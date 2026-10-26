@@ -17,7 +17,6 @@
     ['national-interest-screen', 'The National Interest Screen',       'Foreign investment · economic security'],
     ['assurance-gap',            'The Assurance Gap',                  'Defence autonomy · assurance & test and evaluation'],
     ['tail-number',              'Tail Number Exposed',                'Business-jet flight-data privacy · aviation security'],
-    ['touchstone',               'Touchstone Assay Office',            'AI supply-chain assurance · model provenance'],
     ['ranking',                  'Does the Ranking Hold?',             'Rail procurement security scorecard'],
     ['index-lag',                'The Index Lag Protocol',             'Passive funds · geopolitical shock response'],
     ['companion-briefs',         'Companion Briefs',                   'Geopolitical risk · Indo-Pacific & passive-index protocol'],

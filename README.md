@@ -10,7 +10,6 @@ Live site: **https://ari-ummanath.github.io/portfolios/**
 | `national-interest-screen/` | The National Interest Screen |
 | `assurance-gap/` | The Assurance Gap |
 | `tail-number/` | Tail Number Exposed |
-| `touchstone/` | Touchstone Assay Office |
 | `ranking/` | Does the Ranking Hold? |
 | `index-lag/` | The Index Lag Protocol |
 | `companion-briefs/` | Companion Briefs |
