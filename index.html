@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ari Ummanath · Policy Portfolio</title>
+<meta name="description" content="Independent, source-linked policy case studies on defence, national security, economic integrity and governance by Arpitha (Ari) Ummanath, Canberra.">
+<meta property="og:title" content="Ari Ummanath · Policy Portfolio">
+<meta property="og:description" content="Independent, source-linked case studies on defence, national security, economic integrity and governance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f3ee;--panel:#ffffff;--ink:#16202a;--muted:#56616c;--line:#dcd8cf;--acc:#1b6f78;--acc-soft:#e1efef;--gold:#a8790f}
+@media (prefers-color-scheme:dark){:root{--bg:#10161c;--panel:#18212a;--ink:#e7ecf1;--muted:#9eabb8;--line:#2b3742;--acc:#6cc3cb;--acc-soft:#1c3036;--gold:#e0b04a}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--acc);text-underline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px))}
+.mono{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+/* hero */
+header.hero{padding:72px 0 48px;border-bottom:1px solid var(--line)}
+.hero .mono{color:var(--gold)}
+h1{font:700 clamp(38px,7vw,68px)/1.02 Fraunces,Georgia,serif;letter-spacing:-.01em;margin:14px 0 18px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:62ch;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px}
+.btn-p{background:var(--ink);color:var(--bg)}
+.btn-g{border:1px solid var(--line);color:var(--ink);background:var(--panel)}
+.btn:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.btn svg{width:17px;height:17px;fill:currentColor}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:40px}
+.facts div{background:var(--panel);padding:16px 18px}
+.facts b{display:block;font:700 26px/1.1 Fraunces,Georgia,serif}
+.facts span{font-size:13.5px;color:var(--muted)}
+
+/* filter + grid */
+section{padding:56px 0}
+h2{font:700 clamp(26px,3.6vw,34px)/1.15 Fraunces,Georgia,serif;margin:6px 0 8px;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 24px;max-width:64ch}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.filters button{appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:8px 14px;border-radius:999px;font:500 14px "IBM Plex Sans",sans-serif;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{display:flex;flex-direction:column;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;text-decoration:none;color:var(--ink);transition:transform .15s,border-color .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:0 10px 30px -18px rgba(0,0,0,.4)}
+.card:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.card .mono{color:var(--acc)}
+.card h3{font:700 22px/1.2 Fraunces,Georgia,serif;margin:0;text-wrap:balance}
+.card p{margin:0;color:var(--muted);font-size:15px;flex:1}
+.card .go{font-weight:600;font-size:14px;color:var(--acc)}
+.card[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}html{scroll-behavior:auto}}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:780px){.about{grid-template-columns:1fr}}
+.about p{color:var(--muted);margin:0 0 14px;max-width:62ch}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px}
+.box h3{font:600 13px "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.box ul{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:12px}
+.box li{font-size:15px}
+.box li span{display:block;color:var(--muted);font-size:13.5px}
+.qr{display:flex;gap:14px;align-items:center;border-top:1px solid var(--line);padding-top:16px}
+.qr img{width:96px;height:96px;background:#fff;padding:6px;border-radius:6px}
+.qr span{font-size:13.5px;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="mono">Policy research portfolio · Canberra, Australia</div>
+    <h1>Arpitha (Ari) Ummanath.<br><em>Evidence into policy.</em></h1>
+    <!-- EDIT: your intro sentence -->
+    <p class="lede">I'm a policy researcher and writer studying International Security Studies and Criminology at the Australian National University. Each project below is an independent, source-linked case study that turns public evidence into analysis, practical tools and recommendations.</p>
+    <div class="cta">
+      <a class="btn btn-p" href="#work">View the case studies</a>
+      <a class="btn btn-g" href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect on LinkedIn</a>
+    </div>
+    <div class="facts">
+      <div><b>13</b><span>independent case studies</span></div>
+      <div><b>4</b><span>policy domains, from defence to sport integrity</span></div>
+      <div><b>ASPI</b><span>published in The Strategist</span></div>
+      <div><b>ANU</b><span>International Security &amp; Criminology, 2027</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="work">
+  <div class="wrap">
+    <div class="mono" style="color:var(--gold)">Case studies</div>
+    <h2>Selected work</h2>
+    <p class="sub">Interactive tools, policy briefs and analytical case files. Every claim links back to its public source.</p>
+    <div class="filters" role="group" aria-label="Filter by theme">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="defence" aria-pressed="false">Defence &amp; national security</button>
+      <button type="button" data-f="aviation" aria-pressed="false">Aviation &amp; energy</button>
+      <button type="button" data-f="economic" aria-pressed="false">Economic &amp; financial integrity</button>
+      <button type="button" data-f="sport" aria-pressed="false">Sport governance</button>
+    </div>
+
+    <!-- EDIT: each card below is one project. Copy a whole <a class="card">…</a> block to add a new one. -->
+    <div class="grid" id="grid">
+      <a class="card" data-t="defence" href="aukus/">
+        <div class="mono">Defence industry · export controls</div>
+        <h3>The AUKUS Export-Control Navigator</h3>
+        <p>A cited triage tool that helps small defence suppliers work out whether an item can move licence-free under AUKUS or falls on the Excluded Technologies List.</p>
+        <span class="go">Open the Navigator →</span>
+      </a>
+      <a class="card" data-t="aviation" href="saf/">
+        <div class="mono">Aviation · sustainable fuel policy</div>
+        <h3>The SAF Mandate Gap</h3>
+        <p>A sequencing framework for domestic sustainable aviation fuel: how Australia moves from project grants to dependable demand, with feedstock integrity and public-value safeguards.</p>
+        <span class="go">Read the briefing →</span>
+      </a>
+      <a class="card" data-t="economic" href="phoenix/">
+        <div class="mono">Tax integrity · criminology</div>
+        <h3>The Phoenix Signal</h3>
+        <p>Turns publicly reported warning signs of illegal phoenix activity into a triage read-out mapped to the ATO's graduated compliance response.</p>
+        <span class="go">Try the triage tool →</span>
+      </a>
+      <a class="card" data-t="defence" href="national-interest-screen/">
+        <div class="mono">Foreign investment · economic security</div>
+        <h3>The National Interest Screen</h3>
+        <p>Walks a hypothetical deal through Australia's two-track foreign investment screening, from notification triggers to national interest factors.</p>
+        <span class="go">Screen a deal →</span>
+      </a>
+      <a class="card" data-t="defence" href="assurance-gap/">
+        <div class="mono">Defence autonomy · test &amp; evaluation</div>
+        <h3>The Assurance Gap</h3>
+        <p>Tracks how Australia assures autonomous and AI-enabled defence systems, with a rubric, policy brief and capability network map.</p>
+        <span class="go">Explore the tracker →</span>
+      </a>
+      <a class="card" data-t="aviation" href="tail-number/">
+        <div class="mono">Aviation security · flight-data privacy</div>
+        <h3>Tail Number Exposed</h3>
+        <p>A policy brief on the flight-data privacy gap facing high-profile aircraft owners, comparing the US, Australia, Canada, the UK and Europe, with fixes for operators and governments.</p>
+        <span class="go">Read the case →</span>
+      </a>
+      <a class="card" data-t="defence" href="touchstone/">
+        <div class="mono">AI assurance · model provenance</div>
+        <h3>Touchstone Assay Office</h3>
+        <p>A venture blueprint for an independent nonprofit that tests the AI supply chain end to end, from chips to training data, and stamps what passes.</p>
+        <span class="go">Visit the office →</span>
+      </a>
+      <a class="card" data-t="defence" href="ranking/">
+        <div class="mono">Critical infrastructure · procurement</div>
+        <h3>Does the Ranking Hold?</h3>
+        <p>An interactive security scorecard that stress-tests the Sydney Metro West bidder comparison against seven weighted criteria and stricter evidence standards.</p>
+        <span class="go">See the scorecard →</span>
+      </a>
+      <a class="card" data-t="economic" href="index-lag/">
+        <div class="mono">Passive funds · geopolitical risk</div>
+        <h3>The Index Lag Protocol</h3>
+        <p>Closes the gap between a geopolitical shock and a passive fund's ability to respond, using Russia 2022 as the case study.</p>
+        <span class="go">Read the working paper →</span>
+      </a>
+      <a class="card" data-t="economic" href="companion-briefs/">
+        <div class="mono">Geopolitical risk · Indo-Pacific</div>
+        <h3>Companion Briefs</h3>
+        <p>Two research products extending global geopolitical-risk frameworks: an Indo-Pacific and South Asia overlay, and a response protocol for passive index products.</p>
+        <span class="go">Read the briefs →</span>
+      </a>
+      <a class="card" data-t="economic" href="grand-prix/">
+        <div class="mono">Economic &amp; soft-power impact</div>
+        <h3>Is the Grand Prix Worth It?</h3>
+        <p>An independent scorecard for Melbourne's $3B Formula 1 bet: direct spend, an honest multiplier range, and the soft power nobody has measured.</p>
+        <span class="go">Open the framework →</span>
+      </a>
+      <a class="card" data-t="sport" href="real-selectors/">
+        <div class="mono">Cricket governance · two live cases</div>
+        <h3>The Real Selectors</h3>
+        <p>Who actually controls a cricketer? Organised crime in Canadian cricket set against the privatisation of Australia's Big Bash League.</p>
+        <span class="go">Read the case files →</span>
+      </a>
+      <a class="card" data-t="sport" href="cricket-canada/">
+        <div class="mono">Sport integrity · transnational crime</div>
+        <h3>Cricket Canada</h3>
+        <p>An intelligence-analyst read on the ICC's suspension of Cricket Canada, and the case for diaspora networks as an early-warning asset.</p>
+        <span class="go">Read the analysis →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="border-top:1px solid var(--line)">
+  <div class="wrap about">
+    <div>
+      <div class="mono" style="color:var(--gold)">About</div>
+      <h2>About me</h2>
+      <!-- EDIT: your About paragraphs -->
+      <p>I'm completing a double degree in International Security Studies and Arts (Criminology) at the ANU, graduating in 2027. My work sits where policy, technology and security meet: export controls, defence assurance, economic security, and the integrity of institutions people rely on.</p>
+      <p>I've written a cyber strategy brief for the Czech Ambassador during an internship with the Czech Embassy and EU Delegation, written policy briefs for a national policy library at FORE Australia, and served as Policy &amp; Strategic Affairs Fellow with Girls Run The World. I speak English, Malayalam and Hindi.</p>
+      <p>Every project here was self-directed: I start from a documented, verifiable gap, read the primary sources, and build something that reflects that reading.</p>
+    </div>
+    <div class="box">
+      <h3>Published work</h3>
+      <ul>
+        <li><a href="https://www.aspi.org.au/strategist-posts/women-are-integral-to-closing-australias-defence-workforce-gap/" target="_blank" rel="noopener">Women are integral to closing Australia's defence workforce gap</a><span>ASPI, The Strategist · solo author</span></li>
+        <li><a href="https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf" target="_blank" rel="noopener">Australia's fuel security</a><span>Voices of the Future · co-authored, ANU / SDSC</span></li>
+      </ul>
+      <h3>Contact</h3>
+      <ul><li><a href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener">linkedin.com/in/arpitha-u-62549a2ba</a><span>The best way to reach me</span></li></ul>
+      <div class="qr"><img src="qr/portfolio-qr.svg" alt="QR code linking to this portfolio"><span>Scan to open this portfolio on your phone.</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Arpitha (Ari) Ummanath · Canberra, Australia</span><span>Research aids only, not legal or financial advice.</span></div></footer>
+
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.filters button')),cards=[].slice.call(document.querySelectorAll('.card'));
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    var f=b.getAttribute('data-f');
+    btns.forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+    cards.forEach(function(c){c.hidden=!(f==='all'||c.getAttribute('data-t')===f)});
+  })});
+})();
+</script>
+</body>
+</html>

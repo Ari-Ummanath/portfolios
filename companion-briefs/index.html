@@ -1,0 +1,431 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Companion Briefs</title>
+<style>
+    :root {
+      --ink: #eaf0f6;
+      --muted: #9cabb9;
+      --bg: #070b10;
+      --panel: #101822;
+      --panel-2: #0c121a;
+      --line: rgba(178, 201, 221, .15);
+      --blue: #62a9ff;
+      --blue-deep: #1d4f84;
+      --amber: #f2af52;
+      --red: #ee6a68;
+      --green: #51c59e;
+      --shadow: 0 22px 55px rgba(0,0,0,.34);
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 80% -10%, rgba(36, 103, 166, .28), transparent 34rem), var(--bg);
+      line-height: 1.62;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* Intro */
+    .intro-overlay {
+      position: fixed; inset: 0; z-index: 99; display: grid; place-items: center;
+      background: #05080c; animation: introExit .75s ease 2.55s forwards;
+      pointer-events: none;
+    }
+    .intro-inner { text-align: center; }
+    .orb {
+      width: 122px; height: 122px; border: 2px solid var(--blue); border-radius: 50%; margin: 0 auto;
+      position: relative; box-shadow: 0 0 42px rgba(98,169,255,.32); animation: float 2s ease-in-out infinite;
+    }
+    .orb:before, .orb:after { content: ""; position: absolute; border: 1px solid rgba(98,169,255,.8); border-radius: 50%; }
+    .orb:before { inset: 17px 33px; animation: spin 3.2s linear infinite; }
+    .orb:after { inset: 44px 7px; }
+    .core { position:absolute; inset: 47px; border-radius:50%; background: var(--blue); box-shadow:0 0 25px var(--blue); animation: core 1.35s ease-out both; }
+    .intro-inner h1 { margin: 28px 0 5px; font-size: 25px; letter-spacing: .1em; text-transform: uppercase; opacity: 0; animation: rise .7s ease .38s forwards; }
+    .intro-inner p { margin: 0; color: var(--muted); font-size: 13px; letter-spacing: .13em; text-transform: uppercase; opacity: 0; animation: rise .7s ease .76s forwards; }
+    @keyframes introExit { to { visibility: hidden; opacity: 0; } }
+    @keyframes float { 50% { transform: translateY(-6px); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes core { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes rise { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Navigation */
+    header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(7,11,16,.82); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+    .nav { height: 65px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { text-decoration: none; font-weight: 750; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+    .brand span { color: var(--blue); }
+    .tabs { display: flex; align-items: center; gap: 7px; overflow-x: auto; }
+    .tab { border: 1px solid transparent; color: var(--muted); background: transparent; padding: 8px 10px; border-radius: 8px; cursor: pointer; font: inherit; font-size: 13px; white-space: nowrap; }
+    .tab:hover, .tab.active { border-color: var(--line); color: var(--ink); background: rgba(255,255,255,.045); }
+
+    /* Shared */
+    .view { display: none; animation: appear .35s ease both; }
+    .view.active { display: block; }
+    @keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .eyebrow { color: var(--blue); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+    .hero { padding: 86px 0 48px; text-align: center; }
+    .hero h1 { font-size: clamp(34px, 5vw, 59px); letter-spacing: -.045em; line-height: 1.08; margin: 12px auto 17px; max-width: 900px; }
+    .hero p { color: var(--muted); max-width: 760px; margin: 0 auto; font-size: 17px; }
+    .live { display: inline-flex; margin-top: 25px; padding: 8px 13px; border-radius: 999px; border: 1px solid var(--line); gap: 9px; align-items: center; color: var(--muted); font-size: 13px; }
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 0 rgba(242,175,82,.7); animation: pulse 1.8s infinite; }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(242,175,82,0); } 100% { box-shadow: 0 0 0 0 rgba(242,175,82,0); } }
+    .panel { background: linear-gradient(135deg, rgba(21,31,43,.98), rgba(12,18,26,.98)); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+    .section { padding: 38px; margin: 25px 0; }
+    h2 { margin: 0 0 12px; font-size: 25px; letter-spacing: -.025em; }
+    h3 { font-size: 16px; margin: 20px 0 8px; color: var(--blue); }
+    p { margin: 10px 0; }
+    .muted { color: var(--muted); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--blue); background: var(--blue); color: #06101b; padding: 11px 14px; border-radius: 9px; text-decoration: none; cursor: pointer; font-weight: 750; font-size: 13px; }
+    .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+
+    /* Home */
+    .statement { max-width: 980px; margin: 0 auto 25px; text-align: center; padding: 30px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+    .brief-card { display: flex; flex-direction: column; padding: 30px; min-height: 330px; text-decoration: none; transition: .25s ease; }
+    .brief-card:hover { transform: translateY(-7px); border-color: rgba(98,169,255,.7); box-shadow: 0 28px 60px rgba(0,0,0,.43); }
+    .target { color: var(--blue); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 700; }
+    .brief-card h2 { margin-top: 14px; }
+    .brief-card ul { margin: 14px 0 22px; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .brief-card li { margin: 5px 0; }
+    .brief-card .btn { margin-top: auto; align-self: flex-start; }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .why { padding: 19px; border-radius: 10px; background: rgba(255,255,255,.03); border-left: 3px solid var(--blue); }
+    .why h3 { color: var(--ink); margin: 0 0 7px; }
+    .why p { color: var(--muted); font-size: 14px; margin: 0; }
+
+    /* Briefs */
+    .brief-header { padding: 58px 0 25px; }
+    .brief-header h1 { margin: 10px 0; font-size: clamp(30px,4vw,45px); letter-spacing: -.035em; line-height: 1.12; }
+    .brief-header p { color: var(--muted); max-width: 850px; }
+    .brief-layout { display: grid; grid-template-columns: 270px minmax(0,1fr); align-items: start; gap: 24px; padding-bottom: 60px; }
+    .brief-toc { position: sticky; top: 85px; padding: 18px; }
+    .brief-toc strong { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+    .brief-toc a { display: block; padding: 8px 0; color: var(--muted); text-decoration: none; font-size: 13px; }
+    .brief-toc a:hover { color: var(--blue); }
+    .brief-content { min-width: 0; }
+    .brief-content .panel { padding: 31px; margin-bottom: 20px; }
+    .brief-content ul { padding-left: 20px; }
+    .brief-content li { margin: 8px 0; }
+    .score { display: grid; grid-template-columns: 175px 1fr 60px; gap: 12px; align-items: center; margin: 14px 0; font-size: 13px; }
+    .meter { background: #22303d; height: 8px; border-radius: 99px; overflow: hidden; }
+    .meter > i { height: 100%; display: block; border-radius: 99px; }
+    .med { background: var(--amber); } .high { background: var(--red); } .low { background: var(--green); }
+    .score b { font-size: 12px; color: var(--muted); text-align: right; }
+    .callout { border-left: 3px solid var(--blue); padding: 13px 16px; background: rgba(98,169,255,.07); border-radius: 0 9px 9px 0; color: #c9e0ff; margin-top: 18px; font-size: 14px; }
+    .timeline { border-left: 2px solid #314354; margin: 18px 0 6px 5px; padding-left: 20px; }
+    .event { position: relative; margin: 0 0 20px; }
+    .event:before { content:""; width: 10px; height: 10px; border-radius:50%; position:absolute; left:-26px; top:7px; background:var(--blue); box-shadow:0 0 0 4px rgba(98,169,255,.13); }
+    .event time { color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .footnotes { font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+    .footnotes li { margin: 11px 0; }
+    sup a { color: var(--blue); text-decoration: none; font-weight: 700; }
+    .source-note { font-size: 12px; color: var(--muted); margin-top: 13px; }
+
+    /* About */
+    .about-hero { padding: 75px 0 30px; max-width: 820px; }
+    .about-hero h1 { font-size: clamp(35px,5vw,55px); line-height:1.08; letter-spacing:-.045em; margin: 10px 0 15px; }
+    .about-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .about-list div { padding: 22px; }
+    .about-list h3 { color: var(--ink); margin-top: 0; }
+
+    /* Interactive Decision Framework */
+    .decision-framework {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .step-card {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(98, 169, 255, 0.15);
+    }
+    .step-card.active {
+      background: rgba(98, 169, 255, 0.12);
+      border-color: var(--blue);
+    }
+    .step-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue);
+      opacity: 0.3;
+      position: absolute;
+      top: 8px;
+      right: 12px;
+    }
+    .step-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+    .step-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .step-detail {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: #c9e0ff;
+    }
+    .step-card.active .step-detail {
+      display: block;
+    }
+
+    /* Update Log */
+    .update-log {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(31, 41, 55, 0.4);
+      border-radius: 9px;
+      border: 1px solid var(--line);
+    }
+    .update-log h4 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--blue);
+    }
+    .update-entry {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    .update-entry:last-child { margin-bottom: 0; }
+    .update-date {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .update-change {
+      color: var(--ink);
+    }
+
+    footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; padding: 28px 0; text-align: center; }
+    @media (max-width: 800px) {
+      .wrap { padding: 0 17px; }
+      .brand { font-size: 11px; }
+      .tabs { gap: 1px; }
+      .tab { padding: 7px 8px; font-size: 12px; }
+      .hero { padding-top: 65px; }
+      .grid, .why-grid, .about-list { grid-template-columns: 1fr; }
+      .section, .brief-card, .brief-content .panel { padding: 24px; }
+      .brief-layout { grid-template-columns: 1fr; }
+      .brief-toc { position: static; display: flex; flex-wrap: wrap; gap: 8px; }
+      .brief-toc strong { width: 100%; }
+      .brief-toc a { padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; }
+      .score { grid-template-columns: 130px 1fr 48px; font-size: 12px; }
+      .decision-framework { grid-template-columns: 1fr; }
+      .update-entry { grid-template-columns: 1fr; gap: 4px; }
+    }
+
+    /* Added: base size (artifact reset sets 14px), portfolio menu in the top-right corner, thank-you note */
+    body { font-size: 16px; }
+    button.btn { font-family: inherit; line-height: inherit; }
+    .tabs { min-width: 0; }
+    .corner { display: flex; gap: 8px; flex: none; }
+    .corner a { border: 1px solid var(--line); background: rgba(255,255,255,.045); color: var(--ink); padding: 8px 12px; border-radius: 8px; font-size: 13px; white-space: nowrap; text-decoration: none; }
+    .corner a:hover { border-color: var(--blue); }
+    .corner a:focus-visible, button.btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    @media (max-width: 1000px) {
+      .nav { height: auto; flex-wrap: wrap; padding-block: 10px; row-gap: 6px; }
+      .corner { margin-left: auto; }
+      .tabs { order: 3; width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .view { animation: none; } }
+
+    /* Portfolio dialog: same component as the other case-study pages (About & contact, Case studies) */
+    .pf-dlg{--pf-bg:#FBFCFD;--pf-ink:#14202E;--pf-ink2:#44546A;--pf-line:#D5DDE5;--pf-acc:#1B6F78;--pf-scrim:rgba(10,18,28,.55);position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:var(--pf-scrim);font-family:Georgia,"Times New Roman",serif}
+    @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}}
+    :root[data-theme="dark"] .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}
+    .pf-dlg[hidden],.pf-body[hidden]{display:none!important}
+    .pf-card{background:var(--pf-bg);color:var(--pf-ink);width:min(560px,100%);max-height:100%;overflow:auto;border-radius:10px;border:1px solid var(--pf-line);box-shadow:0 20px 60px rgba(0,0,0,.3);display:grid}
+    .pf-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--pf-line)}
+    .pf-tabs{display:flex;gap:4px;flex-wrap:wrap}
+    .pf-tabs button,.pf-x{appearance:none;border:1px solid transparent;background:none;color:var(--pf-ink2);font:600 15px/1.2 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.02em;padding:7px 12px;border-radius:999px;cursor:pointer}
+    .pf-tabs button[aria-selected="true"]{background:var(--pf-ink);color:var(--pf-bg)}
+    .pf-x{border-color:var(--pf-line);border-radius:6px;font-size:14px}
+    .pf-tabs button:focus-visible,.pf-x:focus-visible,.pf-body a:focus-visible,.pf-copy:focus-visible{outline:2px solid var(--pf-acc);outline-offset:2px}
+    .pf-body{padding:18px;display:grid;gap:14px;font-size:16px;line-height:1.6}
+    .pf-body h2{margin:0;font:700 26px/1.1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;color:var(--pf-ink)}
+    .pf-body p{margin:0;color:var(--pf-ink2)}
+    .pf-label{font:600 12px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ink2)}
+    .pf-li{display:inline-flex;align-items:center;gap:10px;justify-self:start;background:#0A66C2;color:#fff;text-decoration:none;font:600 16px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.03em;padding:11px 16px;border-radius:6px}
+    .pf-li svg{width:18px;height:18px;fill:currentColor}
+    .pf-url{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 13px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--pf-ink2);word-break:break-all}
+    .pf-copy{appearance:none;border:1px solid var(--pf-line);background:none;color:var(--pf-ink);font:600 13px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;padding:6px 10px;border-radius:5px;cursor:pointer}
+    .pf-body p a{color:var(--pf-acc);text-underline-offset:3px}
+    .pf-pubs{margin:0;padding-left:18px;color:var(--pf-ink2)}
+    .pf-list{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--pf-line)}
+    .pf-list li{border-bottom:1px solid var(--pf-line)}
+    .pf-list a{display:grid;gap:2px;padding:11px 4px;text-decoration:none;color:var(--pf-ink)}
+    .pf-list a b{font:600 17px/1.25 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif}
+    .pf-list a span{font-size:14px;color:var(--pf-ink2)}
+    .pf-list a[aria-current] b::after{content:"  \00b7  you are here";font:italic 400 13px Georgia,serif;color:var(--pf-acc)}
+    body.pf-open{overflow:hidden}
+  </style>
+<div class="intro-overlay" aria-hidden="true"><div class="intro-inner"><div class="orb"><i class="core"></i></div><h1>Companion Briefs</h1><p>Institutional geopolitical-risk tools</p></div></div>
+
+  <header><nav class="nav wrap" aria-label="Primary"><a href="#home" class="brand" data-tab="home">Companion <span>Briefs</span></a><div class="tabs"><button class="tab active" data-tab="home">Overview</button><button class="tab" data-tab="indo">Indo-Pacific Brief</button><button class="tab" data-tab="passive">Passive Protocol</button><button class="tab" data-tab="about">About Project</button></div><div class="corner"></div></nav></header>
+
+  <main>
+    <section id="home" class="view active">
+      <div class="wrap">
+        <div class="hero"><div class="eyebrow">Australia-based research project</div><h1>Companion Briefs for Institutional Geopolitical-Risk Tools</h1><p>Two targeted research products extending global risk frameworks with Indo-Pacific regional depth and an operational response protocol for passive index products.</p><div class="live"><i class="pulse"></i>Live framework · Last reviewed September 2026</div></div>
+        <div class="panel statement"><p>Major institutions already publish geopolitical-risk research and operate global tools. This project addresses two practical gaps: a standing regional overlay for the Indo-Pacific and South Asia, and a repeatable pre-index-provider protocol for passive products during market-access shocks.</p></div>
+        <div class="grid">
+          <a href="#indo" class="panel brief-card" data-tab="indo"><span class="target">Goldman Sachs / JPMorgan</span><h2>Indo-Pacific & South Asia Geopolitical Risk Briefing</h2><p class="muted">A regional companion to global GPR tools, connecting four flashpoints to market and operational transmission channels.</p><ul><li>India-China border tension</li><li>AUKUS submarine-timeline risk</li><li>Taiwan Strait shipping-lane exposure</li><li>India's strategic autonomy and sanctions compliance</li></ul><span class="btn">Open brief <span>→</span></span></a>
+          <a href="#passive" class="panel brief-card" data-tab="passive"><span class="target">BlackRock / Vanguard</span><h2>Geopolitical Event Response Protocol for Passive Products</h2><p class="muted">A pre-defined process for responding to impaired market access and geopolitical shocks before, during, and after index-provider action.</p><ul><li>Russia-Ukraine 2022 worked case</li><li>Early-warning indicators by region</li><li>Pre-index action decision framework</li><li>Escalation channel with index providers</li></ul><span class="btn">Open protocol <span>→</span></span></a>
+        </div>
+        <section class="panel section"><h2>Why this works</h2><div class="why-grid"><div class="why"><h3>Product extension</h3><p>The work is framed as a companion module to tools institutions already use, rather than as general geopolitical commentary.</p></div><div class="why"><h3>Regional depth + structural fix</h3><p>It connects regional analysis with an auditable operational response to a known passive-management constraint.</p></div><div class="why"><h3>Live design</h3><p>Risk indicators, event status, and sources are periodically refreshed.</p></div></div></section>
+      </div>
+    </section>
+
+    <section id="indo" class="view">
+      <div class="wrap"><div class="brief-header"><div class="eyebrow">Brief 01 · Regional companion module</div><h1>Indo-Pacific & South Asia Geopolitical Risk Briefing</h1><p>A regional overlay for global geopolitical-risk tools, designed for institutional portfolio, risk, compliance, and client-advisory workflows.</p></div><div class="brief-layout"><aside class="panel brief-toc"><strong>In this brief</strong><a href="#indo-summary">Executive summary</a><a href="#indo-scores">Flashpoint scores</a><a href="#indo-implications">Transmission channels</a><a href="#indo-tools">Toolkit integration</a><a href="#indo-notes">Notes & sources</a></aside><article class="brief-content">
+        <section class="panel" id="indo-summary"><h2>Executive summary</h2><p>Global geopolitical-risk measures capture system-wide shocks, but institutional decision-making also requires standing regional interpretation. This briefing scores four Indo-Pacific and South Asian flashpoints and translates them into portfolio, operational, supply-chain, and compliance implications.<sup><a href="#i1">1</a></sup><sup><a href="#i2">2</a></sup></p><div class="callout"><strong>Design proposition:</strong> use this as a recurring regional companion module alongside global risk indices, rather than as a substitute for them.</div></section>
+        <section class="panel" id="indo-scores"><h2>Flashpoint scores</h2><div class="score"><span>India-China border tension</span><div class="meter"><i class="med" style="width:55%"></i></div><b>55 / 100</b></div><div class="score"><span>AUKUS timeline risk</span><div class="meter"><i class="med" style="width:70%"></i></div><b>70 / 100</b></div><div class="score"><span>Taiwan Strait exposure</span><div class="meter"><i class="high" style="width:85%"></i></div><b>85 / 100</b></div><div class="score"><span>India sanctions predictability</span><div class="meter"><i class="med" style="width:60%"></i></div><b>60 / 100</b></div><p class="source-note">Illustrative analytical scores: a transparent editorial assessment of probability, impact, and transmission risk—not an investment recommendation.</p></section>
+        <section class="panel" id="indo-implications"><h2>Regional flashpoints & implications</h2><h3>1. India-China border tension</h3><p>Reported reductions in deployments and renewed high-level diplomacy point to partial stabilisation, but disputed-border risk remains intertwined with deep trade and supply-chain dependence.<sup><a href="#i3">3</a></sup><sup><a href="#i4">4</a></sup> The practical risk channel is less an immediate large-scale conflict scenario than episodic escalation, policy tightening, and disruption to inputs critical to Indian manufacturing.</p><ul><li>Monitor: LAC incidents, border-talk outcomes, FDI-screening changes, import restrictions, and Chinese-input dependency in electronics, pharmaceuticals, and critical minerals.</li><li>Institutional relevance: supply-chain diligence, country-risk limits, corporate exposure screening, and scenario design.</li></ul><h3>2. AUKUS submarine-timeline risk</h3><p>AUKUS depends on US and UK industrial capacity as well as Australian capability development. Public reporting and parliamentary scrutiny have identified delivery, build-rate, and cost pressure as material execution risks.<sup><a href="#i5">5</a></sup><sup><a href="#i6">6</a></sup></p><ul><li>Monitor: US Virginia-class production, UK submarine-program milestones, workforce capacity, and trilateral funding commitments.</li><li>Institutional relevance: defence-industrial exposure, long-duration public spending, and shifts in regional deterrence assumptions.</li></ul><h3>3. Taiwan Strait shipping-lane exposure</h3><p>The Center for Strategic and International Studies (CSIS)—a bipartisan, nonprofit policy research organization based in Washington, D.C.—estimates that more than one-fifth of global maritime trade transits the Taiwan Strait, making disruption a high-impact event for semiconductors, shipping, insurance, energy, and manufacturing supply chains.<sup><a href="#i7">7</a></sup></p><ul><li>Monitor: military exercises, navigation restrictions, air and maritime incidents, war-risk insurance pricing, and freight diversion.</li><li>Institutional relevance: semiconductor concentration, sector stress testing, inflation scenarios, and logistics exposure.</li></ul><h3>4. India's strategic autonomy & sanctions-compliance predictability</h3><p>India's effort to preserve strategic autonomy while maintaining major relationships across competing blocs can produce a complex operating environment for institutions subject to multiple sanctions and compliance regimes.<sup><a href="#i8">8</a></sup><sup><a href="#i9">9</a></sup></p><ul><li>Monitor: US secondary-sanctions posture, energy and infrastructure linkages, waiver changes, payment mechanisms, and regulatory guidance.</li><li>Institutional relevance: KYC, transaction screening, reputational risk, and India-related exposure scenarios.</li></ul></section>
+        <section class="panel" id="indo-tools"><h2>How it integrates with existing tools</h2><p>The intended use is a repeatable regional overlay: a concise scorecard, a clearly defined indicator set, and direct transmission channels to portfolio, compliance, and client decisions. JPMorganChase established its Center for Geopolitics in 2025 to help clients navigate structural uncertainty, while broader geopolitical-risk tools seek to measure global risk conditions.<sup><a href="#i1">1</a></sup><sup><a href="#i2">2</a></sup></p><div class="callout"><strong>Suggested cadence:</strong> refresh quarterly and immediately after a material event; retain prior scores and explain every score change so the project develops an auditable history.</div><div class="update-log"><h4>Update log</h4><div class="update-entry"><span class="update-date">October 6, 2026</span><span class="update-change">Added the portfolio menu (case studies, About &amp; contact) and fixed a tab-switching error.</span></div><div class="update-entry"><span class="update-date">September 21, 2026</span><span class="update-change">Initial publication: flashpoint scores, sources, and methodology established.</span></div></div></section>
+        <section class="panel footnotes" id="indo-notes"><h2>Notes & sources</h2><ol><li id="i1">JPMorganChase, "JPMorganChase Launches Center for Geopolitics to Help Clients Navigate Structural Uncertainty," press release, May 21, 2025, <a href="https://www.jpmorganchase.com/newsroom/press-releases/2025/center-for-geopolitics-launch" target="_blank" rel="noopener">link</a>.</li><li id="i2">Matteo Iacoviello, "AI-GPR Index," accessed September 15, 2026, <a href="https://www.matteoiacoviello.com/ai_gpr.html" target="_blank" rel="noopener">link</a>.</li><li id="i3">"PLA troop deployment along LAC reduced in 2025, but 10 combined arms brigades remain: MoD report," <em>The Hindu</em>, September 13, 2026, <a href="https://www.thehindu.com/news/national/pla-troop-deployment-along-lac-reduced-in-2025-but-10-combined-arms-brigades-remain-mod-report/article71463567.ece" target="_blank" rel="noopener">link</a>.</li><li id="i4">"India's Modi and China's Xi push business links, border thaw," <em>Reuters</em>, September 12, 2026, <a href="https://www.reuters.com/world/china/chinas-xi-lands-delhi-brics-summit-indian-tv-channels-report-2026-09-12/" target="_blank" rel="noopener">link</a>.</li><li id="i5">Parliament of Australia, "Chapter 4 — AUKUS," <em>Defence Annual Report 2023–24</em>, January 29, 2026, <a href="https://www.aph.gov.au/Parliamentary_Business/Committees/Joint/Foreign_Affairs_Defence_and_Trade/DefenceAR2023-2448P/Report/Chapter_4_-_AUKUS" target="_blank" rel="noopener">link</a>.</li><li id="i6">Daniel Hurst, "As Aukus Spending and Delays Blow Out, Will Australia's Nuclear Submarines Ever Materialise?," <em>The Guardian</em>, May 17, 2026, <a href="https://www.theguardian.com/world/2026/may/17/australia-aukus-spending-delays-nuclear-submarines" target="_blank" rel="noopener">link</a>.</li><li id="i7">CSIS ChinaPower Project, "How the Taiwan Strait Propels the Global Economy," October 10, 2024, Center for Strategic and International Studies (CSIS), <a href="https://features.csis.org/chinapower/china-taiwan-strait-trade/" target="_blank" rel="noopener">link</a>.</li><li id="i8">Chatham House, "The Lines between India's Foreign Policy, Domestic Politics and Economy Will Become Increasingly Blurred in 2026," January 9, 2026, <a href="https://www.chathamhouse.org/2026/01/lines-between-indias-foreign-policy-domestic-politics-and-economy-will-become-increasingly" target="_blank" rel="noopener">link</a>.</li><li id="i9">"Economic D-Day: Trump's Iran Sanctions and India's Bind," <em>Global Chanakya</em>, August 21, 2026, <a href="https://www.globalchanakya.in/blogs/economic-d-day-trumps-iran-sanctions-and-indias-bind" target="_blank" rel="noopener">link</a>.</li></ol></section>
+      </article></div></div>
+    </section>
+
+    <section id="passive" class="view">
+      <div class="wrap"><div class="brief-header"><div class="eyebrow">Brief 02 · Operational response module</div><h1>Geopolitical Event Response Protocol for Passive Products</h1><p>A pre-defined process for responding to impaired market access and geopolitical shocks before, during, and after index-provider action.</p></div><div class="brief-layout"><aside class="panel brief-toc"><strong>In this protocol</strong><a href="#passive-problem">Problem statement</a><a href="#passive-case">Russia 2022 case</a><a href="#passive-warning">Early warning</a><a href="#passive-decision">Decision framework</a><a href="#passive-escalation">Escalation protocol</a><a href="#passive-notes">Notes & sources</a></aside><article class="brief-content">
+        <section class="panel" id="passive-problem"><h2>Problem statement</h2><p>Passive products track benchmarks under defined mandates, yet geopolitical shocks can rapidly impair trading, settlement, valuation, and investability. The 2022 Russia event demonstrated the time gap between an initial shock, fund-level dealing restrictions, and formal index-provider action.<sup><a href="#p1">1</a></sup><sup><a href="#p2">2</a></sup></p><div class="callout"><strong>Protocol objective:</strong> do not attempt to override an index methodology. Instead, give asset managers a repeatable, governed method to prepare for impaired accessibility, communicate clearly, model consequences, and escalate evidence to index providers.</div></section>
+        <section class="panel" id="passive-case"><h2>Worked case: Russia-Ukraine, February-March 2022</h2><div class="timeline"><div class="event"><time>24 February 2022</time><p>Russia launches its full-scale invasion of Ukraine; sanctions and market-access risks accelerate.</p></div><div class="event"><time>28 February 2022</time><p>MSCI Inc. (formerly Morgan Stanley Capital International)—a global provider of equity, fixed income, and multi-asset indices—commences a consultation on the accessibility and investability of the Russian equity market.<sup><a href="#p3">3</a></sup></p></div><div class="event"><time>2–3 March 2022</time><p>Fund issuers take dealing and primary-market restrictions as market disruption and exchange closures intensify.<sup><a href="#p4">4</a></sup><sup><a href="#p5">5</a></sup></p></div><div class="event"><time>7 March 2022</time><p>FTSE Russell removes Russian stocks from its equity indices, effective from the open on 7 March.<sup><a href="#p6">6</a></sup></p></div><div class="event"><time>9 March 2022</time><p>MSCI reclassifies Russia from emerging markets to standalone-market status, citing feedback on market uninvestability.<sup><a href="#p3">3</a></sup></p></div></div><p>Lesson: an institutional response framework should be activated when accessibility deteriorates—not only when an index decision has already occurred.</p></section>
+        <section class="panel" id="passive-warning"><h2>Early-warning indicators</h2><h3>Market accessibility</h3><ul><li>Exchange closures, persistent trading halts, capital controls, foreign-investor restrictions, or custodial/settlement failures.</li><li>Bid-ask dislocation, inability to create or redeem ETF shares, or inability to obtain reliable prices.</li></ul><h3>Geopolitical and legal triggers</h3><ul><li>Armed conflict, broad sanctions, credible blockade risk, emergency legislation, or designation of systemically important issuers.</li><li>Public consultation or formal review by an index provider concerning market classification or investability.</li></ul><h3>Institutional response signals</h3><ul><li>Custodian, exchange, broker, regulator, and index-provider notices are logged in a single evidence record.</li><li>Escalation is based on defined thresholds—not discretionary headline reaction.</li></ul></section>
+        <section class="panel" id="passive-decision"><h2>Pre-index-provider action framework</h2><p>Click each step to reveal details. The following sequence keeps legal, fiduciary, operations, and client interests connected.</p><div class="decision-framework"><div class="step-card" onclick="toggleStep(this)"><span class="step-number">1</span><h4 class="step-title">Detect</h4><p class="step-desc">Monitor trigger indicators and validate information.</p><div class="step-detail">Validate with exchange, regulator, and custodian notices. Log all evidence in a central record.</div></div><div class="step-card" onclick="toggleStep(this)"><span class="step-number">2</span><h4 class="step-title">Assess</h4><p class="step-desc">Convene risk, legal, compliance, portfolio, ops, and comms.</p><div class="step-detail">Cross-functional assessment to determine severity and required actions.</div></div><div class="step-card" onclick="toggleStep(this)"><span class="step-number">3</span><h4 class="step-title">Stabilise</h4><p class="step-desc">Restrict creations/redemptions if dealing is impaired.</p><div class="step-detail">Where permitted, suspend primary-market activity when reliable valuation is not possible.</div></div><div class="step-card" onclick="toggleStep(this)"><span class="step-number">4</span><h4 class="step-title">Model</h4><p class="step-desc">Calculate NAV, tracking-error, and liquidity scenarios.</p><div class="step-detail">Net Asset Value (NAV) is the per-share value of a fund's assets minus liabilities. Model outcomes under different index treatments (standalone market, full removal, zero pricing).</div></div><div class="step-card" onclick="toggleStep(this)"><span class="step-number">5</span><h4 class="step-title">Communicate</h4><p class="step-desc">Issue pre-approved client language on access limits.</p><div class="step-detail">Explain benchmark dependence, tracking-error risk, and next review points clearly.</div></div><div class="step-card" onclick="toggleStep(this)"><span class="step-number">6</span><h4 class="step-title">Escalate</h4><p class="step-desc">Provide evidence to index providers with standardised submission.</p><div class="step-detail">Seek a time-bound review using the escalation protocol below.</div></div></div><div class="callout"><strong>Governance guardrail:</strong> every action must remain subject to fund documents, applicable law, valuation policies, and fiduciary duties. This project is a research framework, not legal or investment advice.</div></section>
+        <section class="panel" id="passive-escalation"><h2>Proposed faster escalation channel</h2><ul><li><strong>Named contacts:</strong> establish identified escalation contacts at the asset manager and index provider.</li><li><strong>Common evidence pack:</strong> use a short template for exchange notices, regulatory actions, settlement evidence, custody status, and observed pricing constraints.</li><li><strong>Decision clock:</strong> agree a documented timetable for acknowledgement, preliminary assessment, and status update after a formal escalation.</li><li><strong>Client-readiness pack:</strong> pre-approve FAQs, valuation explanations, and tracking-error disclosures before a crisis occurs.</li><li><strong>After-action review:</strong> preserve a dated decision log and re-test thresholds after every material event.</li></ul><p>This transforms crisis-time coordination from ad hoc communications into a more auditable operational process.</p></section>
+        <section class="panel footnotes" id="passive-notes"><h2>Notes & sources</h2><ol><li id="p1">MSCI Inc., "MSCI Reclassifies Russia Indexes from Emerging Markets to Standalone Markets Status," press release, March 2, 2022, <a href="https://app2.msci.com/webapp/index_ann/DocGet?pub_key=DoyElS7QfZ8=&lang=en&format=html" target="_blank" rel="noopener">link</a>.</li><li id="p2">FTSE Russell, "Treatment of Russia in FTSE Russell Equity Indices," index notice, March 3, 2022, <a href="https://research.ftserussell.com/products/index-notices/home/getnotice/?id=2603553" target="_blank" rel="noopener">link</a>.</li><li id="p3">MSCI Inc., "Q&A on the Reclassification of the MSCI Russia Indexes," March 3, 2022, <a href="https://app2.msci.com/webapp/index_ann/DocGet?pub_key=bXJ2nmVEMto=&lang=en&format=html" target="_blank" rel="noopener">link</a>.</li><li id="p4">Comisi&oacute;n Nacional del Mercado de Valores, "Relevant Information — iShares VII PLC," March 11, 2022, <a href="https://www.cnmv.es/portal/hr/resultadobusquedahr?division=2&nif=N0072264E&lang=en&ihr=2" target="_blank" rel="noopener">link</a>.</li><li id="p5">FTSE Russell, "FAQ Document: Russia – Ukraine Related Sanctions and Treatment in FTSE Russell Indices," March 2022, <a href="https://www.lseg.com/content/dam/ftse-russell/en_us/documents/policy-documents/ftse-faq-document-russia-treatment-in-ftse-russell-indices.pdf" target="_blank" rel="noopener">link</a>.</li><li id="p6">SEI Asset Management, "Russia/Ukraine FAQ: Market Status," May 27, 2026, <a href="https://assetmanagementuk.seic.com/news/russiaukraine-faq-market-status" target="_blank" rel="noopener">link</a>.</li></ol></section>
+      </article></div></div>
+    </section>
+
+    <section id="about" class="view"><div class="wrap"><div class="about-hero"><div class="eyebrow">Project context</div><h1>About the project</h1><p class="muted">An Australia-based portfolio project demonstrating research, policy design, institutional communication, and geopolitical-risk thinking.</p></div><div class="about-list"><div class="panel"><h3>Purpose</h3><p class="muted">To show how existing institutional geopolitical-risk tools can be extended through a tightly scoped regional brief and a practical passive-product response protocol.</p></div><div class="panel"><h3>Method</h3><p class="muted">The project translates verifiable public reporting and institutional source material into defined indicators, decision-relevant implications, and clearly separated analytical judgements.</p></div><div class="panel"><h3>Live maintenance model</h3><p class="muted">Refresh the flashpoint scores, dated source log, and "what changed" notes quarterly and following material geopolitical or market-access events.</p></div><div class="panel"><h3>Publication note</h3><p class="muted">This independent project is not affiliated with, commissioned by, or endorsed by Goldman Sachs, JPMorganChase, BlackRock, Vanguard, MSCI, or FTSE Russell. It is provided for research and portfolio-demonstration purposes only and is not investment, legal, or compliance advice.</p></div></div></div></section>
+  </main>
+  <footer><div class="wrap">Companion Briefs for Institutional Geopolitical-Risk Tools · Australia-based independent research project</div></footer>
+  
+  <div class="pf-dlg" id="pfDlg" role="dialog" aria-modal="true" aria-label="Portfolio" hidden>
+    <div class="pf-card">
+      <div class="pf-head">
+        <div class="pf-tabs" role="tablist">
+          <button type="button" role="tab" data-pfv="about" aria-selected="true">About &amp; contact</button>
+          <button type="button" role="tab" data-pfv="work" aria-selected="false">Case studies</button>
+        </div>
+        <button type="button" class="pf-x" id="pfClose" aria-label="Close">Close &#10005;</button>
+      </div>
+      <div class="pf-body" data-pfp="about">
+        <div class="pf-label">About</div>
+        <h2>Arpitha (Ari) Ummanath</h2>
+        <p>Policy researcher and writer based in Australia, working on international security, defence and strategic policy. My portfolio is a set of independent, source-linked case studies that turn public evidence into analysis and practical recommendations.</p>
+        <div class="pf-label">Published work</div>
+        <ul class="pf-pubs"><li><a href="https://www.aspi.org.au/strategist-posts/women-are-integral-to-closing-australias-defence-workforce-gap/" target="_blank" rel="noopener">Women are integral to closing Australia&rsquo;s defence workforce gap</a> &middot; ASPI, The Strategist (solo)</li><li><a href="https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf" target="_blank" rel="noopener">Voices of the Future, Vol. 2</a> &middot; Co-authored paper on Australia&rsquo;s fuel security &middot; Girls Run The World</li></ul>
+        <div class="pf-label" style="margin-top:6px">Contact</div>
+        <p>The best way to reach me is on LinkedIn.</p>
+        <a class="pf-li" href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect on LinkedIn</a>
+        <div class="pf-url"><span id="pfUrl">linkedin.com/in/arpitha-u-62549a2ba</span><button type="button" class="pf-copy" id="pfCopy">Copy link</button></div>
+      </div>
+      <div class="pf-body" data-pfp="work" hidden>
+        <div class="pf-label">Portfolio</div>
+        <h2>Case studies</h2>
+        <ul class="pf-list">
+          <li><a href="../assurance-gap/" target="_blank" rel="noopener"><b>The Assurance Gap</b><span>Defence autonomy &middot; assurance &amp; test and evaluation</span></a></li>
+          <li><a href="../tail-number/" target="_blank" rel="noopener"><b>Tail Number Exposed</b><span>Business-jet flight-data privacy &middot; aviation security</span></a></li>
+          <li><a href="../aukus/" target="_blank" rel="noopener"><b>The AUKUS Export-Control Navigator</b><span>Defence industry &middot; export controls</span></a></li>
+          <li><a href="../saf/" target="_blank" rel="noopener"><b>The SAF Mandate Gap</b><span>Aviation &middot; sustainable fuel policy</span></a></li>
+          <li><a href="../grand-prix/" target="_blank" rel="noopener"><b>Is the Grand Prix Worth It?</b><span>Economic &amp; soft-power impact</span></a></li>
+          <li><a href="../real-selectors/" target="_blank" rel="noopener"><b>The Real Selectors</b><span>Cricket governance &middot; two live case studies</span></a></li>
+          <li><a href="../ranking/" target="_blank" rel="noopener"><b>Does the Ranking Hold?</b><span>Rail procurement security scorecard</span></a></li>
+          <li><a href="../companion-briefs/" target="_blank" rel="noopener"><b>Companion Briefs</b><span>Geopolitical risk &middot; Indo-Pacific &amp; passive-index protocol</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    const buttons = document.querySelectorAll('[data-tab]');
+    const views = document.querySelectorAll('.view');
+    function openTab(name) {
+      views.forEach(v => v.classList.toggle('active', v.id === name));
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+      try { history.replaceState(null, '', '#' + name); } catch (err) {}
+      try { window.scrollTo({top: 0, behavior: 'smooth'}); } catch (err) { window.scrollTo(0, 0); }
+    }
+    buttons.forEach(button => button.addEventListener('click', (event) => {
+      event.preventDefault(); openTab(button.dataset.tab);
+    }));
+    const target = location.hash.slice(1);
+    if (['home','indo','passive','about'].includes(target)) openTab(target);
+
+    function toggleStep(card) {
+      const all = document.querySelectorAll('.step-card');
+      all.forEach(c => { if (c !== card) c.classList.remove('active'); });
+      card.classList.toggle('active');
+    }
+
+    (function () {
+      var SELF = 'TQyJPwXirm4XgwVPRmvS8D';
+      var nav = document.querySelector('.corner');
+      [['work', 'Case studies'], ['about', 'About &amp; contact']].forEach(function (p) {
+        var a = document.createElement('a');
+        a.href = '#'; a.setAttribute('role', 'button'); a.setAttribute('data-pf', p[0]); a.innerHTML = p[1];
+        nav.appendChild(a);
+      });
+      var dlg = document.getElementById('pfDlg');
+      dlg.querySelectorAll('.pf-list a').forEach(function (a) { if (a.href.indexOf(SELF) > -1) a.setAttribute('aria-current', 'page'); });
+      var last = null;
+      function view(v) {
+        dlg.querySelectorAll('[data-pfv]').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.pfv === v)); });
+        dlg.querySelectorAll('[data-pfp]').forEach(function (p) { p.hidden = p.dataset.pfp !== v; });
+      }
+      function open(v) {
+        last = document.activeElement; view(v || 'about'); dlg.hidden = false;
+        document.body.classList.add('pf-open'); dlg.querySelector('[aria-selected="true"]').focus();
+      }
+      function close() {
+        dlg.hidden = true; document.body.classList.remove('pf-open');
+        if (last && last.focus) last.focus();
+      }
+      document.addEventListener('click', function (e) {
+        var t = e.target.closest('[data-pf]');
+        if (t) { e.preventDefault(); e.stopImmediatePropagation(); open(t.dataset.pf); }
+      }, true);
+      dlg.addEventListener('click', function (e) {
+        if (e.target === dlg) close();
+        var b = e.target.closest('[data-pfv]'); if (b) view(b.dataset.pfv);
+      });
+      document.getElementById('pfClose').addEventListener('click', close);
+      dlg.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      document.getElementById('pfCopy').addEventListener('click', function () {
+        var u = 'https://www.linkedin.com/in/arpitha-u-62549a2ba/';
+        var btn = document.getElementById('pfCopy');
+        function sel() {
+          var r = document.createRange(); r.selectNodeContents(document.getElementById('pfUrl'));
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected, press Ctrl/Cmd+C';
+        }
+        try {
+          navigator.clipboard.writeText(u).then(function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy link'; }, 1500); }, sel);
+        } catch (err) { sel(); }
+      });
+    })();
+  </script>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

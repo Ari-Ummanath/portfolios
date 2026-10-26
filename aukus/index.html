@@ -1,0 +1,268 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The AUKUS Export-Control Navigator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+#ak-intro{position:fixed;inset:0;z-index:8000;background:#0b1220;color:#e8edf6;font-family:"Inter",-apple-system,sans-serif;display:grid;grid-template-rows:auto 1fr auto;padding:calc(env(safe-area-inset-top,0px) + 16px) 20px calc(env(safe-area-inset-bottom,0px) + 20px);overflow:hidden;transition:opacity .55s ease}
+#ak-intro.out{opacity:0;pointer-events:none}
+#ak-intro[hidden]{display:none!important}
+#ak-intro .ak-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11.5px;letter-spacing:.08em;color:#7686a3}
+#ak-intro .ak-skip{appearance:none;background:transparent;border:1px solid #2d3f66;color:#e8edf6;font:600 13px/1 "Inter",sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:8px 13px;border-radius:6px;cursor:pointer;white-space:nowrap}
+#ak-intro .ak-skip:hover{border-color:#6ea8ff}
+#ak-intro .ak-stage{position:relative;align-self:center;width:100%;max-width:1000px;margin:0 auto;height:230px}
+#ak-intro .ak-belt{position:absolute;left:0;right:0;top:150px;height:10px;border-radius:5px;background:repeating-linear-gradient(90deg,#16233f 0 18px,#243352 18px 22px)}
+#ak-intro .ak-belt.run{animation:akbelt .6s linear infinite}
+@keyframes akbelt{to{background-position:22px 0}}
+#ak-intro .ak-gate{position:absolute;top:34px;width:84px;margin-left:-42px;height:132px;display:grid;justify-items:center;align-content:start;gap:8px}
+#ak-intro .ak-gate .ak-flag{font:700 15px/1 "JetBrains Mono",monospace;letter-spacing:.08em;color:#aab6cd}
+#ak-intro .ak-gate .ak-lamp{width:14px;height:14px;border-radius:50%;background:#243352;transition:background .15s,box-shadow .15s}
+#ak-intro .ak-gate .ak-arch{width:84px;height:84px;border:2px solid #2d3f66;border-bottom:0;border-radius:6px 6px 0 0}
+#ak-intro .ak-gate.ok .ak-lamp{background:#3fb950;box-shadow:0 0 14px 3px rgba(63,185,80,.55)}
+#ak-intro .ak-gate.ok .ak-arch{border-color:#3fb950}
+#ak-intro .ak-gate.no .ak-lamp{background:#f85149;box-shadow:0 0 16px 4px rgba(248,81,73,.6)}
+#ak-intro .ak-gate.no .ak-arch{border-color:#f85149}
+#ak-intro .ak-gate .ak-note{position:absolute;top:-22px;font:600 10.5px/1 "JetBrains Mono",monospace;letter-spacing:.08em;color:#3fb950;opacity:0;transition:opacity .15s;white-space:nowrap}
+#ak-intro .ak-gate.ok:not(.no) .ak-note{opacity:1}
+#ak-intro .ak-crate{position:absolute;top:106px;width:74px;height:44px;margin-left:-37px;border-radius:5px;background:#16233f;border:1.5px solid #6ea8ff;display:grid;place-items:center;text-align:center;font:600 9.5px/1.15 "JetBrains Mono",monospace;letter-spacing:.03em;color:#aab6cd;padding:3px;will-change:left}
+#ak-intro .ak-crate.bad{border-color:#f5a524;color:#f5a524}
+#ak-intro .ak-crate.stopped{border-color:#f85149;color:#f85149}
+#ak-intro .ak-stamp{position:absolute;top:176px;transform:translateX(-50%) rotate(-4deg) scale(1.4);opacity:0;font:800 12.5px/1 "JetBrains Mono",monospace;letter-spacing:.12em;color:#f85149;border:2px solid #f85149;padding:6px 9px;border-radius:4px;white-space:nowrap;transition:opacity .2s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+#ak-intro .ak-stamp.on{opacity:1;transform:translateX(-50%) rotate(-4deg) scale(1)}
+#ak-intro .ak-copy{display:grid;gap:14px;max-width:760px;margin:0 auto;width:100%;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+#ak-intro.done .ak-copy{opacity:1;transform:none}
+#ak-intro .ak-copy h2{font:800 clamp(28px,4.6vw,48px)/1.08 "Inter",sans-serif;letter-spacing:-.02em;color:#e8edf6;margin:0;text-wrap:balance}
+#ak-intro .ak-copy h2 span{color:#f5a524}
+#ak-intro .ak-copy p{font:400 clamp(14px,1.7vw,16px)/1.6 "Inter",sans-serif;color:#aab6cd;margin:0}
+#ak-intro .ak-go{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+#ak-intro .ak-enter{appearance:none;border:0;background:#f5a524;color:#0b1220;font:700 16px/1 "Inter",sans-serif;padding:13px 20px;border-radius:8px;cursor:pointer}
+#ak-intro .ak-enter:hover{background:#ffb84a}
+#ak-intro .ak-fine{font:500 11px/1.4 "JetBrains Mono",monospace;color:#5a6a8c}
+#ak-intro .ak-skip:focus-visible,#ak-intro .ak-enter:focus-visible{outline:2px solid #6ea8ff;outline-offset:3px}
+body.ak-open{overflow:hidden}
+@media (max-width:560px){#ak-intro .ak-gate{width:58px;margin-left:-29px}#ak-intro .ak-gate .ak-arch{width:58px}#ak-intro .ak-crate{width:58px;margin-left:-29px;font-size:8px}#ak-intro .ak-stamp{font-size:10px}}
+@media (prefers-reduced-motion: reduce){#ak-intro,#ak-intro .ak-copy{transition:none}#ak-intro .ak-belt.run{animation:none}}
+</style>
+<div id="ak-intro" role="dialog" aria-modal="true" aria-label="AUKUS Export-Control Navigator introduction" hidden>
+  <div class="ak-top"><span>AUKUS · DEFENCE TRADE CHECKPOINT · ILLUSTRATIVE</span><button class="ak-skip" id="akSkip" type="button">Skip intro</button></div>
+  <div class="ak-stage" id="akStage" aria-hidden="true">
+    <div class="ak-belt" id="akBelt"></div>
+    <div class="ak-gate" style="left:24%" data-g="0"><span class="ak-note">LICENCE-FREE</span><span class="ak-flag">AU</span><span class="ak-lamp"></span><span class="ak-arch"></span></div>
+    <div class="ak-gate" style="left:50%" data-g="1"><span class="ak-note">LICENCE-FREE</span><span class="ak-flag">UK</span><span class="ak-lamp"></span><span class="ak-arch"></span></div>
+    <div class="ak-gate" style="left:76%" data-g="2"><span class="ak-note">LICENCE-FREE</span><span class="ak-flag">US</span><span class="ak-lamp"></span><span class="ak-arch"></span></div>
+    <div class="ak-stamp" id="akStamp" style="left:24%">EXCLUDED TECHNOLOGY</div>
+  </div>
+  <div class="ak-copy">
+    <h2>Most AUKUS defence trade now moves freely. <span>The rest is where suppliers get stuck.</span></h2>
+    <p>Since September 2024 most trade between Australia, the UK and the US needs no special licence. Items on the Excluded Technologies List still do, and telling the two apart takes expertise most small suppliers don't have.</p>
+    <div class="ak-go"><button class="ak-enter" id="akEnter" type="button">Enter the Navigator →</button><span class="ak-fine">Illustrative animation · not legal advice</span></div>
+  </div>
+</div>
+<script>
+(function(){
+  var el=document.getElementById('ak-intro'); if(!el) return;
+  var internal=false;
+  try{ internal=sessionStorage.getItem('ak-internal')==='1'; sessionStorage.removeItem('ak-internal'); }catch(e){}
+  try{ var r=document.referrer; if(r && /\/(index|navigator|cases|brief|verify|sources|about)\.html/.test(r)) internal=true; }catch(e){}
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage=document.getElementById('akStage'), belt=document.getElementById('akBelt'), stamp=document.getElementById('akStamp');
+  var gates=[].slice.call(el.querySelectorAll('.ak-gate')), GX=[24,50,76];
+  var CR=[{t:'SONAR<br>ARRAY',d:0},{t:'NAV<br>UNIT',d:650},{t:'ANTI-<br>TAMPER',d:1300,bad:true},{t:'TECH<br>DATA',d:1950}];
+  var raf=null, t0=0, timers=[], crates=[];
+  function flash(g){if(gates[g].classList.contains('no'))return;gates[g].classList.add('ok');timers.push(setTimeout(function(){if(!gates[g].classList.contains('no'))gates[g].classList.remove('ok');},380));}
+  function build(){
+    crates.forEach(function(c){c.el.remove();}); crates=[];
+    gates.forEach(function(g){g.classList.remove('ok','no');}); stamp.classList.remove('on');
+    CR.forEach(function(c){var d=document.createElement('div');d.className='ak-crate'+(c.bad?' bad':'');d.innerHTML=c.t;d.style.left='-8%';stage.appendChild(d);crates.push({el:d,d:c.d,bad:c.bad,x:-8,passed:[false,false,false],stopped:false});});
+  }
+  function frame(t){
+    if(!t0)t0=t; var el2=t-t0;
+    crates.forEach(function(c){
+      if(c.stopped) return;
+      var p=(el2-c.d)/2600; if(p<0) return;
+      var x=-8+p*118;
+      if(c.bad && x>=GX[0]-7){x=GX[0]-7;c.stopped=true;c.el.classList.add('stopped');gates[0].classList.remove('ok');gates[0].classList.add('no');stamp.classList.add('on');}
+      c.x=x;c.el.style.left=x+'%';
+      GX.forEach(function(g,i){if(!c.bad&&!c.passed[i]&&x>=g){c.passed[i]=true;flash(i);}});
+    });
+    if(el2<4700) raf=requestAnimationFrame(frame); else belt.classList.remove('run');
+  }
+  function finalFrame(){
+    build(); crates.forEach(function(c,i){var x=c.bad?GX[0]-7:[88,64,0,36][i]; c.el.style.left=x+'%'; if(c.bad)c.el.classList.add('stopped');});
+    gates[0].classList.add('no'); stamp.classList.add('on'); el.classList.add('done');
+  }
+  function open(){
+    el.hidden=false; document.body.classList.add('ak-open'); el.classList.remove('out','done');
+    if(reduce){finalFrame(); document.getElementById('akEnter').focus({preventScroll:true}); return;}
+    build(); belt.classList.add('run'); t0=0; raf=requestAnimationFrame(frame);
+    timers.push(setTimeout(function(){el.classList.add('done');document.getElementById('akEnter').focus({preventScroll:true});},4300));
+    document.getElementById('akSkip').focus({preventScroll:true});
+  }
+  function close(){
+    timers.forEach(clearTimeout); timers=[]; cancelAnimationFrame(raf);
+    el.classList.add('out'); document.body.classList.remove('ak-open');
+    setTimeout(function(){el.hidden=true;},reduce?0:560);
+    try{window.scrollTo(0,0);}catch(e){}
+  }
+  document.getElementById('akSkip').addEventListener('click',close);
+  document.getElementById('akEnter').addEventListener('click',close);
+  el.addEventListener('keydown',function(e){if(e.key==='Escape')close();if(e.key==='Tab'){e.preventDefault();var a=document.getElementById('akSkip'),b=document.getElementById('akEnter');(document.activeElement===a?b:a).focus();}});
+  if(!internal) open();
+})();
+</script>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 16h26M16 3v26" stroke="currentColor" stroke-width="1"/><path d="M16 3a13 13 0 0 1 0 26" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 3a13 13 0 0 0 0 26" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span><strong>AUKUS</strong> Export-Control Navigator</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html" class="active">Home</a>
+      <a href="navigator.html">Navigator</a>
+      <a href="cases.html">Case bank</a>
+      <a href="brief.html">Policy brief</a>
+      <a href="verify.html">Verify</a>
+      <a href="sources.html">Sources</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section id="top" class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="radar " aria-hidden="true"><div class="radar-ring r1"></div><div class="radar-ring r2"></div><div class="radar-ring r3"></div><div class="radar-sweep"></div><div class="radar-blip"></div><div class="radar-cross"></div></div>
+  <div class="sub-fleet" aria-hidden="true">
+      <div class="submarine s1"><svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10,40 Q10,20 40,18 L150,18 Q185,18 192,32 Q185,46 150,46 L40,46 Q10,44 10,40 Z" fill="currentColor"/>
+      <rect class="periscope" x="92" y="2" width="9" height="18" rx="2" fill="currentColor"/>
+      <rect x="68" y="29" width="7" height="10" fill="#0b1220"/>
+      <rect x="82" y="29" width="7" height="10" fill="#0b1220"/>
+      <circle cx="178" cy="32" r="3" fill="#0b1220"/>
+    </svg></div>
+      <div class="submarine s2"><svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10,40 Q10,20 40,18 L150,18 Q185,18 192,32 Q185,46 150,46 L40,46 Q10,44 10,40 Z" fill="currentColor"/>
+      <rect class="periscope" x="92" y="2" width="9" height="18" rx="2" fill="currentColor"/>
+      <rect x="68" y="29" width="7" height="10" fill="#0b1220"/>
+      <rect x="82" y="29" width="7" height="10" fill="#0b1220"/>
+      <circle cx="178" cy="32" r="3" fill="#0b1220"/>
+    </svg></div>
+      <div class="submarine s3"><svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10,40 Q10,20 40,18 L150,18 Q185,18 192,32 Q185,46 150,46 L40,46 Q10,44 10,40 Z" fill="currentColor"/>
+      <rect class="periscope" x="92" y="2" width="9" height="18" rx="2" fill="currentColor"/>
+      <rect x="68" y="29" width="7" height="10" fill="#0b1220"/>
+      <rect x="82" y="29" width="7" height="10" fill="#0b1220"/>
+      <circle cx="178" cy="32" r="3" fill="#0b1220"/>
+    </svg></div>
+    </div>
+  <div class="wrap hero-inner">
+    <div class="hero-eyebrow">Policy &middot; Product &middot; Compliance triage</div>
+    <h1>A clearer path through<br/><span class="accent">AUKUS export controls.</span></h1>
+    <p class="hero-lede">Since 1 September 2024, Australia, the UK and the US let most defence trade between them happen <strong>without a special licence</strong> &mdash; a genuine structural reform for AUKUS. But roughly <strong>30% of technology remains excluded</strong>, and working out which category a given item falls into takes real expertise most small suppliers don&rsquo;t have. This site is a free, cited tool that helps close that gap &mdash; built for suppliers, policymakers, and anyone who wants to understand how AUKUS actually works in practice.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="navigator.html">Launch the Navigator</a>
+      <a class="btn btn-ghost" href="brief.html">Read the policy brief</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong>70&ndash;80%</strong><span>of US&ndash;Australia defence trade, by regime (govt &amp; USSC est.)</span></div>
+      <div><strong>~30%</strong><span>remains on the Excluded Technologies List</span></div>
+      <div><strong>700+</strong><span>AU/UK Authorised Users enrolled</span></div>
+      <div><strong>18</strong><span>illustrative triage cases in the case bank</span></div>
+    </div>
+  </div>
+  <div class="hero-disclaimer">A research aid built from verifiable public sources &mdash; <strong>not legal advice</strong>. Always confirm classification and authorisation with Defence Export Controls / DDTC or a qualified professional.</div>
+</section>
+
+<!-- ====== MISSION, IN PLAIN ENGLISH ====== -->
+<section class="section mission">
+  <div class="wrap">
+    <div class="section-eyebrow">The mission</div>
+    <h2 class="section-h">Why this exists.</h2>
+    <p class="mission-lead">AUKUS is a trilateral agreement between Australia, the United Kingdom and the United States to cooperate more closely on defence technology. In September 2024, that cooperation took a significant step forward: most defence trade between the three countries <strong>no longer requires a special export licence</strong>. This is a genuine structural reform &mdash; it reduces friction across the alliance and helps capability reach the people who need it, faster.</p>
+    <p class="mission-lead">The reform is not universal, however. A list of especially sensitive technologies &mdash; the <strong>Excluded Technologies List (ETL)</strong> &mdash; remains tightly controlled, and determining whether a given item falls within it takes specialist knowledge. Large prime contractors &mdash; the head contractors that hold the major government contracts and manage the supply chain beneath them &mdash; generally have dedicated compliance teams for this. Small and mid-sized Australian suppliers, who make up a significant share of the country&rsquo;s defence industrial base, generally do not. A misjudgement in either direction carries real consequences: a company may decline business it was in fact entitled to pursue, or inadvertently breach the law. This tool exists specifically to help Australian suppliers get that judgement right, even though the underlying reforms apply across all three AUKUS partners.</p>
+    <div class="mission-grid">
+      <div class="mission-card public">
+        <h3>For the general public</h3>
+        <p>Defence trade rules aren&rsquo;t just paperwork &mdash; they&rsquo;re one of the guardrails on how sensitive technology and taxpayer-funded defence dollars move between countries. A more literate supplier base means fewer accidental breaches and a stronger, more trustworthy AUKUS partnership overall.</p>
+      </div>
+      <div class="mission-card industry">
+        <h3>For suppliers &amp; industry</h3>
+        <p>If you run or work at a small or mid-sized Australian defence supplier, this tool turns a vague worry ("can I even ship this?") into a structured answer, with the sources to back it up and a clear list of what to check next.</p>
+      </div>
+      <div class="mission-card gov">
+        <h3>For primes, government &amp; policymakers</h3>
+        <p>Every supplier who misreads the rules is friction in the supply chain. A more export-control-literate ecosystem means faster, cleaner onboarding for primes and a stronger case that AUKUS Pillar II can actually deliver at speed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHO THIS AFFECTS ====== -->
+<section class="section problem">
+  <div class="wrap">
+    <h2 class="section-h">The gap that remains.</h2>
+    <div class="two-col">
+      <p>The reforms are genuine. Australia&rsquo;s <em>Defence Trade Controls Amendment Act 2024</em> and the US ITAR <strong>&sect;126.7</strong> exemption <span class="glossary-note" title="The § symbol just means &quot;Section&quot; — it's the standard way legal documents refer to a numbered section of a regulation. ITAR §126.7 = Section 126.7 of the International Traffic in Arms Regulations."><strong>§</strong> = &ldquo;Section&rdquo;</span> (interim final rule 20 Aug 2024; final rule 30 Dec 2025) removed most permit requirements for transfers among AUKUS partners. The Bureau of Industry and Security estimates <strong>about 80% of the value</strong> of existing US&ndash;Australia commercial defence trade is eligible for the exemption.</p>
+      <p>But the United States Studies Centre finds the remaining ~30% &mdash; the Excluded Technologies List &mdash; is the hard part: &ldquo;<em>small and medium-sized companies who lack the in-house expertise or financial capital to manage these compliance requirements are disincentivised from working with the US defence ecosystem.</em>&rdquo; That is exactly the tier feeding Australia&rsquo;s prime contractors and the wider defence supply chain.</p>
+    </div>
+    <div class="stake-grid">
+      <div class="stake-card"><h4>CEO / Board</h4><p>Sovereign supply-chain scaling is a board-level AUKUS Pillar II priority. De-risking supplier onboarding is strategic, not administrative.</p></div>
+      <div class="stake-card"><h4>COO / Ops</h4><p>Every supplier who mis-reads the ETL either over-restricts (lost revenue) or under-restricts (a compliance breach). This reduces both failure modes.</p></div>
+      <div class="stake-card"><h4>Investor</h4><p>Faster, cleaner supplier onboarding means faster programme throughput and better capital efficiency on defence contracts.</p></div>
+      <div class="stake-card"><h4>General public</h4><p>Plain-English transparency about what can and can&rsquo;t be freely traded is a small but real guardrail on how defence dollars and technology flow.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHERE TO GO NEXT ====== -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Continue exploring</div>
+    <h2 class="section-h">Where to go next.</h2>
+    <div class="home-cta">
+      <a class="home-cta-card" href="navigator.html">
+        <div class="cta-eyebrow">Tool</div>
+        <h3>Run the Navigator</h3>
+        <p>Describe an item and get a cited, preliminary triage &mdash; pathway, decision trail, evidence checklist, and where the tool&rsquo;s judgement ends.</p>
+        <span class="cta-arrow">Open the Navigator &rarr;</span>
+      </a>
+      <a class="home-cta-card" href="cases.html">
+        <div class="cta-eyebrow">Examples</div>
+        <h3>Browse the case bank</h3>
+        <p>18 realistic, fictional scenarios showing how the engine behaves &mdash; click any case for a plain-English explanation.</p>
+        <span class="cta-arrow">See the cases &rarr;</span>
+      </a>
+      <a class="home-cta-card" href="brief.html">
+        <div class="cta-eyebrow">Policy</div>
+        <h3>Read the policy brief</h3>
+        <p>A short brief on the literacy gap, who it affects, and why a navigator tool helps.</p>
+        <span class="cta-arrow">Read the brief &rarr;</span>
+      </a>
+      <a class="home-cta-card" href="sources.html">
+        <div class="cta-eyebrow">Evidence</div>
+        <h3>Check the sources</h3>
+        <p>Every claim on this site traces to a primary source, with a live, regularly re-verified check.</p>
+        <span class="cta-arrow">View sources &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>&copy; 2026 Ari U &middot; Canberra, Australia</div>
+    <div class="footer-links">
+      <a href="navigator.html">Navigator</a>
+      <a href="brief.html">Brief</a>
+      <a href="sources.html">Sources</a>
+    </div>
+    <div>Research aid &mdash; not legal advice.</div>
+  </div>
+</footer>
+<script src="portfolio.js" data-self="XXF3dbYBYyyUxHZ7MCJNAV" data-nav=".topnav" data-rename="About=>About the project"></script>
+<script src="app.js"></script>
+
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

@@ -1,0 +1,353 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Assurance Gap</title>
+<style>
+/* Layout: sticky tab bar over a single 1180px column; sections swap in place. Dark is the native look, light mirrors it. */
+:root{--bg:#f4f7fb;--panel:#ffffff;--panel2:#eaf0f8;--line:#cdd8e6;--txt:#0d1a2c;--mut:#4a5b74;--teal:#0e8f86;--blue:#2f6fd6;--amber:#a86a00;--pink:#b0479f;--green:#178a5f;--link:#1f5fc2;--hdr:#f4f7fbee;--scrim:rgba(13,26,44,.55);--modal1:#ffffff;--modal2:#eaf0f8;--modalline:#b9c8dc;--edge:#5d86b866;--glow1:#d9e8f7;--glow2:#eef4fa;--node:#ffffffef;--ctatxt:#ffffff;--shadow:#0d1a2c22;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08111f;--panel:#101d31;--panel2:#0b1728;--line:#263852;--txt:#eaf1ff;--mut:#a9b8d1;--teal:#30d5c8;--blue:#70a8ff;--amber:#ffca68;--pink:#e685d7;--green:#49e1aa;--link:#9fc8ff;--hdr:#08111fee;--scrim:rgba(3,8,16,.84);--modal1:#142743;--modal2:#091525;--modalline:#3b5475;--edge:#5d86b855;--glow1:#17375a;--glow2:#0b1a2d;--node:#101d31ef;--ctatxt:#06131c;--shadow:#000a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#08111f;--panel:#101d31;--panel2:#0b1728;--line:#263852;--txt:#eaf1ff;--mut:#a9b8d1;--teal:#30d5c8;--blue:#70a8ff;--amber:#ffca68;--pink:#e685d7;--green:#49e1aa;--link:#9fc8ff;--hdr:#08111fee;--scrim:rgba(3,8,16,.84);--modal1:#142743;--modal2:#091525;--modalline:#3b5475;--edge:#5d86b855;--glow1:#17375a;--glow2:#0b1a2d;--node:#101d31ef;--ctatxt:#06131c;--shadow:#000a;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--hdr);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar,main{max-width:1180px;margin:auto;padding:16px 22px}.bar{display:flex;gap:18px;align-items:center;justify-content:space-between}
+.brand{font-weight:800}.brand i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--teal);margin-right:8px;box-shadow:0 0 14px var(--teal)}
+nav{display:flex;flex-wrap:wrap;gap:6px}
+button{border:1px solid transparent;background:none;color:var(--mut);border-radius:8px;padding:7px 9px;cursor:pointer;font:inherit;font-size:.88rem}
+button:hover,button.active{color:var(--txt);background:var(--panel);border-color:var(--line)}
+button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+section{display:none}section.active{display:block}
+h1{font-size:clamp(1.9rem,4vw,3.2rem);line-height:1.12;margin:28px 0 10px;text-wrap:balance}h2{margin:0 0 10px;font-size:1.25rem;text-wrap:balance}p{margin:8px 0}
+.lead,.muted,.foot{color:var(--mut)}.lead{max-width:70ch}
+.grid{display:grid;gap:15px;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}.grid>*{min-width:0}
+.panel{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:18px;margin:15px 0}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 9px;margin:3px;color:var(--mut);font-size:.8rem}
+.ok{color:var(--green)}.warn{color:var(--amber)}
+.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:640px}th,td{padding:12px;border:1px solid var(--line);vertical-align:top;text-align:left}th{color:var(--mut);background:var(--panel2)}
+a{color:var(--link)}.fn{font-size:.78rem;vertical-align:super}
+.scale{display:grid;gap:8px}.level{padding:10px;border-left:4px solid var(--teal);background:var(--panel2)}.sources li{margin-bottom:10px}
+.cta{background:var(--teal);color:var(--ctatxt);border:0;font-weight:750;padding:10px 15px}.cta:hover{background:var(--teal);color:var(--ctatxt);filter:brightness(1.08)}
+.dial{display:grid;grid-template-columns:220px 1fr;gap:28px;align-items:center}.dial input{width:190px;accent-color:var(--teal)}.dial-value{font-size:3rem;font-weight:800;color:var(--teal);text-align:center;font-variant-numeric:tabular-nums}
+.intro-modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:22px;background:var(--scrim);backdrop-filter:blur(12px);transition:opacity .28s ease,visibility .28s ease}.intro-modal.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.modal-card{position:relative;width:min(860px,100%);max-height:calc(100vh - 44px);overflow:auto;padding:28px;border:1px solid var(--modalline);border-radius:20px;background:linear-gradient(150deg,var(--modal1),var(--modal2));box-shadow:0 24px 70px var(--shadow)}
+.modal-card h1{margin-top:8px;padding-right:110px}.modal-skip{position:absolute;right:16px;top:14px;color:var(--mut);border-color:var(--line)}.modal-skip:hover{color:var(--txt)}
+.network-wrap{position:relative;min-height:630px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:radial-gradient(circle at 48% 48%,var(--glow1) 0,var(--glow2) 43%,var(--bg) 100%)}
+.network-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.network-lines g{stroke:var(--edge)}
+.node{position:absolute;transform:translate(-50%,-50%);width:132px;min-height:56px;padding:8px 9px;border:1px solid var(--line);border-radius:12px;background:var(--node);color:var(--txt);font-size:.78rem;line-height:1.22;text-align:center;cursor:pointer;box-shadow:0 8px 20px var(--shadow);transition:.18s}
+.node:hover,.node.selected{border-color:var(--teal);background:var(--node);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 18%,transparent),0 12px 28px var(--shadow);transform:translate(-50%,-50%) scale(1.05)}
+.node small{display:block;color:var(--mut);margin-top:3px;font-size:.67rem}
+.node.platform{border-color:color-mix(in srgb,var(--teal) 55%,transparent)}.node.assurance{border-color:color-mix(in srgb,var(--blue) 60%,transparent)}.node.industry{border-color:color-mix(in srgb,var(--pink) 60%,transparent)}.node.policy{border-color:color-mix(in srgb,var(--amber) 60%,transparent)}.node.operator{border-color:color-mix(in srgb,var(--green) 60%,transparent)}
+.network-info{margin-top:14px;min-height:130px}.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.legend span{font-size:.78rem;border:1px solid var(--line);border-radius:20px;padding:3px 8px}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.network-note{font-size:.85rem;color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:760px){.bar,main{padding:14px 16px}.bar{align-items:flex-start;flex-direction:column}.dial{grid-template-columns:1fr}.dial input{width:100%}.modal-card{padding:22px 18px}.modal-card h1{padding-right:0;margin-top:34px}.network-wrap{min-height:0;padding:6px}.node{position:relative!important;left:auto!important;top:auto!important;transform:none!important;display:inline-block;vertical-align:top;margin:6px;width:calc(50% - 16px);min-height:72px;font-size:.68rem}.node:hover,.node.selected{transform:scale(1.02)!important}.network-lines{display:none}}
+
+/* header: brand + portfolio links on top, section tabs below */
+.bar{flex-wrap:wrap}.bar .top{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pf-links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pf-links button{border-color:var(--line)}
+.pf-links .edit-btn{color:var(--teal);border-color:color-mix(in srgb,var(--teal) 55%,transparent)}
+nav.tabs{width:100%}
+/* shared dialog shell */
+.dlg{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:var(--scrim);backdrop-filter:blur(8px)}
+[hidden]{display:none!important}
+.dlg-card{width:min(600px,100%);max-height:100%;overflow:auto;background:linear-gradient(150deg,var(--modal1),var(--modal2));border:1px solid var(--modalline);border-radius:16px;box-shadow:0 24px 70px var(--shadow);display:grid}
+.dlg-card.wide{width:min(860px,100%)}
+.dlg-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--modal1)}
+.dlg-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.dlg-tabs button[aria-selected="true"]{color:var(--ctatxt);background:var(--teal);border-color:var(--teal)}
+.dlg-x{border-color:var(--line)}
+.dlg-body{padding:18px;display:grid;gap:12px;min-width:0}
+.dlg-body h2{margin:0;font-size:1.5rem}
+.label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.li-btn{display:inline-flex;align-items:center;gap:10px;justify-self:start;background:var(--teal);color:var(--ctatxt);text-decoration:none;font-weight:750;padding:10px 15px;border-radius:8px}
+.li-btn svg{width:18px;height:18px;fill:currentColor}
+.urlrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 .82rem/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--mut);word-break:break-all}
+.urlrow button{border-color:var(--line)}
+.pf-list{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--line)}
+.pf-list li{border-bottom:1px solid var(--line)}
+.pf-list a{display:grid;gap:2px;padding:11px 4px;text-decoration:none;color:var(--txt)}
+.pf-list a:hover b{color:var(--teal)}
+.pf-list a span{font-size:.86rem;color:var(--mut)}
+.pf-list a[aria-current] b::after{content:" · you are here";font-weight:400;font-style:italic;font-size:.8rem;color:var(--teal)}
+.pubs{margin:0;padding-left:18px;color:var(--mut)}
+body.dlg-open{overflow:hidden}
+/* editor */
+.ed-group{display:grid;gap:10px;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--panel2)}
+.ed-group h3{margin:0;font-size:1rem}
+.ed-row{display:grid;gap:10px;border-top:1px dashed var(--line);padding-top:12px}
+.ed-row:first-of-type{border-top:0;padding-top:0}
+.ed-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr))}
+.ed-grid>*{min-width:0}
+.fld{display:grid;gap:4px;font-size:.8rem;color:var(--mut)}
+.fld input,.fld textarea,.fld select{font:inherit;font-size:.92rem;color:var(--txt);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+.fld textarea{min-height:64px;resize:vertical}
+.fld input:focus-visible,.fld textarea:focus-visible,.fld select:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+.ed-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.ed-actions .rm{color:var(--amber);border-color:var(--line)}
+.ed-actions .add{border-color:var(--line)}
+.ed-foot{position:sticky;bottom:0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--line);background:var(--modal2)}
+.ed-status{margin-right:auto;font-size:.85rem;color:var(--mut)}
+.ed-status.err{color:var(--amber)}
+.ed-confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.85rem;color:var(--amber)}
+
+</style>
+<script type="application/json" id="projectConfig">
+{
+  "lastUpdated": "2026-09-25",
+  "updateNote": "Scores are analytical judgements based on public information—not official classifications.",
+  "platforms": [
+    {
+      "name": "Ghost Shark",
+      "maker": "Anduril XL-AUV",
+      "status": "A$1.7 billion acquisition program announced in September 2025 for Australian-designed and built vehicles.",
+      "statusFn": [
+        4
+      ],
+      "arl": "A3",
+      "debt": "Medium",
+      "ear": 3.0,
+      "evidence": "Acquisition and production milestones public; detailed independent assurance evidence not publicly confirmed.",
+      "evidenceFn": [
+        5
+      ]
+    },
+    {
+      "name": "MQ-28 Ghost Bat",
+      "maker": "Boeing Defence Australia",
+      "status": "Public reporting describes cooperative capability demonstrations with RAAF crewed aircraft in 2025.",
+      "statusFn": [
+        6
+      ],
+      "arl": "A3",
+      "debt": "Medium",
+      "ear": 2.5,
+      "evidence": "Operational demonstrations public; detailed safety-case and certification evidence not public.",
+      "evidenceFn": [
+        1
+      ]
+    },
+    {
+      "name": "Bluebottle",
+      "maker": "Ocius USV",
+      "status": "ADF received initial vessels in 2023; earlier reporting notes autonomous-operation approval in Australia’s EEZ.",
+      "statusFn": [
+        7
+      ],
+      "arl": "A3–A4",
+      "debt": "Low–Medium",
+      "ear": 2.0,
+      "evidence": "Domestic operational evidence public; broader export and allied-assurance documentation limited publicly.",
+      "evidenceFn": [
+        8
+      ]
+    }
+  ],
+  "caseStudies": [
+    {
+      "title": "The Assurance Gap",
+      "subtitle": "Defence autonomy · assurance & test and evaluation",
+      "url": "../assurance-gap/"
+    },
+    {
+      "title": "Tail Number Exposed",
+      "subtitle": "Business-jet flight-data privacy · aviation security",
+      "url": "../tail-number/"
+    },
+    {
+      "title": "The AUKUS Export-Control Navigator",
+      "subtitle": "Defence industry · export controls",
+      "url": "../aukus/"
+    },
+    {
+      "title": "The SAF Mandate Gap",
+      "subtitle": "Aviation · sustainable fuel policy",
+      "url": "../saf/"
+    },
+    {
+      "title": "Is the Grand Prix Worth It?",
+      "subtitle": "Economic & soft-power impact",
+      "url": "../grand-prix/"
+    },
+    {
+      "title": "The Real Selectors",
+      "subtitle": "Cricket governance · two live case studies",
+      "url": "../real-selectors/"
+    },
+    {
+      "title": "Does the Ranking Hold?",
+      "subtitle": "Rail procurement security scorecard",
+      "url": "../ranking/"
+    },
+    {
+      "title": "Companion Briefs",
+      "subtitle": "Geopolitical risk · Indo-Pacific & passive-index protocol",
+      "url": "../companion-briefs/"
+    }
+  ],
+  "about": {
+    "name": "Arpitha (Ari) Ummanath",
+    "bio": "Policy researcher and writer based in Australia, working on international security, defence and strategic policy. My portfolio is a set of independent, source-linked case studies that turn public evidence into analysis and practical recommendations.",
+    "publications": [
+      {
+        "title": "Women are integral to closing Australia’s defence workforce gap",
+        "note": "ASPI, The Strategist (solo)",
+        "url": "https://www.aspi.org.au/strategist-posts/women-are-integral-to-closing-australias-defence-workforce-gap/"
+      },
+      {
+        "title": "Voices of the Future, Vol. 2",
+        "note": "Co-authored paper on Australia’s fuel security · Girls Run The World",
+        "url": "https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf"
+      }
+    ],
+    "contactNote": "The best way to reach me is on LinkedIn.",
+    "linkedin": "https://www.linkedin.com/in/arpitha-u-62549a2ba/"
+  }
+}
+</script>
+
+<div id="introModal" class="intro-modal" role="dialog" aria-modal="true" aria-labelledby="introHeading"><div class="modal-card"><button id="skipIntro" class="modal-skip" aria-label="Skip introduction">Skip intro ×</button><h1 id="introHeading">Can you trust an autonomous system?</h1><p class="lead">Turn the dial. As capability moves from prototype to deployment, the evidence needed to trust it must move too.</p><div class="panel dial"><div><input id="riskDial" type="range" min="1" max="5" value="3" aria-label="Assurance level"><div class="dial-value" id="dialValue">A3</div></div><div><h2 id="dialTitle">A3 — Structured T&E underway</h2><p id="dialText">Formal test planning and early human-machine teaming evidence exist, but important limits and independent assurance may still be developing.</p><p class="muted">This is an explainer, not a platform rating. Explore the tracker for public evidence.</p><button class="cta" id="enterProject">Enter the project</button></div></div></div></div>
+<header><div class="bar"><div class="top"><div class="brand"><i></i>The Assurance Gap</div><div class="pf-links"><button type="button" class="edit-btn" id="editBtn" hidden>Edit page</button><button type="button" data-pf="work">Case studies</button><button type="button" data-pf="about">About &amp; contact</button></div></div><nav class="tabs" aria-label="Sections"><button class="active" data-tab="home">Home</button><button data-tab="tracker">Tracker + Rubric</button><button data-tab="brief">Brief</button><button data-tab="why">Why it matters</button><button data-tab="network">Capability network</button><button data-tab="fit">Employer fit</button><button data-tab="sources">Sources</button></nav></div></header><main>
+<section id="home" class="active"><p class="foot" id="lastUpdated">Last updated: 25 September 2026 · Public evidence tracker</p><h1>Fielding AI-enabled autonomous systems faster than they can be verified.</h1><p class="lead">A plain-language, public evidence tracker on Australia’s autonomous defence systems and the assurance work needed to make them safer, more trusted, and easier to integrate or export.</p><div class="panel"><span class="tag">Public evidence only</span><span class="tag">Updated manually</span><span class="tag">Australia-focused</span><h2>What is the assurance gap?</h2><p>Autonomous platforms can progress from prototype to operational use quickly. <strong>Assurance</strong> means the evidence, testing, safety arguments, governance, and independent review used to show a system works within known limits. The gap is a practical pacing challenge: technology, operations, training, standards, and public evidence do not always mature at the same speed.<sup><a href="#fn1" class="fn">1</a></sup></p></div><div class="grid"><div class="panel"><h2>Definitions</h2><p><strong>Autonomous system:</strong> a machine that performs part of a mission without continuous direct human control.</p><p><strong>AI-enabled:</strong> using AI or machine learning to support sensing, planning, classification, or decisions.</p><p><strong>T&E:</strong> test and evaluation—the process of checking whether a system performs safely and as intended.</p><p><strong>ARL/EAR:</strong> Assurance Readiness Level and Export Assurance Readiness. ARL describes verification maturity; EAR describes readiness for export or co-development.</p></div><div class="panel"><h2>How to use it</h2><p>Read the Tracker + Rubric for milestones and the assurance scale, the Brief for stakeholder implications, the Capability Network for relationships, and Sources for the evidence base.</p></div></div></section>
+<section id="tracker"><h1>Tracker + Rubric</h1><div class="panel"><h2>Assurance Readiness Rubric</h2><div class="scale"><div class="level"><strong>A1 — Concept:</strong> Initial design or prototype; no structured safety case.</div><div class="level"><strong>A2 — Early testing:</strong> Component tests and initial safety arguments.</div><div class="level"><strong>A3 — Structured T&E:</strong> Formal test plans and early human-machine teaming trials.</div><div class="level"><strong>A4 — Representative testing:</strong> Realistic testing, performance boundaries, and update controls.</div><div class="level"><strong>A5 — Assurance-mature:</strong> Independent acceptance, lifecycle monitoring, controlled updates, and export-ready evidence.</div></div><p class="foot"><strong>Assurance debt:</strong> High at A1–A2, Medium at A3, Low at A4–A5.<sup><a href="#fn2" class="fn">2</a></sup></p></div><div class="panel"><h2>Export Assurance Readiness</h2><p>Score 1–5 across public T&E evidence, independent validation, partner-standard alignment, governance transparency, and export precedent. <strong>1.0–2.4:</strong> Emerging; <strong>2.5–3.9:</strong> Developing; <strong>4.0–5.0:</strong> Mature.<sup><a href="#fn3" class="fn">3</a></sup></p></div><div class="panel"><h2>Assurance Maturity Tracker</h2><p class="lead" id="trackerNote"></p><div class="tablewrap"><table><thead><tr><th>Platform</th><th>Public status</th><th>Assurance readiness</th><th>Export readiness</th><th>Public evidence</th></tr></thead><tbody id="trackerBody"></tbody></table></div></div></section>
+<section id="brief"><h1>Brief: A constructive assurance agenda</h1><div class="panel"><h2>Executive summary</h2><p>Australia is accelerating autonomous and AI-enabled defence capabilities. Testing, evidence, governance, training, and independent review must keep pace.<sup><a href="#fn9" class="fn">9</a></sup></p></div><div class="grid"><div class="panel"><h2>For NOVA Systems</h2><p>NOVA’s T&E Centre of Excellence and advanced practitioner training provide a platform for practical autonomy assurance.<sup><a href="#fn10" class="fn">10</a></sup></p></div><div class="panel"><h2>For BAE and Hunter</h2><p>Hunter is a long-life naval program, making early assurance planning useful for future autonomous and uncrewed integration.<sup><a href="#fn11" class="fn">11</a></sup></p></div><div class="panel"><h2>For AI-autonomy firms</h2><p>Assurance can support integration, allied collaboration, customer confidence, and export review by showing what has and has not been tested.<sup><a href="#fn12" class="fn">12</a></sup></p></div><div class="panel"><h2>Recommendations</h2><ol><li>Use a common ARL/EAR vocabulary.</li><li>Separate public summaries from protected evidence.</li><li>Test human-machine handovers and failure modes early.</li><li>Control AI updates before systems enter service.</li></ol></div></div></section>
+<section id="why"><h1>Why it matters</h1><div class="panel"><h2>For the public</h2><p>Defence systems are publicly funded and influence safety, accountability, and Australia’s international relationships. Clear assurance explains how decision-makers manage risk and responsibility.<sup><a href="#fn13" class="fn">13</a></sup></p><p>This project is an attempt to clarify an important issue: capability can move quickly, but trust depends on the quality of the evidence, testing, accountability, and communication around it.</p></div><div class="panel"><h2>For sovereign capability and AUKUS</h2><p>AUKUS Pillar II includes AI, autonomy, and undersea systems. Shared confidence in test, evaluation, security, and export-control processes supports meaningful collaboration.<sup><a href="#fn14" class="fn">14</a></sup></p></div><div class="panel"><h2>For ethics and law</h2><p>Responsible AI in defence requires lawful use, human responsibility, appropriate controls, and evidence that systems operate within defined limits.<sup><a href="#fn15" class="fn">15</a></sup></p></div></section>
+<section id="network"><h1>Australian Autonomy & Assurance Network</h1><p class="lead">A capability network, rather than a geographical map. Select a node to see how platforms, organisations, operators, assurance functions, and policy settings connect.</p><div class="legend"><span><i style="background:var(--teal)"></i>Platforms</span><span><i style="background:var(--pink)"></i>Industry</span><span><i style="background:var(--blue)"></i>Assurance & research</span><span><i style="background:var(--green)"></i>Operators</span><span><i style="background:var(--amber)"></i>Policy & alliances</span></div><div class="network-wrap"><svg class="network-lines" viewBox="0 0 1000 630" preserveAspectRatio="none"><g stroke-width="2"><line x1="500" y1="300" x2="200" y2="140"/><line x1="500" y1="300" x2="500" y2="120"/><line x1="500" y1="300" x2="800" y2="140"/><line x1="500" y1="300" x2="190" y2="320"/><line x1="500" y1="300" x2="810" y2="320"/><line x1="500" y1="300" x2="250" y2="505"/><line x1="500" y1="300" x2="500" y2="520"/><line x1="500" y1="300" x2="760" y2="505"/></g></svg><button class="node platform selected" style="left:50%;top:48%" data-title="The assurance question" data-text="The central question is whether evidence, test coverage, governance, and independent review can keep pace with platforms moving from prototype toward operation, integration, and export." data-links="ARL rubric; EAR rubric; public T&E evidence">AI-enabled autonomous<br>defence systems<small>Capability + assurance</small></button><button class="node platform" style="left:20%;top:22%" data-title="Ghost Shark" data-text="Anduril’s Ghost Shark extra-large autonomous undersea vehicle is a useful case study because its public development, acquisition, production, and export discussion make the relationship between pace and assurance visible." data-links="Anduril; RAN; NOVA/DSTG; AUKUS & exports">Ghost Shark<small>XL-AUV platform</small></button><button class="node platform" style="left:50%;top:19%" data-title="MQ-28 Ghost Bat" data-text="The MQ-28 illustrates human-machine teaming and cooperative operations with crewed aircraft—areas where operational test evidence and clear human responsibility matter." data-links="Boeing; RAAF; T&E; human-machine teaming">MQ-28 Ghost Bat<small>Uncrewed aircraft</small></button><button class="node platform" style="left:80%;top:22%" data-title="Bluebottle" data-text="Bluebottle shows how maritime autonomy intersects with regulatory approval, operational trials, platform updates, and evidence that a system can operate safely within defined conditions." data-links="Ocius; ADF; maritime assurance; autonomy updates">Bluebottle<small>Uncrewed surface vessel</small></button><button class="node industry" style="left:19%;top:51%" data-title="Industry and integrators" data-text="Anduril-class firms, BAE Systems Australia, Boeing Defence Australia, Lockheed Martin Australia, and Thales develop, integrate, manufacture, or support complex Defence capability. Assurance affects program risk, integration, customer confidence, and export pathways." data-links="Anduril; BAE; Boeing; Lockheed Martin; Thales">Industry & primes<small>Develop • integrate • scale</small></button><button class="node assurance" style="left:81%;top:51%" data-title="Assurance and research" data-text="Independent test and evaluation, airworthiness, Defence science, operational analysis, and training create the evidence base for trustworthy autonomy. NOVA and DSTG are central examples in the Australian ecosystem." data-links="NOVA Systems; DSTG; T&E; airworthiness; training">Assurance & research<small>NOVA • DSTG • T&E</small></button><button class="node operator" style="left:25%;top:80%" data-title="Operators and users" data-text="The RAN, RAAF, and wider ADF need systems that work in realistic environments, integrate with people and existing platforms, and have understood limits, overrides, and responsibility arrangements." data-links="RAN; RAAF; ADF; human-machine teaming">Operators<small>RAN • RAAF • ADF</small></button><button class="node policy" style="left:50%;top:83%" data-title="Policy, law, and export" data-text="Defence AI policy, legal obligations, export controls, partner standards, and Australia’s AUKUS commitments shape what trustworthy deployment and international collaboration require." data-links="Defence AI policy; Article 36; export controls; AUKUS Pillar II">Policy & export<small>Law • governance • allies</small></button><button class="node policy" style="left:76%;top:80%" data-title="Trusted allied collaboration" data-text="AUKUS Pillar II and other partner relationships make shared confidence in testing, security, governance, and export arrangements strategically important—not just administrative." data-links="AUKUS Pillar II; partner trust; co-development">Allied collaboration<small>AUKUS • partners</small></button></div><div class="panel network-info" id="networkInfo"><h2>The assurance question</h2><p>The central question is whether evidence, test coverage, governance, and independent review can keep pace with platforms moving from prototype toward operation, integration, and export.</p><p class="network-note"><strong>Connections to explore:</strong> ARL rubric; EAR rubric; public T&E evidence</p></div><p class="foot">This is a public, explanatory network. It does not represent classified program architecture, contracts, command relationships, or physical locations.</p></section>
+<section id="fit"><h1>Employer fit</h1><div class="grid"><div class="panel"><h2>BAE Systems Australia</h2><p><strong>What they do:</strong> Prime contractor for the Hunter-class frigate program and naval shipbuilding.</p><p>Relevant to long-life combat-system integration, interfaces, risk management, and assurance-by-design.</p></div><div class="panel"><h2>NOVA Systems</h2><p><strong>What they do:</strong> Engineering services firm specialising in T&E, airworthiness, and assurance.</p><p>Directly relevant to independent assurance methods for autonomous and uncrewed systems.</p></div><div class="panel"><h2>Anduril-class firms</h2><p><strong>What they do:</strong> Fast-moving AI/autonomy defence companies progressing prototypes toward production and exports.</p><p>Relevant to assurance as a scaling, integration, and export enabler.</p></div><div class="panel"><h2>Lockheed Martin Australia</h2><p><strong>What they do:</strong> Defence prime active in Australian R&D, systems integration, and advanced capabilities.</p><p>Relevant to AI-enabled command-and-control, autonomy, and allied development.</p></div><div class="panel"><h2>Thales Australia</h2><p><strong>What they do:</strong> Defence technology company active in sensing, communications, maritime, and mission systems.</p><p>Relevant to trusted autonomous operations and maritime assurance.</p></div><div class="panel"><h2>DSTG</h2><p><strong>What they do:</strong> Australia’s in-house Defence science and technology organisation.</p><p>Relevant to research, experimentation, test science, and responsible AI.</p></div></div></section>
+<section id="sources"><h1>Sources</h1><div class="panel"><ol class="sources"><li id="fn1">Australian Department of Defence. “Artificial Intelligence.” 2026. <a href="https://www.defence.gov.au/about/governance/artificial-intelligence" target="_blank">link</a>.</li><li id="fn2">U.S. Department of Defense. <em>Trustworthy Autonomy: A Roadmap to Assurance.</em> 2020. <a href="https://apps.dtic.mil/sti/html/trecms/AD1131283/index.html" target="_blank">link</a>.</li><li id="fn3">U.S. Congressional Research Service. <em>AUKUS Pillar 2.</em> 2024. <a href="https://www.congress.gov/crs-product/R47599" target="_blank">link</a>.</li><li id="fn4">Minister for Defence Industry. “Equipping the Royal Australian Navy with Next Generation Autonomous Undersea Vehicles.” 2025. <a href="https://www.minister.defence.gov.au/media-releases/2025-09-10/equipping-royal-australian-navy-next-generation-autonomous-undersea-vehicles" target="_blank">link</a>.</li><li id="fn5">Minister for Defence Industry. “Ghost Shark and AUKUS.” 2025. <a href="https://www.minister.defence.gov.au/speeches/2025-10-31/ghost-shark-aukus" target="_blank">link</a>.</li><li id="fn6">The Aviationist. “Boeing and RAAF Demonstrate MQ-28A Ghost Bat.” 2025. <a href="https://theaviationist.com/2025/09/07/mq-28a-operational-demonstration/" target="_blank">link</a>.</li><li id="fn7">Minister for Defence Industry. “The First Ocius Bluebottle Uncrewed Surface Vessels for the ADF.” 2023. <a href="https://www.minister.defence.gov.au/media-releases/2023-03-06/first-ocius-bluebottle-usvs-adf" target="_blank">link</a>.</li><li id="fn8">Defence Connect. “Bluebottle USVs Green-lit for Autonomous Operation.” 2020. <a href="https://www.defenceconnect.com.au/strike-air-combat/6414-bluebottle-usvs-green-lighted-for-autonomous-operation" target="_blank">link</a>.</li><li id="fn9">Defence. “AUKUS Trials Artificial Intelligence in Robotic Vehicles.” 2024. <a href="https://www.defence.gov.au/news-events/news/2024-02-06/aukus-trials-artificial-intelligence-robotic-vehicles" target="_blank">link</a>.</li><li id="fn10">NOVA Systems. “Unlocking the True Capability of Autonomous and Uncrewed Systems.” 2022. <a href="https://www.novasystems.com/au/feature/unlocking-the-true-capability-of-autonomous-and-uncrewed-systems" target="_blank">link</a>.</li><li id="fn11">Defence. “Hunter Class Frigate.” 2026. <a href="https://www.defence.gov.au/defence-activities/projects/hunter-class-frigate" target="_blank">link</a>.</li><li id="fn12">UK Government. <em>Defence Artificial Intelligence Strategy.</em> 2022. <a href="https://www.gov.uk/government/publications/defence-artificial-intelligence-strategy/defence-artificial-intelligence-strategy" target="_blank">link</a>.</li><li id="fn13">Parliament of Australia. “Artificial Intelligence and Autonomous Weapons Related Issues.” 2024. <a href="https://www.aph.gov.au/Parliamentary_Business/Committees/Joint/Foreign_Affairs_Defence_and_Trade/DefenceAR2022-23/Inquiry_into_the_Defence_Annual_Report_2022-23/Chapter_5_-_Artificial_Intelligence_and_Autonomous_Weapons_related_issues" target="_blank">link</a>.</li><li id="fn14">U.S. Congressional Research Service. <em>AUKUS Pillar 2.</em> 2024. <a href="https://www.congress.gov/crs-product/R47599" target="_blank">link</a>.</li><li id="fn15">SIPRI. “Autonomous Weapon Systems and AI-enabled Decision Support Systems.” 2025. <a href="https://www.sipri.org/publications/2025/other-publications/autonomous-weapon-systems-and-ai-enabled-decision-support-systems-military-targeting-comparison-and" target="_blank">link</a>.</li></ol></div></section>
+</main>
+<div class="dlg" id="pfDlg" role="dialog" aria-modal="true" aria-label="Portfolio" hidden><div class="dlg-card">
+<div class="dlg-head"><div class="dlg-tabs" role="tablist"><button type="button" role="tab" data-pfv="about" aria-selected="true">About &amp; contact</button><button type="button" role="tab" data-pfv="work" aria-selected="false">Case studies</button></div><button type="button" class="dlg-x" data-close>Close ✕</button></div>
+<div class="dlg-body" data-pfp="about"><div class="label">About</div><h2 id="abName"></h2><p class="muted" id="abBio"></p><div id="abPubsWrap"><div class="label">Published work</div><ul class="pubs" id="abPubs"></ul></div><div class="label">Contact</div><p class="muted" id="abNote"></p><a class="li-btn" id="liBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect on LinkedIn</a><div class="urlrow"><span id="liUrl"></span><button type="button" id="liCopy">Copy link</button></div></div>
+<div class="dlg-body" data-pfp="work" hidden><div class="label">Portfolio</div><h2>Case studies</h2><ul class="pf-list" id="pfList"></ul></div>
+</div></div>
+<div class="dlg" id="edDlg" role="dialog" aria-modal="true" aria-label="Edit page" hidden><div class="dlg-card wide">
+<div class="dlg-head"><strong>Edit page</strong><button type="button" class="dlg-x" id="edCancelTop">Close ✕</button></div>
+<div class="dlg-body" id="edBody"></div>
+<div class="ed-foot"><span class="ed-status" id="edStatus">Changes are saved as a new version of this page.</span><span class="ed-confirm" id="edConfirm" hidden></span><button type="button" id="edCancel">Cancel</button><button type="button" class="cta" id="edSave">Save &amp; publish</button></div>
+</div></div>
+<script>
+const dialData={1:['A1 — Concept','An early idea or prototype. There is not yet a structured safety case or mature test plan.'],2:['A2 — Early testing','Components are being tested, but evidence about full behaviour and limits remains limited.'],3:['A3 — Structured T&E underway','Formal test planning and early human-machine teaming evidence exist, but important limits and independent assurance may still be developing.'],4:['A4 — Representative testing','The system is tested in realistic conditions, with clearer evidence about performance boundaries and controlled updates.'],5:['A5 — Assurance-mature','Independent assurance, lifecycle monitoring, controlled updates, and export-ready evidence are in place.']};const r=document.getElementById('riskDial');r.oninput=()=>{let x=dialData[r.value];dialValue.textContent='A'+r.value;dialTitle.textContent=x[0];dialText.textContent=x[1]};const modal=document.getElementById('introModal');function closeIntro(){modal.classList.add('is-hidden');setTimeout(()=>modal.remove(),320)}document.getElementById('enterProject').onclick=closeIntro;document.getElementById('skipIntro').onclick=closeIntro;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('introModal')&&!document.querySelector('.dlg:not([hidden])'))closeIntro()});const bs=[...document.querySelectorAll('button[data-tab]')],ss=[...document.querySelectorAll('main section')];function activate(id){bs.forEach(y=>y.classList.toggle('active',y.dataset.tab===id));ss.forEach(y=>y.classList.toggle('active',y.id===id));scrollTo({top:0,behavior:'smooth'})}bs.forEach(x=>x.onclick=()=>activate(x.dataset.tab));const info=document.getElementById('networkInfo');document.querySelectorAll('.node').forEach(n=>n.onclick=()=>{document.querySelectorAll('.node').forEach(x=>x.classList.remove('selected'));n.classList.add('selected');info.innerHTML='<h2>'+n.dataset.title+'</h2><p>'+n.dataset.text+'</p><p class="network-note"><strong>Connections to explore:</strong> '+n.dataset.links+'</p>'});
+</script>
+<script>
+(function(){
+const PRISTINE=document.body.innerHTML;
+const SKEL='<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>';
+const SELF='57ERdurfGwqQrTe6XZXzVT';
+let S=JSON.parse(document.getElementById('projectConfig').textContent);
+const $=id=>document.getElementById(id);
+const el=(tag,props,kids)=>{const e=document.createElement(tag);if(props)for(const k in props){if(k==='text')e.textContent=props[k];else if(k==='cls')e.className=props[k];else e.setAttribute(k,props[k]);}(kids||[]).forEach(c=>c&&e.append(c));return e;};
+const fn=n=>{const s=el('sup');s.append(el('a',{href:'#fn'+n,cls:'fn',text:String(n)}));return s;};
+const fns=list=>(list||[]).filter(n=>n>0).map(fn);
+const band=x=>x<2.5?'Emerging':x<4?'Developing':'Mature';
+const fmtDate=d=>{const t=new Date(d+'T00:00:00');return isNaN(t)?d:t.toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});};
+const safeUrl=u=>/^https?:\/\//i.test(u||'')?u:'#';
+
+function render(){
+  $('lastUpdated').textContent='Last updated: '+fmtDate(S.lastUpdated)+' · Public evidence tracker';
+  $('trackerNote').textContent=S.updateNote;
+  const tb=$('trackerBody');tb.replaceChildren();
+  S.platforms.forEach(p=>{
+    const low=/low/i.test(p.debt)&&!/high/i.test(p.debt);
+    tb.append(el('tr',null,[
+      el('td',null,[el('strong',{text:p.name}),el('br'),document.createTextNode(p.maker)]),
+      el('td',null,[document.createTextNode(p.status),...fns(p.statusFn)]),
+      el('td',null,[el('strong',{text:p.arl}),el('br'),el('span',{cls:low?'ok':'warn',text:'Debt: '+p.debt})]),
+      el('td',null,[el('strong',{text:Number(p.ear).toFixed(1)+' / 5'}),el('br'),document.createTextNode(band(Number(p.ear)))]),
+      el('td',null,[document.createTextNode(p.evidence),...fns(p.evidenceFn)])
+    ]));
+  });
+  const a=S.about;
+  $('abName').textContent=a.name;$('abBio').textContent=a.bio;
+  const pubs=$('abPubs');pubs.replaceChildren(...a.publications.map(p=>{const li=el('li');li.append(el('a',{href:safeUrl(p.url),target:'_blank',rel:'noopener',text:p.title}));if(p.note)li.append(document.createTextNode(' · '+p.note));return li;}));
+  $('abPubsWrap').hidden=!a.publications.length;
+  $('abNote').textContent=a.contactNote;
+  $('liBtn').href=safeUrl(a.linkedin);$('liUrl').textContent=(a.linkedin||'').replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
+  $('pfList').replaceChildren(...S.caseStudies.map(c=>{const ln=el('a',{href:safeUrl(c.url),target:'_blank',rel:'noopener'},[el('b',{text:c.title}),el('span',{text:c.subtitle})]);if(c.url.indexOf(SELF)>-1)ln.setAttribute('aria-current','page');return el('li',null,[ln]);}));
+}
+render();
+
+/* dialogs */
+let lastFocus=null;
+function openDlg(d){lastFocus=document.activeElement;d.hidden=false;document.body.classList.add('dlg-open');const f=d.querySelector('button,input');f&&f.focus();}
+function closeDlg(d){d.hidden=true;if(!document.querySelector('.dlg:not([hidden])'))document.body.classList.remove('dlg-open');lastFocus&&lastFocus.focus&&lastFocus.focus();}
+const pf=$('pfDlg');
+function pfView(v){pf.querySelectorAll('[data-pfv]').forEach(b=>b.setAttribute('aria-selected',b.dataset.pfv===v));pf.querySelectorAll('[data-pfp]').forEach(p=>p.hidden=p.dataset.pfp!==v);}
+document.querySelectorAll('[data-pf]').forEach(b=>b.addEventListener('click',()=>{pfView(b.dataset.pf);openDlg(pf);}));
+pf.addEventListener('click',e=>{if(e.target===pf||e.target.closest('[data-close]'))closeDlg(pf);const b=e.target.closest('[data-pfv]');if(b)pfView(b.dataset.pfv);});
+$('liCopy').addEventListener('click',()=>{const b=$('liCopy');const sel=()=>{const r=document.createRange();r.selectNodeContents($('liUrl'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press Ctrl/Cmd+C';};
+  try{navigator.clipboard.writeText(S.about.linkedin).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy link',1500);},sel);}catch(e){sel();}});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!ed.hidden)return tryCancel();if(!pf.hidden)closeDlg(pf);});
+
+/* skip intro once right after the owner saves */
+try{if(sessionStorage.getItem('ag-skip-intro')){sessionStorage.removeItem('ag-skip-intro');const m=$('introModal');m&&m.remove();}}catch(e){}
+
+/* editor */
+const ed=$('edDlg');let W=null,dirty=false,artifactNS=null;
+const clone=o=>JSON.parse(JSON.stringify(o));
+const nums=s=>String(s).split(/[,\s]+/).map(Number).filter(n=>n>0);
+function field(label,val,on,type){const w=el('label',{cls:'fld'},[document.createTextNode(label)]);let i;
+  if(type==='textarea'){i=el('textarea');i.value=val;}
+  else if(Array.isArray(type)){i=el('select');type.forEach(o=>{const op=el('option',{text:o});op.value=o;i.append(op);});i.value=val;}
+  else{i=el('input',{type:type||'text'});i.value=val;if(type==='number'){i.step='0.1';i.min='1';i.max='5';}}
+  i.addEventListener('input',()=>{on(i.value);dirty=true;});w.append(i);return w;}
+function group(title,items,mk,blank,addLabel){
+  const g=el('div',{cls:'ed-group'},[el('h3',{text:title})]);
+  items.forEach((it,ix)=>{const row=el('div',{cls:'ed-row'});mk(it,row);
+    const rm=el('button',{type:'button',cls:'rm',text:'Remove'});rm.onclick=()=>{items.splice(ix,1);dirty=true;buildEditor();};
+    const up=el('button',{type:'button',text:'Move up'});up.disabled=ix===0;up.onclick=()=>{[items[ix-1],items[ix]]=[items[ix],items[ix-1]];dirty=true;buildEditor();};
+    row.append(el('div',{cls:'ed-actions'},[up,rm]));g.append(row);});
+  const add=el('button',{type:'button',cls:'add',text:addLabel});add.onclick=()=>{items.push(blank());dirty=true;buildEditor();};
+  g.append(el('div',{cls:'ed-actions'},[add]));return g;}
+function buildEditor(){
+  const b=$('edBody');const st=b.scrollTop;b.replaceChildren();
+  b.append(el('div',{cls:'ed-group'},[el('h3',{text:'Page details'}),el('div',{cls:'ed-grid'},[
+    field('Last updated',W.lastUpdated,v=>W.lastUpdated=v,'date'),
+    field('Tracker note',W.updateNote,v=>W.updateNote=v)])]));
+  b.append(group('Assurance maturity tracker',W.platforms,(p,row)=>{
+    row.append(el('div',{cls:'ed-grid'},[field('Platform',p.name,v=>p.name=v),field('Maker / type',p.maker,v=>p.maker=v),
+      field('Assurance readiness',p.arl,v=>p.arl=v),field('Assurance debt',p.debt,v=>p.debt=v,['High','Medium','Low–Medium','Low']),
+      field('Export readiness (1–5)',p.ear,v=>p.ear=parseFloat(v)||1,'number')]));
+    row.append(field('Public status',p.status,v=>p.status=v,'textarea'));
+    row.append(field('Status source numbers (e.g. 4, 5)',(p.statusFn||[]).join(', '),v=>p.statusFn=nums(v)));
+    row.append(field('Public evidence',p.evidence,v=>p.evidence=v,'textarea'));
+    row.append(field('Evidence source numbers',(p.evidenceFn||[]).join(', '),v=>p.evidenceFn=nums(v)));
+  },()=>({name:'New platform',maker:'',status:'',statusFn:[],arl:'A1',debt:'High',ear:1,evidence:'',evidenceFn:[]}),'Add platform'));
+  b.append(group('Case studies',W.caseStudies,(c,row)=>{
+    row.append(el('div',{cls:'ed-grid'},[field('Title',c.title,v=>c.title=v),field('Subtitle',c.subtitle,v=>c.subtitle=v),field('Link',c.url,v=>c.url=v,'url')]));
+  },()=>({title:'New case study',subtitle:'',url:'https://'}),'Add case study'));
+  const a=W.about;
+  b.append(el('div',{cls:'ed-group'},[el('h3',{text:'About & contact'}),
+    el('div',{cls:'ed-grid'},[field('Name',a.name,v=>a.name=v),field('LinkedIn URL',a.linkedin,v=>a.linkedin=v,'url')]),
+    field('Bio',a.bio,v=>a.bio=v,'textarea'),field('Contact line',a.contactNote,v=>a.contactNote=v)]));
+  b.append(group('Published work',a.publications,(p,row)=>{
+    row.append(el('div',{cls:'ed-grid'},[field('Title',p.title,v=>p.title=v),field('Note',p.note,v=>p.note=v),field('Link',p.url,v=>p.url=v,'url')]));
+  },()=>({title:'',note:'',url:'https://'}),'Add publication'));
+  b.scrollTop=st;
+}
+function status(t,err){const s=$('edStatus');s.textContent=t;s.classList.toggle('err',!!err);}
+function openEditor(){W=clone(S);dirty=false;$('edConfirm').hidden=true;status('Changes are saved as a new version of this page.');buildEditor();openDlg(ed);}
+function tryCancel(){if(!dirty)return closeDlg(ed);const c=$('edConfirm');c.replaceChildren(document.createTextNode('Discard your changes?'));
+  const y=el('button',{type:'button',text:'Discard'});y.onclick=()=>{dirty=false;c.hidden=true;closeDlg(ed);};
+  const n=el('button',{type:'button',text:'Keep editing'});n.onclick=()=>{c.hidden=true;};c.append(y,n);c.hidden=false;}
+$('edCancel').onclick=tryCancel;$('edCancelTop').onclick=tryCancel;
+$('edSave').onclick=async()=>{
+  if(!artifactNS)return status('Saving is not available in this view.',true);
+  const json=JSON.stringify(W,null,2).replace(/</g,'\\u003c');
+  const body=PRISTINE.replace(/(<script type="application\/json" id="projectConfig">)[\s\S]*?(<\/script>)/,(m,a,b)=>a+'\n'+json+'\n'+b);
+  $('edSave').disabled=true;status('Publishing…');
+  try{try{sessionStorage.setItem('ag-skip-intro','1');}catch(e){}
+    await artifactNS.publish(SKEL+body+'</body></html>');
+    S=W;dirty=false;render();status('Published. The page is reloading with your changes.');
+  }catch(e){const c=e&&e.code;
+    if(c==='conflict')status('A newer version was published first. The page is reloading to it.',true);
+    else if(c==='not_writer'||c==='not_granted'||c==='consent_required'||c==='capability_disabled'){status('You can view this page but not edit it.',true);$('editBtn').hidden=true;}
+    else if(c==='rate_limited')status('Saving too often. Wait a minute, then save again.',true);
+    else status('Could not publish. Try saving again in a moment.',true);
+    $('edSave').disabled=false;}
+};
+$('editBtn').onclick=openEditor;
+(async()=>{try{if(!window.claude||!claude.use)return;const [u,art]=await Promise.all([claude.use('user'),claude.use('artifact')]);
+  if(!art)return;const can=u?await u.canEdit():false;if(!can)return;artifactNS=art;$('editBtn').hidden=false;}catch(e){}})();
+})();
+</script>
+
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

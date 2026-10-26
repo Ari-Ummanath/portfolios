@@ -1,0 +1,171 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Real Selectors</title>
+<meta name="description" content="Two live cricket-governance case studies: a captaincy allegedly reached by organised crime, and a league's ownership opened to foreign capital." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+
+<section class="intro" id="intro">
+  <div class="pitch" aria-hidden="true"></div>
+  <div class="crease" aria-hidden="true"></div>
+  <div class="stumps" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="intro-copy">
+    <h1>Two deliveries.<br/><em>Two governance stories.</em></h1>
+    <p>Every over is a small transfer of control &mdash; ball to bat, plan to outcome.</p>
+  </div>
+
+  <div class="bowl-stage" aria-hidden="true">
+    <div class="ball" id="ball"><div class="seam"></div></div>
+    <div class="bat" id="bat"></div>
+    <div class="hit-flash" id="hitFlash"></div>
+    <div class="impact-flash" id="breakFlash"></div>
+    <div class="shards" id="shards"></div>
+  </div>
+
+  <button class="bowl-btn" id="bowlBtn" type="button">Tap to bowl &rarr;</button>
+  <button class="replay-btn" id="replayBtn" type="button" hidden>&#8635; Replay the delivery</button>
+  <div class="scroll-cue">or scroll to read</div>
+</section>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><b>The Real Selectors</b></a>
+    <nav class="topnav">
+      <a href="index.html" class="current">Home</a>
+      <a href="diaspora.html">Diaspora &amp; integrity</a>
+      <a href="contracts.html">Contracts &amp; governance</a>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap" id="site">
+  <section class="site-hero">
+    <div class="eyebrow">Two case studies &middot; one throughline</div>
+    <h1>Who actually<br/><em>controls a cricketer?</em></h1>
+    <p class="lead">Two live cricket-governance stories: a captaincy allegedly reached by organised crime in Canada, and a domestic league's ownership being prised open to foreign capital in Australia. Different mechanisms, the same underlying question &mdash; who holds the lever, and who's watching it.</p>
+
+    <div class="case-cards">
+      <a class="case-card" href="diaspora.html">
+        <span class="exhibit-tag">Case file 01</span>
+        <h3>Diaspora &amp; integrity</h3>
+        <p>A designated terrorist network, a captaincy, and an ICC Anti-Corruption Unit case that started with journalism. Diaspora cricket networks as an early-warning asset, not only a vulnerability.</p>
+        <div class="stat-mini">
+          <div><strong>1 Jun 2026</strong>Membership suspended</div>
+          <div><strong>63%</strong>Revenue frozen</div>
+          <div><strong>0</strong>Charges filed</div>
+        </div>
+        <div class="enter">Read the file &rarr;</div>
+      </a>
+      <a class="case-card" href="contracts.html">
+        <span class="exhibit-tag">Case file 02</span>
+        <h3>Contracts &amp; governance</h3>
+        <p>BCCI's opaque grade system against Cricket Australia's negotiated one &mdash; and the live story connecting them: Indian capital circling a privatising Big Bash League while the players' association fights over the terms.</p>
+        <div class="stat-mini">
+          <div><strong>10 Sep 2026</strong>BBL privatisation approved</div>
+          <div><strong>49%</strong>Max private stake</div>
+          <div><strong>27.5%&rarr;33%</strong>Revenue-share dispute</div>
+        </div>
+        <div class="enter">Read the file &rarr;</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="throughline">
+    <div class="wrap">
+      <div class="eyebrow">Why these two, together</div>
+      <h2 class="section-h">The same question, read twice</h2>
+      <p>Cricket Canada shows what happens with no separation between who controls a federation and who it lets play: a board itself allegedly captured, deciding selection. Cricket Australia is trying to build that separation deliberately &mdash; sell the BBL's equity, keep the calendar and the salary cap &mdash; over the objection of the players' own association. Neither case is finished. Both are about the same asset: a contracted cricketer, and who actually gets to decide what happens to them.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-lines">
+      <p>Built by Ari &middot; Canberra, Australia &middot; two case studies for a portfolio in international security, diaspora governance and sport policy.</p>
+      <p>Not legal or financial advice, not an investigative finding, and not a claim that any named individual is guilty of anything &mdash; the presumption of innocence holds until the ACU says otherwise.</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  try{
+    var bowlBtn = document.getElementById('bowlBtn');
+    var replayBtn = document.getElementById('replayBtn');
+    var ball = document.getElementById('ball');
+    var bat = document.getElementById('bat');
+    var hitFlash = document.getElementById('hitFlash');
+    var breakFlash = document.getElementById('breakFlash');
+    var shardsBox = document.getElementById('shards');
+    var site = document.getElementById('site');
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var N_SHARDS = 18;
+    for (var i = 0; i < N_SHARDS; i++){
+      var s = document.createElement('span');
+      s.className = 'shard';
+      shardsBox.appendChild(s);
+    }
+    var shards = shardsBox.querySelectorAll('.shard');
+
+    function armShards(){
+      for (var i = 0; i < shards.length; i++){
+        var angle = (Math.PI * 2 * i / shards.length) + (Math.random() * 0.4 - 0.2);
+        var dist = 80 + Math.random() * 100;
+        var dx = Math.cos(angle) * dist;
+        var dy = Math.sin(angle) * dist - 20;
+        shards[i].style.setProperty('--dx', dx.toFixed(1) + 'px');
+        shards[i].style.setProperty('--dy', dy.toFixed(1) + 'px');
+        shards[i].style.setProperty('--rot', (Math.random() * 360 - 180).toFixed(0) + 'deg');
+      }
+    }
+
+    function goToSite(){
+      if (site && site.scrollIntoView) site.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block: 'start'});
+    }
+
+    // Sequence: (1) the delivery + the hit — ball travels, bat connects, ball
+    // squashes on contact and is struck away — THEN, once that's resolved,
+    // (2) the screen breaks open into the site.
+    function playBowl(){
+      if (reduced){ goToSite(); return; }
+      bowlBtn.setAttribute('hidden','');
+      armShards();
+      ball.classList.add('active');
+      bat.classList.add('active');
+      hitFlash.classList.add('active');
+      // the break — screen cracking open — is timed to start only after
+      // the struck ball has visibly left the frame (~1s in)
+      breakFlash.classList.add('active');
+      for (var i = 0; i < shards.length; i++) shards[i].classList.add('active');
+      window.setTimeout(function(){
+        replayBtn.removeAttribute('hidden');
+        goToSite();
+      }, 1750);
+    }
+
+    function resetBowl(){
+      ball.classList.remove('active');
+      bat.classList.remove('active');
+      hitFlash.classList.remove('active');
+      breakFlash.classList.remove('active');
+      for (var i = 0; i < shards.length; i++) shards[i].classList.remove('active');
+      void ball.offsetWidth; // force reflow so the animation can replay
+      replayBtn.setAttribute('hidden','');
+      bowlBtn.removeAttribute('hidden');
+      window.setTimeout(playBowl, 30);
+    }
+
+    if (bowlBtn) bowlBtn.addEventListener('click', playBowl);
+    if (replayBtn) replayBtn.addEventListener('click', resetBowl);
+  } catch(e){ /* fail quiet — page still renders and scrolls without JS */ }
+})();
+</script>
+
+<script src="portfolio.js" data-self="TThL3nZJJqiSj3EFWS3Zym" data-nav=".topbar .topnav"></script>
+
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

@@ -1,0 +1,152 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Phoenix Signal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: case-file triage tool — indicator checklist left, live risk read-out and response pathway right */
+:root{
+  --bg:#f3f5f6; --panel:#ffffff; --ink:#14232b; --muted:#5a6b74; --line:#d5dde1;
+  --accent:#0d5c63; --signal:#c77a00; --high:#b3261e; --low:#2e7d4f; --chip:#e6eef0;
+  --display:"Public Sans",system-ui,sans-serif; --body:"Public Sans",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171b;--panel:#16232a;--ink:#e3ecef;--muted:#93a6ae;--line:#2a3b43;--accent:#5fc1c9;--signal:#f0a52a;--high:#ef6b62;--low:#5cc48a;--chip:#1f3038;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f171b;--panel:#16232a;--ink:#e3ecef;--muted:#93a6ae;--line:#2a3b43;--accent:#5fc1c9;--signal:#f0a52a;--high:#ef6b62;--low:#5cc48a;--chip:#1f3038;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:1100px;margin:0 auto;padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:24px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.5vw,42px);line-height:1.1;margin:6px 0 10px;text-wrap:balance}
+h2{font-size:17px;margin:0 0 12px;text-wrap:balance}
+.lede{max-width:68ch;color:var(--muted);margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.fact{border-top:3px solid var(--accent);background:var(--panel);padding:12px 14px}
+.fact b{display:block;font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums}
+.fact span{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px}
+fieldset{border:0;padding:0;margin:0 0 16px}
+legend{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+label.ind{display:grid;grid-template-columns:20px 1fr auto;gap:10px;align-items:start;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.ind:last-child{border-bottom:0}
+label.ind small{display:block;color:var(--muted);font-size:13px}
+.w{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+input[type=checkbox]{margin-top:4px;accent-color:var(--accent);width:16px;height:16px}
+select{width:100%;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);font:inherit}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:grid;gap:16px}
+.meter{height:12px;background:var(--chip);border-radius:6px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s,background .3s}
+@media (prefers-reduced-motion:reduce){.meter i{transition:none}}
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.score b{font-family:var(--mono);font-size:40px;font-variant-numeric:tabular-nums}
+.pill{font-family:var(--mono);font-size:12px;padding:3px 10px;border-radius:99px;background:var(--chip);font-weight:600}
+.path{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.path li{padding:10px 12px;border:1px solid var(--line);border-radius:4px;opacity:.45}
+.path li.on{opacity:1;border-color:var(--accent);background:var(--chip)}
+.path li b{display:block;font-size:14px}
+.path li span{font-size:13px;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;font-size:13px;padding:7px 12px;border-radius:4px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--panel);border-color:var(--accent)}
+.note{font-size:13px;color:var(--muted);max-width:75ch}
+.note a{color:var(--accent)}
+footer{border-top:1px solid var(--line);padding-top:16px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Independent project · Arpitha Ummanath · Tax integrity &amp; criminology</div>
+    <h1>The Phoenix Signal</h1>
+    <p class="lede">Illegal phoenix activity is when a company is deliberately wound up to dodge tax, wage and super debts, and its business is carried on by a new entity. This tool turns publicly reported warning signs into a simple triage read-out, then maps the result to the ATO's graduated response: make compliance easy, tailor help, and make sure deliberate non-compliance has consequences.</p>
+  </header>
+
+  <section class="facts" aria-label="Context">
+    <div class="fact"><b>$2.85–5.13bn</b><span>Estimated annual direct cost to the Australian economy (PwC estimate for 2015–16)</span></div>
+    <div class="fact"><b>3,400+</b><span>Referrals of suspected illegal phoenix activity received by the ATO in 2023–24</span></div>
+    <div class="fact"><b>2,600+</b><span>Audits and reviews completed by the ATO in 2023–24</span></div>
+    <div class="fact"><b>$2.45bn</b><span>Recovered by the ATO-led Phoenix Taskforce since 2014</span></div>
+  </section>
+
+  <div class="grid">
+    <form class="panel" id="f" aria-label="Indicators">
+      <h2>Case indicators</h2>
+      <fieldset>
+        <legend>Industry</legend>
+        <select id="sector">
+          <option value="1.25">Building and construction (higher-prevalence sector)</option>
+          <option value="1.25">Labour hire (higher-prevalence sector)</option>
+          <option value="1.2">Security services (higher-prevalence sector)</option>
+          <option value="1.2">Payroll services (higher-prevalence sector)</option>
+          <option value="1">Other industry</option>
+        </select>
+      </fieldset>
+      <fieldset id="inds">
+        <legend>Warning signs observed</legend>
+      </fieldset>
+      <div class="btns">
+        <button type="button" id="sample" class="primary">Load example case</button>
+        <button type="button" id="clear">Clear</button>
+      </div>
+    </form>
+
+    <aside class="out" aria-live="polite">
+      <div class="panel">
+        <div class="eyebrow">Triage read-out</div>
+        <div class="score"><b id="score">0</b><span class="w">/ 100</span><span class="pill" id="tier">No concern</span></div>
+        <div class="meter" aria-hidden="true"><i id="bar"></i></div>
+        <p class="note" id="why" style="margin-top:10px">Tick indicators to see how the signal builds.</p>
+      </div>
+      <div class="panel">
+        <h2>Graduated response pathway</h2>
+        <ol class="path" id="path">
+          <li data-min="0"><b>Make it easy</b><span>Education, prompts and clear guidance for businesses in genuine difficulty.</span></li>
+          <li data-min="25"><b>Tailored help and early engagement</b><span>Contact, payment arrangements, director-obligation reminders.</span></li>
+          <li data-min="50"><b>Compliance review or audit</b><span>Data-matching across agencies; review of asset transfers and related entities.</span></li>
+          <li data-min="75"><b>Consequences</b><span>Director penalties and disqualification; referral of the most serious cases to the Serious Financial Crime Taskforce.</span></li>
+        </ol>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p class="note"><b>Method.</b> Indicator weights are my own illustrative scoring for teaching purposes and are not ATO methodology. A single indicator rarely proves anything; legitimate restructures and honest business failures share several of these signs. The aim is to show how layered signals, not any one fact, separate misfortune from a deliberate pattern, which mirrors the ATO view that illegal phoenixing becomes the concern when it is repeated and cyclical.</p>
+    <p class="note"><b>Sources.</b> <a href="https://www.accountantsdaily.com.au/regulation/20527-phoenix-taskforce-claws-back-99m-in-fy24">Accountants Daily: Phoenix Taskforce FY24</a> · <a href="https://publicaccountant.com.au/news/ato-brings-in-over-500-million-from-illegal-phoenix-operators/">Public Accountant: ANAO review and sector prevalence</a> · <a href="https://www.cpaaustralia.com.au/public-practice/inpractice/taxation/ato-taskforce-ups-the-ante-on-illegal-phoenixing">CPA Australia: facilitators and enforcement tools</a> · <a href="https://www.ato.gov.au/about-ato/strategic-planning/corporate-plan/ato-corporate-plan-2026-27/1-australian-taxation-office/commissioners-foreword">ATO Corporate Plan 2026–27</a></p>
+  </footer>
+</div>
+
+<script>
+const IND=[
+ ["dir","Recent change of directors","Especially shortly before or after debts fall due",14],
+ ["name","Recent change of company name","A known warning sign flagged by the ATO",10],
+ ["debt","Unpaid PAYG withholding, GST or super","Liabilities building while trading continues",18],
+ ["assets","Assets moved to a related entity for less than market value","Leaves creditors with an empty shell",20],
+ ["same","New entity trades from the same premises with the same staff","Business continues; only the debts are left behind",16],
+ ["prior","Same people linked to earlier failed companies","Repeated, cyclical pattern",16],
+ ["adv","Use of a pre-insolvency adviser","Facilitators are a current enforcement focus",6]
+];
+const box=document.getElementById('inds');
+IND.forEach(([id,t,s,w])=>{const l=document.createElement('label');l.className='ind';l.innerHTML=`<input type="checkbox" id="${id}" data-w="${w}"><span>${t}<small>${s}</small></span><span class="w">+${w}</span>`;box.appendChild(l)});
+const $=id=>document.getElementById(id);
+function calc(){
+  const ticked=[...box.querySelectorAll('input:checked')];
+  let raw=ticked.reduce((a,c)=>a+ +c.dataset.w,0);
+  const mult=ticked.length?+$('sector').value:1;
+  const s=Math.min(100,Math.round(raw*mult));
+  $('score').textContent=s;
+  const bar=$('bar');bar.style.width=s+'%';
+  const tiers=[[75,'High: likely deliberate','var(--high)'],[50,'Elevated','var(--signal)'],[25,'Watch','var(--accent)'],[0,'No concern','var(--low)']];
+  const t=tiers.find(x=>s>=x[0]);$('tier').textContent=t[1];bar.style.background=t[2];
+  $('why').textContent=ticked.length?`${ticked.length} indicator${ticked.length>1?'s':''} observed${mult>1?', weighted up for a higher-prevalence sector':''}. ${ticked.some(c=>c.id==='prior')?'A repeat pattern is the strongest sign of deliberate conduct.':'No repeat pattern yet, so failure may be genuine.'}`:'Tick indicators to see how the signal builds.';
+  const lis=[...document.querySelectorAll('#path li')];
+  const active=lis.filter(li=>s>=+li.dataset.min).pop();
+  lis.forEach(li=>li.classList.toggle('on',li===active));
+}
+$('f').addEventListener('change',calc);
+$('sample').onclick=()=>{box.querySelectorAll('input').forEach(c=>c.checked=['dir','debt','assets','same'].includes(c.id));$('sector').selectedIndex=1;calc()};
+$('clear').onclick=()=>{box.querySelectorAll('input').forEach(c=>c.checked=false);calc()};
+$('f').addEventListener('submit',e=>e.preventDefault());
+$('sample').click();
+</script>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

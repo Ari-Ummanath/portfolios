@@ -1,0 +1,56 @@
+{
+  "last_checked": "2026-08-17T22:32:00+10:00",
+  "regulatory_currency": "ITAR §126.7 final rule — 30 Dec 2025",
+  "method": "Content spot-check via Claude (Cowork) — the six pages were re-fetched and their key facts re-extracted and compared against the cited claims on this site. This cloud environment cannot make raw outbound requests for a byte-level hash; see monitor.py for a portable script that does a true SHA-256 check when run somewhere with normal internet access (e.g. your own machine).",
+  "sources": [
+    {
+      "id": "etl",
+      "label": "Excluded Technology List (22 CFR Pt 126, Supp. 2)",
+      "url": "https://www.law.cornell.edu/cfr/text/22/appendix-Supplement_No_2_to_part_126",
+      "status": "current",
+      "note": "Reachable; exclusion categories (cluster munitions, MANPADS, F-22, classified countermeasures, etc.) consistent with the site's ETL patterns.",
+      "last_checked": "2026-08-17T22:32:00+10:00"
+    },
+    {
+      "id": "fr_final",
+      "label": "ITAR §126.7 final rule (90 FR 61053)",
+      "url": "https://www.federalregister.gov/documents/2025/12/30/2025-23998/international-traffic-in-arms-regulations-exemption-for-defense-trade-and-cooperation-among",
+      "status": "review",
+      "note": "Effective date (30 Dec 2025) and final-rule status confirmed. Flag: the rule text references clarifying edits to the Excluded Technology List in response to comments — worth a closer legal read before treating the ETL as fully static.",
+      "last_checked": "2026-08-17T22:32:00+10:00"
+    },
+    {
+      "id": "fr_interim",
+      "label": "ITAR §126.7 interim final rule (89 FR 67270)",
+      "url": "https://www.federalregister.gov/documents/2024/08/20/2024-18043/international-traffic-in-arms-regulations-exemption-for-defense-trade-and-cooperation-among",
+      "status": "current",
+      "note": "Effective 1 Sep 2024, interim final rule status confirmed.",
+      "last_checked": "2026-08-17T22:32:00+10:00"
+    },
+    {
+      "id": "dec_lfe",
+      "label": "Australia — licence-free environment (5 criteria)",
+      "url": "https://www.defence.gov.au/business-industry/exporting/applications-pre-notifications/licence-free-environment",
+      "status": "current",
+      "note": "Five access criteria (end-user, location, not-excluded, registration, pre-notification) confirmed unchanged.",
+      "last_checked": "2026-08-17T22:32:00+10:00"
+    },
+    {
+      "id": "dec_changes",
+      "label": "Australia — changes to export controls",
+      "url": "https://www.defence.gov.au/business-industry/exporting/export-controls-framework/changes-export-controls",
+      "status": "current",
+      "note": "Commencement (1 Sep 2024) and offences ss. 10A–10C confirmed unchanged.",
+      "last_checked": "2026-08-17T22:32:00+10:00"
+    },
+    {
+      "id": "bis",
+      "label": "BIS — AUKUS export control changes",
+      "url": "https://www.bis.gov/media/documents/aukus.pdf",
+      "status": "current",
+      "note": "~80% of value figure and effective dates confirmed unchanged.",
+      "last_checked": "2026-08-17T22:32:00+10:00"
+    }
+  ],
+  "changes_detected": []
+}

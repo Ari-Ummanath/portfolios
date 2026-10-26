@@ -1,0 +1,434 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Touchstone Assay Office</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: an assay certificate. Single reading column with wide "specimen" panels for the interactive pieces; hallmark punches as the recurring motif. */
+:root{
+  --paper:#ECEEEB; --sheet:#F7F8F6; --ink:#15191C; --muted:#5A6167; --line:#C8CDCA;
+  --gold:#946A12; --gold-soft:#E9DDBF; --alarm:#A9332A; --alarm-soft:#F2DAD6; --pass:#2D6A4C; --pass-soft:#D6E7DD;
+  --display:"Gloock", "Georgia", serif;
+  --body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --measure:66ch;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#111414; --sheet:#181C1C; --ink:#E5E6E1; --muted:#9BA29F; --line:#2E3534;
+  --gold:#D9AA4E; --gold-soft:#3A3020; --alarm:#E1766B; --alarm-soft:#3B2220; --pass:#7CC29C; --pass-soft:#1D3328; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111414; --sheet:#181C1C; --ink:#E5E6E1; --muted:#9BA29F; --line:#2E3534;
+  --gold:#D9AA4E; --gold-soft:#3A3020; --alarm:#E1766B; --alarm-soft:#3B2220; --pass:#7CC29C; --pass-soft:#1D3328; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:28px 80px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;line-height:1.12;margin:0}
+h2{font-size:clamp(1.7rem,3.4vw,2.4rem)}
+h3{font-size:1.25rem}
+p{margin:0;max-width:var(--measure)}
+a{color:var(--gold)}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--mono)}
+section{padding-block:56px;border-top:1px solid var(--line);display:grid;gap:22px}
+.lede{font-size:1.12rem;color:var(--ink)}
+.muted{color:var(--muted)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* nav */
+.top{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between;padding-bottom:22px}
+.top nav{display:flex;flex-wrap:wrap;gap:4px 16px}
+.top nav a{color:var(--muted);text-decoration:none;font-size:.88rem}
+.top nav a:hover{color:var(--ink)}
+
+/* hallmark punches */
+.punches{display:flex;gap:8px;flex-wrap:wrap}
+.punch{font-family:var(--display);font-size:1.05rem;min-width:44px;height:44px;padding:0 10px;display:inline-grid;place-items:center;border:1.5px solid var(--ink);border-radius:14px 4px 14px 4px;background:var(--sheet)}
+.punch.g{border-color:var(--gold);color:var(--gold)}
+.punch.sm{min-width:34px;height:34px;font-size:.9rem;border-radius:10px 3px 10px 3px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:40px;align-items:end;padding-block:24px 52px}
+.hero h1{font-size:clamp(2.5rem,6.4vw,4.6rem);letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .stack{display:grid;gap:22px}
+.streak{height:3px;width:120px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:2px}
+.specimen{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:22px;display:grid;gap:12px}
+.big{font-family:var(--display);font-size:clamp(3.4rem,8vw,5.2rem);line-height:1;color:var(--alarm)}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+
+/* chain explorer */
+.chain{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;counter-reset:s}
+.chain button{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:12px 10px;text-align:left;cursor:pointer;display:grid;gap:4px;min-height:84px;position:relative}
+.chain button:hover{border-color:var(--muted)}
+.chain button[aria-selected="true"]{border-color:var(--gold);box-shadow:inset 0 -3px 0 var(--gold)}
+.chain .n{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.chain .t{font-weight:600;font-size:.9rem;line-height:1.25}
+.sev{width:8px;height:8px;border-radius:50%;position:absolute;top:12px;right:10px}
+.sev.hi{background:var(--alarm)} .sev.md{background:var(--gold)}
+@media (max-width:860px){.chain{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:440px){.chain{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.panel{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.panel h3{grid-column:1/-1}
+.panel .col{display:grid;gap:8px;align-content:start;min-width:0}
+.panel ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.tag.threat{background:var(--alarm-soft);color:var(--alarm)}
+.tag.control{background:var(--pass-soft);color:var(--pass)}
+.tag.us{background:var(--gold-soft);color:var(--gold)}
+@media (max-width:760px){.panel{grid-template-columns:1fr}}
+
+/* poison scale */
+.scale{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:24px;display:grid;gap:18px}
+.scale input[type=range]{width:100%;accent-color:var(--gold)}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.readout div{display:grid;gap:2px;min-width:0}
+.readout .v{font-family:var(--mono);font-size:1.35rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.readout .v.r{color:var(--alarm)}
+.bar{height:26px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 10%) ,var(--paper);border:1px solid var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--alarm);min-width:2px}
+@media (max-width:560px){.readout{grid-template-columns:1fr}}
+
+/* programmes */
+.progs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.prog{background:var(--sheet);padding:24px;display:grid;gap:10px;align-content:start;min-width:0}
+.prog header{display:flex;gap:14px;align-items:center}
+.prog ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:.95rem}
+@media (max-width:760px){.progs{grid-template-columns:1fr}}
+
+/* stakeholder lens */
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tabs button{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:.9rem}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.lens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:24px}
+.lens .col{display:grid;gap:8px;align-content:start;min-width:0}
+.lens .quote{grid-column:1/-1;font-family:var(--display);font-size:1.35rem;line-height:1.3;border-top:1px solid var(--line);padding-top:18px}
+@media (max-width:760px){.lens{grid-template-columns:1fr}}
+
+/* flywheel */
+.fly{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:center}
+.fly svg{width:100%;height:auto;max-width:440px;justify-self:center}
+.fly ol{margin:0;padding-left:20px;display:grid;gap:10px}
+@media (max-width:760px){.fly{grid-template-columns:1fr}}
+
+/* roadmap */
+.road{display:grid;gap:0}
+.phase{display:grid;grid-template-columns:150px minmax(0,1fr) 170px;gap:24px;padding-block:20px;border-bottom:1px solid var(--line)}
+.phase:first-child{border-top:1px solid var(--line)}
+.phase ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
+.money{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.money b{display:block;font-size:1.1rem;color:var(--gold)}
+@media (max-width:760px){.phase{grid-template-columns:1fr;gap:6px}.money{text-align:left}}
+
+/* budget */
+.budget{display:grid;gap:10px}
+.brow{display:grid;grid-template-columns:200px minmax(0,1fr) 60px;gap:14px;align-items:center;font-size:.92rem}
+.brow .b{height:12px;background:var(--paper);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.brow .b i{display:block;height:100%;background:var(--gold)}
+.brow .p{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.brow{grid-template-columns:1fr 50px}.brow .b{grid-column:1/-1;order:3}}
+
+/* risks */
+.risks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.risk{border-left:3px solid var(--alarm);padding:4px 0 4px 16px;display:grid;gap:6px;min-width:0}
+@media (max-width:760px){.risks{grid-template-columns:1fr}}
+
+/* pitch */
+.pitch{background:var(--ink);color:var(--paper);border-radius:6px;padding:28px;display:grid;gap:16px}
+.pitch .label{color:var(--gold)}
+.pitch p{font-size:1.05rem;max-width:none}
+.pitch .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.pitch button{background:var(--gold);color:#15191C;border:0;border-radius:4px;padding:9px 16px;font-weight:600;cursor:pointer}
+.pitch code{font-family:var(--mono);user-select:all}
+.sources{font-size:.85rem;color:var(--muted);display:grid;gap:6px}
+.sources ol{margin:0;padding-left:20px;display:grid;gap:4px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div style="display:flex;gap:12px;align-items:center">
+      <span class="punch g sm">T</span>
+      <span class="label">Touchstone · venture blueprint · v0.1 · Oct 2026</span>
+    </div>
+    <nav aria-label="Sections">
+      <a href="#problem">Problem</a><a href="#chain">Chain</a><a href="#model">Model</a><a href="#wins">Who wins</a><a href="#roadmap">Roadmap</a><a href="#ask">The ask</a>
+    </nav>
+  </div>
+
+  <header class="hero">
+    <div class="stack">
+      <div class="streak"></div>
+      <h1>Every model needs a <em>hallmark.</em></h1>
+      <p class="lede">For seven centuries, silver has been tested by an independent assay office before it could be sold as sterling. AI has no equivalent. Nobody outside a lab can verify what silicon a model was trained on, what data went in, or whether something was planted along the way. Touchstone is that office: an independent nonprofit that tests the AI supply chain end to end and stamps what passes.</p>
+      <div class="punches" aria-label="The four Touchstone marks">
+        <span class="punch" title="Silicon">Si</span><span class="punch" title="Data">D</span><span class="punch" title="Weights">W</span><span class="punch" title="Operations">Op</span><span class="punch g" title="Date letter">26</span>
+      </div>
+    </div>
+    <div class="specimen">
+      <span class="label">Specimen finding</span>
+      <div class="big">250</div>
+      <p>poisoned documents were enough to plant a hidden backdoor in every model size tested, from 600M to 13B parameters, in a 2025 study by Anthropic, the UK AI Security Institute and the Alan Turing Institute. The count stayed near-constant as clean data grew.</p>
+    </div>
+  </header>
+
+  <section id="problem">
+    <span class="label">01 · The problem</span>
+    <h2>AI is built on a chain nobody can see the whole of.</h2>
+    <div class="two">
+      <p>A frontier model is the end product of a supply chain longer than most people realise: chips fabricated in one country, packaged in another, flashed with firmware, racked in a datacentre, fed trillions of tokens scraped from a web anyone can write to, refined with synthetic data generated by other models, then shipped as weights through public hubs into agents that read live documents. Each link can be compromised. Most are verified only by the party with the most to lose from finding a problem.</p>
+      <p>The data link is the most alarming. The 2025 poisoning study overturned the old assumption that an attacker must control a fixed share of the training set; what matters is an absolute count, so the attacker's job stays flat while the dataset grows. The hardware link is the most politically live: US prosecutors charged three people tied to Super Micro in March 2026 over an alleged $2.5B scheme to move Nvidia-equipped servers to China, and the Chip Security Act would mandate location verification on exported AI chips.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="label">02 · Try it</span>
+    <h2>The attacker's job doesn't grow. The haystack does.</h2>
+    <div class="scale">
+      <label for="tok" class="label">Training set size · drag</label>
+      <input id="tok" type="range" min="9" max="13.3" step="0.05" value="11.4">
+      <div class="readout">
+        <div><span class="label">Clean tokens</span><span class="v" id="o-clean">—</span></div>
+        <div><span class="label">Poison tokens (≈250 docs)</span><span class="v r">~420,000</span></div>
+        <div><span class="label">Share of dataset</span><span class="v r" id="o-pct">—</span></div>
+      </div>
+      <div class="bar" aria-hidden="true"><i id="o-bar"></i></div>
+      <p class="muted" style="font-size:.9rem" id="o-note">The red sliver is drawn at a minimum of 2px so you can see it. At true scale it would be invisible. That is the point: you cannot find this by sampling.</p>
+      <p class="muted" style="font-size:.85rem">Caveat: the study tested models up to 13B parameters with a simple denial-of-service backdoor. Whether the constant holds for frontier-scale models and more harmful behaviours is an open question, and it is exactly the kind of question Touchstone exists to answer.</p>
+    </div>
+  </section>
+
+  <section id="chain">
+    <span class="label">03 · The chain</span>
+    <h2>Eight links, eight ways in.</h2>
+    <p class="muted">Select a link to see the threat, the control that should exist, and what Touchstone does about it. Red dots mark links where no independent verification exists today.</p>
+    <div class="chain" role="tablist" aria-label="Supply chain links" id="chain-tabs"></div>
+    <div class="panel" id="chain-panel" role="tabpanel"></div>
+  </section>
+
+  <section id="model">
+    <span class="label">04 · The organisation</span>
+    <h2>Four programmes, one office.</h2>
+    <p>Touchstone is a nonprofit research foundation with a public-benefit assay arm. The foundation owns the standard and the research, so no customer can buy a softer test. The assay arm charges for audits, and its surplus flows back to the foundation. The precedent is Underwriters Laboratories, set up in 1894 with insurance-industry backing to test electrical products, which turned a public-safety problem into a self-funding institution.</p>
+    <div class="progs">
+      <article class="prog">
+        <header><span class="punch sm">Tr</span><h3>Trace · the open standard</h3></header>
+        <p>A signed AI Bill of Materials linking silicon attestation, crawl manifests, synthetic-data lineage and weight hashes into one verifiable record.</p>
+        <ul><li>Hash-pinned dataset snapshots and signed crawl manifests</li><li>Lineage tags for synthetic data: which model made it, from what prompt set</li><li>Built to slot into existing work at CoSAI, OWASP and NIST, not compete with it</li></ul>
+      </article>
+      <article class="prog">
+        <header><span class="punch sm">Ca</span><h3>Canary · the friendly attack</h3></header>
+        <p>The intriguing part. Touchstone runs the attack harmlessly, so labs learn whether they would have caught it.</p>
+        <ul><li>Benign, registered canary documents seeded on the open web under a published protocol</li><li>Labs opt in to learn whether canaries reached their training sets</li><li>Open backdoor-scanning bench: detection tools tested against known-planted models</li></ul>
+      </article>
+      <article class="prog">
+        <header><span class="punch sm">As</span><h3>Assay · the Mark</h3></header>
+        <p>Independent audits against Trace, with four separate punches so buyers see exactly what was verified.</p>
+        <ul><li><b>Si</b> hardware provenance and attestation · <b>D</b> data provenance and poison screening</li><li><b>W</b> weight integrity and security level · <b>Op</b> deployment, retrieval and agent hygiene</li><li>Date letter on every mark: assays expire and must be renewed</li></ul>
+      </article>
+      <article class="prog">
+        <header><span class="punch sm">Se</span><h3>Sentinel · the exchange</h3></header>
+        <p>An information-sharing and analysis centre for the AI supply chain, modelled on the financial sector's FS-ISAC.</p>
+        <ul><li>Members report poisoned sources, compromised packages and tampered hardware confidentially</li><li>Touchstone anonymises and redistributes within hours</li><li>Feeds Australia's AI Safety Institute and partner institutes through agreed channels</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="wins">
+    <span class="label">05 · Who wins</span>
+    <h2>Everyone at the table gets something they can't get alone.</h2>
+    <div class="tabs" role="tablist" aria-label="Stakeholders" id="lens-tabs"></div>
+    <div class="lens" id="lens-panel" role="tabpanel"></div>
+  </section>
+
+  <section>
+    <span class="label">06 · The ambitious part</span>
+    <h2>A flywheel that makes security the cheaper choice.</h2>
+    <div class="fly">
+      <svg viewBox="0 0 420 420" role="img" aria-label="Flywheel: research, standard, assays, insurance pricing, procurement mandates, threat data, back to research">
+        <circle cx="210" cy="210" r="150" fill="none" stroke="var(--line)" stroke-width="2"/>
+        <circle cx="210" cy="210" r="150" fill="none" stroke="var(--gold)" stroke-width="2" stroke-dasharray="6 10"/>
+        <g font-family="var(--body)" font-size="13" fill="var(--ink)" text-anchor="middle">
+          <g><circle cx="210" cy="60" r="34" fill="var(--sheet)" stroke="var(--ink)"/><text x="210" y="57">Canary</text><text x="210" y="73">research</text></g>
+          <g><circle cx="340" cy="135" r="34" fill="var(--sheet)" stroke="var(--ink)"/><text x="340" y="132">Trace</text><text x="340" y="148">standard</text></g>
+          <g><circle cx="340" cy="285" r="34" fill="var(--sheet)" stroke="var(--ink)"/><text x="340" y="282">Paid</text><text x="340" y="298">assays</text></g>
+          <g><circle cx="210" cy="360" r="34" fill="var(--sheet)" stroke="var(--gold)"/><text x="210" y="357">Insurer</text><text x="210" y="373">pricing</text></g>
+          <g><circle cx="80" cy="285" r="34" fill="var(--sheet)" stroke="var(--ink)"/><text x="80" y="282">Gov</text><text x="80" y="298">procurement</text></g>
+          <g><circle cx="80" cy="135" r="34" fill="var(--sheet)" stroke="var(--ink)"/><text x="80" y="132">Sentinel</text><text x="80" y="148">threat data</text></g>
+        </g>
+        <text x="210" y="205" text-anchor="middle" font-family="var(--display)" font-size="26" fill="var(--gold)">T</text>
+        <text x="210" y="228" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--muted)" letter-spacing="1.5">ASSAY OFFICE</text>
+      </svg>
+      <ol>
+        <li><b>Research</b> exposes how poisoning and hardware tampering actually work at scale.</li>
+        <li>Findings harden into <b>Trace</b>, a standard labs can implement cheaply.</li>
+        <li>Labs and enterprises buy <b>assays</b> to prove they meet it.</li>
+        <li>The cunning lever: <b>insurers</b> price AI liability using the Mark, so an unmarked model costs more to cover. Security stops being a cost centre.</li>
+        <li><b>Governments</b> cite the Mark in procurement, as they already do with hardware certifications.</li>
+        <li>Every assay and member report feeds <b>Sentinel</b>, which sharpens the research. The loop tightens.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <span class="label">07 · Why it matters beyond business</span>
+    <h2>The catastrophic-risk case.</h2>
+    <div class="two">
+      <p>Funders such as Coefficient Giving's Project Tailwind ask a hard question: how does the work actually reduce catastrophic risk, and who will change their decisions because of it? Touchstone's answer has three parts. A backdoored model wired into power grids, defence systems or biology tooling is a catastrophe waiting for a trigger phrase. Poisoned alignment and safety-training data could quietly undo the safeguards labs believe they have. And stolen or diverted compute and weights proliferate capability to actors who will not test anything.</p>
+      <p>Each programme has a named user who changes a decision. Lab security teams change what data they ingest after a Canary result. Procurement officers change what they buy when the Mark is in the tender. Underwriters change premiums. Safety institutes change what they test for when Sentinel shows them what's circulating. Research that nobody acts on is excluded by design: every Touchstone output ships with the decision it is meant to change.</p>
+    </div>
+    <div class="specimen" style="grid-template-columns:auto 1fr;align-items:start;gap:16px 20px">
+      <span class="punch g">AU</span>
+      <div style="display:grid;gap:6px">
+        <h3>Why Canberra</h3>
+        <p>Australia is a trusted middle power inside Five Eyes and AUKUS, with no frontier lab of its own to protect. That makes an Australian assay office credible to US, UK and Asian labs alike. Australia's AI Safety Institute became operational in early 2026 with $29.9M, began testing frontier models in July and signed a cooperation MoU with the UK institute in May. Touchstone gives that ecosystem an independent, non-government partner with supply-chain depth.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <span class="label">08 · Roadmap</span>
+    <h2>From pilot to institution in four phases.</h2>
+    <div class="road">
+      <div class="phase"><div><span class="label">Phase 0</span><h3>Found</h3><span class="muted mono" style="font-size:.85rem">Q4 2026 – Q2 2027</span></div>
+        <div><p>Assemble a founding team of one ML-security researcher, one hardware-security engineer and a policy lead. Publish the supply-chain threat map. Run a first Canary pilot with two open-weight labs. Open conversations with the AU AISI and two insurers.</p></div>
+        <div class="money"><span class="label">Pre-seed ask</span><b>$1.5M</b>Tailwind range $0.2–2M</div></div>
+      <div class="phase"><div><span class="label">Phase 1</span><h3>Prove</h3><span class="muted mono" style="font-size:.85rem">2027</span></div>
+        <div><ul><li>Trace v0.1 specification released openly</li><li>Backdoor-scanning bench open-sourced with a public leaderboard</li><li>First five paid assays; Sentinel launches with ten members</li></ul></div>
+        <div class="money"><span class="label">Growth ask</span><b>$6–12M</b>Tailwind range $2–20M</div></div>
+      <div class="phase"><div><span class="label">Phase 2</span><h3>Embed</h3><span class="muted mono" style="font-size:.85rem">2028</span></div>
+        <div><ul><li>Mark referenced in at least one government AI procurement framework</li><li>Insurer pilot pricing AI cover against assay results</li><li>Hardware attestation lab tests vendor location-verification claims independently</li></ul></div>
+        <div class="money"><span class="label">Mix</span><b>~40% earned</b>Assays and membership</div></div>
+      <div class="phase"><div><span class="label">Phase 3</span><h3>Scale</h3><span class="muted mono" style="font-size:.85rem">2029 →</span></div>
+        <div><p>Accredit partner assay offices in the UK, Singapore and the EU under one standard. Touchstone becomes the reference body; the foundation stays focused on research and the hardest frontier assays.</p></div>
+        <div class="money"><span class="label">Target</span><b>Self-funding</b>Grants for research only</div></div>
+    </div>
+    <div class="two" style="margin-top:12px">
+      <div class="budget">
+        <span class="label">Proposed pre-seed allocation · $1.5M over 18 months</span>
+        <div class="brow"><span>Research engineers</span><span class="b"><i style="width:52%"></i></span><span class="p">52%</span></div>
+        <div class="brow"><span>Canary infrastructure</span><span class="b"><i style="width:16%"></i></span><span class="p">16%</span></div>
+        <div class="brow"><span>Standards and policy</span><span class="b"><i style="width:14%"></i></span><span class="p">14%</span></div>
+        <div class="brow"><span>Legal and ethics review</span><span class="b"><i style="width:10%"></i></span><span class="p">10%</span></div>
+        <div class="brow"><span>Operations</span><span class="b"><i style="width:8%"></i></span><span class="p">8%</span></div>
+      </div>
+      <div style="display:grid;gap:10px;align-content:start">
+        <span class="label">How we'll know it's working</span>
+        <ul style="margin:0;padding-left:18px;display:grid;gap:6px">
+          <li>Labs that change an ingestion pipeline after a Canary result</li>
+          <li>Procurement documents that cite the Mark</li>
+          <li>Median time from a Sentinel report to member-wide alert</li>
+          <li>Detection rate of the open bench against planted backdoors, year on year</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="label">09 · What could go wrong</span>
+    <h2>The risks, faced squarely.</h2>
+    <div class="risks">
+      <div class="risk"><h3>Capture</h3><p>Paying customers lean on auditors. Mitigation: the foundation owns the standard, assay staff rotate, and failed assays are counted publicly even when details stay private.</p></div>
+      <div class="risk"><h3>Dual use</h3><p>Poisoning research teaches attackers too. Mitigation: canaries are benign and registered, methods go through coordinated disclosure, and the most sensitive findings go to labs and institutes first.</p></div>
+      <div class="risk"><h3>Legal exposure</h3><p>Seeding content on the open web raises terms-of-service and liability questions. Mitigation: legal review is budgeted from day one, and canaries are placed only on domains Touchstone controls or partners consent to.</p></div>
+      <div class="risk"><h3>Lab refusal</h3><p>Frontier labs may decline outside audits. Mitigation: start with open-weight labs and enterprise buyers, then let insurers and procurement create the pull.</p></div>
+    </div>
+  </section>
+
+  <section id="ask">
+    <span class="label">10 · The ask</span>
+    <div class="pitch">
+      <span class="label">Draft expression of interest · Project Tailwind</span>
+      <p id="eoi">Touchstone is an independent assay office for the AI supply chain. Recent research shows a near-constant handful of poisoned documents can backdoor language models regardless of size, and advanced chips are being diverted despite export controls, yet no independent body verifies what hardware, data and weights a model is built from. Touchstone will publish an open provenance standard (Trace), run benign canary experiments that tell labs whether they would have caught a poisoning attack, audit models against the standard, and operate a threat-sharing exchange for the AI supply chain. Based in Canberra and working with Australia's AI Safety Institute and allied institutes, we seek $1.5M in pre-seed funding over 18 months to build the founding team, ship the threat map and complete a first canary pilot with two open-weight labs.</p>
+      <div class="row"><button id="copy" type="button">Copy draft</button><span style="font-size:.9rem">Send to <code>tailwind@cg.org</code></span></div>
+    </div>
+    <div class="specimen" style="gap:8px">
+      <span class="label">Founder fit</span>
+      <p>A founder with international security training, criminology grounding in how bad actors behave, embassy-level cyber-strategy briefing experience and published energy-security policy work brings the policy half of this office. The priority hire is a technical co-founder in ML security. Funders on Tailwind have said outsiders with a clear theory of change are exactly who they want to back.</p>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <span class="label">Sources</span>
+    <ol>
+      <li><a href="https://www.anthropic.com/research/small-samples-poison" target="_blank" rel="noopener">Anthropic · A small number of samples can poison LLMs of any size</a> (with UK AISI and the Alan Turing Institute)</li>
+      <li><a href="https://www.aisi.gov.uk/blog/examining-backdoor-data-poisoning-at-scale" target="_blank" rel="noopener">UK AI Security Institute · Examining backdoor data poisoning at scale</a></li>
+      <li><a href="https://chinaselectcommittee.house.gov/media/press-releases/house-committee-passes-chip-security-act" target="_blank" rel="noopener">House Select Committee on the CCP · Chip Security Act</a></li>
+      <li><a href="https://startupfortune.com/congress-wants-to-put-a-gps-tracker-on-every-nvidia-chip-that-leaves-the-country/" target="_blank" rel="noopener">Startup Fortune · Chip Security Act and the Super Micro smuggling case</a></li>
+      <li><a href="https://www.kucoin.com/news/flash/australia-s-ai-safety-institute-launches-frontier-model-testing" target="_blank" rel="noopener">Australia's AI Safety Institute launches frontier model testing</a></li>
+      <li><a href="https://open.spotify.com/episode/4DrBZEj3PP21JpMtzVcFAn" target="_blank" rel="noopener">80,000 Hours #254 · Max Nadeau on Project Tailwind</a></li>
+    </ol>
+    <p>Budget, phases and targets on this page are proposals, not commitments from any named organisation.</p>
+  </footer>
+</div>
+
+<script>
+const LINKS=[
+ {n:"01",t:"Silicon",sev:"hi",threat:["Chips diverted past export controls","Counterfeit or remarked parts","Hardware trojans inserted at fab or packaging"],control:["Chip identity attestation","Delay-based location verification, already demonstrated on H100s","Tamper-evident packaging"],us:"Independent test bench that verifies vendor attestation and location claims instead of taking them on trust. Earns the Si punch."},
+ {n:"02",t:"Firmware & drivers",sev:"md",threat:["Malicious GPU firmware or BMC implants","Compromised CUDA or driver packages"],control:["Signed firmware and measured boot","Software bills of materials","Reproducible builds"],us:"Trace records firmware hashes alongside chip identity so the whole compute stack is one chain."},
+ {n:"03",t:"Datacentre",sev:"md",threat:["Insider access to training clusters","Co-tenant side channels in shared cloud"],control:["Confidential computing on modern accelerators","Access logging tied to training runs"],us:"Op assays check physical and logical access controls for the clusters where a model was trained."},
+ {n:"04",t:"Web data",sev:"hi",threat:["About 250 planted documents can backdoor a model","Expired domains or edits timed to dataset snapshots"],control:["Hash-pinned snapshots","Signed crawl manifests","Source reputation scoring"],us:"Canary seeds benign, registered documents and reports to labs whether they were ingested. The friendliest possible red team."},
+ {n:"05",t:"Synthetic data",sev:"hi",threat:["A compromised or misaligned model contaminating data for the next model","Hidden traits passed through innocuous-looking generated data"],control:["Lineage tags: generator, version, prompt set","Separation of generator and trainee"],us:"Trace requires synthetic lineage, so a poisoned generator can be traced and every downstream model recalled."},
+ {n:"06",t:"Training",sev:"hi",threat:["Insider-planted backdoors","Sleeper behaviours that survive safety training"],control:["Training-run attestation","Trigger scanning before release"],us:"The open scanning bench measures which detection tools actually find planted backdoors, and publishes results."},
+ {n:"07",t:"Weights",sev:"md",threat:["Weight theft by states or criminals","Malicious serialised files on public model hubs"],control:["Signed weights and safe formats","Graded security levels for weight storage"],us:"W punch certifies weight integrity and the security level of storage, verified on site."},
+ {n:"08",t:"Agents & retrieval",sev:"md",threat:["Poisoned documents in retrieval indexes","Tool and plugin poisoning in agent workflows"],control:["Retrieval provenance","Runtime monitoring of tool calls"],us:"Op assays extend the chain past training into what a deployed agent reads, where most enterprise risk now sits."}
+];
+const LENS={
+ "CEO":{get:["A Mark to put in front of boards and regulators","Lower insurance premiums on AI products","A defensible answer when a model misbehaves"],give:["Assay fees","Agreement to be tested independently"],why:["Liability is shifting onto deployers","Customers increasingly ask for provenance"],q:"Proof beats promises. The Mark turns 'trust us' into a document."},
+ "COO":{get:["A single checklist across vendors instead of fifty questionnaires","Early warning from Sentinel before a bad package spreads"],give:["Supply-chain data to the exchange, anonymised"],why:["Vendor risk reviews for AI are slow and inconsistent"],q:"One standard to buy against cuts weeks off every AI procurement."},
+ "CISO":{get:["Canary results showing real ingestion exposure","Benchmarked detection tools","Peer threat intelligence"],give:["Incident reports to Sentinel"],why:["No current tool tells them whether their training data was poisoned"],q:"Finally, an attack drill for the data pipeline."},
+ "Government":{get:["An independent partner for the AI Safety Institute","A procurement reference that doesn't require building a new regulator","Allied credibility for Australia"],give:["Recognition of the Mark in tenders","Data-sharing agreements"],why:["Supply-chain security is a national-security issue","Middle powers need influence without a frontier lab"],q:"Sovereign assurance without a sovereign model."},
+ "Insurers":{get:["Actuarial signal for pricing AI liability","Loss data from Sentinel"],give:["Premium discounts for marked models"],why:["AI risk is hard to price without independent evidence"],q:"The same move that built UL: insurers fund the test that lowers their losses."},
+ "Public":{get:["Safer systems in health, finance and infrastructure","A recognisable mark on the AI they rely on"],give:["Nothing. Public research is free and open"],why:["People can't inspect models; they can look for a mark"],q:"The hallmark on silver, for the systems that run your life."},
+ "Funders":{get:["A field-wide shared infrastructure, one of the gaps Tailwind most wants filled","Independent assessment of safety claims","A path to self-sustainability"],give:["Pre-seed and growth grants"],why:["Talent, not money, is the bottleneck in AI safety"],q:"Each grant dollar buys research that the market then pays to apply."}
+};
+function el(h){const d=document.createElement('div');d.innerHTML=h;return d.firstElementChild}
+const ct=document.getElementById('chain-tabs'),cp=document.getElementById('chain-panel');
+function showLink(i){
+  [...ct.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));
+  const L=LINKS[i];
+  cp.innerHTML=`<h3>${L.n} · ${L.t}</h3>
+   <div class="col"><span class="tag threat">Threat</span><ul>${L.threat.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+   <div class="col"><span class="tag control">Control that should exist</span><ul>${L.control.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+   <div class="col"><span class="tag us">Touchstone</span><p>${L.us}</p></div>`;
+  try{localStorage.setItem('ts-link',i)}catch(e){}
+}
+LINKS.forEach((L,i)=>{const b=el(`<button role="tab" type="button" id="link-${i}"><span class="sev ${L.sev}" aria-label="${L.sev==='hi'?'No independent verification today':'Partial controls exist'}"></span><span class="n">${L.n}</span><span class="t">${L.t}</span></button>`);b.onclick=()=>showLink(i);ct.appendChild(b)});
+let li=3;try{const s=localStorage.getItem('ts-link');if(s!==null)li=+s}catch(e){}
+showLink(li>=0&&li<LINKS.length?li:3);
+
+const lt=document.getElementById('lens-tabs'),lp=document.getElementById('lens-panel');
+const keys=Object.keys(LENS);
+function showLens(k){
+  [...lt.children].forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k));
+  const L=LENS[k],ul=a=>`<ul style="margin:0;padding-left:18px;display:grid;gap:5px">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  lp.innerHTML=`<div class="col"><span class="tag control">What they get</span>${ul(L.get)}</div>
+   <div class="col"><span class="tag us">What they give</span>${ul(L.give)}</div>
+   <div class="col"><span class="tag threat">Why they say yes now</span>${ul(L.why)}</div>
+   <p class="quote">${L.q}</p>`;
+}
+keys.forEach(k=>{const b=el(`<button role="tab" type="button" data-k="${k}">${k}</button>`);b.onclick=()=>showLens(k);lt.appendChild(b)});
+showLens("CEO");
+
+const POISON=420000,tok=document.getElementById('tok');
+function fmt(n){const u=[[1e12,'T'],[1e9,'B'],[1e6,'M']];for(const[v,s]of u)if(n>=v)return (n/v).toFixed(n/v<10?1:0)+s;return Math.round(n).toLocaleString()}
+function upd(){
+  const n=Math.pow(10,+tok.value),p=POISON/(n+POISON)*100;
+  document.getElementById('o-clean').textContent=fmt(n);
+  document.getElementById('o-pct').textContent=(p<0.0001?p.toExponential(1):p.toPrecision(2))+'%';
+  document.getElementById('o-bar').style.width=Math.max(p,0)+'%';
+}
+tok.addEventListener('input',upd);upd();
+
+document.getElementById('copy').addEventListener('click',async e=>{
+  const t=document.getElementById('eoi').textContent,b=e.currentTarget;
+  try{await navigator.clipboard.writeText(t);b.textContent='Copied'}
+  catch(_){const r=document.createRange();r.selectNodeContents(document.getElementById('eoi'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press copy'}
+  setTimeout(()=>b.textContent='Copy draft',2200);
+});
+</script>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

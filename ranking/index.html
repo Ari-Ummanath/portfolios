@@ -1,0 +1,1095 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Does the Ranking Hold?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #eef1ee;
+    --surface: #ffffff;
+    --surface-2: #f5f7f4;
+    --ink: #12181b;
+    --ink-2: #4b555a;
+    --ink-muted: #838c8f;
+    --border: #d7ddd7;
+    --border-strong: #b9c1ba;
+    --accent: #1f5a78;
+    --accent-ink: #ffffff;
+    --accent-wash: #e2ecef;
+    --verified-ink: #2c6b46;
+    --verified-bg: #e2f0e6;
+    --unverified-ink: #93630a;
+    --unverified-bg: #f4e9d2;
+    --heat-1: #d3e3f3;
+    --heat-2: #a2c6e8;
+    --heat-3: #6198d2;
+    --heat-4: #2f6cad;
+    --heat-5: #163f66;
+    --heat-text-dark: #12181b;
+    --heat-text-light: #f5f7f4;
+    --focus: #1f5a78;
+    --bidder-mtrcrrc: #c98500;
+    --bidder-alstom: #d95926;
+    --bidder-siemens: #2a78d6;
+    --bidder-hyundai: #199e70;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10151a;
+      --surface: #171d22;
+      --surface-2: #1c2329;
+      --ink: #eef1f0;
+      --ink-2: #b6bfc3;
+      --ink-muted: #7c868b;
+      --border: #2a3339;
+      --border-strong: #3a444b;
+      --accent: #74acd2;
+      --accent-ink: #0a1014;
+      --accent-wash: #1c2c35;
+      --verified-ink: #7ed3a0;
+      --verified-bg: #1c3126;
+      --unverified-ink: #e6bb63;
+      --unverified-bg: #332a17;
+      --heat-1: #1e2b3a;
+      --heat-2: #26496a;
+      --heat-3: #2f6ea3;
+      --heat-4: #4f97c9;
+      --heat-5: #92c8ee;
+      --heat-text-dark: #0a1014;
+      --heat-text-light: #f5f7f4;
+      --focus: #92c8ee;
+      --bidder-mtrcrrc: #d9a441;
+      --bidder-alstom: #e2793f;
+      --bidder-siemens: #5a9adf;
+      --bidder-hyundai: #3fbf93;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10151a;
+    --surface: #171d22;
+    --surface-2: #1c2329;
+    --ink: #eef1f0;
+    --ink-2: #b6bfc3;
+    --ink-muted: #7c868b;
+    --border: #2a3339;
+    --border-strong: #3a444b;
+    --accent: #74acd2;
+    --accent-ink: #0a1014;
+    --accent-wash: #1c2c35;
+    --verified-ink: #7ed3a0;
+    --verified-bg: #1c3126;
+    --unverified-ink: #e6bb63;
+    --unverified-bg: #332a17;
+    --heat-1: #1e2b3a;
+    --heat-2: #26496a;
+    --heat-3: #2f6ea3;
+    --heat-4: #4f97c9;
+    --heat-5: #92c8ee;
+    --heat-text-dark: #0a1014;
+    --heat-text-light: #f5f7f4;
+    --focus: #92c8ee;
+    --bidder-mtrcrrc: #d9a441;
+    --bidder-alstom: #e2793f;
+    --bidder-siemens: #5a9adf;
+    --bidder-hyundai: #3fbf93;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .page { max-width: 1240px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  .masthead { padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: clamp(26px, 3.4vw, 38px);
+    line-height: 1.08;
+    margin: 0 0 8px 0;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  .dek { color: var(--ink-2); font-size: 16.5px; max-width: 70ch; line-height: 1.6; margin: 0; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 252px 1fr 292px;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 1040px) {
+    .layout { grid-template-columns: 1fr; }
+    .controls, .evidence { position: static !important; }
+  }
+  [hidden] { display: none !important; }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px;
+  }
+  .controls { position: sticky; top: 20px; }
+  .evidence { position: sticky; top: 20px; }
+
+  .control-group + .control-group { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+  .control-group h2, .main-content h2, .evidence h2 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-muted);
+    font-weight: 600;
+    margin: 0 0 10px 0;
+  }
+
+  .segmented { display: flex; border: 1px solid var(--border-strong); border-radius: 5px; overflow: hidden; }
+  .seg-btn {
+    flex: 1; padding: 7px 4px; font: inherit; font-size: 12.5px; font-weight: 500;
+    background: var(--surface); color: var(--ink-2); border: none; cursor: pointer;
+  }
+  .seg-btn + .seg-btn { border-left: 1px solid var(--border-strong); }
+  .seg-btn.active { background: var(--accent); color: var(--accent-ink); }
+  .seg-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  .hint { font-size: 12px; color: var(--ink-muted); line-height: 1.45; margin: 8px 0 0 0; }
+
+  .preset-list { display: flex; flex-direction: column; gap: 6px; }
+  .preset-btn {
+    text-align: left; font: inherit; font-size: 12.5px; font-weight: 500;
+    padding: 7px 9px; background: var(--surface-2); color: var(--ink);
+    border: 1px solid var(--border); border-radius: 5px; cursor: pointer;
+  }
+  .preset-btn.active { background: var(--accent-wash); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .preset-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+  .slider-row { margin-bottom: 14px; }
+  .slider-row:last-child { margin-bottom: 0; }
+  .slider-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .slider-label { font-size: 12px; color: var(--ink); line-height: 1.3; }
+  .slider-code { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-muted); margin-right: 5px; }
+  .slider-val { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  input[type="range"] {
+    width: 100%; accent-color: var(--accent); height: 16px; cursor: pointer; background: transparent;
+  }
+  input[type="range"]:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .main-content { display: flex; flex-direction: column; gap: 26px; padding: 20px; }
+
+  .ranking-chart { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row { display: grid; grid-template-columns: 128px 1fr 40px; align-items: center; gap: 10px; }
+  .bar-name { font-size: 12.5px; font-weight: 500; }
+  .bar-track { background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; height: 20px; overflow: hidden; }
+  .bar-fill { height: 100%; transition: width 0.35s ease; border-radius: 2px 0 0 2px; }
+  .bar-score { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
+
+  .caption { font-size: 12.5px; color: var(--ink-2); line-height: 1.55; margin: 4px 0 0 0; padding: 10px 12px; background: var(--surface-2); border-left: 2px solid var(--accent); border-radius: 0 4px 4px 0; }
+  .caption b { color: var(--ink); }
+
+  .heatmap-section .hint { margin-bottom: 12px; }
+  .heatmap-wrap { overflow-x: auto; }
+  table.heatmap { border-collapse: separate; border-spacing: 3px; width: 100%; min-width: 560px; }
+  table.heatmap th { font-size: 10px; font-weight: 600; color: var(--ink-muted); text-align: center; padding: 4px 2px; }
+  table.heatmap th.rowhead-col { text-align: left; }
+  table.heatmap td.rowhead { font-size: 12px; font-weight: 500; padding: 6px 8px 6px 0; white-space: nowrap; }
+  table.heatmap td.cell {
+    width: 58px; height: 40px; text-align: center; vertical-align: middle;
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 13.5px;
+    border-radius: 4px; cursor: pointer; position: relative; border: 2px solid transparent;
+  }
+  table.heatmap td.cell.unverified { border-style: dashed; border-color: rgba(0,0,0,0.28); }
+  table.heatmap td.cell.selected { outline: 2px solid var(--focus); outline-offset: 1px; }
+  table.heatmap td.cell:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  table.heatmap td.cell:hover { filter: brightness(1.06); }
+
+  .legend { display: flex; align-items: center; gap: 14px; margin-top: 12px; flex-wrap: wrap; font-size: 11px; color: var(--ink-muted); }
+  .legend-scale { display: flex; align-items: center; gap: 3px; }
+  .legend-swatch { width: 16px; height: 12px; border-radius: 2px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dash { width: 14px; height: 12px; border: 1.5px dashed var(--border-strong); border-radius: 2px; }
+  .legend-solid { width: 14px; height: 12px; border: 1.5px solid var(--border-strong); border-radius: 2px; }
+
+  .evidence-empty { font-size: 13px; color: var(--ink-muted); line-height: 1.5; }
+  .evidence-head { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .evidence-bidder { font-size: 11px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .evidence-criterion { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+  .evidence-score-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .evidence-score { font-family: "IBM Plex Mono", monospace; font-size: 20px; font-weight: 700; color: var(--accent); }
+  .badge { font-size: 10.5px; font-weight: 600; padding: 2px 7px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .badge.verified { background: var(--verified-bg); color: var(--verified-ink); }
+  .badge.unverified { background: var(--unverified-bg); color: var(--unverified-ink); }
+  .evidence-text { font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+
+  .page-footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); line-height: 1.6; }
+  .page-footer strong { color: var(--ink-2); }
+
+  .tabbar { display: flex; gap: 8px; margin-top: 22px; }
+  .tab-btn { font: inherit; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+  .tab-btn:hover:not(.active) { background: var(--surface-2); }
+  .tab-btn.active { background: var(--accent-wash); border-color: var(--accent); color: var(--accent); }
+  .tab-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .about-panel { padding: 26px 30px 30px; }
+  .about-eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+  .about-h1 { font-size: clamp(22px, 2.8vw, 29px); line-height: 1.2; margin: 0 0 12px 0; text-wrap: balance; max-width: 56ch; }
+  .about-lede { font-size: 15.5px; color: var(--ink-2); line-height: 1.65; max-width: 82ch; margin: 0 0 8px 0; }
+  .section-label { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); font-weight: 600; margin: 30px 0 12px 0; padding-top: 22px; border-top: 1px solid var(--border); }
+  .about-panel > .section-label:first-of-type { margin-top: 26px; }
+  .about-body { font-size: 13.5px; color: var(--ink-2); line-height: 1.65; margin: 0; }
+
+  .split-row { display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 860px) { .split-row { grid-template-columns: 1fr; } }
+  .mini-stats { display: flex; flex-direction: column; gap: 10px; }
+  .mini-stat { border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; padding: 13px 16px; }
+  .mini-stat .n { font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 21px; color: var(--accent); line-height: 1; }
+  .mini-stat .l { font-size: 12px; color: var(--ink-2); margin-top: 5px; line-height: 1.4; }
+
+  .hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; align-items: start; margin-top: 6px; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hero-stat { border: 1px solid var(--border); background: var(--surface); border-radius: 7px; padding: 14px 15px; }
+  .hero-stat .n { font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 22px; color: var(--accent); line-height: 1; }
+  .hero-stat .l { font-size: 11.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+
+  .tool-intro { grid-column: 1 / -1; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 13px 18px; margin-bottom: 4px; }
+  .tab-link { background: none; border: none; padding: 0; margin: 0; font: inherit; font-weight: 600; color: var(--accent); text-decoration: underline; text-decoration-color: var(--border-strong); cursor: pointer; }
+  .tab-link:hover { text-decoration-color: currentColor; }
+  .tab-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .stake-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+  @media (max-width: 760px) { .stake-grid { grid-template-columns: 1fr; } }
+  .stake-card { border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; padding: 15px 17px; }
+  .stake-card .who { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 6px; }
+  .stake-card p { font-size: 13px; color: var(--ink-2); line-height: 1.55; margin: 0; }
+
+  .plain-box { background: var(--accent-wash); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 0 0 6px 0; }
+  .plain-box h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin: 0 0 8px 0; font-weight: 700; }
+  .plain-box p { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; margin: 0; }
+  .plain-box strong { color: var(--ink); }
+
+  .criteria-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .crit-item { display: grid; grid-template-columns: 88px 1fr; gap: 16px; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; background: var(--surface); }
+  @media (max-width: 640px) { .crit-item { grid-template-columns: 1fr; } }
+  .crit-item .crit-tag { display: flex; flex-direction: column; gap: 4px; }
+  .crit-item .crit-code { font-family: "IBM Plex Mono", monospace; font-size: 15px; font-weight: 700; color: var(--accent); }
+  .crit-item .crit-weight { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-muted); }
+  .crit-item h4 { font-size: 13.5px; font-weight: 600; margin: 0 0 5px 0; color: var(--ink); }
+  .crit-item p { font-size: 13px; color: var(--ink-2); line-height: 1.55; margin: 0; }
+
+  .biblio ol { margin: 14px 0 0 0; padding: 0; list-style: none; counter-reset: bib; }
+  .biblio li { counter-increment: bib; position: relative; padding: 13px 4px 13px 30px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+  .biblio li::before { content: counter(bib); position: absolute; left: 2px; top: 13px; font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-muted); font-weight: 700; }
+  .biblio li:last-child { border-bottom: none; }
+  .biblio li a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 2px; }
+  .biblio li a:hover { text-decoration-color: currentColor; }
+  .src-flag { display: inline-block; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; position: relative; top: -1px; }
+  .src-flag.primary { background: var(--verified-bg); color: var(--verified-ink); }
+  .src-flag.gov { background: var(--accent-wash); color: var(--accent); }
+  .src-flag.secondary { background: var(--unverified-bg); color: var(--unverified-ink); }
+
+  .rubric-table-wrap { overflow-x: auto; margin-top: 16px; }
+  table.rubric-table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 12.5px; }
+  table.rubric-table th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); font-weight: 700; padding: 8px 12px; border-bottom: 1px solid var(--border-strong); }
+  table.rubric-table td { padding: 12px 12px; border-bottom: 1px solid var(--border); color: var(--ink-2); vertical-align: top; line-height: 1.5; }
+  table.rubric-table tr:last-child td { border-bottom: none; }
+  table.rubric-table td:first-child { color: var(--ink); font-weight: 500; min-width: 180px; }
+  table.rubric-table td .crit-code { margin-right: 4px; }
+
+  .evidence-sources { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .evidence-sources .lbl { display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; color: var(--ink-muted); margin-bottom: 4px; }
+  .evidence-sources ul { margin: 0; padding: 0; list-style: none; }
+  .evidence-sources li { font-size: 12px; color: var(--ink-muted); line-height: 1.5; margin-bottom: 2px; }
+  .evidence-sources a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 2px; }
+  .evidence-sources a:hover { text-decoration-color: currentColor; }
+
+  .disclaimer { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin: 2px 0 22px 0; font-size: 12.5px; color: var(--ink-muted); line-height: 1.6; }
+  .disclaimer strong { color: var(--ink-2); }
+
+  .about-body a, .disclaimer a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 2px; }
+  .about-body a:visited, .disclaimer a:visited { color: var(--accent); }
+  .about-body a:hover, .disclaimer a:hover { text-decoration-color: currentColor; }
+
+  .bidco-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0 24px 0; }
+  @media (max-width: 760px) { .bidco-grid { grid-template-columns: 1fr; } }
+  .bidco-card { border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; padding: 15px 17px; }
+  .bidco-card .who { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 6px; }
+  .bidco-card p { font-size: 13px; color: var(--ink-2); line-height: 1.55; margin: 0; }
+
+  /* Intro overlay: "The signal clears" (remove this block, the .rk-intro markup and the intro script (the one after the main page script) to drop it) */
+  body.rk-lock { overflow: hidden; }
+  .rk-intro { --rk-red: #c0392b; --rk-amber: #c98500; --rk-green: #1f8a5b; position: fixed; inset: 0; z-index: 8000; overflow-x: hidden; overflow-y: auto; color: var(--ink); cursor: pointer; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .rk-intro { --rk-red: #ef7b6c; --rk-amber: #e6bb63; --rk-green: #5fd09a; } }
+  :root[data-theme="dark"] .rk-intro { --rk-red: #ef7b6c; --rk-amber: #e6bb63; --rk-green: #5fd09a; }
+  .rk-pl, .rk-pr { position: fixed; top: 0; bottom: 0; width: 50.4%; background: var(--bg); transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1); }
+  .rk-pl { left: 0; }
+  .rk-pr { right: 0; }
+  .rk-intro.s5 .rk-pl { transform: translateX(-101%); box-shadow: 2px 0 0 var(--border-strong); }
+  .rk-intro.s5 .rk-pr { transform: translateX(101%); box-shadow: -2px 0 0 var(--border-strong); }
+  .rk-ui { position: relative; min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: calc(env(safe-area-inset-top, 0px) + 16px) 0 calc(env(safe-area-inset-bottom, 0px) + 16px); transition: opacity 0.5s; }
+  .rk-intro.s5 .rk-ui { opacity: 0; }
+  .rk-in { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  .rk-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px 16px; }
+  .rk-eyebrow { font: 600 11px/1.4 "IBM Plex Mono", ui-monospace, monospace; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); }
+  .rk-intro button { font: inherit; cursor: pointer; }
+  .rk-skip { font-size: 13px; font-weight: 600; background: var(--surface); color: var(--ink-2); border: 1px solid var(--border-strong); border-radius: 999px; padding: 7px 14px; }
+  .rk-skip:hover { background: var(--surface-2); }
+  .rk-h { margin: 0; font-size: clamp(30px, 8vw, 54px); line-height: 1.05; letter-spacing: -0.015em; text-wrap: balance; opacity: 0; transform: translateY(8px); transition: opacity 0.5s, transform 0.5s; }
+  .rk-intro.s4 .rk-h, .rk-intro.still .rk-h { opacity: 1; transform: none; }
+  .rk-stage { position: relative; height: 300px; overflow: hidden; }
+  .rk-sc { position: relative; height: 100%; max-width: 760px; margin: 0 auto; }
+  .rk-track { position: absolute; left: 0; right: 0; bottom: 20px; height: 14px; border-top: 3px solid var(--ink-2); background: repeating-linear-gradient(90deg, var(--border-strong) 0 7px, transparent 7px 24px) 0 100% / 100% 9px no-repeat; }
+  .rk-mast { position: absolute; right: 16px; top: 20px; bottom: 34px; width: 34px; }
+  .rk-post { position: absolute; left: 14px; top: 0; bottom: 0; width: 6px; background: var(--ink-2); }
+  .rk-lamps { position: relative; display: grid; gap: 6px; padding: 6px; background: var(--surface); border: 2px solid var(--ink-2); border-radius: 8px; }
+  .rk-lamp { width: 18px; height: 18px; border-radius: 50%; background: var(--surface-2); border: 1.5px solid var(--border-strong); transition: background 0.2s, box-shadow 0.2s, border-color 0.2s; }
+  .rk-intro[data-sig="red"] .rk-lr { background: var(--rk-red); border-color: var(--rk-red); box-shadow: 0 0 14px var(--rk-red); }
+  .rk-intro[data-sig="amber"] .rk-la { background: var(--rk-amber); border-color: var(--rk-amber); box-shadow: 0 0 14px var(--rk-amber); }
+  .rk-intro[data-sig="green"] .rk-lg { background: var(--rk-green); border-color: var(--rk-green); box-shadow: 0 0 14px var(--rk-green); }
+  .rk-boom { position: absolute; right: 33px; top: 140px; width: 26%; height: 10px; border: 1.5px solid var(--ink-2); border-radius: 3px; background: repeating-linear-gradient(90deg, var(--rk-red) 0 14px, var(--surface) 14px 28px); transform-origin: 100% 50%; transition: transform 0.7s cubic-bezier(0.3, 0.9, 0.4, 1); }
+  .rk-intro.s3 .rk-boom { transform: rotate(36deg); }
+  .rk-train { position: absolute; left: 16px; right: 16px; bottom: 34px; display: flex; gap: 6px; transform: translateX(110vw); }
+  .rk-intro.s1 .rk-train { transform: none; transition: transform 1.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s; }
+  .rk-car { position: relative; flex: 1 1 0; min-width: 0; height: 80px; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 5px 11px; background: var(--surface); border: 1.5px solid var(--border-strong); border-bottom: 0; border-radius: 9px 9px 2px 2px; }
+  .rk-car:first-child { border-radius: 26px 9px 2px 2px; padding-left: 9px; }
+  .rk-car::before { content: ""; position: absolute; left: 5px; right: 5px; top: 8px; height: 11px; border-radius: 2px; background: repeating-linear-gradient(90deg, var(--accent-wash) 0 12px, transparent 12px 16px); }
+  .rk-car:first-child::before { left: 14px; }
+  .rk-car::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--c); }
+  .rk-car em { font: 600 10px "IBM Plex Mono", monospace; font-style: normal; color: var(--ink-muted); }
+  .rk-car b { font-size: 10.5px; font-weight: 600; line-height: 1.2; color: var(--ink); }
+  .rk-w { position: absolute; bottom: -7px; width: 14px; height: 14px; border-radius: 50%; background: var(--ink-2); border: 2px solid var(--bg); z-index: 1; }
+  .rk-w:nth-of-type(1) { left: 14%; }
+  .rk-w:nth-of-type(2) { right: 14%; }
+  .rk-cap { margin: 0; font: 500 13px/1.5 "IBM Plex Mono", ui-monospace, monospace; letter-spacing: 0.02em; color: var(--ink-2); min-height: 1.5em; }
+  .rk-go { align-self: flex-start; background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); font-size: 15px; font-weight: 600; padding: 12px 22px; border-radius: 6px; }
+  .rk-intro button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .rk-intro.still .rk-train { transform: none; }
+  .rk-intro.still .rk-boom { transform: rotate(36deg); }
+  @media (min-width: 600px) { .rk-car b { font-size: 12.5px; } .rk-car em { font-size: 11px; } .rk-car { padding: 0 8px 12px; } .rk-car:first-child { padding-left: 14px; } .rk-stage { height: 310px; } }
+  @media (prefers-reduced-motion: reduce) { .rk-pl, .rk-pr, .rk-ui, .rk-h, .rk-train, .rk-boom, .rk-lamp { transition: none !important; } }
+</style>
+
+<div class="page">
+
+  <div class="masthead">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Rail Procurement Security Scorecard — Interactive Sensitivity Test</div>
+        <h1>Does the ranking hold?</h1>
+        <p class="dek">The Sydney Metro West worked comparison, stress-tested against how you weigh the seven criteria and how strictly you score evidence that couldn't be verified. Built from public information only, on the honour system of showing every assumption rather than hiding it — reweigh it, flip the evidentiary standard, and see what actually moves versus what was baked in from the start.</p>
+        <div class="tabbar" id="tabbar" role="tablist">
+          <button class="tab-btn active" data-tab="tool" role="tab" aria-selected="true">Interactive scorecard</button>
+          <button class="tab-btn" data-tab="about" role="tab" aria-selected="false">Why this matters</button>
+          <button class="tab-btn" data-tab="rubric" role="tab" aria-selected="false">Full rubric</button>
+          <button class="tab-btn" data-tab="brief" role="tab" aria-selected="false">One-page brief</button>
+          <button class="tab-btn" data-tab="sourcing" role="tab" aria-selected="false">Sourcing</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="n">7</div><div class="l">weighted criteria, locked before any bidder was scored</div></div>
+        <div class="hero-stat"><div class="n">4</div><div class="l">bidders compared, using public information only</div></div>
+        <div class="hero-stat"><div class="n">$0</div><div class="l">New South Wales's (NSW) mandated minimum weighting for security criteria in tenders</div></div>
+        <div class="hero-stat"><div class="n">33 pts</div><div class="l">MTR–CRRC's gap to the leader at baseline weights, strict scoring</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout" id="toolPanel">
+
+    <p class="tool-intro">This is the working tool: reweigh the seven criteria, flip how strictly unverified evidence gets scored, and click any heatmap cell for its sourcing. New to why any of this matters or what the criteria actually mean? Start with <button type="button" class="tab-link" data-jump="about">Why This Matters</button> instead.</p>
+
+    <aside class="panel controls" aria-label="Scoring controls">
+      <div class="control-group">
+        <h2>Scoring convention</h2>
+        <div class="segmented" role="group" id="modeToggle">
+          <button data-mode="strict" class="seg-btn active">Strict</button>
+          <button data-mode="neutral" class="seg-btn">Neutral</button>
+        </div>
+        <p class="hint" id="modeHint"></p>
+      </div>
+
+      <div class="control-group">
+        <h2>Weight scenario</h2>
+        <div class="preset-list" id="presetList"></div>
+      </div>
+
+      <div class="control-group">
+        <h2>Criterion weights</h2>
+        <div class="sliders" id="sliders"></div>
+      </div>
+    </aside>
+
+    <main class="panel main-content">
+      <section class="ranking-section">
+        <h2>Live ranking · weighted score /100</h2>
+        <div class="ranking-chart" id="rankingChart"></div>
+        <p class="caption" id="rankingCaption"></p>
+      </section>
+
+      <section class="heatmap-section">
+        <h2>Evidence heatmap</h2>
+        <div class="plain-box" style="margin-bottom:14px;">
+          <h4>How to read this grid</h4>
+          <p>Each row is a bidder, each column one of the seven criteria (hover a column header for its full name). <strong>Colour = score</strong>: pale means a low score (1, more disclosure/safety concerns found), dark means a high score (5, well-documented and disclosed) — it's the same scale as the legend below, not a red/green "danger" meter. <strong>Border style = how solid the evidence is</strong>: a solid border means the score is backed by a specific public source; a dashed border means no public evidence was found either way for that bidder on that criterion, so it was scored cautiously rather than assumed to be fine. Click or tab to any cell to open its full evidence and source links in the panel on the right.</p>
+        </div>
+        <p class="hint">Click any cell for its full evidence and sourcing. Dashed border = no public evidence found either way (scored, not assumed).</p>
+        <div class="heatmap-wrap">
+          <table class="heatmap" id="heatmapTable"></table>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><span class="mono">Score</span></div>
+          <div class="legend-scale" id="legendScale"></div>
+          <div class="legend-item"><span class="legend-solid"></span> verified evidence</div>
+          <div class="legend-item"><span class="legend-dash"></span> unverified / no evidence found</div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="panel evidence" aria-label="Evidence detail" id="evidencePanel"></aside>
+
+  </div>
+
+  <section class="about-panel panel" id="aboutPanel" hidden>
+
+    <div class="about-eyebrow">Why This Matters</div>
+    <h2 class="about-h1">What this tool is, who it's for, and where the numbers come from</h2>
+    <p class="about-lede">What the problem actually is, who has a stake in it, what each of the seven criteria is really asking, and exactly where every number came from.</p>
+
+    <h3 class="section-label">01 — Who this affects, and why</h3>
+    <div class="split-row">
+      <p class="about-body">Australia's transit agencies buy driverless trains and signalling systems roughly once a generation, and those systems then run for 30+ years inside the country's critical infrastructure — carrying millions of passengers a year. When agencies compare bids, price is easy to compare: it's just a number. Things like who's in control of the software running the trains, or who can get into it remotely after it's installed, are much harder to put a number on — so there's rarely a clear, public rule for weighing one against the other. In practice, that usually means the cheapest bid wins by default, not because anyone stopped caring about security, but because nothing requires agencies to weigh the two openly before signing. This scorecard is one attempt at a rule for doing that, built entirely from information that's already public.</p>
+      <div class="mini-stats">
+        <div class="mini-stat"><div class="n">Once a generation</div><div class="l">how often a transit agency typically makes this kind of purchase</div></div>
+        <div class="mini-stat"><div class="n">30+ years</div><div class="l">how long the resulting trains and signalling stay in service</div></div>
+        <div class="mini-stat"><div class="n">2032</div><div class="l">Sydney Metro West's fleet is due in service by this year</div></div>
+      </div>
+    </div>
+    <div class="stake-grid">
+      <div class="stake-card"><div class="who">Board &amp; Executives</div><p>A credible, neutral scorecard is a market-shaping asset for any rail manufacturer — it turns "security-conscious procurement" from a slogan into something a bid can actually be measured against and win on, instead of losing to price alone.</p></div>
+      <div class="stake-card"><div class="who">Bid &amp; Government-Affairs Teams</div><p>There's currently no consistent rubric that makes a supplier's security credentials legible to a procurement panel weighing them against a cheaper competitor. This gives that argument a structure and a citation trail, not just a claim in a cover letter.</p></div>
+      <div class="stake-card"><div class="who">Transit Agencies &amp; Government</div><p>Agencies are making a decades-long infrastructure decision under real political pressure, usually with no standard way to weigh "this bid is $50M cheaper" against "this bid raises supply-chain concerns." A published, criteria-based framework replaces ad hoc, politically-loaded judgement calls with something repeatable and defensible.</p></div>
+      <div class="stake-card"><div class="who">General Public &amp; Taxpayers</div><p>These are public-money decisions about systems that carry millions of commuters every year. When there's no consistent way to weigh security against cost, the public usually only learns why a decision was made well after the contract is already signed — if at all.</p></div>
+    </div>
+
+    <h3 class="section-label">02 — What each criterion actually measures</h3>
+    <div class="plain-box">
+      <h4>How to read the scores</h4>
+      <p>Every bidder is scored 0–5 on each of the seven criteria below, using only information that's publicly available — no confidential bids, no classified assessments. A criterion's <strong>weight</strong> is how much it counts toward the final 0–100 total; the heaviest-weighted criterion is the one judged most likely to actually cause a security failure if it goes wrong, not the one that sounds the most alarming. Where no public evidence exists either way, that's marked <strong>unverified</strong> and scored cautiously rather than assumed to be fine — you can see exactly which scores that affects in the heatmap's dashed borders.</p>
+    </div>
+    <div class="criteria-list" id="criteriaList"></div>
+
+    <h3 class="section-label">03 — Where this information comes from</h3>
+    <div class="plain-box">
+      <h4>Sourcing rules</h4>
+      <p>Every score in this tool traces to a public source — see the <button type="button" class="tab-link" data-jump="sourcing">Sourcing</button> tab for the full, numbered list. Company self-disclosures (certifications, ownership pages, press releases) are marked <strong>Primary</strong>; official government or court records (DOJ settlements, government procurement policy) are marked <strong>Government</strong>; independent news or investigative reporting is marked <strong>Secondary</strong>. Nothing here is a classified or clearance-grade assessment — some genuinely relevant facts (a specific contract's remote-access terms, a company's full tier-2 supplier list) simply aren't public for any bidder, and are scored as unverified rather than guessed at.</p>
+    </div>
+
+  </section>
+
+  <section class="about-panel panel" id="rubricPanel" hidden>
+    <div class="about-eyebrow">Full Rubric</div>
+    <h2 class="about-h1">The scoring architecture, criterion by criterion</h2>
+    <p class="about-lede">The yardstick itself — what a 5 looks like, what a 0 looks like, and how the seven scores combine into one number. Fixed before any bidder was scored; the interactive tab lets you change the weights, not the definitions below.</p>
+    <div class="rubric-table-wrap">
+      <table class="rubric-table" id="rubricTable"></table>
+    </div>
+    <div class="plain-box" style="margin-top:20px;">
+      <h4>How the final score is built</h4>
+      <p>Each bidder's seven 0–5 scores are multiplied by their criterion's weight, summed, then scaled to 0–100. Weights are set before scoring and shown as a percentage of the total — the <button type="button" class="tab-link" data-jump="tool">interactive tab</button> lets you change them and watch every bidder's total update live.</p>
+    </div>
+  </section>
+
+  <section class="about-panel panel" id="briefPanel" hidden>
+    <div class="about-eyebrow">One-Page Brief</div>
+    <h2 class="about-h1">The one-page case for security-weighted procurement</h2>
+    <p class="about-lede">Written for a bid or government-affairs team to forward or print without touching a slider — the same argument this tool makes, as a standalone one-pager.</p>
+
+    <div class="disclaimer"><strong>Not legal advice, and not the final word.</strong> This is an independent research and analysis exercise built entirely from publicly available information — company disclosures, government and court records, and reputable news reporting, all linked in the <button type="button" class="tab-link" data-jump="sourcing">Sourcing</button> tab. It doesn't allege anything beyond what's already a matter of public record, isn't a certified or clearance-grade security assessment, and its scores and weights are open to reasonable disagreement. It is not produced, commissioned, endorsed, or reviewed by Alstom, Siemens Mobility, Hyundai Rotem, UGL, CRRC, MTR Corporation, or any other party named here.</div>
+
+    <h3 class="section-label">The problem</h3>
+    <p class="about-body">Transit agencies have no consistent, defensible way to weigh security and foreign-interference risk against price in rail procurement — so price wins by default. This isn't hypothetical: <a href="https://www.info.buy.nsw.gov.au/buyer-guidance/source/select-suppliers/evaluation-criteria" target="_blank" rel="noopener">New South Wales's (NSW) own procurement policy</a> requires agencies to disclose the <em>relative importance</em> of tender evaluation criteria, and mandates a minimum 10% non-price weighting for small and medium enterprise (SME) participation on contracts over $3M — but sets no equivalent mandated minimum for security or national-interest criteria. The gap is procedural, not just political.</p>
+
+    <h3 class="section-label">Who's bidding</h3>
+    <div class="bidco-grid">
+      <div class="bidco-card"><div class="who">Siemens Mobility</div><p>The rail division of Siemens AG, a publicly listed German industrial group. No state ownership at any level of its corporate structure — one of the two largest rail-equipment manufacturers in this field.</p></div>
+      <div class="bidco-card"><div class="who">Alstom</div><p>French rolling-stock and signalling manufacturer, listed on Euronext Paris. No state entity currently holds a controlling stake — its largest shareholder is Canada's CDPQ pension fund — though the French state guaranteed a 2004 rescue loan.</p></div>
+      <div class="bidco-card"><div class="who">Hyundai Rotem / UGL</div><p>A joint bid pairing Hyundai Rotem (the rail-manufacturing arm of South Korea's Hyundai Motor Group) with UGL, an Australian rail-maintenance and engineering firm owned by CIMIC Group, itself majority-controlled by Spain's ACS/Hochtief.</p></div>
+      <div class="bidco-card"><div class="who">MTR–CRRC Consortium</div><p>A joint bid pairing MTR Corporation (Hong Kong's metro operator, roughly 75% owned by the Hong Kong SAR Government) with CRRC, China's state-owned rolling-stock manufacturer — the world's largest by output — overseen by China's State-owned Assets Supervision and Administration Commission (SASAC).</p></div>
+    </div>
+
+    <h3 class="section-label">Why this reads as judgment, not advocacy</h3>
+    <p class="about-body">A scorecard that never costs any bidder anything isn't neutral, it's marketing. Applied symmetrically, compliance/integrity history costs multiple bidders real points: <a href="https://www.justice.gov/opa/pr/alstom-sentenced-pay-772-million-criminal-fine-resolve-foreign-bribery-charges" target="_blank" rel="noopener">Alstom's 2014 bribery settlement</a> ($772M, the largest Foreign Corrupt Practices Act (FCPA) fine at the time) and <a href="https://www.justice.gov/archive/opa/pr/2008/December/08-crm-1105.html" target="_blank" rel="noopener">Siemens AG's 2008 settlement</a> ($800M, the record before Alstom's) both score below a clean record — and <a href="https://www.scmp.com/news/hong-kong/hong-kong-economy/article/2152798/mtr-corporation-hands-file-anti-corruption-agency" target="_blank" rel="noopener">MTR's Hung Hom scandal</a> and <a href="https://www.dailymaverick.co.za/article/2021-03-30-the-chinese-railway-rolling-stock-corporation-china-inc-boards-the-state-capture-train/" target="_blank" rel="noopener">CRRC's South Africa "Locorruption" links</a> do the same on the other side. Ownership transparency, in turn, doesn't penalise state links as such — it penalises the absence of disclosed governance safeguards around them.</p>
+
+    <h3 class="section-label">Using this in a bid response</h3>
+    <div class="crit-item" style="grid-template-columns:1fr; margin-bottom:10px;"><div><h4>Ask how it's weighted, in writing</h4><p>Before drafting a word of your response, find out how heavily the tender actually weighs security against price. If the Request for Proposal (RFP — the document that spells out what's being bought and how bids will be judged) doesn't say, ask the agency directly: NSW policy already requires agencies to disclose the relative importance of each evaluation criterion for procurements it covers, so this is a fair, and usually answerable, question.</p></div></div>
+    <div class="crit-item" style="grid-template-columns:1fr; margin-bottom:10px;"><div><h4>Show it, don't just say it</h4><p>A certification, an audit report, or a specific contract clause about who can access your systems counts for more with an evaluator than a paragraph claiming your company "takes security seriously." This scorecard's seven criteria are all things that can be pointed to in writing — treat that as a checklist for what your bid response should actually include.</p></div></div>
+    <div class="crit-item" style="grid-template-columns:1fr; margin-bottom:10px;"><div><h4>Don't hide a compliance history — explain it</h4><p>If your company has a past bribery or integrity finding, assume the evaluator already knows or will find out. A finding that's been fully resolved — with a completed independent monitorship and real time elapsed since — reads very differently from an unresolved one, but only if you're the one who explains that history, rather than leaving it to be discovered mid-evaluation.</p></div></div>
+    <div class="crit-item" style="grid-template-columns:1fr;"><div><h4>Close the gaps that are just undisclosed, not actually bad</h4><p>Several of this framework's lower scores exist simply because information isn't public yet — a tier-2 supplier list, a specific remote-access policy — not because the underlying answer is bad. Publishing what your company already does internally often costs nothing, and can move your own score up under this framework or one like it.</p></div></div>
+  </section>
+
+  <section class="about-panel panel" id="sourcingPanel" hidden>
+    <div class="about-eyebrow">Sourcing</div>
+    <h2 class="about-h1">Every fact, traced to where it came from</h2>
+    <p class="about-lede">Company self-disclosures are marked <strong>Primary</strong>; official government or court records are marked <strong>Government</strong>; independent news or investigative reporting is marked <strong>Secondary</strong>.</p>
+    <div class="biblio">
+      <ol id="biblioList"></ol>
+    </div>
+  </section>
+
+  <div class="page-footer">
+    <strong>Methodology:</strong> seven criteria, weighted, scored 0–5 from public sources only. "Unverified" means no evidence was found — not that the finding is bad. This is a public-information methodology demonstration, not a security clearance-grade assessment.
+  </div>
+
+</div>
+
+<div class="rk-intro" id="rkIntro" role="dialog" aria-modal="true" aria-labelledby="rkTitle" data-sig="">
+  <div class="rk-pl"></div><div class="rk-pr"></div>
+  <div class="rk-ui">
+    <div class="rk-in rk-top">
+      <div class="rk-eyebrow">Sydney Metro West scorecard</div>
+      <button type="button" class="rk-skip" id="rkSkip">Skip intro ×</button>
+    </div>
+    <div class="rk-in"><h2 class="rk-h" id="rkTitle">Does the ranking hold?</h2></div>
+    <div class="rk-stage" aria-hidden="true">
+      <div class="rk-track"></div>
+      <div class="rk-sc">
+        <div class="rk-mast"><div class="rk-post"></div><div class="rk-lamps"><span class="rk-lamp rk-lr"></span><span class="rk-lamp rk-la"></span><span class="rk-lamp rk-lg"></span></div></div>
+        <div class="rk-boom"></div>
+        <div class="rk-train"><div class="rk-car" style="--c:var(--bidder-siemens)"><em>1</em><b>Siemens Mobility</b><span class="rk-w"></span><span class="rk-w"></span></div><div class="rk-car" style="--c:var(--bidder-alstom)"><em>2</em><b>Alstom</b><span class="rk-w"></span><span class="rk-w"></span></div><div class="rk-car" style="--c:var(--bidder-hyundai)"><em>3</em><b>Hyundai Rotem/UGL</b><span class="rk-w"></span><span class="rk-w"></span></div><div class="rk-car" style="--c:var(--bidder-mtrcrrc)"><em>4</em><b>MTR–CRRC Consortium</b><span class="rk-w"></span><span class="rk-w"></span></div></div>
+      </div>
+    </div>
+    <div class="rk-in"><p class="rk-cap" id="rkCap" aria-live="polite">Four bids on the line…</p></div>
+    <div class="rk-in" style="display:flex"><button type="button" class="rk-go" id="rkGo" hidden>Enter the scorecard</button></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  "use strict";
+
+  var CRITERIA = [
+    {id:"ownership",   code:"C1", name:"Ownership & state-control transparency", weight:15},
+    {id:"provenance",  code:"C2", name:"Signalling/software provenance & remote-access governance", weight:20},
+    {id:"supplychain", code:"C3", name:"Supply-chain auditability", weight:15},
+    {id:"incident",    code:"C4", name:"Cyber-incident disclosure history", weight:15},
+    {id:"compliance",  code:"C5", name:"Compliance & integrity history", weight:10},
+    {id:"standards",   code:"C6", name:"Standards alignment", weight:15},
+    {id:"datasov",     code:"C7", name:"Operational-data sovereignty", weight:10}
+  ];
+
+  var BIDDERS = [
+    {id:"siemens", name:"Siemens Mobility", color:"var(--bidder-siemens)"},
+    {id:"alstom", name:"Alstom", color:"var(--bidder-alstom)"},
+    {id:"hyundai", name:"Hyundai Rotem/UGL", color:"var(--bidder-hyundai)"},
+    {id:"mtrcrrc", name:"MTR–CRRC Consortium", color:"var(--bidder-mtrcrrc)"}
+  ];
+
+  var SCORES = {
+    mtrcrrc: {
+      ownership:   {score:2, verified:true,  evidence:"Both consortium partners' state links are publicly disclosed: MTR Corporation is roughly 75% owned by the Hong Kong SAR Government (Hong Kong Stock Exchange (HKEX)-listed for the remainder); CRRC is state-owned via China's State-owned Assets Supervision and Administration Commission (SASAC) and appears on the US Department of Defense's (DoD) Section 1260H 'Chinese Military Company' list. Disclosed, but no governance safeguard separating either partner from state control was found.", sources:[3,1]},
+      provenance:  {score:1, verified:false, evidence:"CRRC is the disclosed source of the signalling and platform-door software, but no public documentation of remote-access governance or audit terms for this specific contract was found.", sources:[2]},
+      supplychain: {score:1, verified:false, evidence:"No tier-2 supplier disclosure found. The Rail Security Alliance's opacity claims (its June 2021 letter to the US Secretary of Defense) come from a US rail-manufacturing lobbying group whose members compete with CRRC — attributed evidence, not an independently verified finding.", sources:[0]},
+      incident:    {score:2, verified:false, evidence:"No specific documented cyber incident found for CRRC or MTR signalling systems in this research pass. Scored identically to all four bidders — an absent public incident record isn't treated as evidence of a clean one.", sources:[]},
+      compliance:  {score:1, verified:true,  evidence:"CRRC's predecessor (China North Railway) was named in South Africa's Transnet 'Locorruption' state-capture investigation — Gupta-network kickbacks tied to a 2014 locomotive tender (Daily Maverick / OpenSecrets investigative reporting).", sources:[7]},
+      standards:   {score:1, verified:false, evidence:"No documented engagement with CENELEC TS 50701 or IEC 63452 found for CRRC or MTR.", sources:[]},
+      datasov:     {score:1, verified:false, evidence:"No bid-specific data-residency or telemetry-access terms publicly confirmed.", sources:[]}
+    },
+    alstom: {
+      ownership:   {score:4, verified:true,  evidence:"No controlling state shareholder currently — the largest holder is a Canadian pension fund (Caisse de dépôt et placement du Québec (CDPQ), ~17.5%). France's 2004 loan/guarantee rescue of Alstom is on public record as historical state backing, but it never converted into an ongoing controlling stake.", sources:[4]},
+      provenance:  {score:3, verified:true,  evidence:"Mature public cybersecurity architecture documentation, including its Certified Security Gateway product. Bid-specific remote-access governance terms for Sydney Metro West are not publicly confirmed.", sources:[]},
+      supplychain: {score:2, verified:false, evidence:"Alstom operates long-standing Chinese joint-venture traction/signalling manufacturing (e.g. SATEE, since 2011) for the Chinese domestic market. No confirmed link between that manufacturing base and component sourcing for Western-market bids.", sources:[]},
+      incident:    {score:2, verified:false, evidence:"No specific documented cyber incident found in this research pass.", sources:[]},
+      compliance:  {score:2, verified:true,  evidence:"Pleaded guilty to bribery in the US in December 2014 — a $772M criminal fine, the largest Foreign Corrupt Practices Act (FCPA)-related criminal penalty at the time. Operated under a compliance monitorship since completed.", sources:[5]},
+      standards:   {score:4, verified:true,  evidence:"Publicly positioned as an early contributor/advocate for CENELEC TS 50701 (finalized 2021) and engaged in IEC 63452's ongoing development.", sources:[9,11]},
+      datasov:     {score:2, verified:false, evidence:"General published cybersecurity-by-design posture; no bid-specific data-residency terms confirmed.", sources:[]}
+    },
+    siemens: {
+      ownership:   {score:4, verified:true,  evidence:"No state ownership found. Siemens Mobility is a wholly owned subsidiary of Siemens AG, a publicly listed German multinational with a diversified institutional/private shareholder base.", sources:[]},
+      provenance:  {score:3, verified:true,  evidence:"TÜV SÜD-certified digital rail vehicle architecture and IEC 62443-certified critical-infrastructure products. Bid-specific remote-access terms for Sydney Metro West are not publicly confirmed.", sources:[12]},
+      supplychain: {score:2, verified:false, evidence:"No tier-2 supply-chain disclosure found either way in this research pass.", sources:[]},
+      incident:    {score:2, verified:false, evidence:"No specific documented cyber incident found in this research pass.", sources:[]},
+      compliance:  {score:2, verified:true,  evidence:"Parent Siemens AG's 2008 global bribery settlement — $800M combined US Securities and Exchange Commission (SEC) and Department of Justice (DOJ) fines (about $1.6bn including German authorities) — was the record Foreign Corrupt Practices Act (FCPA)-related case before Alstom's 2014 settlement, and reshaped corporate anti-corruption compliance standards. Predates the current Siemens Mobility divisional structure, but sits under the same corporate group.", sources:[6]},
+      standards:   {score:5, verified:true,  evidence:"Best-documented standards posture of the four bidders: TÜV SÜD certifications, IEC 62443 certifications, and a published cybersecurity white-paper series (2023–2025).", sources:[12]},
+      datasov:     {score:2, verified:false, evidence:"General published cybersecurity-by-design posture; no bid-specific data-residency terms confirmed.", sources:[]}
+    },
+    hyundai: {
+      ownership:   {score:4, verified:true,  evidence:"No state ownership found on either side: Hyundai Rotem sits within Hyundai Motor Group (private); UGL, its Australian joint-venture (JV) partner, is owned by CIMIC Group, majority-controlled by Spain's ACS/Hochtief (private).", sources:[]},
+      provenance:  {score:2, verified:true,  evidence:"Holds Safety Integrity Level 4 (SIL4) safety certification for its electronic interlocking systems (a safety, not cybersecurity, standard) and obtained its first international cybersecurity certification in October 2025 — real, but recent and less mature than Alstom's or Siemens'.", sources:[13]},
+      supplychain: {score:2, verified:false, evidence:"No tier-2 supply-chain disclosure found either way in this research pass.", sources:[]},
+      incident:    {score:2, verified:false, evidence:"No specific documented cyber incident found in this research pass.", sources:[]},
+      compliance:  {score:3, verified:false, evidence:"No adjudicated integrity finding located against Hyundai Rotem/UGL specifically. Separately, the NSW Auditor-General criticised Transport for NSW's management of the Hyundai Rotem/UGL New Intercity Fleet contract (cost overrun, delays) — but that is a buyer-side procurement failure, not a vendor integrity finding, so it is not scored here.", sources:[15]},
+      standards:   {score:3, verified:true,  evidence:"First international rail cybersecurity certification obtained October 2025 — genuine engagement, but later and less mature than Alstom's or Siemens'.", sources:[13]},
+      datasov:     {score:2, verified:false, evidence:"General posture only; no bid-specific data-residency terms confirmed.", sources:[]}
+    }
+  };
+
+  var PRESETS = {
+    balanced:    {id:"balanced",    label:"Balanced (locked baseline)", weights:{ownership:15, provenance:20, supplychain:15, incident:15, compliance:10, standards:15, datasov:10}},
+    securitymax: {id:"securitymax", label:"Security-maximalist",        weights:{ownership:20, provenance:25, supplychain:20, incident:20, compliance:5,  standards:5,  datasov:5}},
+    governance:  {id:"governance",  label:"Governance & integrity focus", weights:{ownership:20, provenance:10, supplychain:10, incident:10, compliance:25, standards:20, datasov:5}},
+    minimal:     {id:"minimal",     label:"Minimal scrutiny (flattened)", weights:{ownership:14, provenance:15, supplychain:14, incident:14, compliance:15, standards:14, datasov:14}}
+  };
+
+  var CRIT_EXPLAIN = {
+    ownership: "Who actually owns or controls the bidding company, and is that ownership disclosed with safeguards separating it from political influence? This isn't about penalising any government's ownership as such — it's about whether that ownership is public knowledge and comes with independent governance, versus being undisclosed or unchecked.",
+    provenance: "For a driverless train, the signalling and control software is the part that keeps trains apart and moving safely. This asks who built it, and — critically — who can remotely update or access it once it's running, and whether that access is logged and auditable by the transit agency itself. It carries the heaviest weight because it's the most direct route to an actual safety or security failure.",
+    supplychain: "Modern trains are assembled from thousands of components sourced from dozens of sub-suppliers. This asks whether a bidder can show, and let an agency independently check, where the safety- and security-critical parts actually come from — or whether that's simply unknown.",
+    incident: "Has this company, or its major products, had a documented cybersecurity incident, and did they disclose it? Every bidder is scored the same when no incident record exists either way, so none is rewarded just for attracting less scrutiny than its competitors.",
+    compliance: "Has this company or its parent corporate group been found guilty of bribery, corruption, or comparably serious misconduct by a court or regulator? Scored identically regardless of nationality — this is the criterion most likely to cost a bidder points it might not expect, which is part of what keeps the framework honest rather than one-sided.",
+    standards: "Rail cybersecurity has real, independently published technical standards — like CENELEC TS 50701 — a company can be certified against, plus newer ones still being finalised, like IEC 63452, that a company can at least be seen contributing to. This measures how seriously a bidder has engaged with the actual technical rulebook, not how loudly it talks about security.",
+    datasov: "Trains and signalling systems constantly generate operational data — train locations, performance, diagnostic logs. This asks who can access that data, where it's stored, and whether the transit agency has real contractual control over it, rather than the manufacturer having it by default."
+  };
+
+  var RUBRIC_DEFS = {
+    ownership: {five:"Ownership is fully public; any state stake comes with disclosed governance safeguards (arm's-length board, no state veto rights).", zero:"Majority state ownership with no disclosed separation from the state."},
+    provenance: {five:"Software source is disclosed; remote update/maintenance access is contractually restricted, logged, and auditable by the customer.", zero:"No disclosure of who can remotely update safety-critical systems, or under what audit."},
+    supplychain: {five:"Tier-2 supplier disclosure and component provenance tracking are published or contractually offered.", zero:"No visibility into sub-suppliers of safety- or security-critical components."},
+    incident: {five:"Consistent, timely public or regulatory disclosure of past incidents within a defined evidence window.", zero:"Known incidents undisclosed, or no verifiable record either way (flagged, not scored as good)."},
+    compliance: {five:"Clean record, or fully remediated violations with a completed independent monitorship.", zero:"Recent, unremediated corruption or labor findings from a credible regulator or court."},
+    standards: {five:"Certified against finalized standards (TS 50701 / IEC 62443); documented engagement in still-draft ones (IEC 63452).", zero:"No public standards engagement or certification."},
+    datasov: {five:"Contractual data-residency terms plus customer control over telemetry/diagnostic data access.", zero:"Data handled outside customer jurisdiction, with no disclosed controls."}
+  };
+
+  function renderRubricTable() {
+    var el = document.getElementById("rubricTable");
+    if (!el) return;
+    var rows = '<tr><th>Criterion</th><th>Weight</th><th>What a 5 looks like</th><th>What a 0 looks like</th></tr>';
+    CRITERIA.forEach(function(c){
+      rows += '<tr><td><span class="crit-code mono">' + c.code + '</span> ' + c.name + '</td><td class="mono">' + c.weight + '%</td><td>' + RUBRIC_DEFS[c.id].five + '</td><td>' + RUBRIC_DEFS[c.id].zero + '</td></tr>';
+    });
+    el.innerHTML = rows;
+  }
+
+  var SOURCES = [
+    {text:"Rail Security Alliance's June 2021 letter to the US Secretary of Defense — the origin of the “100% state-owned, PLA-controlled,” “83% of global rail market,” and forced-labor supply-chain claims about CRRC.", url:"https://www.rtands.com/passenger/rail-security-alliance-expresses-concern-about-crrc-to-u-s-dept-of-defense/", label:"Railway Track & Structures, on the RSA letter", flag:"secondary"},
+    {text:"CRRC's listing on the US Department of Defense's “Chinese Military Company” (Section 1260H) register.", url:"https://railsecurity.org/wp-content/uploads/2022/10/Entity-List-Press-Release.101122.pdf", label:"Rail Security Alliance, reporting on the DoD list", flag:"secondary"},
+    {text:"The MTR–CRRC consortium's win of the Sydney Metro West trains, signalling and platform-doors contract.", url:"https://metrorailtoday.com/news/mtrcrrc-consortium-wins-major-contract-for-sydney-metro-west-project", label:"Metro Rail Today", flag:"secondary"},
+    {text:"MTR Corporation's Hong Kong SAR Government ownership, disclosed at roughly 75%.", url:"https://www.mtr.com.hk/en/corporate/investor/investor_faq.html", label:"MTR Corporation investor FAQ", flag:"primary"},
+    {text:"Alstom's current shareholder structure — no controlling state shareholder; largest holder is a Canadian pension fund.", url:"https://www.alstom.com/finance/information-alstom-shareholders", label:"Alstom investor relations", flag:"primary"},
+    {text:"Alstom's guilty plea and $772M criminal fine for bribery — the largest FCPA-related criminal penalty at the time.", url:"https://www.justice.gov/opa/pr/alstom-sentenced-pay-772-million-criminal-fine-resolve-foreign-bribery-charges", label:"US Department of Justice", flag:"gov"},
+    {text:"Siemens AG's 2008 global bribery settlement — $800M in combined SEC/DOJ fines, the record FCPA-related case before Alstom's.", url:"https://www.justice.gov/archive/opa/pr/2008/December/08-crm-1105.html", label:"US Department of Justice (archived release)", flag:"gov"},
+    {text:"CRRC's predecessor, China North Railway, named in South Africa's Transnet “Locorruption” state-capture investigation.", url:"https://www.dailymaverick.co.za/article/2021-03-30-the-chinese-railway-rolling-stock-corporation-china-inc-boards-the-state-capture-train/", label:"Daily Maverick investigative reporting", flag:"secondary"},
+    {text:"MTR's Hung Hom station “shoddy work” scandal, including corruption allegations against a contractor that MTR's own public report was found to have omitted.", url:"https://www.scmp.com/news/hong-kong/hong-kong-economy/article/2152798/mtr-corporation-hands-file-anti-corruption-agency", label:"South China Morning Post", flag:"secondary"},
+    {text:"CENELEC TS 50701, the finalized 2021 railway cybersecurity standard.", url:"https://www.cencenelec.eu/news-events/news/2021/eninthespotlight/2021-06-10-new-clc-ts-50701-railways-cybersecurity/", label:"CEN-CENELEC", flag:"primary"},
+    {text:"IEC 63452, the still-in-draft railway cybersecurity standard (prEN stage, not yet published).", url:"https://standards.iteh.ai/catalog/standards/clc/bbbb2fd3-ceae-4689-b161-1fa21ee2c4b3/pren-iec-63452-2025", label:"iTeh Standards catalogue listing", flag:"secondary"},
+    {text:"Alstom's public positioning as an early contributor to TS 50701 and to IEC 63452's ongoing development.", url:"https://www.alstom.com/press-releases-news/2024/3/towards-first-railway-cybersecurity-international-standard-why-standards-are-important-secure-railways", label:"Alstom press release", flag:"primary"},
+    {text:"Siemens Mobility's IEC 62443 critical-infrastructure certifications and TÜV SÜD-certified digital rail vehicle architecture.", url:"https://press.siemens.com/global/en/pressrelease/siemens-mobility-gains-iec-62443-standard-cybersecurity-certifications-critical", label:"Siemens press release", flag:"primary"},
+    {text:"Hyundai Rotem's first international rail cybersecurity certification, obtained October 2025.", url:"https://www.asiae.co.kr/en/article/2025102209390904073", label:"Asia Business Daily", flag:"secondary"},
+    {text:"NSW Government procurement guidance confirming no mandated minimum weighting for security/national-interest criteria, versus a mandated 10% non-price minimum for small and medium enterprise (SME) participation on contracts over $3M.", url:"https://www.info.buy.nsw.gov.au/buyer-guidance/source/select-suppliers/evaluation-criteria", label:"buy.nsw.gov.au, NSW Government", flag:"gov"},
+    {text:"The NSW Auditor-General's criticism of Transport for NSW's management of the Hyundai Rotem/UGL New Intercity Fleet contract (cost overrun, delays) — a buyer-side procurement finding, not scored against the vendor here.", url:"https://www.railjournal.com/fleet/transport-for-new-south-wales-criticised-over-new-train-procurement/", label:"International Railway Journal, on the NSW Auditor-General's findings", flag:"secondary"},
+    {text:"Independent market-research corroboration (partial) of CRRC's global rolling-stock market position.", url:"https://www.masstransitmag.com/rail/press-release/12243415/sci-verkehr-gmbh-chinas-manufacturer-heavily-dominates-world-market-for-new-high-speed-trains-market-volume-for-new-trains-decreasing", label:"Mass Transit, reporting SCI Verkehr research", flag:"secondary"}
+  ];
+
+  function renderCriteriaList() {
+    var el = document.getElementById("criteriaList");
+    if (!el) return;
+    el.innerHTML = CRITERIA.map(function(c){
+      return '<div class="crit-item">' +
+        '<div class="crit-tag"><span class="crit-code">' + c.code + '</span><span class="crit-weight">' + c.weight + '% weight</span></div>' +
+        '<div><h4>' + c.name + '</h4><p>' + CRIT_EXPLAIN[c.id] + '</p></div>' +
+      '</div>';
+    }).join("");
+  }
+
+  function renderBiblio() {
+    var el = document.getElementById("biblioList");
+    if (!el) return;
+    el.innerHTML = SOURCES.map(function(s){
+      return '<li>' + s.text + ' <a href="' + s.url + '" target="_blank" rel="noopener">' + s.label + ' ↗</a>' +
+        '<span class="src-flag ' + s.flag + '">' + s.flag + '</span></li>';
+    }).join("");
+  }
+
+  var PANEL_IDS = {tool:"toolPanel", about:"aboutPanel", rubric:"rubricPanel", brief:"briefPanel", sourcing:"sourcingPanel"};
+
+  function switchTab(tab) {
+    Object.keys(PANEL_IDS).forEach(function(key){
+      var node = document.getElementById(PANEL_IDS[key]);
+      if (node) node.hidden = key !== tab;
+    });
+    document.querySelectorAll(".tab-btn").forEach(function(btn){
+      var isActive = btn.dataset.tab === tab;
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+  }
+
+  document.querySelectorAll(".tab-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){ switchTab(btn.dataset.tab); });
+  });
+  document.querySelectorAll(".tab-link[data-jump]").forEach(function(btn){
+    btn.addEventListener("click", function(){ switchTab(btn.dataset.jump); });
+  });
+
+  var state = {
+    mode: "strict",
+    activePreset: "balanced",
+    weights: Object.assign({}, PRESETS.balanced.weights),
+    selected: {bidder:"alstom", criterion:"compliance"}
+  };
+
+  var els = {
+    modeHint: document.getElementById("modeHint"),
+    presetList: document.getElementById("presetList"),
+    sliders: document.getElementById("sliders"),
+    rankingChart: document.getElementById("rankingChart"),
+    rankingCaption: document.getElementById("rankingCaption"),
+    heatmapTable: document.getElementById("heatmapTable"),
+    legendScale: document.getElementById("legendScale"),
+    evidencePanel: document.getElementById("evidencePanel"),
+    modeToggle: document.getElementById("modeToggle")
+  };
+
+  function heatColor(score) {
+    var stops = [
+      {v:1, c:[211,227,243]}, {v:2, c:[162,198,232]}, {v:3, c:[97,152,210]},
+      {v:4, c:[47,108,173]}, {v:5, c:[22,63,102]}
+    ];
+    var darkStops = [
+      {v:1, c:[30,43,58]}, {v:2, c:[38,73,106]}, {v:3, c:[47,110,163]},
+      {v:4, c:[79,151,201]}, {v:5, c:[146,200,238]}
+    ];
+    var isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var root = document.documentElement.getAttribute("data-theme");
+    if (root === "dark") isDark = true;
+    if (root === "light") isDark = false;
+    var use = isDark ? darkStops : stops;
+    var s = Math.max(1, Math.min(5, score));
+    var lo = use[0], hi = use[use.length-1];
+    for (var i=0;i<use.length-1;i++){ if (s>=use[i].v && s<=use[i+1].v){ lo=use[i]; hi=use[i+1]; break; } }
+    var t = (hi.v===lo.v) ? 0 : (s-lo.v)/(hi.v-lo.v);
+    var rgb = lo.c.map(function(v,i){ return Math.round(v + (hi.c[i]-v)*t); });
+    var lum = (0.299*rgb[0]+0.587*rgb[1]+0.114*rgb[2])/255;
+    return {bg:"rgb("+rgb.join(",")+")", text: (isDark ? (lum>0.55 ? "var(--heat-text-dark)" : "var(--heat-text-light)") : (lum>0.6 ? "var(--heat-text-dark)" : "var(--heat-text-light)"))};
+  }
+
+  function effectiveScore(bidderId, critId) {
+    var cell = SCORES[bidderId][critId];
+    if (state.mode === "neutral" && !cell.verified) return 2.5;
+    return cell.score;
+  }
+
+  function normalizedWeights() {
+    var sum = 0;
+    CRITERIA.forEach(function(c){ sum += state.weights[c.id]; });
+    var out = {};
+    CRITERIA.forEach(function(c){ out[c.id] = sum > 0 ? (state.weights[c.id] / sum) * 100 : 0; });
+    return out;
+  }
+
+  function computeTotal(bidderId, weightsOverride, modeOverride) {
+    var w = weightsOverride || normalizedWeights();
+    var total = 0;
+    CRITERIA.forEach(function(c){
+      var cell = SCORES[bidderId][c.id];
+      var sc = cell.score;
+      if ((modeOverride || state.mode) === "neutral" && !cell.verified) sc = 2.5;
+      total += (w[c.id]/100) * sc;
+    });
+    return total * 20;
+  }
+
+  function renderModeHint() {
+    els.modeHint.textContent = state.mode === "strict"
+      ? "Unverified criteria keep their scored value (evidence gaps read as low disclosure)."
+      : "Unverified criteria are reset to a neutral 2.5 — evidence gaps are treated as unknown, not penalised.";
+  }
+
+  function renderPresets() {
+    els.presetList.innerHTML = "";
+    Object.keys(PRESETS).forEach(function(key){
+      var p = PRESETS[key];
+      var btn = document.createElement("button");
+      btn.className = "preset-btn" + (state.activePreset === key ? " active" : "");
+      btn.textContent = p.label;
+      btn.addEventListener("click", function(){
+        state.activePreset = key;
+        state.weights = Object.assign({}, p.weights);
+        renderAll();
+      });
+      els.presetList.appendChild(btn);
+    });
+  }
+
+  function renderSliders() {
+    els.sliders.innerHTML = "";
+    var norm = normalizedWeights();
+    CRITERIA.forEach(function(c){
+      var row = document.createElement("div");
+      row.className = "slider-row";
+      row.innerHTML =
+        '<div class="slider-top">' +
+          '<span class="slider-label"><span class="slider-code mono">' + c.code + '</span>' + c.name + '</span>' +
+          '<span class="slider-val">' + Math.round(norm[c.id]) + '%</span>' +
+        '</div>' +
+        '<input type="range" min="0" max="40" value="' + state.weights[c.id] + '" aria-label="' + c.name + ' weight" data-crit="' + c.id + '">';
+      els.sliders.appendChild(row);
+    });
+    els.sliders.querySelectorAll("input[type=range]").forEach(function(input){
+      input.addEventListener("input", function(){
+        state.weights[input.dataset.crit] = parseInt(input.value, 10);
+        state.activePreset = null;
+        renderAll(true);
+      });
+    });
+  }
+
+  function renderRanking() {
+    var norm = normalizedWeights();
+    var totals = BIDDERS.map(function(b){ return {b:b, total: computeTotal(b.id, norm)}; });
+    totals.sort(function(a,b){ return b.total - a.total; });
+    var max = Math.max.apply(null, totals.map(function(t){ return t.total; }));
+    els.rankingChart.innerHTML = "";
+    totals.forEach(function(t){
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      row.innerHTML =
+        '<div class="bar-name">' + t.b.name + '</div>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:' + (max>0 ? (t.total/max*100) : 0) + '%;background:' + t.b.color + '"></div></div>' +
+        '<div class="bar-score mono">' + Math.round(t.total) + '</div>';
+      els.rankingChart.appendChild(row);
+    });
+
+    var strictTotals = {}, neutralTotals = {};
+    BIDDERS.forEach(function(b){
+      strictTotals[b.id] = computeTotal(b.id, norm, "strict");
+      neutralTotals[b.id] = computeTotal(b.id, norm, "neutral");
+    });
+    var leaderStrict = Math.max.apply(null, Object.values(strictTotals));
+    var leaderNeutral = Math.max.apply(null, Object.values(neutralTotals));
+    var gapStrict = Math.round(leaderStrict - strictTotals.mtrcrrc);
+    var gapNeutral = Math.round(leaderNeutral - neutralTotals.mtrcrrc);
+    var dominated = BIDDERS.every(function(b){
+      if (b.id === "mtrcrrc") return true;
+      return CRITERIA.every(function(c){ return SCORES.mtrcrrc[c.id].score <= SCORES[b.id][c.id].score; });
+    });
+
+    if (state.mode === "strict") {
+      els.rankingCaption.innerHTML = dominated
+        ? "Try any weighting: under the strict convention, MTR–CRRC scores at or below every other bidder on <b>every single criterion</b>, so no reweighting changes its last-place position. What moves is the size of the gap — currently <b>" + gapStrict + " points</b> behind the leader. Switch to Neutral to see how much of that gap is confirmed finding versus scoring convention."
+        : "Reweighting changes the ranking under the strict convention — current gap to the leader: <b>" + gapStrict + " points</b>.";
+    } else {
+      els.rankingCaption.innerHTML = "Switching unverified criteria to a neutral 2.5 narrows MTR–CRRC's gap to the leader from <b>" + gapStrict + " points</b> (Strict) to <b>" + gapNeutral + " points</b> (Neutral) at these weights — the order doesn't flip, but most of the disadvantage turns out to come from how unverified evidence is scored, not from confirmed findings.";
+    }
+  }
+
+  function renderHeatmap() {
+    var table = els.heatmapTable;
+    table.innerHTML = "";
+    var thead = document.createElement("tr");
+    thead.innerHTML = '<th class="rowhead-col">Bidder</th>' + CRITERIA.map(function(c){ return '<th title="' + c.name + '">' + c.code + '</th>'; }).join("");
+    table.appendChild(thead);
+    BIDDERS.forEach(function(b){
+      var tr = document.createElement("tr");
+      var rowhead = document.createElement("td");
+      rowhead.className = "rowhead";
+      rowhead.textContent = b.name;
+      tr.appendChild(rowhead);
+      CRITERIA.forEach(function(c){
+        var cellData = SCORES[b.id][c.id];
+        var sc = effectiveScore(b.id, c.id);
+        var colors = heatColor(sc);
+        var td = document.createElement("td");
+        td.className = "cell" + (cellData.verified ? "" : " unverified") + ((state.selected.bidder===b.id && state.selected.criterion===c.id) ? " selected" : "");
+        td.style.background = colors.bg;
+        td.style.color = colors.text;
+        td.textContent = (sc % 1 === 0) ? sc : sc.toFixed(1);
+        td.tabIndex = 0;
+        td.setAttribute("role","button");
+        td.setAttribute("aria-label", b.name + ", " + c.name + ", score " + sc);
+        td.addEventListener("click", function(){ state.selected = {bidder:b.id, criterion:c.id}; renderAll(true); });
+        td.addEventListener("keydown", function(e){ if (e.key==="Enter"||e.key===" "){ e.preventDefault(); state.selected = {bidder:b.id, criterion:c.id}; renderAll(true); } });
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+  }
+
+  function renderLegend() {
+    els.legendScale.innerHTML = "";
+    [1,2,3,4,5].forEach(function(s){
+      var sw = document.createElement("span");
+      sw.className = "legend-swatch";
+      sw.style.background = heatColor(s).bg;
+      els.legendScale.appendChild(sw);
+    });
+  }
+
+  function renderEvidence() {
+    var bidder = BIDDERS.filter(function(b){ return b.id === state.selected.bidder; })[0];
+    var crit = CRITERIA.filter(function(c){ return c.id === state.selected.criterion; })[0];
+    var cell = SCORES[bidder.id][crit.id];
+    var sc = effectiveScore(bidder.id, crit.id);
+    var srcIdx = cell.sources || [];
+    var sourcesHtml = srcIdx.length
+      ? '<div class="evidence-sources"><span class="lbl">Source' + (srcIdx.length>1?"s":"") + '</span><ul>' +
+          srcIdx.map(function(i){
+            var s = SOURCES[i];
+            return '<li><a href="' + s.url + '" target="_blank" rel="noopener">' + s.label + ' ↗</a><span class="src-flag ' + s.flag + '">' + s.flag + '</span></li>';
+          }).join("") +
+        '</ul></div>'
+      : '<div class="evidence-sources"><span class="lbl">Source</span><span style="font-size:12px;color:var(--ink-muted);">No public source found either way — see the <button type="button" class="tab-link" data-jump="sourcing" style="font-size:12px;">Sourcing</button> tab for the full list this tool draws on.</span></div>';
+    els.evidencePanel.innerHTML =
+      '<h2>Evidence</h2>' +
+      '<div class="evidence-head">' +
+        '<div class="evidence-bidder">' + bidder.name + ' · ' + crit.code + '</div>' +
+        '<div class="evidence-criterion">' + crit.name + '</div>' +
+        '<div class="evidence-score-row">' +
+          '<span class="evidence-score mono">' + cell.score + '<span style="font-size:13px;color:var(--ink-muted);font-weight:500;">/5</span></span>' +
+          '<span class="badge ' + (cell.verified ? "verified" : "unverified") + '">' + (cell.verified ? "Verified" : "Unverified") + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<p class="evidence-text">' + cell.evidence + '</p>' +
+      (state.mode==="neutral" && !cell.verified ? '<p class="hint">Neutral mode: scored as 2.5 in the ranking, not ' + cell.score + '.</p>' : '') +
+      sourcesHtml;
+    els.evidencePanel.querySelectorAll(".tab-link[data-jump]").forEach(function(btn){
+      btn.addEventListener("click", function(){ switchTab(btn.dataset.jump); });
+    });
+  }
+
+  function renderModeButtons() {
+    els.modeToggle.querySelectorAll(".seg-btn").forEach(function(btn){
+      btn.classList.toggle("active", btn.dataset.mode === state.mode);
+    });
+  }
+
+  function renderAll(skipSliders) {
+    renderModeHint();
+    renderModeButtons();
+    renderPresets();
+    if (!skipSliders) renderSliders(); else {
+      var norm = normalizedWeights();
+      els.sliders.querySelectorAll(".slider-row").forEach(function(row, i){
+        var c = CRITERIA[i];
+        row.querySelector(".slider-val").textContent = Math.round(norm[c.id]) + "%";
+      });
+    }
+    renderRanking();
+    renderLegend();
+    renderHeatmap();
+    renderEvidence();
+  }
+
+  els.modeToggle.querySelectorAll(".seg-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      state.mode = btn.dataset.mode;
+      renderAll(true);
+    });
+  });
+
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(){ renderAll(true); });
+  }
+
+  renderAll(false);
+  renderCriteriaList();
+  renderBiblio();
+  renderRubricTable();
+})();
+</script>
+<script>
+/* Intro overlay: "The signal clears". Carriage order mirrors the scorecard's baseline ranking. */
+(function () {
+  var root = document.getElementById("rkIntro");
+  if (!root) return;
+  try {
+    var cap = document.getElementById("rkCap"), skip = document.getElementById("rkSkip"), go = document.getElementById("rkGo");
+    var timers = [], done = false;
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function close() {
+      if (done) return;
+      done = true;
+      timers.forEach(clearTimeout);
+      document.removeEventListener("keydown", onKey);
+      root.hidden = true;
+      document.body.classList.remove("rk-lock");
+      try { var t = document.querySelector(".tab-btn.active"); if (t) t.focus({preventScroll: true}); } catch (e) {}
+    }
+    function onKey(e) {
+      if (e.key === "Escape") close();
+      else if (e.key === "Tab") { e.preventDefault(); (reduced ? go : skip).focus(); }
+    }
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+    function sig(c, text) { root.setAttribute("data-sig", c); if (text) cap.textContent = text; }
+    root.addEventListener("click", close);
+    document.addEventListener("keydown", onKey);
+    document.body.classList.add("rk-lock");
+    if (reduced) {
+      root.classList.add("still", "s1", "s3", "s4");
+      sig("green", "Cleared to proceed.");
+      skip.hidden = true; go.hidden = false; go.focus({preventScroll: true});
+    } else {
+      skip.focus({preventScroll: true});
+      at(60, function () { root.classList.add("s1"); sig("red"); });
+      at(1700, function () { sig("amber", "Checking the ranking\u2026"); });
+      at(2700, function () { sig("green", "Cleared to proceed."); root.classList.add("s3"); });
+      at(3300, function () { root.classList.add("s4"); });
+      at(3900, function () { root.classList.add("s5"); });
+      at(4800, close);
+    }
+  } catch (err) {
+    root.hidden = true;
+    document.body.classList.remove("rk-lock");
+  }
+})();
+</script>
+<script>window.PF_CONFIG={self:"BSgDLSV9jZawQSSKrEuEnP"};</script>
+<script>
+/* Ari · portfolio About & contact + case-studies menu (shared across case studies) */
+(function(){
+  if (window.__pfLoaded) return; window.__pfLoaded = true;
+  var cur = document.currentScript;
+  var CFG = window.PF_CONFIG || {};
+  if (cur) { CFG.self = CFG.self || cur.getAttribute('data-self'); CFG.nav = CFG.nav || cur.getAttribute('data-nav'); CFG.rename = CFG.rename || cur.getAttribute('data-rename'); }
+  var st = document.createElement('style'); st.textContent = '\n.pf-dlg{--pf-bg:#FBFCFD;--pf-ink:#14202E;--pf-ink2:#44546A;--pf-line:#D5DDE5;--pf-acc:#1B6F78;--pf-scrim:rgba(10,18,28,.55);position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:var(--pf-scrim);font-family:Georgia,"Times New Roman",serif}\n@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}}\n:root[data-theme="dark"] .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}\n.pf-dlg[hidden],.pf-body[hidden]{display:none!important}\n.pf-card{background:var(--pf-bg);color:var(--pf-ink);width:min(560px,100%);max-height:100%;overflow:auto;border-radius:10px;border:1px solid var(--pf-line);box-shadow:0 20px 60px rgba(0,0,0,.3);display:grid}\n.pf-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--pf-line)}\n.pf-tabs{display:flex;gap:4px;flex-wrap:wrap}\n.pf-tabs button,.pf-x{appearance:none;border:1px solid transparent;background:none;color:var(--pf-ink2);font:600 15px/1.2 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.02em;padding:7px 12px;border-radius:999px;cursor:pointer}\n.pf-tabs button[aria-selected="true"]{background:var(--pf-ink);color:var(--pf-bg)}\n.pf-x{border-color:var(--pf-line);border-radius:6px;font-size:14px}\n.pf-tabs button:focus-visible,.pf-x:focus-visible,.pf-body a:focus-visible,.pf-copy:focus-visible{outline:2px solid var(--pf-acc);outline-offset:2px}\n.pf-body{padding:18px;display:grid;gap:14px;font-size:16px;line-height:1.6}\n.pf-body h2{margin:0;font:700 26px/1.1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;color:var(--pf-ink)}\n.pf-body p{margin:0;color:var(--pf-ink2)}\n.pf-label{font:600 12px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ink2)}\n.pf-li{display:inline-flex;align-items:center;gap:10px;justify-self:start;background:#0A66C2;color:#fff;text-decoration:none;font:600 16px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.03em;padding:11px 16px;border-radius:6px}\n.pf-li svg{width:18px;height:18px;fill:currentColor}\n.pf-url{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 13px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--pf-ink2);word-break:break-all}\n.pf-copy{appearance:none;border:1px solid var(--pf-line);background:none;color:var(--pf-ink);font:600 13px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;padding:6px 10px;border-radius:5px;cursor:pointer}\n.pf-body p a{color:var(--pf-acc);text-underline-offset:3px}.pf-list{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--pf-line)}\n.pf-list li{border-bottom:1px solid var(--pf-line)}\n.pf-list a{display:grid;gap:2px;padding:11px 4px;text-decoration:none;color:var(--pf-ink)}\n.pf-list a b{font:600 17px/1.25 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif}\n.pf-list a span{font-size:14px;color:var(--pf-ink2)}\n.pf-list a[aria-current] b::after{content:"  · you are here";font:italic 400 13px Georgia,serif;color:var(--pf-acc)}\nbody.pf-open{overflow:hidden}\n\n.pf-bar{font:600 13px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.04em;background:#14202E;color:#E6EDF4;padding:9px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;position:relative;z-index:40}\n.pf-bar b{letter-spacing:.12em}\n.pf-bar nav{display:flex;gap:16px}\n.pf-bar a{color:#E6EDF4;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}\n.pf-bar a:hover{border-bottom-color:#6CC3CB}\n.pf-bar a:focus-visible{outline:2px solid #6CC3CB;outline-offset:3px}\n'; document.head.appendChild(st);
+  var wrap = document.createElement('div'); wrap.innerHTML = '<div class="pf-dlg" id="pfDlg" role="dialog" aria-modal="true" aria-label="Portfolio" hidden>\n  <div class="pf-card">\n    <div class="pf-head">\n      <div class="pf-tabs" role="tablist">\n        <button type="button" role="tab" data-pfv="about" aria-selected="true">About &amp; contact</button>\n        <button type="button" role="tab" data-pfv="work" aria-selected="false">Case studies</button>\n      </div>\n      <button type="button" class="pf-x" id="pfClose" aria-label="Close">Close ✕</button>\n    </div>\n    <div class="pf-body" data-pfp="about">\n      <div class="pf-label">About</div>\n      <h2>Arpitha (Ari) Ummanath</h2>\n      <p>Policy researcher and writer based in Australia, working on international security, defence and strategic policy. My portfolio is a set of independent, source-linked case studies that turn public evidence into analysis and practical recommendations.</p>\n      <p>Published work includes a solo piece in ASPI\'s <a href="https://www.aspi.org.au/strategist-posts/women-are-integral-to-closing-australias-defence-workforce-gap/" target="_blank" rel="noopener"><i>The Strategist</i></a> and a co-authored paper on Australia\'s fuel security (<a href="https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf" target="_blank" rel="noopener"><i>Voices of the Future</i></a> – Girls Run The World).</p>\n      <div class="pf-label" style="margin-top:6px">Contact</div>\n      <p>The best way to reach me is on LinkedIn.</p>\n      <a class="pf-li" href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect on LinkedIn</a>\n      <div class="pf-url"><span id="pfUrl">linkedin.com/in/arpitha-u-62549a2ba</span><button type="button" class="pf-copy" id="pfCopy">Copy link</button></div>\n    </div>\n    <div class="pf-body" data-pfp="work" hidden>\n      <div class="pf-label">Portfolio</div>\n      <h2>Case studies</h2>\n      <ul class="pf-list">\n        <li><a href="../assurance-gap/" target="_blank" rel="noopener"><b>The Assurance Gap</b><span>Defence autonomy · assurance &amp; test and evaluation</span></a></li>\n        <li><a href="../tail-number/" target="_blank" rel="noopener"><b>Tail Number Exposed</b><span>Business-jet flight-data privacy · aviation security</span></a></li>\n        <li><a href="../aukus/" target="_blank" rel="noopener"><b>The AUKUS Export-Control Navigator</b><span>Defence industry · export controls</span></a></li>\n        <li><a href="../saf/" target="_blank" rel="noopener"><b>The SAF Mandate Gap</b><span>Aviation · sustainable fuel policy</span></a></li>\n        <li><a href="../grand-prix/" target="_blank" rel="noopener"><b>Is the Grand Prix Worth It?</b><span>Economic &amp; soft-power impact</span></a></li>\n        <li><a href="../real-selectors/" target="_blank" rel="noopener"><b>The Real Selectors</b><span>Cricket governance · two live case studies</span></a></li>\n        <li><a href="../ranking/" target="_blank" rel="noopener"><b>Does the Ranking Hold?</b><span>Rail procurement security scorecard</span></a></li>\n        <li><a href="../companion-briefs/" target="_blank" rel="noopener"><b>Companion Briefs</b><span>Geopolitical risk · Indo-Pacific &amp; passive-index protocol</span></a></li>\n      </ul>\n    </div>\n  </div>\n</div>'; document.body.appendChild(wrap.firstElementChild);
+  function mkLinks(container, cls, before){
+    [['work','Case studies'],['about','About &amp; contact']].forEach(function(p){
+      var a=document.createElement('a'); a.href='#'; a.setAttribute('role','button'); a.setAttribute('data-pf',p[0]); a.innerHTML=p[1];
+      if(cls) a.className=cls;
+      container.appendChild(a);
+    });
+  }
+  var nav = CFG.nav ? document.querySelector(CFG.nav) : null;
+  if (nav) {
+    var sample = nav.querySelector('a:not(.active):not(.current)') || nav.querySelector('a');
+    var cls = sample ? sample.className.replace(/\b(active|current)\b/g,'').trim() : '';
+    if (CFG.rename) { var parts = CFG.rename.split('=>'); nav.querySelectorAll('a').forEach(function(a){ if(a.textContent.trim()===parts[0]) a.textContent=parts[1]; }); }
+    mkLinks(nav, cls);
+  } else {
+    var bar=document.createElement('div'); bar.className='pf-bar';
+    bar.innerHTML='<b>ARI · PORTFOLIO</b><nav aria-label="Portfolio"></nav>';
+    mkLinks(bar.querySelector('nav'), '');
+    var host = CFG.barHost ? document.querySelector(CFG.barHost) : null;
+    if (host) host.insertBefore(bar, host.firstChild); else document.body.insertBefore(bar, document.body.firstChild);
+  }
+  var SELF = CFG.self || '';
+
+  const dlg=document.getElementById('pfDlg'); if(!dlg) return;
+  dlg.querySelectorAll('.pf-list a').forEach(a=>{ if(SELF && a.href.indexOf(SELF)>-1) a.setAttribute('aria-current','page'); });
+  let last=null;
+  function view(v){dlg.querySelectorAll('[data-pfv]').forEach(b=>b.setAttribute('aria-selected',b.dataset.pfv===v));dlg.querySelectorAll('[data-pfp]').forEach(p=>p.hidden=p.dataset.pfp!==v);}
+  function open(v){last=document.activeElement;view(v||'about');dlg.hidden=false;document.body.classList.add('pf-open');dlg.querySelector('[aria-selected="true"]').focus();}
+  function close(){dlg.hidden=true;document.body.classList.remove('pf-open');if(last&&last.focus)last.focus();}
+  document.addEventListener('click',e=>{const t=e.target.closest('[data-pf]');if(t){e.preventDefault();e.stopImmediatePropagation();open(t.dataset.pf);}},true);
+  dlg.addEventListener('click',e=>{if(e.target===dlg)close();const b=e.target.closest('[data-pfv]');if(b)view(b.dataset.pfv);});
+  document.getElementById('pfClose').addEventListener('click',close);
+  dlg.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  document.getElementById('pfCopy').addEventListener('click',()=>{const u='https://www.linkedin.com/in/arpitha-u-62549a2ba/';const btn=document.getElementById('pfCopy');
+    try{navigator.clipboard.writeText(u).then(()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy link',1500);},sel);}catch(e){sel();}
+    function sel(){const r=document.createRange();r.selectNodeContents(document.getElementById('pfUrl'));const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected, press Ctrl/Cmd+C';}});
+
+})();
+</script>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

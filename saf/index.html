@@ -1,0 +1,1143 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The SAF Mandate Gap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEF1EC;
+    --paper-raised:#FAFBF8;
+    --ink:#233234;
+    --ink-soft:#57676A;
+    --ink-faint:#8B9A98;
+    --line:#C7D0C7;
+    --line-strong:#9FAEA8;
+    --accent:#3F7078;
+    --accent-soft:#DDE8E6;
+    --safety:#BD6E36;
+    --safety-soft:#F1DFC9;
+    --sage:#748A63;
+    --sage-soft:#E1E8D6;
+    --rust:#9C5346;
+    --rust-soft:#EEDAD3;
+    --sand:#DCCFAE;
+    --status-cleared:#5C7A4E;
+    --status-cleared-bg:#E3EAD9;
+    --status-taxiing:#A8791F;
+    --status-taxiing-bg:#F1E5C7;
+    --status-holding:#9C5346;
+    --status-holding-bg:#EEDAD3;
+    --status-diversion:#7C3F3F;
+    --status-diversion-bg:#EBD3D3;
+    --shadow: 0 1px 0 rgba(35,50,52,0.05), 0 8px 24px -16px rgba(35,50,52,0.35);
+    --display: 'Fraunces', 'Iowan Old Style', 'Georgia', serif;
+    --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1B2524;
+      --paper-raised:#222E2C;
+      --ink:#E7EEEA;
+      --ink-soft:#AEC0BA;
+      --ink-faint:#71827D;
+      --line:#3A4644;
+      --line-strong:#4F5F5C;
+      --accent:#8FC6C7;
+      --accent-soft:#28403F;
+      --safety:#E0A470;
+      --safety-soft:#3E2F20;
+      --sage:#A8C293;
+      --sage-soft:#2C3826;
+      --rust:#D89184;
+      --rust-soft:#3C2624;
+      --sand:#4B4530;
+      --status-cleared:#9CC182;
+      --status-cleared-bg:#26301F;
+      --status-taxiing:#E0BB63;
+      --status-taxiing-bg:#3A2F18;
+      --status-holding:#D89184;
+      --status-holding-bg:#3C2624;
+      --status-diversion:#E29999;
+      --status-diversion-bg:#3D2323;
+      --shadow: 0 1px 0 rgba(0,0,0,0.2), 0 8px 28px -16px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1B2524;
+    --paper-raised:#222E2C;
+    --ink:#E7EEEA;
+    --ink-soft:#AEC0BA;
+    --ink-faint:#71827D;
+    --line:#3A4644;
+    --line-strong:#4F5F5C;
+    --accent:#8FC6C7;
+    --accent-soft:#28403F;
+    --safety:#E0A470;
+    --safety-soft:#3E2F20;
+    --sage:#A8C293;
+    --sage-soft:#2C3826;
+    --rust:#D89184;
+    --rust-soft:#3C2624;
+    --sand:#4B4530;
+    --status-cleared:#9CC182;
+    --status-cleared-bg:#26301F;
+    --status-taxiing:#E0BB63;
+    --status-taxiing-bg:#3A2F18;
+    --status-holding:#D89184;
+    --status-holding-bg:#3C2624;
+    --status-diversion:#E29999;
+    --status-diversion-bg:#3D2323;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;color:var(--ink);}
+  p{margin:0 0 1em 0;max-width:64ch;}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px;}
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+  ::selection{background:var(--accent-soft);}
+  .mono{font-family:var(--mono);}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  table{border-collapse:collapse;width:100%;font-size:.92rem;}
+  th,td{text-align:left;padding:.65em .75em;border-bottom:1px solid var(--line);vertical-align:top;}
+  thead th{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);border-bottom:1px solid var(--line-strong);}
+  tbody tr:last-child td{border-bottom:none;}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;}
+  .table-wrap table{min-width:640px;}
+  sup a{font-family:var(--mono);font-size:.72em;text-decoration:none;color:var(--accent);padding:0 .1em;}
+  sup a:hover{text-decoration:underline;}
+
+  /* ---------- Intro / tarmac ---------- */
+  #intro{
+    position:fixed;inset:0;z-index:50;
+    background:linear-gradient(180deg, var(--paper) 0%, var(--sand) 130%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:24px;
+    overflow:hidden;
+  }
+  #intro[hidden]{display:none;}
+  .skip-btn{
+    position:absolute;top:20px;right:20px;
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;
+    background:var(--paper-raised);color:var(--ink);
+    border:1px solid var(--line-strong);border-radius:999px;
+    padding:.55em 1.1em;cursor:pointer;
+    box-shadow:var(--shadow);
+    z-index:5;
+  }
+  .skip-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .intro-instruction{
+    font-family:var(--mono);font-size:.82rem;color:var(--ink-soft);
+    text-align:center;max-width:46ch;margin:0 0 18px 0;letter-spacing:.01em;
+  }
+  .intro-title{
+    font-family:var(--display);font-size:clamp(1.6rem,4vw,2.4rem);
+    color:var(--ink);margin-bottom:6px;text-align:center;
+  }
+  #tarmacWrap{width:min(920px,94vw);}
+  #tarmacSvg{width:100%;height:auto;display:block;touch-action:none;}
+  #planeGroup{cursor:grab;}
+  #planeGroup:active{cursor:grabbing;}
+  #planeGroup.launching{transition:transform 1.1s cubic-bezier(.4,0,.2,1);}
+  #intro.leaving{transition:opacity .5s ease;opacity:0;pointer-events:none;}
+  @media (prefers-reduced-motion: reduce){
+    #planeGroup.launching{transition:none;}
+  }
+
+  /* ---------- App shell ---------- */
+  #app{max-width:1040px;margin:0 auto;padding:40px 24px 100px;}
+  header.masthead{margin-bottom:44px;}
+  .masthead-top{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;
+  }
+  .site-title{font-family:var(--display);font-size:clamp(2rem,5vw,2.9rem);line-height:1.05;}
+  .site-title em{font-style:italic;color:var(--accent);}
+  .site-tagline{max-width:52ch;color:var(--ink-soft);font-size:.98rem;margin-top:10px;}
+  .today-chip{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;color:var(--ink-faint);
+    border:1px solid var(--line);border-radius:999px;padding:.4em .85em;white-space:nowrap;
+  }
+
+  nav.tabs{
+    margin-top:40px;
+    display:flex;flex-wrap:wrap;gap:6px;
+    border-top:1px dashed var(--line-strong);
+    border-bottom:1px dashed var(--line-strong);
+    padding:10px 0;
+  }
+  nav.tabs button{
+    font-family:var(--mono);font-size:.76rem;letter-spacing:.03em;text-transform:uppercase;
+    background:transparent;border:1px solid transparent;color:var(--ink-soft);
+    padding:.6em 1em;border-radius:3px;cursor:pointer;
+  }
+  nav.tabs button:hover{color:var(--ink);border-color:var(--line);}
+  nav.tabs button[aria-selected="true"]{
+    background:var(--paper-raised);color:var(--accent);border-color:var(--line-strong);
+    box-shadow:inset 0 -2px 0 var(--accent);
+  }
+
+  main{margin-top:36px;}
+  section.page{display:flex;flex-direction:column;gap:28px;}
+  section.page[hidden]{display:none;}
+
+  .plate{
+    position:relative;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 28px 24px;
+    box-shadow:var(--shadow);
+  }
+  .plate::before{
+    content:attr(data-plate);
+    position:absolute;top:-11px;left:20px;
+    background:var(--paper);
+    padding:0 8px;
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.09em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .plate h2{font-size:1.5rem;margin-bottom:.3em;}
+  .plate h3{font-size:1.08rem;margin:0 0 .4em 0;color:var(--ink);}
+  .plate-lede{color:var(--ink-soft);font-size:1rem;}
+  .plate p{max-width:none;}
+
+  .pullquote{
+    font-family:var(--display);font-style:italic;font-size:1.35rem;line-height:1.4;
+    color:var(--ink);text-align:center;max-width:none;
+    padding:20px 8px;margin:6px 0 0;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+
+  .stat-row{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;
+    margin:14px 0 18px;
+  }
+  .stat-tile{
+    background:var(--paper);border:1px solid var(--line);border-radius:5px;
+    padding:14px 12px;text-align:center;
+  }
+  .stat-figure{
+    display:block;font-family:var(--mono);font-variant-numeric:tabular-nums;
+    font-size:1.3rem;font-weight:600;color:var(--accent);
+  }
+  .stat-label{
+    display:block;font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);
+    letter-spacing:.02em;margin-top:.3em;line-height:1.3;
+  }
+
+  .problem-purpose{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:14px;}
+  .problem-purpose .card{padding:20px 20px;}
+  .problem-purpose h3{font-family:var(--display);}
+  .problem-purpose p{font-size:.94rem;color:var(--ink);margin-bottom:0;}
+
+  .callout{
+    border-left:3px solid var(--accent);
+    background:var(--accent-soft);
+    padding:14px 18px;border-radius:0 4px 4px 0;
+    font-size:.92rem;color:var(--ink);
+  }
+  .callout p:last-child{margin-bottom:0;}
+  .callout .eyebrow{color:var(--accent);opacity:.85;margin-bottom:.3em;}
+
+  .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
+  .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+
+  .status-chip{
+    display:inline-flex;align-items:center;gap:.45em;
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;text-transform:uppercase;
+    padding:.35em .7em;border-radius:999px;white-space:nowrap;
+  }
+  .status-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;}
+  .status-cleared{background:var(--status-cleared-bg);color:var(--status-cleared);}
+  .status-taxiing{background:var(--status-taxiing-bg);color:var(--status-taxiing);}
+  .status-holding{background:var(--status-holding-bg);color:var(--status-holding);}
+  .status-diversion{background:var(--status-diversion-bg);color:var(--status-diversion);}
+
+  .signboard{
+    display:block;background:var(--paper-raised);border:1px solid var(--line);
+    border-radius:4px;padding:16px 18px;text-decoration:none;color:var(--ink);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .signboard:hover{border-color:var(--accent);transform:translateY(-1px);}
+  .signboard .eyebrow{margin-bottom:.4em;}
+  .signboard h4{font-size:1.02rem;font-family:var(--display);font-weight:600;}
+
+  .card{background:var(--paper-raised);border:1px solid var(--line);border-radius:5px;padding:16px 18px;}
+  .card h4{font-size:.98rem;margin-bottom:.35em;}
+  .card p{font-size:.9rem;color:var(--ink-soft);margin-bottom:0;}
+
+  .footnotes{
+    margin-top:8px;border-top:1px solid var(--line);padding-top:14px;
+    font-size:.82rem;color:var(--ink-soft);
+  }
+  .footnotes ol{padding-left:1.3em;margin:0;}
+  .footnotes li{margin-bottom:.5em;}
+  .footnotes a{word-break:break-word;}
+
+  .plane-icon{color:var(--accent);}
+
+  /* Sequencing runway table -> horizontal scroll on small screens handled by .table-wrap */
+  .pillar-tag{
+    display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;
+    color:var(--ink-faint);text-transform:uppercase;margin-bottom:.5em;
+  }
+
+  /* Radial stakeholder map */
+  #stakeSvg{width:100%;height:auto;max-width:900px;display:block;margin:0 auto;}
+  .stake-node{cursor:pointer;outline:none;}
+  .stake-node circle{transition:r .12s ease, stroke-width .12s ease;}
+  .stake-node:hover circle, .stake-node.active circle{r:9;}
+  .stake-node:focus-visible circle{stroke-width:3;stroke:var(--ink);}
+  .stake-node text{font-family:var(--mono);font-size:8.5px;fill:var(--ink-soft);}
+  .stake-node.active text{fill:var(--accent);}
+  #stakeDetail{min-height:180px;}
+  #stakeDetail .placeholder{color:var(--ink-faint);font-size:.9rem;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .filter-chip{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;text-transform:uppercase;
+    background:var(--paper-raised);border:1px solid var(--line);color:var(--ink-soft);
+    padding:.4em .8em;border-radius:999px;cursor:pointer;
+  }
+  .filter-chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+
+  .log-entry{border-bottom:1px solid var(--line);padding:16px 0;}
+  .log-entry:last-child{border-bottom:none;}
+  .log-head{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:6px;}
+  .log-date{font-family:var(--mono);font-size:.82rem;color:var(--accent);}
+  .confidence{font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;}
+  .log-entry p{font-size:.93rem;}
+  .log-source{font-size:.8rem;color:var(--ink-soft);}
+
+  .bib-group h3{margin-top:0;}
+  .bib-group ol{padding-left:1.4em;font-size:.92rem;}
+  .bib-group li{margin-bottom:.85em;}
+
+  footer.site-footer{
+    margin-top:56px;padding-top:22px;border-top:1px dashed var(--line-strong);
+    font-size:.82rem;color:var(--ink-faint);
+  }
+
+  @media (max-width:640px){
+    #app{padding:28px 16px 80px;}
+    .plate{padding:20px 16px 18px;}
+  }
+</style>
+<div id="intro" role="img" aria-label="Illustrated pastel airport tarmac at dusk with a small aircraft on the taxiway">
+  <button id="skipIntro" class="skip-btn" type="button">Skip intro →</button>
+  <div class="intro-title">The SAF Mandate Gap</div>
+  <p class="intro-instruction">Drag the aircraft along the taxiway to begin the briefing<br>— or press Skip.</p>
+  <div id="tarmacWrap">
+    <svg id="tarmacSvg" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--sand)" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="var(--paper)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1200" height="180" fill="url(#skyGrad)"/>
+      <!-- control tower, faint -->
+      <g opacity="0.55" stroke="var(--ink-faint)" stroke-width="1.4" fill="none">
+        <rect x="1040" y="70" width="26" height="70"/>
+        <rect x="1028" y="55" width="50" height="18"/>
+        <line x1="1053" y1="140" x2="1053" y2="150"/>
+      </g>
+      <!-- tarmac -->
+      <rect x="0" y="150" width="1200" height="310" fill="var(--paper-raised)" stroke="var(--line-strong)" stroke-width="1.5"/>
+      <!-- hold-short marking -->
+      <g stroke="var(--safety)" stroke-width="4" opacity="0.55">
+        <line x1="980" y1="220" x2="980" y2="420"/>
+        <line x1="990" y1="220" x2="990" y2="420"/>
+      </g>
+      <!-- taxiway centerline (dashed path the plane follows) -->
+      <line id="taxiPath" x1="120" y1="320" x2="960" y2="320" stroke="var(--safety)" stroke-width="3" stroke-dasharray="16 14" opacity="0.85"/>
+      <!-- runway threshold chevrons -->
+      <g fill="var(--ink-faint)" opacity="0.5">
+        <polygon points="1000,300 1020,320 1000,340 1010,320"/>
+        <polygon points="1030,300 1050,320 1030,340 1040,320"/>
+      </g>
+      <!-- gate box start -->
+      <rect x="95" y="295" width="50" height="50" fill="none" stroke="var(--line-strong)" stroke-dasharray="4 4"/>
+      <text x="120" y="365" text-anchor="middle" class="mono" font-size="11" fill="var(--ink-faint)">GATE</text>
+      <text x="960" y="365" text-anchor="middle" class="mono" font-size="11" fill="var(--ink-faint)">RWY 09</text>
+      <!-- ground vehicle, decorative -->
+      <g transform="translate(210,400)" opacity="0.6" fill="none" stroke="var(--sage)" stroke-width="1.6">
+        <rect x="0" y="0" width="26" height="14" rx="2"/>
+        <circle cx="6" cy="15" r="3"/>
+        <circle cx="20" cy="15" r="3"/>
+      </g>
+      <!-- windsock -->
+      <g transform="translate(1120,250)" stroke="var(--ink-faint)" fill="none" stroke-width="1.4">
+        <line x1="0" y1="0" x2="0" y2="60"/>
+        <path d="M0,4 L34,10 L20,16 L34,22 L0,26 Z" fill="var(--safety-soft)" stroke="var(--safety)"/>
+      </g>
+      <!-- plane -->
+      <g id="planeGroup" transform="translate(120,320)" tabindex="0" role="slider" aria-label="Drag the aircraft toward the runway" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <g fill="var(--accent)" stroke="var(--paper-raised)" stroke-width="1" transform="scale(-1,1)">
+          <path d="M-34,0 L20,0 L34,4 L20,8 L-34,8 L-40,4 Z"/>
+          <path d="M-6,0 L2,-22 L8,-22 L4,0 Z"/>
+          <path d="M-6,8 L2,26 L8,26 L4,8 Z"/>
+          <path d="M14,0 L26,-8 L28,-6 L18,4 Z"/>
+          <path d="M14,8 L26,16 L28,14 L18,4 Z"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <header class="masthead">
+    <div class="masthead-top">
+      <div>
+        <h1 class="site-title">The <em>SAF</em> Mandate Gap</h1>
+        <p class="site-tagline">A sequencing framework for domestic sustainable aviation fuel: investment certainty, feedstock integrity, and public-value safeguards.</p>
+      </div>
+      <span class="today-chip mono">LAST REVIEWED 6 SEP 2026</span>
+    </div>
+
+    <nav class="tabs" role="tablist" aria-label="Project sections">
+      <button role="tab" data-target="overview" aria-selected="true">Overview</button>
+      <button role="tab" data-target="about" aria-selected="false">Why This</button>
+      <button role="tab" data-target="sequencing" aria-selected="false">Sequencing</button>
+      <button role="tab" data-target="scorecard" aria-selected="false">Scorecard</button>
+      <button role="tab" data-target="feedstock" aria-selected="false">Feedstock &amp; Flight</button>
+      <button role="tab" data-target="stakeholders" aria-selected="false">Control Tower</button>
+      <button role="tab" data-target="flightlog" aria-selected="false">Flight Log</button>
+      <button role="tab" data-target="sources" aria-selected="false">Sources</button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+  <!-- ============ OVERVIEW ============ -->
+  <section class="page" id="page-overview" role="tabpanel">
+    <div class="plate" data-plate="Plate 01 — Cleared for Take-off?">
+      <p class="eyebrow">The situation, in one paragraph</p>
+      <h2>Australia has started funding sustainable aviation fuel.</h2>
+      <p class="plate-lede">The question still unresolved is how to create dependable demand for it. A domestic SAF industry needs more than grants — it needs a credible pathway from project funding to long-term offtake, one that protects travellers, regions, communities, and taxpayers along the way. This is a living policy project: it maps the gap, tests the constraints, and sets out a draftable route forward.</p>
+
+      <div class="problem-purpose">
+        <div class="card">
+          <span class="eyebrow" style="color:var(--accent);">The problem, plainly</span>
+          <h3 style="margin-top:.4em;">There is no guaranteed buyer for domestic SAF</h3>
+          <p>Qantas and Airbus asked the government for two things in 2023: capital support to build production, and a legislated blending mandate to guarantee demand once that fuel existed. Government has delivered the first. It has not yet delivered the second — and without a mandate, no investor will fund a production facility on the strength of grants alone.</p>
+        </div>
+        <div class="card">
+          <span class="eyebrow" style="color:var(--safety);">The purpose of this project</span>
+          <h3 style="margin-top:.4em;">Turn "should we have a mandate" into "how would it work"</h3>
+          <p>This project takes that unresolved question off the shelf and designs an answer: a staged timeline, a named compliance entity, a cost-containment mechanism, and a stakeholder sequence — so that whichever department eventually drafts the mandate has less work left to do.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <a class="signboard" data-goto="feedstock"><span class="eyebrow">01</span><h4>Why the gap matters</h4></a>
+      <a class="signboard" data-goto="feedstock"><span class="eyebrow">02</span><h4>What is holding it up</h4></a>
+      <a class="signboard" data-goto="sequencing"><span class="eyebrow">03</span><h4>How a mandate could work</h4></a>
+      <a class="signboard" data-goto="stakeholders"><span class="eyebrow">04</span><h4>Who needs to move</h4></a>
+    </div>
+
+    <div class="plate" data-plate="Policy status board">
+      <h3>Four instruments, four different states of readiness</h3>
+      <div class="grid-4" style="margin-top:14px;">
+        <div class="card">
+          <span class="status-chip status-taxiing">Taxiing</span>
+          <h4 style="margin-top:.6em;">Production incentives</h4>
+          <p>Cleaner Fuels Program — A$1.1bn, 10-year production-linked incentives, delivered by the Australian Renewable Energy Agency (ARENA). Announced Sept 2025; guidelines still in development, not yet open for applications.<sup><a href="#fn-ov-1" id="rfn-ov-1">1</a></sup><sup><a href="#fn-ov-4" id="rfn-ov-4">4</a></sup></p>
+        </div>
+        <div class="card">
+          <span class="status-chip status-cleared">Cleared</span>
+          <h4 style="margin-top:.6em;">Innovation funding</h4>
+          <p>Future Made in Australia Innovation Fund — up to A$250m for low-carbon liquid fuels, including SAF. Open since December 2025.<sup><a href="#fn-ov-2" id="rfn-ov-2">2</a></sup><sup><a href="#fn-ov-3" id="rfn-ov-3">3</a></sup></p>
+        </div>
+        <div class="card">
+          <span class="status-chip status-taxiing">Taxiing</span>
+          <h4 style="margin-top:.6em;">Certification</h4>
+          <p>Government has committed to expand the Guarantee of Origin scheme to low-carbon liquid fuels, enabling lifecycle-emissions tracking and compliance accounting.<sup><a href="#fn-ov-5" id="rfn-ov-5">5</a></sup></p>
+        </div>
+        <div class="card">
+          <span class="status-chip status-holding">Holding</span>
+          <h4 style="margin-top:.6em;">Mandate</h4>
+          <p>No SAF blending obligation is legislated. The 2026–27 Federal Budget commits to "introduce a demand measure"; four design models remain under review.<sup><a href="#fn-ov-6" id="rfn-ov-6">6</a></sup></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="plate" data-plate="Runway timeline, 2023 → today">
+      <h3>Supply-side progress has outpaced the demand-side decision</h3>
+      <figure style="margin:0;">
+        <svg viewBox="0 0 900 220" role="img" aria-label="Timeline from 2023 to 2026 showing sustainable aviation fuel funding milestones on a taxiway track above, against a runway track below marked with a hold-short bar because the blending mandate has not been legislated" style="width:100%;height:auto;">
+          <line x1="40" y1="70" x2="860" y2="70" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <text x="40" y="50" class="mono" font-size="10" fill="var(--ink-faint)">FUNDING &amp; SUPPLY-SIDE</text>
+          <g font-family="IBM Plex Mono" font-size="9.5" fill="var(--ink-soft)">
+            <circle cx="120" cy="70" r="4" fill="var(--sage)"/>
+            <text x="120" y="95" text-anchor="middle">2023</text>
+            <text x="120" y="107" text-anchor="middle">ICF report</text>
+            <circle cx="260" cy="70" r="4" fill="var(--sage)"/>
+            <text x="260" y="95" text-anchor="middle">2024</text>
+            <text x="260" y="107" text-anchor="middle">consultation</text>
+            <circle cx="430" cy="70" r="4" fill="var(--sage)"/>
+            <text x="430" y="95" text-anchor="middle">Sep 2025</text>
+            <text x="430" y="107" text-anchor="middle">CFP announced</text>
+            <circle cx="560" cy="70" r="4" fill="var(--sage)"/>
+            <text x="560" y="95" text-anchor="middle">Dec 2025</text>
+            <text x="560" y="107" text-anchor="middle">Fund opens</text>
+            <circle cx="700" cy="70" r="4" fill="var(--sage)"/>
+            <text x="700" y="95" text-anchor="middle">Jul 2026</text>
+            <text x="700" y="107" text-anchor="middle">Brisbane SAF</text>
+          </g>
+          <line x1="40" y1="160" x2="780" y2="160" stroke="var(--accent)" stroke-width="3" stroke-dasharray="10 8" opacity="0.8"/>
+          <text x="40" y="140" class="mono" font-size="10" fill="var(--ink-faint)">DEMAND-SIDE / MANDATE</text>
+          <g stroke="var(--safety)" stroke-width="5"><line x1="780" y1="140" x2="780" y2="180"/><line x1="792" y1="140" x2="792" y2="180"/></g>
+          <text x="786" y="200" text-anchor="middle" class="mono" font-size="9.5" fill="var(--safety)">HOLD SHORT</text>
+          <g>
+            <line x1="786" y1="30" x2="786" y2="205" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="2 3"/>
+            <text x="786" y="18" text-anchor="middle" class="mono" font-size="10" fill="var(--ink)">TODAY</text>
+          </g>
+          <circle cx="860" cy="70" r="3" fill="none" stroke="var(--ink-faint)"/>
+          <text x="860" y="95" text-anchor="middle" class="mono" font-size="9" fill="var(--ink-faint)">2030→</text>
+        </svg>
+        <figcaption class="eyebrow" style="margin-top:10px;">Five supply-side milestones sit above the line; the demand-side mandate track below is still held at the runway threshold.</figcaption>
+      </figure>
+      <p style="margin-top:16px;">Funding can lower a project's risk. It does not, by itself, create the enduring market that gets a project to a final investment decision — that is the specific, narrow gap this project is about.</p>
+    </div>
+
+    <div class="footnotes">
+      <ol>
+        <li id="fn-ov-1">Australian Renewable Energy Agency, "Cleaner Fuels Program," accessed September 5, 2026, <a href="https://arena.gov.au/funding/cleaner-fuels-program/" target="_blank" rel="noopener">arena.gov.au/funding/cleaner-fuels-program</a>. <a href="#rfn-ov-1">↩</a></li>
+        <li id="fn-ov-2">Australian Renewable Energy Agency, "Future Made in Australia Innovation Fund," accessed September 5, 2026, <a href="https://arena.gov.au/funding/future-made-in-australia-innovation-fund/" target="_blank" rel="noopener">arena.gov.au/funding/future-made-in-australia-innovation-fund</a>. <a href="#rfn-ov-2">↩</a></li>
+        <li id="fn-ov-3">Australian Renewable Energy Agency, <em>Future Made in Australia Innovation Fund — Low Carbon Liquid Fuels Technology Focus Area</em> (2025), <a href="https://arena.gov.au/assets/2025/11/FMA-Innovation-Fund-Low-Carbon-Liquid-Fuels-Technology-Focus-Area.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-ov-3">↩</a></li>
+        <li id="fn-ov-4">Australian Renewable Energy Agency, "ARENA to Drive Domestic Low Carbon Fuel Production," May 13, 2026, <a href="https://arena.gov.au/news/arena-to-drive-domestic-low-carbon-fuel-production/" target="_blank" rel="noopener">arena.gov.au</a>. <a href="#rfn-ov-4">↩</a></li>
+        <li id="fn-ov-5">Australian Government, Department of Infrastructure, Transport, Regional Development, Communications and the Arts, <em>A Future Made in Australia: Unlocking Australia's Low Carbon Liquid Fuel Opportunity: Consultation Paper</em> (Canberra: Commonwealth of Australia, 2024), <a href="https://www.infrastructure.gov.au/sites/default/files/documents/low-carbon-liquid-fuels-consultation-paper.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-ov-5">↩</a></li>
+        <li id="fn-ov-6">Clayton Utz, "Australia's Proposed Low Carbon Liquid Fuel Demand Measure: International Lessons and Infrastructure Implications," June 2026, <a href="https://www.claytonutz.com/insights/2026/june/australia-s-proposed-low-carbon-liquid-fuel-demand-measure-international-lessons-and-infrastructure-implications" target="_blank" rel="noopener">claytonutz.com</a>. <a href="#rfn-ov-6">↩</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ WHY THIS ============ -->
+  <section class="page" id="page-about" role="tabpanel" hidden>
+    <div class="plate" data-plate="A note on why this exists">
+      <p class="eyebrow">Why I built this</p>
+      <p class="plate-lede">I built it because Qantas and Airbus put an unusually specific, well-evidenced policy request on the public record in 2023, government spent two years responding to half of it, and almost nobody went back to check what happened to the other half. That gap — between what gets announced and what gets legislated — is where most of the interesting policy work in this country actually sits.</p>
+    </div>
+  </section>
+
+  <!-- ============ SEQUENCING ============ -->
+  <section class="page" id="page-sequencing" role="tabpanel" hidden>
+    <div class="plate" data-plate="Plate 02 — A Mandate Built to Land">
+      <p class="eyebrow">The sequencing question</p>
+      <h2>Legislate the mandate architecture before 2030 — and comply conditionally, not on a fixed date.</h2>
+      <p class="plate-lede">A blending target, capital grants, and a buy-out safeguard cannot be designed independently. A target without supply support raises compliance costs; grants without durable demand leave revenue uncertain; a mandate without a buy-out can expose airlines, fuel suppliers, and travellers to a shortage-driven price spike. The Government has committed funding toward a regulatory impact analysis of mandates and other demand-side measures, and confirmed in the 2026–27 Budget that it will introduce a demand measure — the design questions below are about how.<sup><a href="#fn-seq-1" id="rfn-seq-1">1</a></sup></p>
+    </div>
+
+    <div class="plate" data-plate="Two keys, one market">
+      <h3>The mandate should turn on only once both keys are ready</h3>
+      <div class="grid-2" style="margin-top:14px;">
+        <div class="card" style="border-left:3px solid var(--accent);">
+          <span class="eyebrow" style="color:var(--accent);">Key one</span>
+          <h4>Investment certainty</h4>
+          <p>Cleaner Fuels Program guidelines issued; first projects show a credible pathway to final investment decision; certification protocol functioning.</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--safety);">
+          <span class="eyebrow" style="color:var(--safety);">Key two</span>
+          <h4>Public-interest protection</h4>
+          <p>Buy-out mechanism set; regional-service safeguards in place; competition and pass-through reporting designed; supply-shortage protocol published.</p>
+        </div>
+      </div>
+      <p class="pullquote">A mandate should be legislated early, signalled clearly, and activated responsibly.</p>
+    </div>
+
+    <div class="plate" data-plate="2026 → 2040 sequencing table">
+      <h3>A conditional pathway, not a forecast</h3>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>Period</th><th>Obligation</th><th>Government delivers</th><th>Industry receives</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">2026–27<br>Design runway</td><td>None enforceable</td><td>Exposure draft; regulatory impact analysis; lifecycle-emissions accounting; Cleaner Fuels Program guidelines</td><td>Legal and market visibility ahead of a final investment decision</td></tr>
+            <tr><td class="mono">2028–29<br>Investment signal</td><td>Statutory trajectory legislated; not yet active</td><td>Certificate registry and compliance-entity rules; buy-out methodology; regional-service safeguards</td><td>An investable demand signal with bounded downside risk</td></tr>
+            <tr><td class="mono">2030<br>First compliance year</td><td>1%, conditional on certified supply</td><td>Annual supply, price, and competition reporting; lifecycle verification</td><td>Certificate trading, limited banking, a transparent buy-out, narrow shortage relief</td></tr>
+            <tr><td class="mono">2032<br>Scale checkpoint</td><td>3%, subject to independent review</td><td>Reassessment of domestic production, regional-price effects, feedstock sustainability</td><td>Greater predictability for multi-year offtake agreements</td></tr>
+            <tr><td class="mono">2035<br>Investment maturity</td><td>5–7%, set through statutory review</td><td>Evaluation of whether production-linked support should taper or extend</td><td>Visibility for additional capacity and supply contracts</td></tr>
+            <tr><td class="mono">2040<br>Decarbonisation scale</td><td>Review-set; ICF's illustrative 28% is a benchmark, not a commitment</td><td>Full statutory review of affordability, emissions integrity, connectivity, feedstock use</td><td>A known process for revision rather than regulatory surprise</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px;font-size:.9rem;color:var(--ink-soft);">ICF's November 2023 central scenario, for reference<sup><a href="#fn-seq-2" id="rfn-seq-2">2</a></sup> — a useful benchmark for this project, not an enacted Australian target:</p>
+      <div class="stat-row">
+        <div class="stat-tile"><span class="stat-figure">1.5%</span><span class="stat-label">by 2026</span></div>
+        <div class="stat-tile"><span class="stat-figure">5%</span><span class="stat-label">by 2030</span></div>
+        <div class="stat-tile"><span class="stat-figure">28%</span><span class="stat-label">by 2040</span></div>
+        <div class="stat-tile"><span class="stat-figure">A$1.5bn</span><span class="stat-label">capital-grant pool</span></div>
+        <div class="stat-tile"><span class="stat-figure">10 yrs</span><span class="stat-label">production-linked revenue support</span></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="plate" data-plate="Pillar A — grants">
+        <span class="pillar-tag">Production support</span>
+        <h3>Two distinct programs, easily conflated</h3>
+        <p style="font-size:.92rem;">The A$250m Future Made in Australia Innovation Fund (2026–29) reduces technical, feedstock, and first-of-a-kind development risk at the pre-commercial and demonstration stage.<sup><a href="#fn-seq-3" id="rfn-seq-3">3</a></sup> The A$1.1bn Cleaner Fuels Program (2027 onward) addresses the operating-cost and revenue gap once a project begins producing eligible fuel.<sup><a href="#fn-seq-4" id="rfn-seq-4">4</a></sup> Neither is a durable demand obligation; aligning their eligibility and lifecycle thresholds with the eventual mandate is itself a design task.</p>
+      </div>
+      <div class="plate" data-plate="Pillar B — mandate">
+        <span class="pillar-tag">Demand pathway</span>
+        <h3>Obligate suppliers, not airlines</h3>
+        <p style="font-size:.92rem;">Placing the compliance obligation on fuel suppliers — not individual airlines — avoids disadvantaging one carrier over another and creates a market-wide mechanism rather than an airline-by-airline tax. Airlines still shape the market through offtake agreements, book-and-claim purchases, and joint investment. The obligation should carry a defined annual volume, a lifecycle-emissions eligibility rule, tradeable certificates, limited banking, a shortage protocol, and a review every three to five years.</p>
+      </div>
+    </div>
+
+    <div class="plate" data-plate="Pillar C — buy-out price">
+      <span class="pillar-tag">Cost containment</span>
+      <h3>A safety valve, not a routine substitute for SAF</h3>
+      <p>ICF's modelling proposed an illustrative buy-out price of A$4–5 per litre as a consumer-protection mechanism, alongside a package under which the modelled cost impact stayed close to neutral out to 2040.<sup><a href="#fn-seq-2" id="rfn-seq-2b">2</a></sup> This project treats that as a 2023 modelling input, not a recommended 2026 figure or settled policy. A durable design should instead set the buy-out through an independently published, annually reviewed methodology — indexed to a transparent SAF/jet-fuel price differential, with a floor and a ceiling, and revenue ring-fenced for SAF-enabling infrastructure, certification, and regional airport logistics. This is the direct policy answer to "producers need offtake certainty before they will commit capital" — the public record is clear that Government has committed to test demand-side design options, including a mandate, a low-carbon fuel standard, and certificate-based mechanisms, precisely because that certainty does not yet exist.<sup><a href="#fn-seq-1" id="rfn-seq-1b">1</a></sup></p>
+    </div>
+
+    <div class="plate" data-plate="Mini-portfolio — federal policy brief">
+      <span class="eyebrow">Addressed to federal policymakers</span>
+      <h3 style="margin-top:.4em;">Decision requested</h3>
+      <p style="font-size:.93rem;">Publish and consult on a legislated, aviation-specific SAF mandate framework by 2027, with compliance commencing from 2030 only after predefined supply, certification, and public-interest readiness conditions are met.</p>
+      <h3>Recommended architecture</h3>
+      <p style="font-size:.93rem;">Legislate a supplier-level pathway; make compliance conditional rather than uncertain; pair it with the existing grant instruments; retain a SAF-specific sub-target so aviation is not crowded out by lower-cost renewable-diesel pathways; build cost containment into the statute; and treat feedstock governance — traceability, land-use safeguards, community and First Nations engagement — as core infrastructure, not an afterthought.</p>
+      <h3>Immediate next step</h3>
+      <p style="font-size:.93rem;margin-bottom:0;">Commission an exposure draft linking the mandate pathway, Cleaner Fuels Program eligibility, Guarantee of Origin development, and regional-connectivity safeguards — so consultation can move from whether a demand measure is needed to what design can deliver one responsibly.</p>
+    </div>
+
+    <div class="footnotes">
+      <ol>
+        <li id="fn-seq-1">Clayton Utz, "Australia's Proposed Low Carbon Liquid Fuel Demand Measure: International Lessons and Infrastructure Implications," June 2026, <a href="https://www.claytonutz.com/insights/2026/june/australia-s-proposed-low-carbon-liquid-fuel-demand-measure-international-lessons-and-infrastructure-implications" target="_blank" rel="noopener">claytonutz.com</a>. <a href="#rfn-seq-1">↩a</a> <a href="#rfn-seq-1b">↩b</a></li>
+        <li id="fn-seq-2">ICF, <em>Developing a SAF Industry to Decarbonise Australian Aviation: SAF Policies</em> (November 2023), <a href="https://www.qantas.com/content/dam/qantas/pdfs/qantas-group/icf-report-australia-saf-policy-analysis-nov23.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-seq-2">↩a</a> <a href="#rfn-seq-2b">↩b</a></li>
+        <li id="fn-seq-3">Australian Renewable Energy Agency, <em>Future Made in Australia Innovation Fund — Low Carbon Liquid Fuels Technology Focus Area</em> (2025), <a href="https://arena.gov.au/assets/2025/11/FMA-Innovation-Fund-Low-Carbon-Liquid-Fuels-Technology-Focus-Area.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-seq-3">↩</a></li>
+        <li id="fn-seq-4">Australian Renewable Energy Agency, "ARENA to Drive Domestic Low Carbon Fuel Production," May 13, 2026, <a href="https://arena.gov.au/news/arena-to-drive-domestic-low-carbon-fuel-production/" target="_blank" rel="noopener">arena.gov.au</a>. <a href="#rfn-seq-4">↩</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SCORECARD ============ -->
+  <section class="page" id="page-scorecard" role="tabpanel" hidden>
+    <div class="plate" data-plate="Plate 03 — Readiness Scorecard">
+      <p class="eyebrow">From policy intent to investable market</p>
+      <h2>Australia's SAF readiness, condition by condition</h2>
+      <p class="plate-lede">It compares what the ICF/Qantas/Airbus package originally proposed, what public policy has since delivered, and what this project concludes should happen next.</p>
+      <div class="tag-row" style="margin-top:6px;">
+        <span class="status-chip status-cleared">Cleared — present &amp; operational</span>
+        <span class="status-chip status-taxiing">Taxiing — announced &amp; in delivery</span>
+        <span class="status-chip status-holding">Holding — unresolved</span>
+        <span class="status-chip status-diversion">Diversion risk — may miss aviation outcome</span>
+      </div>
+    </div>
+
+    <div class="plate" data-plate="Scorecard">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Condition</th><th>ICF / Qantas–Airbus proposal</th><th>Current position</th><th>Status</th><th>Conclusion</th></tr></thead>
+          <tbody>
+            <tr><td>Long-term aviation demand signal</td><td>Illustrative mandate, 5% by 2030 / 28% by 2040<sup><a href="#fn-sc-1" id="rfn-sc-1">1</a></sup></td><td>Regulatory impact analysis funded; no mandate legislated<sup><a href="#fn-sc-2" id="rfn-sc-2">2</a></sup></td><td><span class="status-chip status-holding">Holding</span></td><td>Legislate a conditional pathway before 2030</td></tr>
+            <tr><td>Capital support</td><td>A$1.5bn in capital grants<sup><a href="#fn-sc-1" id="rfn-sc-1b">1</a></sup></td><td>A$250m Innovation Fund stream, project development &amp; demonstration<sup><a href="#fn-sc-3" id="rfn-sc-3">3</a></sup></td><td><span class="status-chip status-taxiing">Taxiing</span></td><td>Support high-risk stages; pair with demand visibility</td></tr>
+            <tr><td>Production support</td><td>Ten years of production incentives<sup><a href="#fn-sc-1" id="rfn-sc-1c">1</a></sup></td><td>A$1.1bn Cleaner Fuels Program, 10-year production-linked incentives<sup><a href="#fn-sc-4" id="rfn-sc-4">4</a></sup></td><td><span class="status-chip status-taxiing">Taxiing</span></td><td>Align incentive and mandate eligibility rules</td></tr>
+            <tr><td>Feedstock assurance</td><td>Contemplated within a broader package<sup><a href="#fn-sc-1" id="rfn-sc-1d">1</a></sup></td><td>Applicants must disclose competing feedstock uses and land/community impacts<sup><a href="#fn-sc-3" id="rfn-sc-3b">3</a></sup></td><td><span class="status-chip status-taxiing">Taxiing</span></td><td>Publish a feedstock hierarchy before high mandate levels apply</td></tr>
+            <tr><td>Aviation-specific protection</td><td>A dedicated SAF mandate<sup><a href="#fn-sc-1" id="rfn-sc-1e">1</a></sup></td><td>SAF, renewable diesel and methanol are all priority fuels<sup><a href="#fn-sc-3" id="rfn-sc-3c">3</a></sup></td><td><span class="status-chip status-diversion">Diversion risk</span></td><td>Retain a SAF sub-target so cheaper pathways don't crowd it out</td></tr>
+            <tr><td>Certification &amp; lifecycle integrity</td><td>Lifecycle-emissions criteria, ≥50% GHG reduction<sup><a href="#fn-sc-1" id="rfn-sc-1f">1</a></sup></td><td>Lifecycle analysis required; Guarantee of Origin scheme in development<sup><a href="#fn-sc-3" id="rfn-sc-3d">3</a></sup></td><td><span class="status-chip status-taxiing">Taxiing</span></td><td>One domestic methodology, internationally interoperable</td></tr>
+            <tr><td>Consumer protection</td><td>Buy-out price modelled at A$4–5/L<sup><a href="#fn-sc-1" id="rfn-sc-1g">1</a></sup></td><td>No buy-out mechanism legislated</td><td><span class="status-chip status-holding">Holding</span></td><td>Publish a methodology-based cost-containment mechanism first</td></tr>
+            <tr><td>Public transparency</td><td>Not the central focus of the ICF model</td><td>Program-level reporting exists; no compliance register yet</td><td><span class="status-chip status-holding">Holding</span></td><td>Publish an annual SAF Market Report</td></tr>
+            <tr><td>Project pipeline &amp; airport logistics</td><td>Policy-incentive focus</td><td>SAF began flowing at Brisbane Airport, July 2026<sup><a href="#fn-sc-5" id="rfn-sc-5">5</a></sup></td><td><span class="status-chip status-taxiing">Taxiing</span></td><td>Use early deployments as chain-of-custody learning sites</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px;font-size:.92rem;color:var(--ink-soft);">Australia has moved materially beyond aspiration: innovation funding, a production-incentive program, and a clearer sustainability architecture are all in motion. The unresolved market-formation gap is a dependable, aviation-specific demand signal with transparent cost containment and legally workable compliance rules.</p>
+    </div>
+
+    <div class="footnotes">
+      <ol>
+        <li id="fn-sc-1">ICF, <em>Developing a SAF Industry to Decarbonise Australian Aviation: SAF Policies</em> (November 2023), <a href="https://www.qantas.com/content/dam/qantas/pdfs/qantas-group/icf-report-australia-saf-policy-analysis-nov23.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-sc-1">↩a</a> <a href="#rfn-sc-1b">↩b</a> <a href="#rfn-sc-1c">↩c</a> <a href="#rfn-sc-1d">↩d</a> <a href="#rfn-sc-1e">↩e</a> <a href="#rfn-sc-1f">↩f</a> <a href="#rfn-sc-1g">↩g</a></li>
+        <li id="fn-sc-2">Clayton Utz, "Australia's Proposed Low Carbon Liquid Fuel Demand Measure," June 2026, <a href="https://www.claytonutz.com/insights/2026/june/australia-s-proposed-low-carbon-liquid-fuel-demand-measure-international-lessons-and-infrastructure-implications" target="_blank" rel="noopener">claytonutz.com</a>. <a href="#rfn-sc-2">↩</a></li>
+        <li id="fn-sc-3">Australian Renewable Energy Agency, <em>Future Made in Australia Innovation Fund — Low Carbon Liquid Fuels Technology Focus Area</em> (2025), <a href="https://arena.gov.au/assets/2025/11/FMA-Innovation-Fund-Low-Carbon-Liquid-Fuels-Technology-Focus-Area.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-sc-3">↩a</a> <a href="#rfn-sc-3b">↩b</a> <a href="#rfn-sc-3c">↩c</a> <a href="#rfn-sc-3d">↩d</a></li>
+        <li id="fn-sc-4">Australian Renewable Energy Agency, "ARENA to Drive Domestic Low Carbon Fuel Production," May 13, 2026, <a href="https://arena.gov.au/news/arena-to-drive-domestic-low-carbon-fuel-production/" target="_blank" rel="noopener">arena.gov.au</a>. <a href="#rfn-sc-4">↩</a></li>
+        <li id="fn-sc-5">Australian Renewable Energy Agency, "Sustainable Aviation Fuel Takes Off at Brisbane Airport," July 6, 2026, <a href="https://arena.gov.au/news/sustainable-aviation-fuel-takes-off-at-brisbane-airport/" target="_blank" rel="noopener">arena.gov.au</a>. <a href="#rfn-sc-5">↩</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ FEEDSTOCK & BLOCKERS ============ -->
+  <section class="page" id="page-feedstock" role="tabpanel" hidden>
+    <div class="plate" data-plate="Plate 04 — Why the Gate Is Still Closed">
+      <p class="eyebrow">Blocker analysis</p>
+      <h2>Three implementation questions, not one failure of will</h2>
+      <p class="plate-lede">The evidence points to three connected questions that have to be resolved together, not one simple explanation. The first is timing: when can an obligation begin without outrunning certified supply? The second is allocation: how can policy reserve enough low-carbon fuel for aviation while recognising other sectors' needs? The third is protection: how can government create investment-grade demand without placing disproportionate cost or service risk on passengers and regional communities?</p>
+    </div>
+
+    <div class="plate" data-plate="A — sequencing &amp; readiness">
+      <h3>A. Sequence before scale</h3>
+      <p>Government's low-carbon-liquid-fuels consultation says explicitly that it is assessing the interaction between supply-side incentives and demand-side options, including mandates and a low-carbon fuel standard, through a regulatory impact analysis.<sup><a href="#fn-fd-1" id="rfn-fd-1">1</a></sup> The Cleaner Fuels Program is designed for projects nearing a final investment decision, but its guidelines and eligibility criteria are still being developed with input from project developers, feedstock suppliers, and financiers.<sup><a href="#fn-fd-2" id="rfn-fd-2">2</a></sup> The next move available to government is not "announce a mandate tomorrow" — it is to publish a Mandate Readiness Framework alongside the Cleaner Fuels Program guidelines: confirm fuel suppliers as the compliance entity, settle lifecycle-emissions and certification rules, announce the mandate pathway ahead of final investment decisions, and start compliance only once certified supply and certificate infrastructure exist.</p>
+    </div>
+
+    <div class="plate" data-plate="B — feedstock allocation">
+      <h3>B. Feedstock has competing destinations</h3>
+      <p>SAF, renewable diesel, and naphtha can be produced in shared facilities from overlapping feedstocks. Because renewable diesel is nominally cheaper to produce, a technology-neutral policy risks channelling scarce feedstock and capital toward it — leaving aviation, which has fewer near-term substitutes, short of fuel. Qantas and Airbus's own joint submission makes this argument directly, and recommends at minimum a SAF sub-mandate with tradeable certificates as the fix.<sup><a href="#fn-fd-3" id="rfn-fd-3">3</a></sup> Government's own consultation paper recognises the same tension: low-carbon liquid fuels will serve aviation, heavy road freight, maritime, mining, agriculture, and construction, and feedstock cost — driven partly by competing demand for agricultural land and food crops — is already the primary driver of production cost.<sup><a href="#fn-fd-1" id="rfn-fd-1b">1</a></sup></p>
+      <p style="margin-bottom:0;">This is not only a climate question. A generic low-carbon-fuel standard is a product-allocation instrument as much as an emissions one — it decides which sector gets first claim on a scarce input. That framing sits inside a broader pattern of contested demand across Australia's critical resource inputs, a pattern this author has examined elsewhere in co-authored research on critical-resource-supply strategy for the ANU Strategic and Defence Studies Centre.<sup><a href="#fn-fd-4" id="rfn-fd-4">4</a></sup></p>
+    </div>
+
+    <div class="plate" data-plate="C — cost &amp; connectivity">
+      <h3>C. Price protection is policy infrastructure</h3>
+      <p>Low-carbon liquid fuels are currently estimated at two to five times the cost of their fossil equivalents, and government's own framing is to deliver public value while minimising price impacts and protecting competition.<sup><a href="#fn-fd-1" id="rfn-fd-1c">1</a></sup> ICF's package addresses this directly through a buy-out price, modelling a broadly cost-neutral effect on fares out to 2040 under the combined mandate-plus-grants scenario — a modelled result, not a guarantee.<sup><a href="#fn-fd-5" id="rfn-fd-5">5</a></sup> The differentiating design choice this project recommends is a Regional Connectivity Safeguard: a narrowly scoped, time-limited exemption for very small-volume regional uplift where supply is demonstrably unavailable; buy-out revenue ring-fenced for domestic SAF infrastructure and regional blending capacity; annual public reporting on pass-through by route class; a mandatory review if regional fares or frequency move past set thresholds; and a bar on the safeguard being used as a blanket exemption for large incumbent carriers.</p>
+    </div>
+
+    <div class="plate" data-plate="Feedstock-to-flight risk map">
+      <h3>Where upstream risk actually sits</h3>
+      <p style="font-size:.92rem;">A mandate creates demand for a finished fuel. Investment risk sits upstream — in feedstock availability, traceability, technology yield, transport logistics, and contracted offtake. ARENA's own eligibility criteria confirm the range of feedstocks now under consideration and the sustainability tests attached to them.<sup><a href="#fn-fd-2" id="rfn-fd-2b">2</a></sup></p>
+      <div class="table-wrap" style="margin-top:10px;">
+        <table>
+          <thead><tr><th>Feedstock / pathway</th><th>Opportunity</th><th>Core risk</th><th>Policy question</th></tr></thead>
+          <tbody>
+            <tr><td>Agricultural residues</td><td>Regional value from bagasse, straw and other residues</td><td>Collection, seasonality, competing soil-health uses</td><td>What residue-removal threshold protects soil carbon?</td></tr>
+            <tr><td>Plantation-forestry residues</td><td>Significant biomass in relevant regions</td><td>Competing uses, ecosystem impacts, collection economics</td><td>Which residue categories are genuinely additional?</td></tr>
+            <tr><td>Used cooking oil &amp; tallow</td><td>Mature, already-used feedstocks</td><td>Limited supply, international competition, mislabelling risk</td><td>How should traceability and additionality be verified?</td></tr>
+            <tr><td>Oilseeds &amp; energy crops</td><td>Predictable, scalable supply</td><td>Land-use change, food/fuel tension, water impacts</td><td>Under what conditions should crop-based pathways qualify?</td></tr>
+            <tr><td>Novel crops (pongamia, carinata)</td><td>Long-term domestic diversification</td><td>Agronomic uncertainty, time to scale</td><td>What early support is appropriate before high mandate volumes?</td></tr>
+            <tr><td>Biogas, hydrogen, biogenic CO₂</td><td>Emerging power-to-liquid pathways</td><td>Electricity cost, technology maturity, capital intensity</td><td>Should policy reserve a technology-neutral sub-target?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <ol>
+        <li id="fn-fd-1">Australian Government, Department of Infrastructure, Transport, Regional Development, Communications and the Arts, <em>A Future Made in Australia: Unlocking Australia's Low Carbon Liquid Fuel Opportunity: Consultation Paper</em> (Canberra: Commonwealth of Australia, 2024), <a href="https://www.infrastructure.gov.au/sites/default/files/documents/low-carbon-liquid-fuels-consultation-paper.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-fd-1">↩a</a> <a href="#rfn-fd-1b">↩b</a> <a href="#rfn-fd-1c">↩c</a></li>
+        <li id="fn-fd-2">Australian Renewable Energy Agency, <em>Future Made in Australia Innovation Fund — Low Carbon Liquid Fuels Technology Focus Area</em> (2025), <a href="https://arena.gov.au/assets/2025/11/FMA-Innovation-Fund-Low-Carbon-Liquid-Fuels-Technology-Focus-Area.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-fd-2">↩a</a> <a href="#rfn-fd-2b">↩b</a></li>
+        <li id="fn-fd-3">Qantas Group and Airbus SAS, <em>Our Future — SAF Made in Australia: Low Carbon Liquid Fuel Policy Consultation Response</em> (July 25, 2024), <a href="https://www.infrastructure.gov.au/sites/default/files/documents/lclf2024-qantas-airbus.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-fd-3">↩</a></li>
+        <li id="fn-fd-4">Arpitha Ummanath and Cassandra Howell, "Strategies for Securing Australia's Critical Resource Supply," in <em>Voices of the Future</em>, vol. 2 (ANU Strategic and Defence Studies Centre), accessed September 5, 2026, <a href="https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-fd-4">↩</a></li>
+        <li id="fn-fd-5">ICF, <em>Developing a SAF Industry to Decarbonise Australian Aviation: SAF Policies</em> (November 2023), <a href="https://www.qantas.com/content/dam/qantas/pdfs/qantas-group/icf-report-australia-saf-policy-analysis-nov23.pdf" target="_blank" rel="noopener">PDF</a>. <a href="#rfn-fd-5">↩</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ STAKEHOLDERS / CONTROL TOWER ============ -->
+  <section class="page" id="page-stakeholders" role="tabpanel" hidden>
+    <div class="plate" data-plate="Plate 05 — Control Tower">
+      <p class="eyebrow">Who has to move, and in what order</p>
+      <h2>Neither an airline nor a manufacturer can clear this alone</h2>
+      <p class="plate-lede">Industry support for domestic SAF is substantial, but implementation interests are not identical. The workable sequence is for government to settle certification, fiscal, and mandate architecture first — then align suppliers, producers, airlines, airports, feedstock providers, and communities around the operational rules. Click a stakeholder on the radar to see their decision right, incentive, and next move.</p>
+    </div>
+
+    <div class="plate" data-plate="Radial stakeholder map">
+      <svg id="stakeSvg" viewBox="0 0 700 520" role="img" aria-label="Radial control-tower map of SAF policy stakeholders arranged in four concentric rings around a central goal of domestic SAF market readiness">
+        <circle cx="350" cy="260" r="205" fill="none" stroke="var(--line)" stroke-dasharray="2 5"/>
+        <circle cx="350" cy="260" r="160" fill="none" stroke="var(--line)" stroke-dasharray="2 5"/>
+        <circle cx="350" cy="260" r="115" fill="none" stroke="var(--line)" stroke-dasharray="2 5"/>
+        <circle cx="350" cy="260" r="70" fill="none" stroke="var(--line-strong)"/>
+        <circle cx="350" cy="260" r="40" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+        <text x="350" y="256" text-anchor="middle" class="mono" font-size="9.5" fill="var(--accent)">DOMESTIC SAF</text>
+        <text x="350" y="268" text-anchor="middle" class="mono" font-size="9.5" fill="var(--accent)">MARKET READINESS</text>
+        <g id="stakeNodes"></g>
+      </svg>
+      <div id="stakeDetail" class="card" style="margin-top:18px;">
+        <p class="placeholder">Select a stakeholder on the radar to view their position.</p>
+      </div>
+      <div class="tag-row" style="margin-top:16px;">
+        <span class="eyebrow">Rings, inner → outer:</span>
+        <span class="filter-chip" style="cursor:default;">Decision-makers</span>
+        <span class="filter-chip" style="cursor:default;">Implementation partners</span>
+        <span class="filter-chip" style="cursor:default;">Market participants</span>
+        <span class="filter-chip" style="cursor:default;">Affected &amp; public-interest</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FLIGHT LOG ============ -->
+  <section class="page" id="page-flightlog" role="tabpanel" hidden>
+    <div class="plate" data-plate="Plate 06 — Policy Flight Log">
+      <p class="eyebrow">A dated, sourced record — updated as the policy moves</p>
+      <h2>The mandate is still moving. This page tracks it.</h2>
+      <p class="plate-lede">Each entry records a material development in funding, regulation, or infrastructure, why it matters, and how it affects the sequencing model on the previous pages. Entries are dated, sourced to a primary or trade record, and rated for confidence. Last reviewed 6 September 2026.</p>
+      <div class="tag-row" id="logFilters" style="margin-top:6px;">
+        <button class="filter-chip" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-chip" data-filter="Funding" aria-pressed="false">Funding</button>
+        <button class="filter-chip" data-filter="Mandate" aria-pressed="false">Mandate &amp; regulation</button>
+        <button class="filter-chip" data-filter="Infrastructure" aria-pressed="false">Infrastructure</button>
+      </div>
+    </div>
+
+    <div class="plate" data-plate="Log entries" id="logList">
+
+      <div class="log-entry" data-category="Mandate">
+        <div class="log-head"><span class="log-date">Nov 2023</span><span class="confidence">Confidence: High — primary document</span></div>
+        <p>ICF publishes <em>Developing a SAF Industry to Decarbonise Australian Aviation</em> for Qantas and Airbus, proposing the mandate-plus-grants-plus-buy-out package this project uses as its central benchmark: 1.5% (2026) → 5% (2030) → 28% (2040), a A$1.5bn capital pool, and a A$4–5/L buy-out.</p>
+        <p class="log-source">Source: company-commissioned industry report. <a href="https://www.qantas.com/content/dam/qantas/pdfs/qantas-group/icf-report-australia-saf-policy-analysis-nov23.pdf" target="_blank" rel="noopener">Read the report ↗</a></p>
+      </div>
+
+      <div class="log-entry" data-category="Mandate">
+        <div class="log-head"><span class="log-date">Jul 2024</span><span class="confidence">Confidence: High — primary submission</span></div>
+        <p>Qantas and Airbus submit a joint consultation response recommending a SAF-specific sub-mandate with tradeable certificates, on the grounds that a technology-neutral standard would favour cheaper renewable diesel over SAF.</p>
+        <p class="log-source">Source: joint industry consultation submission. <a href="https://www.infrastructure.gov.au/sites/default/files/documents/lclf2024-qantas-airbus.pdf" target="_blank" rel="noopener">Read the submission ↗</a></p>
+      </div>
+
+      <div class="log-entry" data-category="Funding">
+        <div class="log-head"><span class="log-date">Sep 2025</span><span class="confidence">Confidence: High — primary/statutory</span></div>
+        <p>The Cleaner Fuels Program is announced: up to A$1.1bn in production-linked incentives over ten years for low-carbon liquid fuel projects nearing a final investment decision. Design impact: this is the strongest evidence to date that supply-side policy is moving faster than demand-side policy.</p>
+        <p class="log-source">Source: Australian Renewable Energy Agency. <a href="https://arena.gov.au/funding/cleaner-fuels-program/" target="_blank" rel="noopener">Program page ↗</a></p>
+      </div>
+
+      <div class="log-entry" data-category="Funding">
+        <div class="log-head"><span class="log-date">Dec 2025</span><span class="confidence">Confidence: High — primary/statutory</span></div>
+        <p>The Future Made in Australia Innovation Fund opens, allocating up to A$250m to low-carbon liquid fuels including SAF and renewable diesel, covering pre-commercial innovation through deployment.</p>
+        <p class="log-source">Source: Australian Renewable Energy Agency. <a href="https://arena.gov.au/funding/future-made-in-australia-innovation-fund/" target="_blank" rel="noopener">Fund page ↗</a></p>
+      </div>
+
+      <div class="log-entry" data-category="Funding">
+        <div class="log-head"><span class="log-date">May 2026</span><span class="confidence">Confidence: High — primary/statutory</span></div>
+        <p>ARENA is formally named delivery agency for the Cleaner Fuels Program and opens stakeholder consultation on program guidelines and eligibility criteria — the program remains not yet open for applications.</p>
+        <p class="log-source">Source: Australian Renewable Energy Agency. <a href="https://arena.gov.au/news/arena-to-drive-domestic-low-carbon-fuel-production/" target="_blank" rel="noopener">Announcement ↗</a></p>
+      </div>
+
+      <div class="log-entry" data-category="Mandate">
+        <div class="log-head"><span class="log-date">Jun 2026</span><span class="confidence">Confidence: Medium — trade/legal analysis</span></div>
+        <p>Legal analysis confirms the 2026–27 Federal Budget commits Government to "introduce a demand measure." Four international design models remain under active comparison: supplier obligations/blending mandates, tradeable certificate schemes, carbon-intensity frameworks, and financial support mechanisms. No binding percentages have been legislated. Design impact: confirms the "Holding" status on the Scorecard page remains current.</p>
+        <p class="log-source">Source: Clayton Utz commentary. <a href="https://www.claytonutz.com/insights/2026/june/australia-s-proposed-low-carbon-liquid-fuel-demand-measure-international-lessons-and-infrastructure-implications" target="_blank" rel="noopener">Read the analysis ↗</a></p>
+      </div>
+
+      <div class="log-entry" data-category="Infrastructure">
+        <div class="log-head"><span class="log-date">Jul 2026</span><span class="confidence">Confidence: High — primary/statutory</span></div>
+        <p>SAF begins flowing at Brisbane Airport via Viva Energy's refurbished Pinkenba terminal, trialling a book-and-claim system so airlines can purchase and track associated emissions reductions — part of ARENA's A$36.7m SAF Funding Initiative across six projects. Design impact: the first operational precedent for chain-of-custody and blending logistics this project's Pillar A depends on.</p>
+        <p class="log-source">Source: Australian Renewable Energy Agency. <a href="https://arena.gov.au/news/sustainable-aviation-fuel-takes-off-at-brisbane-airport/" target="_blank" rel="noopener">Read the announcement ↗</a></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="page" id="page-sources" role="tabpanel" hidden>
+    <div class="plate" data-plate="Plate 07 — The Sources">
+      <h2>Full bibliography</h2>
+    </div>
+
+    <div class="plate bib-group" data-plate="Australian Government &amp; statutory agencies">
+      <h3>Australian Government &amp; statutory agencies</h3>
+      <ol>
+        <li>Australian Government, Department of Infrastructure, Transport, Regional Development, Communications and the Arts. <em>A Future Made in Australia: Unlocking Australia's Low Carbon Liquid Fuel Opportunity: Consultation Paper.</em> Canberra: Commonwealth of Australia, 2024. <a href="https://www.infrastructure.gov.au/sites/default/files/documents/low-carbon-liquid-fuels-consultation-paper.pdf" target="_blank" rel="noopener">infrastructure.gov.au</a>.</li>
+        <li>Australian Government, Department of Infrastructure, Transport, Regional Development, Communications and the Arts. "Consultation on Future Made in Australia: Unlocking Australia's Low Carbon Liquid Fuel Opportunity." October 23, 2024. <a href="https://www.infrastructure.gov.au/have-your-say/consultation-future-made-australia-unlocking-australias-low-carbon-liquid-fuel-opportunity" target="_blank" rel="noopener">infrastructure.gov.au</a>.</li>
+        <li>Australian Renewable Energy Agency. "Cleaner Fuels Program." Accessed September 5, 2026. <a href="https://arena.gov.au/funding/cleaner-fuels-program/" target="_blank" rel="noopener">arena.gov.au</a>.</li>
+        <li>Australian Renewable Energy Agency. "Future Made in Australia Innovation Fund." Accessed September 5, 2026. <a href="https://arena.gov.au/funding/future-made-in-australia-innovation-fund/" target="_blank" rel="noopener">arena.gov.au</a>.</li>
+        <li>Australian Renewable Energy Agency. <em>Future Made in Australia Innovation Fund — Low Carbon Liquid Fuels Technology Focus Area.</em> 2025. <a href="https://arena.gov.au/assets/2025/11/FMA-Innovation-Fund-Low-Carbon-Liquid-Fuels-Technology-Focus-Area.pdf" target="_blank" rel="noopener">arena.gov.au</a>.</li>
+        <li>Australian Renewable Energy Agency. "ARENA to Drive Domestic Low Carbon Fuel Production." May 13, 2026. <a href="https://arena.gov.au/news/arena-to-drive-domestic-low-carbon-fuel-production/" target="_blank" rel="noopener">arena.gov.au</a>.</li>
+        <li>Australian Renewable Energy Agency. "Sustainable Aviation Fuel Takes Off at Brisbane Airport." July 6, 2026. <a href="https://arena.gov.au/news/sustainable-aviation-fuel-takes-off-at-brisbane-airport/" target="_blank" rel="noopener">arena.gov.au</a>.</li>
+      </ol>
+    </div>
+
+    <div class="plate bib-group" data-plate="Industry &amp; company materials">
+      <h3>Industry &amp; company materials</h3>
+      <ol>
+        <li>ICF. <em>Developing a SAF Industry to Decarbonise Australian Aviation: SAF Policies.</em> November 2023. <a href="https://www.qantas.com/content/dam/qantas/pdfs/qantas-group/icf-report-australia-saf-policy-analysis-nov23.pdf" target="_blank" rel="noopener">qantas.com</a>.</li>
+        <li>Qantas Group and Airbus SAS. <em>Our Future — SAF Made in Australia: Low Carbon Liquid Fuel Policy Consultation Response.</em> July 25, 2024. <a href="https://www.infrastructure.gov.au/sites/default/files/documents/lclf2024-qantas-airbus.pdf" target="_blank" rel="noopener">infrastructure.gov.au</a>.</li>
+        <li>Qantas Group. "Sustainable Aviation Fuel." Accessed September 5, 2026. <a href="https://www.qantas.com/en-au/about-us/sustainability/sustainable-aviation-fuel" target="_blank" rel="noopener">qantas.com</a>.</li>
+      </ol>
+    </div>
+
+    <div class="plate bib-group" data-plate="Research, analysis &amp; related work">
+      <h3>Research, analysis &amp; related work</h3>
+      <ol>
+        <li>Clayton Utz. "Australia's Proposed Low Carbon Liquid Fuel Demand Measure: International Lessons and Infrastructure Implications." June 2026. <a href="https://www.claytonutz.com/insights/2026/june/australia-s-proposed-low-carbon-liquid-fuel-demand-measure-international-lessons-and-infrastructure-implications" target="_blank" rel="noopener">claytonutz.com</a>.</li>
+        <li>Ummanath, Arpitha, and Cassandra Howell. "Strategies for Securing Australia's Critical Resource Supply." In <em>Voices of the Future</em>, vol. 2. Australian National University Strategic and Defence Studies Centre. Accessed September 5, 2026. <a href="https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf" target="_blank" rel="noopener">PDF</a>.</li>
+      </ol>
+    </div>
+
+    <div class="plate" data-plate="Reading this site">
+      <h3>How claims are labelled</h3>
+      <p style="font-size:.92rem;">Three kinds of statement appear throughout this project, and they are not interchangeable. A <strong>Record</strong> is a fact drawn directly from a primary or statutory source — a program's funding total, an announcement date. An <strong>Assessment</strong> is this project's reading of what several records together imply — a status chip, a "why this matters" line. A <strong>Proposal</strong> is a design recommendation made by this project and is not government policy — the sequencing table, the buy-out methodology, the Regional Connectivity Safeguard. ICF's modelled figures are treated as an industry benchmark throughout, never as an enacted target.</p>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="site-footer">
+    Built for policymakers, aviation and fuel-sector leaders, project developers, investors, regional communities, and everyone with a stake in a credible domestic SAF market.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- Navigation ---------------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('nav.tabs button'));
+  var pages = Array.prototype.slice.call(document.querySelectorAll('section.page'));
+
+  function showPage(id){
+    pages.forEach(function(p){ p.hidden = (p.id !== 'page-' + id); });
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', t.dataset.target === id ? 'true' : 'false'); });
+    var main = document.getElementById('main');
+    if (main) main.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ showPage(t.dataset.target); });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-goto]')).forEach(function(el){
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      showPage(el.dataset.goto);
+    });
+  });
+
+  /* ---------------- Intro / drag-to-taxi ---------------- */
+  var introEl = document.getElementById('intro');
+  var appEl = document.getElementById('app');
+  var skipBtn = document.getElementById('skipIntro');
+  var planeGroup = document.getElementById('planeGroup');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var START_X = 120, END_X = 960, Y = 320;
+  var progress = 0;
+  var dragging = false;
+
+  function setPlanePosition(p){
+    progress = Math.max(0, Math.min(1, p));
+    var x = START_X + (END_X - START_X) * progress;
+    planeGroup.setAttribute('transform', 'translate(' + x.toFixed(1) + ',' + Y + ')');
+    planeGroup.setAttribute('aria-valuenow', Math.round(progress * 100));
+  }
+
+  function completeIntro(animate){
+    if (animate && !reduceMotion){
+      planeGroup.classList.add('launching');
+      planeGroup.setAttribute('transform', 'translate(' + (END_X + 260) + ',' + (Y - 200) + ') scale(1.15) rotate(-8)');
+      introEl.classList.add('leaving');
+      window.setTimeout(finishIntro, 620);
+    } else {
+      finishIntro();
+    }
+  }
+  function finishIntro(){
+    introEl.hidden = true;
+    appEl.hidden = false;
+  }
+
+  skipBtn.addEventListener('click', function(){ completeIntro(false); });
+
+  function pointerX(evt){
+    var rect = document.getElementById('tarmacSvg').getBoundingClientRect();
+    var clientX = (evt.touches && evt.touches[0]) ? evt.touches[0].clientX : evt.clientX;
+    var svgWidth = 1200;
+    return (clientX - rect.left) / rect.width * svgWidth;
+  }
+
+  function onDragStart(evt){
+    dragging = true;
+    planeGroup.setPointerCapture && evt.pointerId != null && planeGroup.setPointerCapture(evt.pointerId);
+  }
+  function onDragMove(evt){
+    if (!dragging) return;
+    evt.preventDefault();
+    var x = pointerX(evt);
+    setPlanePosition((x - START_X) / (END_X - START_X));
+  }
+  function onDragEnd(){
+    if (!dragging) return;
+    dragging = false;
+    if (progress > 0.82){
+      completeIntro(true);
+    } else {
+      setPlanePosition(0);
+    }
+  }
+
+  planeGroup.addEventListener('pointerdown', onDragStart);
+  window.addEventListener('pointermove', onDragMove);
+  window.addEventListener('pointerup', onDragEnd);
+  planeGroup.addEventListener('touchstart', function(e){ dragging = true; }, {passive:true});
+  planeGroup.addEventListener('touchmove', onDragMove, {passive:false});
+  planeGroup.addEventListener('touchend', onDragEnd);
+
+  planeGroup.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ setPlanePosition(progress + 0.12); e.preventDefault(); }
+    if (e.key === 'ArrowLeft'){ setPlanePosition(progress - 0.12); e.preventDefault(); }
+    if ((e.key === 'Enter' || e.key === ' ') && progress > 0.82){ completeIntro(true); e.preventDefault(); }
+  });
+
+  if (reduceMotion){
+    introEl.hidden = true;
+    appEl.hidden = false;
+  }
+
+  /* ---------------- Stakeholder control tower ---------------- */
+  var stakeholders = [
+    {id:'infra', ring:0, angle:-90.0, label:'Dept. of Infrastructure, Transport & Regional Development', category:'Decision-maker',
+      decision:'Central policy designer for the mandate pathway.', incentive:'Transport transition and aviation-sector viability.',
+      concern:'Evidence on mandate scope, compliance entity, cost impacts, and implementation sequencing.',
+      evidence:'A costed, staged mandate design with a named compliance entity.', next:'Publish the exposure draft and RIA findings.'},
+    {id:'cceew', ring:0, angle:-24.5, label:'Dept. of Climate Change, Energy, Environment & Water', category:'Decision-maker',
+      decision:'Essential co-owner of lifecycle-emissions rules.', incentive:'Net-zero policy and emissions accounting integrity.',
+      concern:'Lifecycle methodology and compatibility with broader climate policy.', evidence:'A single interoperable lifecycle-emissions methodology.',
+      next:'Finalise Guarantee of Origin expansion to LCLF.'},
+    {id:'treasury', ring:0, angle:40.9, label:'Treasury & Finance', category:'Decision-maker',
+      decision:'Potential gatekeeper on fiscal exposure.', incentive:'Value for money, competition, household cost impacts.',
+      concern:'Credible cost controls, sunset clauses, and measurable public benefit.', evidence:'Modelling on buy-out exposure and fiscal cost under different uptake scenarios.',
+      next:'Sign off the buy-out and sunset-review mechanism.'},
+
+    {id:'arena', ring:1, angle:-57.3, label:'Australian Renewable Energy Agency (ARENA)', category:'Implementation partner',
+      decision:'Delivers production and innovation grant funding.', incentive:'A functioning project pipeline reaching final investment decision.',
+      concern:'Project-pipeline intelligence and merit criteria calibrated to real bottlenecks.', evidence:'Learnings from funded projects and the Brisbane Airport trial.',
+      next:'Finalise Cleaner Fuels Program guidelines.'},
+    {id:'agriculture', ring:1, angle:8.2, label:'Dept. of Agriculture, Fisheries & Forestry', category:'Implementation partner',
+      decision:'Critical co-designer of feedstock strategy.', incentive:'Feedstock availability, land-use impact, regional value creation.',
+      concern:'Sustainable feedstock strategy, farmer benefit, traceability.', evidence:'A public feedstock-allocation hierarchy across competing sectors.',
+      next:'Co-publish land-use and food-security safeguards.'},
+    {id:'competition', ring:1, angle:73.6, label:'Competition & consumer-policy regulator', category:'Implementation partner',
+      decision:'Risk manager for fare and market-concentration impacts.', incentive:'Fair pass-through and healthy market structure.',
+      concern:'Transparent reporting and small-carrier treatment.', evidence:'Buy-out and pass-through reporting design.',
+      next:'Define the annual public reporting standard.'},
+
+    {id:'states', ring:2, angle:-122.7, label:'State governments', category:'Market participant',
+      decision:'Project enabler through planning, ports, and precincts.', incentive:'Regional development and energy-infrastructure investment.',
+      concern:'A clear federal demand signal to justify state co-investment.', evidence:'Confirmed federal mandate trajectory.', next:'Align planning approvals with priority production sites.'},
+    {id:'suppliers', ring:2, angle:171.8, label:'Fuel suppliers & refiners', category:'Market participant',
+      decision:'Bear the compliance obligation under a supplier-level mandate.', incentive:'Long-term, predictable compliance rules.',
+      concern:'Certificate flexibility and supply-shortage protection.', evidence:'Finalised certificate registry and shortage protocol.', next:'Confirm blending and terminal logistics capacity.'},
+    {id:'safdev', ring:2, angle:106.4, label:'SAF developers & investors', category:'Market participant',
+      decision:'Make the final investment decision on new facilities.', incentive:'Revenue certainty and bankable offtake.',
+      concern:'Time-bound production support plus a credible mandate pathway.', evidence:'A published mandate trajectory and certificate value.', next:'Progress toward financial close on lead projects.'},
+
+    {id:'airlines', ring:3, angle:-155.5, label:'Airlines, airports & freight users', category:'Affected stakeholder',
+      decision:'Shape demand through offtake and book-and-claim purchases.', incentive:'Reliable, reasonably priced SAF supply.',
+      concern:'Fair cost allocation and supply reliability.', evidence:'Transparent pass-through and shortage-relief rules.', next:'Expand offtake agreements as certified supply grows.'},
+    {id:'regional', ring:3, angle:139.1, label:'Regional communities, workers, First Nations & environmental organisations', category:'Public-interest safeguard',
+      decision:'Not one bloc — must be engaged throughout, not only at the end.', incentive:'Jobs, land and water stewardship, genuine emissions integrity.',
+      concern:'Meaningful participation, benefit-sharing, and transparency.', evidence:'Documented consultation on land-use and community impact.', next:'Confirm the Regional Connectivity Safeguard design.'}
+  ];
+  var ringRadius = [70, 115, 160, 205];
+  var svgNS = 'http://www.w3.org/2000/svg';
+  var nodesG = document.getElementById('stakeNodes');
+  var detailEl = document.getElementById('stakeDetail');
+
+  function categoryChip(cat){
+    return '<span class="eyebrow" style="color:var(--accent);">' + cat + '</span>';
+  }
+
+  stakeholders.forEach(function(s){
+    var r = ringRadius[s.ring];
+    var rad = s.angle * Math.PI / 180;
+    var cx = 350 + r * Math.cos(rad);
+    var cy = 260 + r * Math.sin(rad);
+    var g = document.createElementNS(svgNS, 'g');
+    g.setAttribute('class', 'stake-node');
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', s.label);
+    g.dataset.id = s.id;
+
+    var circle = document.createElementNS(svgNS, 'circle');
+    circle.setAttribute('cx', cx); circle.setAttribute('cy', cy); circle.setAttribute('r', 6.5);
+    circle.setAttribute('fill', 'var(--paper-raised)');
+    circle.setAttribute('stroke', 'var(--accent)');
+    circle.setAttribute('stroke-width', '1.6');
+    g.appendChild(circle);
+
+    var textAnchor = Math.cos(rad) > 0.15 ? 'start' : (Math.cos(rad) < -0.15 ? 'end' : 'middle');
+    var dx = Math.cos(rad) > 0.15 ? 10 : (Math.cos(rad) < -0.15 ? -10 : 0);
+    var dy = Math.sin(rad) > 0.3 ? 14 : (Math.sin(rad) < -0.3 ? -9 : 4);
+    var label = s.label.length > 20 ? s.label.slice(0,18) + '…' : s.label;
+    var text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', cx + dx); text.setAttribute('y', cy + dy);
+    text.setAttribute('text-anchor', textAnchor);
+    text.textContent = label;
+    g.appendChild(text);
+
+    function activate(){
+      Array.prototype.slice.call(nodesG.querySelectorAll('.stake-node')).forEach(function(n){ n.classList.remove('active'); });
+      g.classList.add('active');
+      detailEl.innerHTML =
+        categoryChip(s.category) +
+        '<h4 style="margin-top:.5em;">' + s.label + '</h4>' +
+        '<p style="font-size:.87rem;margin-bottom:.5em;"><strong>Decision right:</strong> ' + s.decision + '</p>' +
+        '<p style="font-size:.87rem;margin-bottom:.5em;"><strong>Incentive:</strong> ' + s.incentive + '</p>' +
+        '<p style="font-size:.87rem;margin-bottom:.5em;"><strong>Concern:</strong> ' + s.concern + '</p>' +
+        '<p style="font-size:.87rem;margin-bottom:.5em;"><strong>Evidence they need:</strong> ' + s.evidence + '</p>' +
+        '<p style="font-size:.87rem;margin-bottom:0;"><strong>Next action:</strong> ' + s.next + '</p>';
+    }
+    g.addEventListener('click', activate);
+    g.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activate(); } });
+    nodesG.appendChild(g);
+  });
+
+  /* ---------------- Flight log filters ---------------- */
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('#logFilters .filter-chip'));
+  var logEntries = Array.prototype.slice.call(document.querySelectorAll('.log-entry'));
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      var f = btn.dataset.filter;
+      logEntries.forEach(function(entry){
+        entry.hidden = (f !== 'all' && entry.dataset.category !== f);
+      });
+    });
+  });
+
+})();
+</script>
+<script>window.PF_CONFIG={self:"7wCZbA8RrAioD3YasEkTe5",barHost:"#app"};</script>
+<script>
+/* Ari · portfolio About & contact + case-studies menu (shared across case studies) */
+(function(){
+  if (window.__pfLoaded) return; window.__pfLoaded = true;
+  var cur = document.currentScript;
+  var CFG = window.PF_CONFIG || {};
+  if (cur) { CFG.self = CFG.self || cur.getAttribute('data-self'); CFG.nav = CFG.nav || cur.getAttribute('data-nav'); CFG.rename = CFG.rename || cur.getAttribute('data-rename'); }
+  var st = document.createElement('style'); st.textContent = '\n.pf-dlg{--pf-bg:#FBFCFD;--pf-ink:#14202E;--pf-ink2:#44546A;--pf-line:#D5DDE5;--pf-acc:#1B6F78;--pf-scrim:rgba(10,18,28,.55);position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:var(--pf-scrim);font-family:Georgia,"Times New Roman",serif}\n@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}}\n:root[data-theme="dark"] .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}\n.pf-dlg[hidden],.pf-body[hidden]{display:none!important}\n.pf-card{background:var(--pf-bg);color:var(--pf-ink);width:min(560px,100%);max-height:100%;overflow:auto;border-radius:10px;border:1px solid var(--pf-line);box-shadow:0 20px 60px rgba(0,0,0,.3);display:grid}\n.pf-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--pf-line)}\n.pf-tabs{display:flex;gap:4px;flex-wrap:wrap}\n.pf-tabs button,.pf-x{appearance:none;border:1px solid transparent;background:none;color:var(--pf-ink2);font:600 15px/1.2 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.02em;padding:7px 12px;border-radius:999px;cursor:pointer}\n.pf-tabs button[aria-selected="true"]{background:var(--pf-ink);color:var(--pf-bg)}\n.pf-x{border-color:var(--pf-line);border-radius:6px;font-size:14px}\n.pf-tabs button:focus-visible,.pf-x:focus-visible,.pf-body a:focus-visible,.pf-copy:focus-visible{outline:2px solid var(--pf-acc);outline-offset:2px}\n.pf-body{padding:18px;display:grid;gap:14px;font-size:16px;line-height:1.6}\n.pf-body h2{margin:0;font:700 26px/1.1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;color:var(--pf-ink)}\n.pf-body p{margin:0;color:var(--pf-ink2)}\n.pf-label{font:600 12px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ink2)}\n.pf-li{display:inline-flex;align-items:center;gap:10px;justify-self:start;background:#0A66C2;color:#fff;text-decoration:none;font:600 16px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.03em;padding:11px 16px;border-radius:6px}\n.pf-li svg{width:18px;height:18px;fill:currentColor}\n.pf-url{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 13px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--pf-ink2);word-break:break-all}\n.pf-copy{appearance:none;border:1px solid var(--pf-line);background:none;color:var(--pf-ink);font:600 13px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;padding:6px 10px;border-radius:5px;cursor:pointer}\n.pf-body p a{color:var(--pf-acc);text-underline-offset:3px}.pf-list{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--pf-line)}\n.pf-list li{border-bottom:1px solid var(--pf-line)}\n.pf-list a{display:grid;gap:2px;padding:11px 4px;text-decoration:none;color:var(--pf-ink)}\n.pf-list a b{font:600 17px/1.25 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif}\n.pf-list a span{font-size:14px;color:var(--pf-ink2)}\n.pf-list a[aria-current] b::after{content:"  · you are here";font:italic 400 13px Georgia,serif;color:var(--pf-acc)}\nbody.pf-open{overflow:hidden}\n\n.pf-bar{font:600 13px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.04em;background:#14202E;color:#E6EDF4;padding:9px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;position:relative;z-index:40}\n.pf-bar b{letter-spacing:.12em}\n.pf-bar nav{display:flex;gap:16px}\n.pf-bar a{color:#E6EDF4;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}\n.pf-bar a:hover{border-bottom-color:#6CC3CB}\n.pf-bar a:focus-visible{outline:2px solid #6CC3CB;outline-offset:3px}\n'; document.head.appendChild(st);
+  var wrap = document.createElement('div'); wrap.innerHTML = '<div class="pf-dlg" id="pfDlg" role="dialog" aria-modal="true" aria-label="Portfolio" hidden>\n  <div class="pf-card">\n    <div class="pf-head">\n      <div class="pf-tabs" role="tablist">\n        <button type="button" role="tab" data-pfv="about" aria-selected="true">About &amp; contact</button>\n        <button type="button" role="tab" data-pfv="work" aria-selected="false">Case studies</button>\n      </div>\n      <button type="button" class="pf-x" id="pfClose" aria-label="Close">Close ✕</button>\n    </div>\n    <div class="pf-body" data-pfp="about">\n      <div class="pf-label">About</div>\n      <h2>Arpitha (Ari) Ummanath</h2>\n      <p>Policy researcher and writer based in Australia, working on international security, defence and strategic policy. My portfolio is a set of independent, source-linked case studies that turn public evidence into analysis and practical recommendations.</p>\n      <p>Published work includes a solo piece in ASPI\'s <a href="https://www.aspi.org.au/strategist-posts/women-are-integral-to-closing-australias-defence-workforce-gap/" target="_blank" rel="noopener"><i>The Strategist</i></a> and a co-authored paper on Australia\'s fuel security (<a href="https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf" target="_blank" rel="noopener"><i>Voices of the Future</i></a> – Girls Run The World).</p>\n      <div class="pf-label" style="margin-top:6px">Contact</div>\n      <p>The best way to reach me is on LinkedIn.</p>\n      <a class="pf-li" href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect on LinkedIn</a>\n      <div class="pf-url"><span id="pfUrl">linkedin.com/in/arpitha-u-62549a2ba</span><button type="button" class="pf-copy" id="pfCopy">Copy link</button></div>\n    </div>\n    <div class="pf-body" data-pfp="work" hidden>\n      <div class="pf-label">Portfolio</div>\n      <h2>Case studies</h2>\n      <ul class="pf-list">\n        <li><a href="../assurance-gap/" target="_blank" rel="noopener"><b>The Assurance Gap</b><span>Defence autonomy · assurance &amp; test and evaluation</span></a></li>\n        <li><a href="../tail-number/" target="_blank" rel="noopener"><b>Tail Number Exposed</b><span>Business-jet flight-data privacy · aviation security</span></a></li>\n        <li><a href="../aukus/" target="_blank" rel="noopener"><b>The AUKUS Export-Control Navigator</b><span>Defence industry · export controls</span></a></li>\n        <li><a href="../saf/" target="_blank" rel="noopener"><b>The SAF Mandate Gap</b><span>Aviation · sustainable fuel policy</span></a></li>\n        <li><a href="../grand-prix/" target="_blank" rel="noopener"><b>Is the Grand Prix Worth It?</b><span>Economic &amp; soft-power impact</span></a></li>\n        <li><a href="../real-selectors/" target="_blank" rel="noopener"><b>The Real Selectors</b><span>Cricket governance · two live case studies</span></a></li>\n        <li><a href="../ranking/" target="_blank" rel="noopener"><b>Does the Ranking Hold?</b><span>Rail procurement security scorecard</span></a></li>\n        <li><a href="../companion-briefs/" target="_blank" rel="noopener"><b>Companion Briefs</b><span>Geopolitical risk · Indo-Pacific &amp; passive-index protocol</span></a></li>\n      </ul>\n    </div>\n  </div>\n</div>'; document.body.appendChild(wrap.firstElementChild);
+  function mkLinks(container, cls, before){
+    [['work','Case studies'],['about','About &amp; contact']].forEach(function(p){
+      var a=document.createElement('a'); a.href='#'; a.setAttribute('role','button'); a.setAttribute('data-pf',p[0]); a.innerHTML=p[1];
+      if(cls) a.className=cls;
+      container.appendChild(a);
+    });
+  }
+  var nav = CFG.nav ? document.querySelector(CFG.nav) : null;
+  if (nav) {
+    var sample = nav.querySelector('a:not(.active):not(.current)') || nav.querySelector('a');
+    var cls = sample ? sample.className.replace(/\b(active|current)\b/g,'').trim() : '';
+    if (CFG.rename) { var parts = CFG.rename.split('=>'); nav.querySelectorAll('a').forEach(function(a){ if(a.textContent.trim()===parts[0]) a.textContent=parts[1]; }); }
+    mkLinks(nav, cls);
+  } else {
+    var bar=document.createElement('div'); bar.className='pf-bar';
+    bar.innerHTML='<b>ARI · PORTFOLIO</b><nav aria-label="Portfolio"></nav>';
+    mkLinks(bar.querySelector('nav'), '');
+    var host = CFG.barHost ? document.querySelector(CFG.barHost) : null;
+    if (host) host.insertBefore(bar, host.firstChild); else document.body.insertBefore(bar, document.body.firstChild);
+  }
+  var SELF = CFG.self || '';
+
+  const dlg=document.getElementById('pfDlg'); if(!dlg) return;
+  dlg.querySelectorAll('.pf-list a').forEach(a=>{ if(SELF && a.href.indexOf(SELF)>-1) a.setAttribute('aria-current','page'); });
+  let last=null;
+  function view(v){dlg.querySelectorAll('[data-pfv]').forEach(b=>b.setAttribute('aria-selected',b.dataset.pfv===v));dlg.querySelectorAll('[data-pfp]').forEach(p=>p.hidden=p.dataset.pfp!==v);}
+  function open(v){last=document.activeElement;view(v||'about');dlg.hidden=false;document.body.classList.add('pf-open');dlg.querySelector('[aria-selected="true"]').focus();}
+  function close(){dlg.hidden=true;document.body.classList.remove('pf-open');if(last&&last.focus)last.focus();}
+  document.addEventListener('click',e=>{const t=e.target.closest('[data-pf]');if(t){e.preventDefault();e.stopImmediatePropagation();open(t.dataset.pf);}},true);
+  dlg.addEventListener('click',e=>{if(e.target===dlg)close();const b=e.target.closest('[data-pfv]');if(b)view(b.dataset.pfv);});
+  document.getElementById('pfClose').addEventListener('click',close);
+  dlg.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  document.getElementById('pfCopy').addEventListener('click',()=>{const u='https://www.linkedin.com/in/arpitha-u-62549a2ba/';const btn=document.getElementById('pfCopy');
+    try{navigator.clipboard.writeText(u).then(()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy link',1500);},sel);}catch(e){sel();}
+    function sel(){const r=document.createRange();r.selectNodeContents(document.getElementById('pfUrl'));const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected, press Ctrl/Cmd+C';}});
+
+})();
+</script>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

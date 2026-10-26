@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}</style>
+<title>Navigator — AUKUS Export-Control Navigator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 16h26M16 3v26" stroke="currentColor" stroke-width="1"/><path d="M16 3a13 13 0 0 1 0 26" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 3a13 13 0 0 0 0 26" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span><strong>AUKUS</strong> Export-Control Navigator</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Home</a>
+      <a href="navigator.html" class="active">Navigator</a>
+      <a href="cases.html">Case bank</a>
+      <a href="brief.html">Policy brief</a>
+      <a href="verify.html">Verify</a>
+      <a href="sources.html">Sources</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="hero page-hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="radar " aria-hidden="true"><div class="radar-ring r1"></div><div class="radar-ring r2"></div><div class="radar-ring r3"></div><div class="radar-sweep"></div><div class="radar-blip"></div><div class="radar-cross"></div></div>
+  <div class="wrap hero-inner">
+    <div class="hero-eyebrow">The Navigator</div>
+    <h1>Describe the item.<br/><span class="accent">Get a cited triage.</span></h1>
+    <p class="hero-lede">Enter a plain-English description of the technology, component or service you intend to transfer, then answer the triage questions. The tool returns a <strong>preliminary pathway</strong>, a <strong>decision trail</strong> showing which rules fired and why, an <strong>evidence checklist</strong>, and the <strong>questions where its judgement ends</strong> &mdash; each linked to source.</p>
+  </div>
+</section>
+
+<section id="navigator" class="section navigator">
+  <div class="wrap">
+    <div class="nav-grid">
+      <div class="nav-form">
+        <label class="field">
+          <span class="field-label">1 &middot; Describe the item / technology / service</span>
+          <textarea id="desc" rows="4" placeholder="e.g. inertial navigation unit with associated technical data, to be supplied to an Australian Authorised User in Adelaide"></textarea>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">2 &middot; Item type</span>
+            <select id="itemType">
+              <option value="unclear">Unsure / needs classification</option>
+              <option value="itar_article">ITAR defence article (USML)</option>
+              <option value="itar_technical_data">ITAR technical data</option>
+              <option value="itar_service">ITAR defence service / brokering</option>
+              <option value="dsgl_munitions">DSGL Part 1 (Munitions)</option>
+              <option value="dsgl_dual">DSGL Part 2 (Dual-use)</option>
+              <option value="commercial_dual">Commercial dual-use (EAR)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">3 &middot; Destination</span>
+            <select id="destination">
+              <option value="inside">Within AU/UK/US territories</option>
+              <option value="outside">Outside AUKUS territories</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">4 &middot; Recipient</span>
+            <select id="recipient">
+              <option value="aukus_party">AU/UK/US person or government</option>
+              <option value="deployed_forces">AUKUS forces deployed overseas</option>
+              <option value="foreign_national_in_aus">Foreign national within Australia</option>
+              <option value="third_country">Third-country party</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">5 &middot; Authorised-user status</span>
+            <select id="authorisedUser">
+              <option value="yes">Registered Authorised User</option>
+              <option value="unsure">Not sure</option>
+              <option value="no">Not registered</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">6 &middot; Third-country re-transfer?</span>
+            <select id="thirdCountry">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">7 &middot; Technical data involved?</span>
+            <select id="technicalData">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">8 &middot; Classified information?</span>
+            <select id="classified">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="nav-actions">
+          <button id="runBtn" class="btn btn-primary">Run triage</button>
+          <button id="resetBtn" class="btn btn-ghost">Reset</button>
+        </div>
+        <p class="nav-foot"><strong>Important:</strong> outputs are a preliminary research aid only, not a legal determination. &ldquo;Likely eligible&rdquo; is never a substitute for formal classification and authorised-user registration.</p>
+      </div>
+
+      <div id="resultBox" class="result-box" aria-live="polite">
+        <div class="result-placeholder">
+          <div class="placeholder-icon" aria-hidden="true">&#9670;</div>
+          <p>Your triage result, decision trail, evidence checklist and source citations will appear here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>&copy; 2026 Ari U &middot; Canberra, Australia</div>
+    <div class="footer-links">
+      <a href="navigator.html">Navigator</a>
+      <a href="brief.html">Brief</a>
+      <a href="sources.html">Sources</a>
+    </div>
+    <div>Research aid &mdash; not legal advice.</div>
+  </div>
+</footer>
+
+<script src="portfolio.js" data-self="XXF3dbYBYyyUxHZ7MCJNAV" data-nav=".topnav" data-rename="About=>About the project"></script>
+<script src="app.js"></script>
+<script src="../assets/portfolio.js"></script>

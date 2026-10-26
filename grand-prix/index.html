@@ -1,0 +1,1057 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is the Grand Prix Worth It? — Independent Economic &amp; Soft-Power Impact Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ---- validated categorical palette, DARK mode, all 6 checks PASS ---- */
+    --red:   #d9576d;
+    --blue:  #5a8cd6;
+    --teal:  #22a084;
+    --amber: #c07f28;
+
+    --red-tint:   rgba(217,87,109,.14);
+    --red-line:   rgba(217,87,109,.32);
+    --blue-tint:  rgba(90,140,214,.14);
+    --blue-line:  rgba(90,140,214,.32);
+    --teal-tint:  rgba(34,160,132,.16);
+    --teal-line:  rgba(34,160,132,.34);
+    --amber-tint: rgba(192,127,40,.16);
+    --amber-line: rgba(192,127,40,.34);
+
+    --bg:      #0b0d13;
+    --bg-2:    #12141c;
+    --bg-3:    #181b26;
+    --ink:     #f3f2ee;
+    --ink-soft:#c6c9d3;
+    --ink-muted:#888ca0;
+    --line:    rgba(255,255,255,.09);
+    --line-soft: rgba(255,255,255,.05);
+
+    --radius: 14px;
+    --maxw: 1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.6; font-size:16px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Titillium Web','Inter',system-ui,sans-serif; font-weight:700; letter-spacing:-0.01em; margin:0 0 .5em 0; color:var(--ink);}
+  p{margin:0 0 1em 0;}
+  a{color:var(--blue); text-decoration:underline; text-decoration-color:rgba(90,140,214,.4); text-underline-offset:2px;}
+  a:hover{text-decoration-color:currentColor;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  .page{display:none;}
+  .page.active{display:block; animation:fadein .5s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  main{position:relative; z-index:2;}
+  section{padding:64px 0; scroll-margin-top:88px;}
+  section + section{border-top:1px solid var(--line-soft);}
+
+  /* ---------------- animated background: fixed circuit + cars ---------------- */
+  .track-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(90,140,214,.10), transparent 60%),
+      radial-gradient(ellipse 900px 600px at 105% 30%, rgba(217,87,109,.09), transparent 60%),
+      radial-gradient(ellipse 800px 700px at 0% 85%, rgba(34,160,132,.07), transparent 60%),
+      var(--bg);
+  }
+  .track-svg{position:absolute; top:-8%; left:50%; width:1400px; max-width:none; height:auto; transform:translateX(-50%); will-change:transform;}
+  @media (max-width:900px){.track-svg{width:1000px;}}
+  .track-line{fill:none; stroke-linecap:round; stroke-linejoin:round;}
+
+  /* ---------------- flag strip ---------------- */
+  .flag-strip{height:5px; background-image:linear-gradient(90deg, var(--red) 25%, transparent 25%, transparent 50%, var(--blue) 50%, var(--blue) 75%, transparent 75%, transparent); background-size:12px 5px; opacity:.85;}
+
+  /* ---------------- nav ---------------- */
+  header.site{position:sticky; top:0; z-index:50; background:rgba(11,13,19,.72); backdrop-filter:blur(14px); border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:var(--maxw); margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Titillium Web',sans-serif; font-weight:900; font-size:14px; letter-spacing:.02em; white-space:nowrap; color:var(--ink); text-decoration:none; cursor:pointer;}
+  .brand-mark{width:20px; height:20px; flex:none;}
+  nav.links{display:flex; gap:2px; flex-wrap:wrap;}
+  nav.links a{font-size:13px; font-weight:600; color:var(--ink-muted); text-decoration:none; padding:8px 12px; border-radius:999px; white-space:nowrap; cursor:pointer; transition:color .15s, background .15s;}
+  nav.links a:hover{background:var(--bg-3); color:var(--ink);}
+  nav.links a.active{background:var(--blue-tint); color:var(--blue);}
+  .badge-live{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--teal); background:var(--teal-tint); border:1px solid var(--teal-line); padding:5px 10px 5px 8px; border-radius:999px; white-space:nowrap;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 3px var(--teal-tint);}
+
+  /* ---------------- hero ---------------- */
+  .hero{padding:72px 0 44px 0; position:relative;}
+  .kicker{display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--red); background:var(--red-tint); border:1px solid var(--red-line); padding:6px 12px; border-radius:999px; margin-bottom:20px;}
+  .hero h1{font-size:clamp(36px,6vw,64px); line-height:1.02; max-width:780px;}
+  .hero h1 .accent{color:var(--blue);}
+  .hero .lede{font-size:18px; color:var(--ink-soft); max-width:640px; margin-top:16px;}
+  .hero-meta{display:flex; gap:28px; flex-wrap:wrap; margin-top:36px;}
+
+  /* ---------------- stat tiles ---------------- */
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:8px;}
+  @media (max-width:820px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-tile{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--radius); padding:20px 18px; backdrop-filter:blur(6px);}
+  .stat-tile .num{font-family:'Titillium Web',sans-serif; font-weight:900; font-size:29px; line-height:1;}
+  .stat-tile .num.red{color:var(--red);} .stat-tile .num.blue{color:var(--blue);} .stat-tile .num.teal{color:var(--teal);} .stat-tile .num.amber{color:var(--amber);}
+  .stat-tile .lbl{font-size:12.5px; color:var(--ink-muted); margin-top:6px; line-height:1.4;}
+  .stat-tile .src{font-size:11px; color:var(--ink-muted); margin-top:8px; opacity:.75;}
+  .stat-tile .src a{color:var(--ink-muted);}
+
+  /* ---------------- explore grid (home) ---------------- */
+  .explore-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:14px;}
+  @media (max-width:860px){.explore-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.explore-grid{grid-template-columns:1fr;}}
+  .explore-card{
+    display:block; text-decoration:none; border-radius:var(--radius); border:1px solid var(--line);
+    background:var(--bg-2); padding:24px 22px; transition:transform .18s ease, border-color .18s ease, background .18s ease;
+    position:relative; overflow:hidden;
+  }
+  .explore-card:hover{transform:translateY(-3px); border-color:var(--line); background:var(--bg-3);}
+  .explore-card .ec-num{font-family:'Titillium Web',sans-serif; font-weight:900; font-size:12px; letter-spacing:.06em; text-transform:uppercase; opacity:.7; margin-bottom:10px; display:block;}
+  .explore-card h3{font-size:19px; margin-bottom:6px; color:var(--ink);}
+  .explore-card p{font-size:13.5px; color:var(--ink-muted); margin-bottom:0;}
+  .explore-card .arrow{position:absolute; right:20px; top:22px; font-size:18px; opacity:.5; transition:transform .18s ease, opacity .18s ease;}
+  .explore-card:hover .arrow{transform:translateX(4px); opacity:1;}
+  .explore-card.c-red .ec-num{color:var(--red);} .explore-card.c-blue .ec-num{color:var(--blue);}
+  .explore-card.c-teal .ec-num{color:var(--teal);} .explore-card.c-amber .ec-num{color:var(--amber);}
+
+  /* ---------------- section headers ---------------- */
+  .eyebrow{font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:10px;}
+  .section-head{max-width:720px; margin-bottom:36px;}
+  .section-head h1{font-size:clamp(28px,4vw,40px);}
+  .section-head p{color:var(--ink-soft); font-size:16px;}
+
+  /* ---------------- framework cards ---------------- */
+  .framework-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:900px){.framework-grid{grid-template-columns:1fr;}}
+  .fw-card{border-radius:var(--radius); border:1px solid var(--line); background:var(--bg-2); padding:26px 24px; display:flex; flex-direction:column; gap:12px;}
+  .fw-card .fw-num{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center; font-family:'Titillium Web',sans-serif; font-weight:900; font-size:15px; color:#fff;}
+  .fw-card.c1 .fw-num{background:var(--red);} .fw-card.c2 .fw-num{background:var(--blue);} .fw-card.c3 .fw-num{background:var(--teal);}
+  .fw-card h3{font-size:18px; margin-bottom:2px;}
+  .fw-card p{font-size:14.5px; color:var(--ink-soft); margin-bottom:0;}
+  .fw-card ul{margin:6px 0 0 0; padding-left:18px; font-size:13.5px; color:var(--ink-soft);}
+  .fw-card ul li{margin-bottom:5px;}
+  .fw-card .tag{align-self:flex-start; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:4px 9px; border-radius:999px; margin-top:2px;}
+  .fw-card.c1 .tag{background:var(--red-tint); color:var(--red);} .fw-card.c2 .tag{background:var(--blue-tint); color:var(--blue);} .fw-card.c3 .tag{background:var(--teal-tint); color:var(--teal);}
+
+  .plain-box{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--radius); padding:26px 28px; margin-bottom:28px;}
+  .plain-box h4{font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--blue); margin-bottom:10px;}
+  .plain-box p{font-size:15px; color:var(--ink-soft);}
+  .plain-box p:last-child{margin-bottom:0;}
+  .analogy-row{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:16px;}
+  @media (max-width:800px){.analogy-row{grid-template-columns:1fr;}}
+  .analogy{border-radius:10px; padding:14px 16px; font-size:13px; color:var(--ink-soft);}
+  .analogy strong{display:block; font-size:12px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px;}
+  .analogy.red{background:var(--red-tint); border:1px solid var(--red-line);} .analogy.red strong{color:var(--red);}
+  .analogy.blue{background:var(--blue-tint); border:1px solid var(--blue-line);} .analogy.blue strong{color:var(--blue);}
+  .analogy.teal{background:var(--teal-tint); border:1px solid var(--teal-line);} .analogy.teal strong{color:var(--teal);}
+
+  /* ---------------- chart ---------------- */
+  .chart-card{border:1px solid var(--line); background:var(--bg-2); border-radius:var(--radius); padding:28px 26px 22px 26px; margin-top:8px;}
+  .chart-title{font-size:15px; font-weight:700; margin-bottom:2px;}
+  .chart-sub{font-size:13px; color:var(--ink-muted); margin-bottom:22px;}
+  .bar-row{display:grid; grid-template-columns:190px 1fr 96px; align-items:center; gap:14px; margin-bottom:16px;}
+  @media (max-width:640px){.bar-row{grid-template-columns:110px 1fr 74px; gap:8px;}}
+  .bar-label{font-size:13px; font-weight:600; color:var(--ink-soft); text-align:right;}
+  .bar-track{position:relative; height:22px; background:var(--bg-3); border-radius:6px; overflow:hidden;}
+  .bar-fill{position:absolute; left:0; top:0; bottom:0; border-radius:6px 4px 4px 6px; min-width:6px;}
+  .bar-fill.red{background:var(--red);} .bar-fill.blue{background:var(--blue);} .bar-fill.amber{background:var(--amber);}
+  .bar-val{font-size:13.5px; font-weight:700; font-variant-numeric:tabular-nums;}
+  .legend-row{display:flex; gap:18px; flex-wrap:wrap; margin-bottom:22px;}
+  .legend-item{display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-soft);}
+  .legend-swatch{width:10px;height:10px;border-radius:3px;}
+
+  .callout{border-radius:var(--radius); padding:22px 24px; border:1px solid var(--amber-line); background:var(--amber-tint); margin-top:20px; font-size:14.5px; color:var(--ink-soft);}
+  .callout strong{color:var(--ink);}
+  .callout.blue{border-color:var(--blue-line); background:var(--blue-tint);}
+  .callout.teal{border-color:var(--teal-line); background:var(--teal-tint);}
+  .callout.red{border-color:var(--red-line); background:var(--red-tint);}
+  .callout h4{font-size:14px; margin-bottom:8px; color:var(--ink);}
+
+  .steps{counter-reset:step; margin:20px 0 0 0; padding:0; list-style:none;}
+  .steps li{position:relative; padding-left:40px; margin-bottom:16px; font-size:14.5px; color:var(--ink-soft);}
+  .steps li::before{counter-increment:step; content:counter(step); position:absolute; left:0; top:0; width:26px; height:26px; border-radius:50%; background:var(--blue-tint); color:var(--blue); border:1px solid var(--blue-line); font-weight:800; font-size:12.5px; display:flex; align-items:center; justify-content:center;}
+  .steps li strong{color:var(--ink);}
+
+  .stake-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px;}
+  @media (max-width:760px){.stake-grid{grid-template-columns:1fr;}}
+  .stake-card{border:1px solid var(--line); background:var(--bg-2); border-radius:12px; padding:18px 20px;}
+  .stake-card .who{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--teal); margin-bottom:6px;}
+  .stake-card p{font-size:13.5px; color:var(--ink-soft); margin-bottom:0;}
+
+  .assumptions{border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; background:var(--bg-2); margin-top:18px;}
+  .assumptions summary{cursor:pointer; font-weight:700; font-size:14px; color:var(--ink);}
+  .assumptions[open] summary{margin-bottom:12px;}
+  .assumptions ol{margin:0; padding-left:20px; font-size:13.5px; color:var(--ink-soft);}
+  .assumptions ol li{margin-bottom:8px;}
+
+  /* proof box */
+  .proof-box{border:1px solid var(--teal-line); background:var(--teal-tint); border-radius:var(--radius); padding:26px 28px; margin-top:24px;}
+  .proof-box h4{font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--teal); margin-bottom:12px;}
+  .pull-quote{border-left:3px solid var(--teal); padding-left:16px; margin:14px 0; font-size:16px; font-style:italic; color:var(--ink);}
+  .proof-links{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;}
+  .proof-links a{font-size:13px; font-weight:600; background:var(--bg-2); border:1px solid var(--line); padding:8px 14px; border-radius:999px; text-decoration:none; color:var(--ink-soft);}
+  .proof-links a:hover{color:var(--teal); border-color:var(--teal-line);}
+
+  /* soft power index */
+  .index-panel{display:grid; grid-template-columns:220px 1fr; gap:32px; align-items:center; margin-top:8px;}
+  @media (max-width:760px){.index-panel{grid-template-columns:1fr;}}
+  .dial-wrap{display:flex; flex-direction:column; align-items:center; gap:10px;}
+  .dial-score{font-family:'Titillium Web',sans-serif; font-weight:900; font-size:44px; color:var(--teal);}
+  .dial-tier{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--amber); background:var(--amber-tint); border:1px solid var(--amber-line); padding:4px 10px; border-radius:999px;}
+  .dial-scale{font-size:11.5px; color:var(--ink-muted); text-align:center; max-width:180px;}
+  .idx-row{display:grid; grid-template-columns:220px 1fr 60px; align-items:center; gap:12px; margin-bottom:14px;}
+  @media (max-width:640px){.idx-row{grid-template-columns:110px 1fr 46px;}}
+  .idx-label{font-size:13px; font-weight:600; color:var(--ink-soft);}
+  .idx-weight{font-size:11px; color:var(--ink-muted); display:block; font-weight:400;}
+  .idx-track{height:12px; background:var(--bg-3); border-radius:6px; overflow:hidden;}
+  .idx-fill{height:100%; background:var(--teal); border-radius:6px;}
+  .idx-val{font-size:13px; font-weight:700; text-align:right;}
+
+  /* case study */
+  .case-study{border:1px solid var(--line); background:linear-gradient(160deg, var(--bg-2), var(--bg-3)); border-radius:18px; padding:32px; margin-top:28px; position:relative; overflow:hidden;}
+  .case-study .cs-tag{display:inline-block; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--amber); background:var(--amber-tint); border:1px solid var(--amber-line); padding:5px 11px; border-radius:999px; margin-bottom:14px;}
+  .case-study h3{font-size:22px; margin-bottom:10px;}
+  .case-study .cs-meta{font-size:12.5px; color:var(--ink-muted); margin-bottom:16px;}
+  .cs-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:26px; margin-top:16px;}
+  @media (max-width:800px){.cs-grid{grid-template-columns:1fr;}}
+  .cs-stat{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:var(--bg-2); margin-bottom:10px;}
+  .cs-stat .n{font-family:'Titillium Web',sans-serif; font-weight:800; font-size:17px; color:var(--amber);}
+  .cs-stat .l{font-size:11.5px; color:var(--ink-muted); margin-top:2px;}
+
+  /* table */
+  table.data{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:10px;}
+  table.data th, table.data td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line-soft);}
+  table.data th{font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-muted); font-weight:700;}
+  table.data td{color:var(--ink-soft);}
+  table.data tr:last-child td{border-bottom:none;}
+  .num-cell{font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink);}
+
+  /* exec summary */
+  .exec-sheet{background:var(--bg-2); border:1px solid var(--line); border-radius:18px; padding:44px 44px;}
+  @media (max-width:640px){.exec-sheet{padding:28px 22px;}}
+  .exec-sheet h3{font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--red); margin-top:26px; margin-bottom:8px;}
+  .exec-sheet h3:first-of-type{margin-top:0;}
+  .exec-sheet p, .exec-sheet li{font-size:14.5px; color:var(--ink-soft);}
+  .exec-top{display:flex; justify-content:space-between; align-items:flex-start; gap:20px; border-bottom:2px solid var(--line); padding-bottom:16px; margin-bottom:8px; flex-wrap:wrap;}
+  .exec-top .t1{font-family:'Titillium Web',sans-serif; font-weight:900; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-muted);}
+  .exec-audience{font-size:12px; color:var(--ink-muted); text-align:right;}
+  .exec-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:18px 0;}
+  @media (max-width:700px){.exec-grid{grid-template-columns:1fr;}}
+  .exec-stat{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:var(--bg-3);}
+  .exec-stat .n{font-family:'Titillium Web',sans-serif; font-weight:800; font-size:20px;}
+  .exec-stat .l{font-size:11.5px; color:var(--ink-muted); margin-top:3px;}
+
+  .biblio{font-size:13.5px; color:var(--ink-soft);}
+  .biblio ol{padding-left:22px; margin:0;}
+  .biblio li{margin-bottom:0; padding:14px 4px 14px 4px; border-bottom:1px solid var(--line-soft); line-height:1.65;}
+  .biblio li:last-child{border-bottom:none;}
+  .biblio li::marker{color:var(--ink-muted); font-weight:700;}
+  .src-flag{display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; padding:2px 7px; border-radius:5px; margin-top:8px;}
+  .src-flag.primary{background:var(--teal-tint); color:var(--teal);}
+  .src-flag.gov{background:var(--blue-tint); color:var(--blue);}
+  .src-flag.secondary{background:var(--amber-tint); color:var(--amber);}
+
+  /* ---------------- about page ---------------- */
+  .about-hero{max-width:760px;}
+  .about-hero h1{font-size:clamp(30px,4.4vw,46px); line-height:1.06;}
+  .about-hero .lede{font-size:18px; color:var(--ink-soft); margin-top:16px;}
+  .about-block{background:var(--bg-2); border:1px solid var(--line); border-radius:var(--radius); padding:30px 32px; margin-top:22px;}
+  .about-block h4{font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--teal); margin-bottom:12px;}
+  .about-block p{font-size:15.5px; color:var(--ink-soft); margin-bottom:0;}
+  .fine-print{border-top:1px solid var(--line); margin-top:32px; padding-top:20px; font-size:12.5px; color:var(--ink-muted); line-height:1.6;}
+
+  footer{padding:44px 0 64px 0;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-size:12.5px; color:var(--ink-muted);}
+
+  .toc-pill{display:inline-flex; gap:8px; flex-wrap:wrap; margin-top:22px;}
+  .toc-pill a{font-size:12.5px; font-weight:600; text-decoration:none; color:var(--ink-soft); border:1px solid var(--line); padding:6px 12px; border-radius:999px; background:var(--bg-2); cursor:pointer;}
+  .toc-pill a:hover{border-color:var(--blue-line); color:var(--blue);}
+
+  /* ================= INTRO: lights out + curtain ================= */
+  #intro{position:fixed; inset:0; z-index:500; background:#07080c; display:flex; align-items:center; justify-content:center; flex-direction:column;}
+  .lights-rig{display:flex; gap:22px; padding:20px 30px; background:#000; border-radius:14px; border:1px solid rgba(255,255,255,.08); box-shadow:0 20px 60px rgba(0,0,0,.6);}
+  .light{width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #3a1015, #1a0608); box-shadow:inset 0 0 6px rgba(0,0,0,.8); transition:background .15s ease, box-shadow .15s ease;}
+  .light.on{background:radial-gradient(circle at 35% 30%, #ff7d8c, #d9223f); box-shadow:0 0 22px 6px rgba(217,34,63,.75), inset 0 0 6px rgba(255,255,255,.3);}
+  @media (max-width:520px){.lights-rig{gap:14px; padding:16px 18px;} .light{width:24px;height:24px;}}
+  #intro .intro-caption{margin-top:26px; font-family:'Titillium Web',sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:13px; color:var(--ink-muted); min-height:20px;}
+  #intro .flash{position:fixed; inset:0; background:#fff; opacity:0; pointer-events:none;}
+  #intro .flash.go{animation:flashgo .35s ease;}
+  @keyframes flashgo{0%{opacity:0;} 12%{opacity:.9;} 100%{opacity:0;}}
+  .skip-intro{position:fixed; top:22px; right:22px; z-index:520; font-size:12.5px; font-weight:700; color:var(--ink-muted); background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); padding:8px 16px; border-radius:999px; cursor:pointer; letter-spacing:.02em;}
+  .skip-intro:hover{color:var(--ink); border-color:rgba(255,255,255,.3);}
+
+  .curtain{position:fixed; top:0; bottom:0; width:52%; background:
+      repeating-linear-gradient(135deg, #0b0d13 0 26px, #14161f 26px 52px);
+    z-index:490; box-shadow:0 0 60px rgba(0,0,0,.5); transition:transform 1s cubic-bezier(.76,0,.24,1);
+    display:flex; align-items:center; }
+  .curtain::after{content:''; position:absolute; top:0; bottom:0; width:8px;}
+  .curtain.left{left:0; border-right:2px solid var(--red);}
+  .curtain.left::after{right:-8px; background-image:linear-gradient(180deg, var(--red) 50%, var(--blue) 50%); background-size:8px 22px;}
+  .curtain.right{right:0; border-left:2px solid var(--blue);}
+  .curtain-mark{font-family:'Titillium Web',sans-serif; font-weight:900; font-size:13px; letter-spacing:.15em; color:rgba(255,255,255,.18); writing-mode:vertical-rl; margin:auto; padding:40px 0;}
+  .curtain.left .curtain-mark{margin-left:auto; margin-right:26px;}
+  .curtain.right .curtain-mark{margin-right:auto; margin-left:26px;}
+  body.intro-opening .curtain.left{transform:translateX(-100%);}
+  body.intro-opening .curtain.right{transform:translateX(100%);}
+  body.intro-done #intro, body.intro-done .curtain, body.intro-done .skip-intro{display:none;}
+  body.intro-active{overflow:hidden; height:100vh;}
+
+  @media print{ header.site, .no-print, #intro, .curtain{display:none !important;} }
+</style>
+</head>
+<body class="intro-active">
+
+<!-- ===================== INTRO SEQUENCE ===================== -->
+<div id="intro">
+  <div class="lights-rig" id="lightsRig">
+    <div class="light" data-i="0"></div>
+    <div class="light" data-i="1"></div>
+    <div class="light" data-i="2"></div>
+    <div class="light" data-i="3"></div>
+    <div class="light" data-i="4"></div>
+  </div>
+  <div class="intro-caption" id="introCaption">Lights out, and away we go…</div>
+  <div class="flash" id="introFlash"></div>
+</div>
+<div class="curtain left"><div class="curtain-mark">AGP · IMPACT FRAMEWORK</div></div>
+<div class="curtain right"><div class="curtain-mark">EST. 2026</div></div>
+<button class="skip-intro" id="skipIntro">Skip Intro →</button>
+
+<!-- ===================== ANIMATED BACKGROUND ===================== -->
+<div class="track-bg" aria-hidden="true">
+  <svg class="track-svg" id="trackSvg" viewBox="0 0 1400 2600" fill="none">
+    <path id="trackPath" class="track-line" d="M120 60
+      C 60 160, 90 300, 220 330
+      C 380 368, 430 240, 360 150
+      C 300 72, 400 10, 520 30
+      C 660 54, 640 220, 760 260
+      C 900 306, 990 190, 1120 220
+      C 1260 252, 1290 400, 1200 470
+      C 1090 556, 940 470, 830 540
+      C 720 610, 760 740, 900 780
+      C 1060 826, 1180 720, 1300 800
+      C 1380 856, 1360 980, 1260 1010
+      C 1120 1052, 1020 950, 890 990
+      C 760 1030, 740 1160, 860 1220
+      C 1000 1290, 1140 1210, 1260 1290
+      C 1350 1350, 1320 1480, 1210 1500
+      C 1060 1528, 970 1420, 830 1460
+      C 700 1497, 700 1620, 830 1660
+      C 970 1704, 1080 1600, 1210 1650
+      C 1320 1693, 1310 1830, 1190 1850
+      C 1040 1875, 960 1760, 810 1800
+      C 690 1832, 700 1960, 830 1990
+      C 970 2022, 1060 1920, 1190 1960
+      C 1300 1993, 1300 2120, 1180 2140
+      C 1030 2165, 950 2050, 800 2080
+      C 660 2108, 660 2230, 500 2250
+      C 340 2270, 260 2160, 160 2200
+      C 70 2236, 60 2340, 140 2380"
+      stroke="#5a8cd6" stroke-width="3" opacity="0.28"/>
+    <path d="M120 60
+      C 60 160, 90 300, 220 330
+      C 380 368, 430 240, 360 150
+      C 300 72, 400 10, 520 30
+      C 660 54, 640 220, 760 260
+      C 900 306, 990 190, 1120 220
+      C 1260 252, 1290 400, 1200 470
+      C 1090 556, 940 470, 830 540
+      C 720 610, 760 740, 900 780
+      C 1060 826, 1180 720, 1300 800
+      C 1380 856, 1360 980, 1260 1010
+      C 1120 1052, 1020 950, 890 990
+      C 760 1030, 740 1160, 860 1220
+      C 1000 1290, 1140 1210, 1260 1290
+      C 1350 1350, 1320 1480, 1210 1500
+      C 1060 1528, 970 1420, 830 1460
+      C 700 1497, 700 1620, 830 1660
+      C 970 1704, 1080 1600, 1210 1650
+      C 1320 1693, 1310 1830, 1190 1850
+      C 1040 1875, 960 1760, 810 1800
+      C 690 1832, 700 1960, 830 1990
+      C 970 2022, 1060 1920, 1190 1960
+      C 1300 1993, 1300 2120, 1180 2140
+      C 1030 2165, 950 2050, 800 2080
+      C 660 2108, 660 2230, 500 2250
+      C 340 2270, 260 2160, 160 2200
+      C 70 2236, 60 2340, 140 2380"
+      stroke="#d9576d" stroke-width="1.4" stroke-dasharray="1 13" opacity="0.4"/>
+
+    <!-- cars: glow dot + trailing tail, animated along the track path -->
+    <g opacity="0.95">
+      <circle r="5" fill="#22a084"><animateMotion dur="16s" repeatCount="indefinite" rotate="auto"><mpath href="#trackPath"/></animateMotion></circle>
+    </g>
+    <g opacity="0.9">
+      <circle r="4.5" fill="#d9576d"><animateMotion dur="21s" begin="-6s" repeatCount="indefinite" rotate="auto"><mpath href="#trackPath"/></animateMotion></circle>
+    </g>
+    <g opacity="0.9">
+      <circle r="4" fill="#c07f28"><animateMotion dur="26s" begin="-14s" repeatCount="indefinite" rotate="auto"><mpath href="#trackPath"/></animateMotion></circle>
+    </g>
+  </svg>
+</div>
+
+<!-- ===================== NAV ===================== -->
+<header class="site no-print">
+  <div class="nav-inner">
+    <a class="brand" href="#home">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#d9576d" stroke-width="2"/><path d="M12 2v20M2 12h20" stroke="#5a8cd6" stroke-width="1.4" opacity=".7"/></svg>
+      AGP IMPACT
+    </a>
+    <nav class="links">
+      <a href="#problem">The Problem</a>
+      <a href="#framework">Framework</a>
+      <a href="#worked-example">2026 Example</a>
+      <a href="#soft-power">Soft Power</a>
+      <a href="#gameplan">The Gameplan</a>
+      <a href="#exec">One-Pager</a>
+      <a href="#sources">Sources</a>
+      <a href="#about">About</a>
+    </nav>
+    <span class="badge-live"><span class="dot"></span>Live · Aug 2026</span>
+  </div>
+</header>
+
+<main>
+<!-- ===================== HOME ===================== -->
+<div class="page" id="page-home">
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">Independent · Not affiliated with AGPC, F1, or Save Albert Park</span>
+    <h1>Is the Grand Prix<br><span class="accent">Worth It?</span></h1>
+    <p class="lede">An independent scorecard for Melbourne's $3B Formula 1 bet — direct spend, an honest multiplier range, and the soft power nobody's actually measured. No independent review since 2007. Here's one, built in the open.</p>
+
+    <div class="stat-row">
+      <div class="stat-tile"><div class="num red">$1B+</div><div class="lbl">Lost so far, taxpayer-funded</div><div class="src">Logan, <em>The Point</em> <a href="#sources">[1]</a></div></div>
+      <div class="stat-tile"><div class="num red">~$3B</div><div class="lbl">Projected by contract end, 2037</div><div class="src">Menadue, <em>P&amp;I</em> <a href="#sources">[2]</a></div></div>
+      <div class="stat-tile"><div class="num amber">19 yrs</div><div class="lbl">Since the last independent check</div><div class="src">VAGO, 2007 <a href="#sources">[3]</a></div></div>
+      <div class="stat-tile"><div class="num blue">2037</div><div class="lbl">Contract end-date, locked in 2022</div><div class="src">Premier of Vic. <a href="#sources">[4]</a></div></div>
+    </div>
+
+    <div class="explore-grid">
+      <a class="explore-card c-red" href="#problem"><span class="ec-num">01 · The Gap</span><h3>19 Years Without a Check</h3><p>Every claimed figure since 2007 came from someone with a stake in the answer. Here's the paper trail.</p><span class="arrow">→</span></a>
+      <a class="explore-card c-blue" href="#framework"><span class="ec-num">02 · The Method</span><h3>Three Numbers, Not One</h3><p>Direct spend, an honest multiplier range, and soft power — kept separate on purpose, explained plainly.</p><span class="arrow">→</span></a>
+      <a class="explore-card c-blue" href="#worked-example"><span class="ec-num">03 · The Test</span><h3>2026, By the Numbers</h3><p>The framework applied to March's record-breaking race — claim vs. estimate vs. audited fact.</p><span class="arrow">→</span></a>
+      <a class="explore-card c-teal" href="#soft-power"><span class="ec-num">04 · Beyond Dollars</span><h3>What Money Can't Measure</h3><p>A scored, honest index for global visibility and prestige — plus a live case study from Malaysia.</p><span class="arrow">→</span></a>
+      <a class="explore-card c-red" href="#gameplan"><span class="ec-num">05 · The Payoff</span><h3>Making It Worth It</h3><p>The "is it worth it" debate is common. Here's the uncommon part — a cited, four-way plan for local businesses, government, AGPC, and the public.</p><span class="arrow">→</span></a>
+      <a class="explore-card c-amber" href="#exec"><span class="ec-num">06 · The Brief</span><h3>The One-Page Version</h3><p>For anyone who wants the whole argument in the time it takes to read one page.</p><span class="arrow">→</span></a>
+      <a class="explore-card c-teal" href="#sources"><span class="ec-num">07 · Receipts</span><h3>Show Your Work</h3><p>Every figure on this site, traced to its source, Chicago-style, with working links.</p><span class="arrow">→</span></a>
+      <a class="explore-card c-amber" href="#about"><span class="ec-num">00 · Backstory</span><h3>About This Project</h3><p>Who built this, who it's for, and why it exists at all.</p><span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== PROBLEM ===================== -->
+<div class="page" id="page-problem">
+<div class="flag-strip"></div>
+<section id="problem">
+  <div class="wrap">
+    <div class="eyebrow">01 — The Governance Gap</div>
+    <div class="section-head">
+      <h1>Nobody's Checked the Math Since 2007</h1>
+      <p>Every economic figure attached to the Australian Grand Prix since 2007 has come from a commissioned consultancy. The one time Victoria's own Auditor-General tested those figures independently, the result contradicted every claim made since — and no one has run that test again.</p>
+    </div>
+
+    <table class="data">
+      <thead><tr><th>Year</th><th>Claimed benefit</th><th>Source</th><th>Independently verified?</th></tr></thead>
+      <tbody>
+        <tr><td>2006–07</td><td class="num-cell">−$3.8M net social benefit (BCR 0.95)</td><td><a href="https://www.audit.vic.gov.au/report/state-investment-major-events" target="_blank">Applied Economics, for the Victorian Auditor-General ↗</a></td><td>Yes — this <em>is</em> the independent review</td></tr>
+        <tr><td>2022 (Jun)</td><td class="num-cell">$92M direct → $171M GSP</td><td><a href="https://paddockintel.com/melbourne-2026-australian-grand-prix-cost-economic-impact/" target="_blank">Ernst &amp; Young, commissioned by AGPC ↗</a></td><td>No</td></tr>
+        <tr><td>2022 (Dec)</td><td class="num-cell">"over $170M annually"</td><td><a href="https://www.premier.vic.gov.au/melbourne-formula-1-drivers-seat-until-2037" target="_blank">Victorian Government media release ↗</a></td><td>No</td></tr>
+        <tr><td>2023</td><td class="num-cell">$266M ($144M direct + $124M flow-on)</td><td><a href="https://www.crikey.com.au/2023/11/30/grand-prix-2023-victorian-economic-benefit-ernst-young/" target="_blank">Ernst &amp; Young, commissioned by AGPC ↗</a></td><td>No — critiqued by economist John Quiggin</td></tr>
+        <tr><td>2025</td><td class="num-cell">$323.9M GSP / "approx. $300M"</td><td><a href="https://www.parliament.vic.gov.au/parliamentary-activity/hansard/hansard-details/HANSARD-2145855009-32197" target="_blank">Cited by MPs, Vic. Parliament Hansard ↗</a></td><td>No</td></tr>
+        <tr><td>2026</td><td class="num-cell">Not yet published</td><td><a href="https://www.travelandtourworld.com/news/article/melbourne-gears-up-for-the-2026-australian-grand-prix-record-crowds-and-huge-economic-impact-set-to-boost-tourism-and-global-recognition/" target="_blank">Pre-race coverage used "billions" / placeholder figures ↗</a></td><td>No study published as of Aug 2026</td></tr>
+      </tbody>
+    </table>
+
+    <div class="proof-box">
+      <h4>The proof — this isn't a claim, it's on the public record</h4>
+      <p>In 2006, the Victorian Auditor-General's Office commissioned an outside firm, Applied Economics, to independently test the economic case for the Grand Prix using the same cost-benefit method used to evaluate any other piece of public spending. The finding was published, tabled in Parliament, and has never been repeated since.</p>
+      <div class="pull-quote">"The estimated costs exceed the benefits to Victoria by 5 per cent." — a net social benefit of <strong>−$3.8 million</strong>, benefit-cost ratio <strong>0.95</strong>, for the 2005 Grand Prix.</div>
+      <p style="margin-bottom:0;">You can read both documents yourself — the underlying analysis and the Auditor-General's own report that commissioned it:</p>
+      <div class="proof-links">
+        <a href="https://appliedeconomics.com.au/wp-content/uploads/2021/10/2006-cost-benefit-analysis-of-formula-one-grand-prix-victoria.pdf" target="_blank">Read the 2006 Applied Economics report (PDF) ↗</a>
+        <a href="https://www.audit.vic.gov.au/report/state-investment-major-events" target="_blank">Read VAGO's official report page ↗</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Why this matters for a $3B, 15-year commitment:</strong> the Victorian Government's own audited numbers — not a critic's estimate — show a net cash cost of <strong>$102.33M</strong> for the Grand Prix in FY2024-25 alone, plus <strong>$26.63M</strong> for the co-hosted MotoGP, a combined <strong>$128.96M</strong> in one year. That figure is not contested by anyone. The benefit side of the ledger is contested by almost everyone qualified to assess it.
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== FRAMEWORK ===================== -->
+<div class="page" id="page-framework">
+<div class="flag-strip"></div>
+<section id="framework">
+  <div class="wrap">
+    <div class="eyebrow">02 — The Framework</div>
+    <div class="section-head">
+      <h1>Three Numbers, Not One</h1>
+      <p>Every public dispute over the Grand Prix's value comes from collapsing three different questions into a single headline figure. This framework keeps them apart on purpose.</p>
+    </div>
+
+    <div class="plain-box">
+      <h4>What "framework" actually means here, and how it's used</h4>
+      <p>A framework isn't one number — it's a repeatable method. Instead of everyone quoting whichever figure a press release hands them, this is a fixed set of steps that produces the same kind of answer no matter who applies it or which year they're looking at. In practice: take the numbers AGPC already publishes (attendance, visitor spend, government cost), run them through three separate calculations instead of one blended one, and compare what comes out to whatever number is in the headline that year. You can see it actually done, step by step, on the <a href="#worked-example">2026 worked example page</a>.</p>
+      <p>Here's why the separation matters. Imagine a company that only ever publishes its revenue, never its costs. Technically every number it reports is true — and the picture it paints is still deeply misleading. That's roughly what's happening here: government communications report a single "economic benefit" figure and stop, without publishing the cost side of the ledger next to it, and without saying which of three very different questions that figure is actually answering.</p>
+      <p style="margin-bottom:0;">Those three questions — and why keeping them separate actually matters — are below.</p>
+      <div class="analogy-row">
+        <div class="analogy red"><strong>Question 1</strong>How much did visitors actually spend here, that they wouldn't have spent anyway?</div>
+        <div class="analogy blue"><strong>Question 2</strong>Does that spending ripple outward and create more value elsewhere in the economy — and how much?</div>
+        <div class="analogy teal"><strong>Question 3</strong>Separate from dollars entirely — what does hosting this event do for how the world sees Melbourne and Australia?</div>
+      </div>
+    </div>
+
+    <div class="framework-grid">
+      <div class="fw-card c1">
+        <div class="fw-num">1</div>
+        <span class="tag">Direct Activity</span>
+        <h3>Direct Economic Activity</h3>
+        <p>Verified, near-cash spending by out-of-state visitors whose main reason for travelling was the event — not gross turnover, and not money that would have been spent in Victoria anyway.</p>
+        <ul>
+          <li>Bottom-up: (out-of-state attendees) × (verified average spend) × (% primary-purpose)</li>
+          <li>Net of the government's own subsidy, which moves money around rather than creating it</li>
+          <li>Sourced from AGPC's audited annual report and its own visitor-exit survey</li>
+        </ul>
+      </div>
+      <div class="fw-card c2">
+        <div class="fw-num">2</div>
+        <span class="tag">Multiplier Range</span>
+        <h3>Indirect / Induced Multiplier Range</h3>
+        <p>A "multiplier" is the number economists multiply raw visitor spending by, to try to capture money circulating further through the economy. Say a visitor spends $100 at a restaurant — the waiter paid from that $100 spends some of it too, and so does whoever they pay next. A multiplier of, say, 1.9 claims that original $100 eventually generates $190 in total activity once those ripples are counted. The catch: nobody agrees how big the ripple really is, and the number you pick can nearly double the final figure — which is exactly why "flow-on effects" are the single most disputed part of every event study.</p>
+        <ul>
+          <li><strong>Low bound — no ripple counted:</strong> just the spending itself, no multiplier. The Bureau of Statistics stopped publishing its own official multipliers in 2001–02, judging them too easy to misuse this way</li>
+          <li><strong>High bound — industry multiplier:</strong> the ripple effect implied by industry-commissioned models, roughly 1.85–2.0× the original spending</li>
+          <li>Instead of picking one and hiding the disagreement, the framework shows both ends — the size of that gap <em>is</em> the political argument, made visible instead of buried in a footnote</li>
+        </ul>
+      </div>
+      <div class="fw-card c3">
+        <div class="fw-num">3</div>
+        <span class="tag">Soft-Power Index</span>
+        <h3>Soft-Power / Diplomatic-Value Index</h3>
+        <p>An illustrative 0–100 composite for the value dollar-based models simply can't price: global visibility, destination brand lift, and relationships between host nations.</p>
+        <ul>
+          <li>Weighted sub-scores anchored to real, cited data — not vibes</li>
+          <li>Grounded in published research on soft power and sports mega-events</li>
+          <li>Marked down on purpose where the case is self-reported or genuinely contested</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout blue" style="margin-top:28px;">
+      <h4>Why should anyone outside Treasury care?</h4>
+      <p style="margin-bottom:0;">Because "the Grand Prix generates $300M" and "the Grand Prix costs Victoria $100M a year" are <em>both true statements that can appear in the same news cycle</em> — and almost nobody explains how. Once you see the three-way split, every headline about the Grand Prix's value becomes something you can actually evaluate, instead of something you either believe or don't based on who said it.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== WORKED EXAMPLE ===================== -->
+<div class="page" id="page-worked-example">
+<div class="flag-strip"></div>
+<section id="worked-example">
+  <div class="wrap">
+    <div class="eyebrow">03 — Worked Example</div>
+    <div class="section-head">
+      <h1>2026, By the Numbers</h1>
+      <p>The 2026 race (8 March) drew a record <strong>483,934</strong> attendees across four days — the highest in the event's history. Victoria's audited FY2025-26 financials (which will cover this race) aren't due until around October 2026, so this is a transparent, bottom-up estimate, shown next to the government's own claim trajectory and the one number nobody disputes.</p>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Claimed benefit vs. framework estimate vs. audited net cost — 2026 Australian GP</div>
+      <div class="chart-sub">Three different, equally real answers to "what is this event worth" — read side by side below. Full calculation in "Show the assumptions" below the chart.</div>
+      <div class="legend-row">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--red)"></span>What's claimed</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>What this framework estimates</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--amber)"></span>What's actually audited</div>
+      </div>
+      <div class="bar-row"><div class="bar-label">Claim, scaled to 2026<br><span style="font-weight:400;color:var(--ink-muted)">$312M–$337M</span></div><div class="bar-track"><div class="bar-fill red" style="width:97%"></div></div><div class="bar-val">~$324M</div></div>
+      <div class="bar-row"><div class="bar-label">Framework direct spend<br><span style="font-weight:400;color:var(--ink-muted)">bottom-up, this analysis</span></div><div class="bar-track"><div class="bar-fill blue" style="width:32%"></div></div><div class="bar-val">~$107M</div></div>
+      <div class="bar-row"><div class="bar-label">Audited net cost to Victoria<br><span style="font-weight:400;color:var(--ink-muted)">FY2024-25, most recent audited year</span></div><div class="bar-track"><div class="bar-fill amber" style="width:31%"></div></div><div class="bar-val">−$102.3M</div></div>
+    </div>
+
+    <details class="assumptions" open>
+      <summary>Show the assumptions behind every number</summary>
+      <ol>
+        <li><strong>Claim, scaled to 2026 ($312M–$337M, midpoint ~$324M):</strong> the 2025 government/industry claims ($300M–$323.9M), scaled proportionally by 2026's attendance growth over 2025 (483,934 vs. 465,000 ≈ +4.1%). Not a new calculation — just what the existing, government-endorsed method already implies for 2026.</li>
+        <li><strong>Framework direct spend (~$107M):</strong> AGPC's own 2023/24 visitor mix (≈9,000 international + ≈72,000 interstate ≈ 80,800 "visitor-economy" attendees out of 452,055 total, ≈17.9%), applied to 2026's 483,934 attendance → ≈86,600 visitor-economy attendees, multiplied by AGPC's own audited average non-ticket spend of $1,235 per person. Ticket revenue is shown separately to avoid counting the same dollar twice.</li>
+        <li><strong>Audited net cost (−$102.3M):</strong> AGPC's most recent full-year government investment figure, FY2024-25 — the only one of the three numbers that's a completed, audited fact.</li>
+        <li><strong>One honest limitation:</strong> this framework doesn't invent a brand-new independent number for 2026 — nobody has actually done that study yet. The only two times anyone ran a genuinely independent check (2006 and 2013), they found the event was a net loss for Victoria. Scale that same approach up to today's much bigger government subsidy, and 2026 would likely land somewhere between roughly breaking even and a loss too — though nobody can say exactly how much without someone actually running the numbers again. Getting that real, independent study done is this framework's main recommendation.</li>
+      </ol>
+    </details>
+
+    <div class="callout blue" style="margin-top:28px;">
+      <h4>Okay, but why do these three numbers not match?</h4>
+      <p>Picture three different people asked to value the same concert ticket. One counts every dollar the fan spent that weekend — Uber, hotel, dinner — and calls that the concert's value. A second says: that spending doesn't just stop there, it pays a waiter who then spends it too, so the "real" value is bigger — maybe twice as big, depending how generous your assumptions are. A third points out the promoter still had to pay for the venue, security, and staging, and asks whether the concert actually turned a profit once you subtract that.</p>
+      <ol class="steps">
+        <li><strong>The ~$324M figure</strong> is the second person's answer: gross visitor spending, run through a multiplier that boosts it further. It's a legitimate way to estimate economic activity — but it's not the same thing as "profit," and the Bureau of Statistics itself stopped publishing the official version of this multiplier in 2001–02 because it was so easy to misuse this way.</li>
+        <li><strong>The ~$107M figure</strong> is closer to the first person's answer: real, traceable visitor spending, without the multiplier boost, and without double-counting money that would have been spent in Victoria regardless.</li>
+        <li><strong>The −$102.3M figure</strong> is the third person's answer, and it's the only one that's actually audited rather than modelled: what it cost the Victorian government, in cash, once ticket and sponsorship revenue is subtracted from what was spent putting the event on.</li>
+      </ol>
+      <p style="margin-bottom:0;">None of the three numbers is "wrong." They're answers to three different questions, and the entire public argument about the Grand Prix happens because the media, government press releases, and critics each usually only quote one of the three — the one that best fits the point they're making.</p>
+    </div>
+
+    <div class="callout" style="margin-top:20px;">
+      <h4>Who this actually matters to, and why</h4>
+      <div class="stake-grid">
+        <div class="stake-card"><div class="who">The general public</div><p>You're the one whose taxes cover the $102M-a-year gap if the "benefit" side is overstated — and whose community sport, hospitals, or transport budget competes with it for the same dollars.</p></div>
+        <div class="stake-card"><div class="who">Government &amp; Treasury</div><p>A transparent, defensible framework is what protects a $3B, 15-year public commitment from becoming a political liability at the next election or budget estimates hearing.</p></div>
+        <div class="stake-card"><div class="who">Investors &amp; industry</div><p>Consistent multiplier-model disputes are exactly what erode confidence in "economic activity" claims generally — a credible, repeatable framework rebuilds that trust for future major-event bids.</p></div>
+        <div class="stake-card"><div class="who">Media &amp; recruiters</div><p>It shows the difference between repeating a headline number and being able to explain where it actually came from.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== SOFT POWER ===================== -->
+<div class="page" id="page-soft-power">
+<div class="flag-strip"></div>
+<section id="soft-power">
+  <div class="wrap">
+    <div class="eyebrow">04 — Soft-Power Index</div>
+    <div class="section-head">
+      <h1>What Money Can't Measure</h1>
+      <p>Formula 1 sells host cities global visibility, not just visitor spend — but that value has never been measured for Melbourne on its own terms. This index is illustrative and directional, not a dollar figure, and is deliberately marked down wherever the evidence is thin: either <strong>self-reported</strong> (the number comes from AGPC's own visitor survey, with no independent source checking it) or <strong>genuinely contested</strong> (credible researchers or critics actively dispute the claim, not just a matter of opinion).</p>
+    </div>
+
+    <div class="index-panel">
+      <div class="dial-wrap">
+        <div class="dial-score">46<span style="font-size:20px;color:var(--ink-muted);">/100</span></div>
+        <div class="dial-tier">Moderate · Contested</div>
+        <div class="dial-scale">0–33 Low/unsubstantiated · 34–66 Moderate/contested · 67–100 Strong/well-evidenced</div>
+      </div>
+      <div>
+        <div class="idx-row"><div class="idx-label">Global media &amp; broadcast reach<span class="idx-weight">Weight 25% · F1 2025 season growth data</span></div><div class="idx-track"><div class="idx-fill" style="width:72%"></div></div><div class="idx-val">72</div></div>
+        <div class="idx-row"><div class="idx-label">Destination brand lift<span class="idx-weight">Weight 25% · AGPC visitor-exit survey, self-reported</span></div><div class="idx-track"><div class="idx-fill" style="width:68%"></div></div><div class="idx-val">68</div></div>
+        <div class="idx-row"><div class="idx-label">International guest diversity<span class="idx-weight">Weight 20% · ≈2% of attendance is international</span></div><div class="idx-track"><div class="idx-fill" style="width:40%"></div></div><div class="idx-val">40</div></div>
+        <div class="idx-row"><div class="idx-label">Revealed promoter commitment<span class="idx-weight">Weight 15% · 15-year contract to 2037</span></div><div class="idx-track"><div class="idx-fill" style="width:85%"></div></div><div class="idx-val">85</div></div>
+        <div class="idx-row"><div class="idx-label">Contestedness discount<span class="idx-weight">Weight 15%, inverse · "sportswashing" &amp; local-opposition literature</span></div><div class="idx-track"><div class="idx-fill" style="width:15%;background:var(--red)"></div></div><div class="idx-val">−10</div></div>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <span class="cs-tag">Live case study · July 2026</span>
+      <h3>When One Country Rents Another Country's Race</h3>
+      <div class="cs-meta">Sepang, Malaysia — hosting the "Formula 1 Gulf Air Bahrain Grand Prix," 2–4 October 2026</div>
+      <div class="cs-grid">
+        <div>
+          <p>In July 2026, F1 and the FIA confirmed something unusual: Malaysia's Sepang International Circuit will host a round of the championship on 2–4 October 2026 — but it will still be called the <strong>Bahrain</strong> Grand Prix. Bahrain's own venue faced hosting challenges for the date; rather than drop the round, F1 arranged for Malaysia to run it physically while Bahrain keeps the name, the branding, and the diplomatic credit.</p>
+          <p>Malaysia's Deputy Prime Minister was candid about the economics: with Bahrain covering primary hosting costs, Malaysia's own commitment is close to its existing RM16 million annual Sepang maintenance budget — while it banks the "tourism, foreign investment, and global exposure" regardless of whose name is on the race. The Prime Minister framed it explicitly as a soft-power move: "enduring trust between Malaysia and Bahrain," and proof of Malaysia's "capability to host major international events." The former Sepang CEO was blunter — calling it a "litmus test" for whether Malaysia earns a permanent race back, after "astronomical hosting fees" pushed it off the calendar between 2017 and 2026.</p>
+        </div>
+        <div>
+          <div class="cs-stat"><div class="n">2–4 Oct 2026</div><div class="l">Race dates, Sepang International Circuit</div></div>
+          <div class="cs-stat"><div class="n">RM16M</div><div class="l">Malaysia's existing annual venue budget — its main cost exposure</div></div>
+          <div class="cs-stat"><div class="n">2017 → 2026</div><div class="l">Years Malaysia was off the F1 calendar, over hosting-fee costs</div></div>
+        </div>
+      </div>
+      <p style="margin-top:14px; margin-bottom:0;">This deal is a real-world instance of exactly the split this framework argues for. Bahrain keeps the soft-power asset — the name, the flag, the diplomatic story — without bearing the hosting cost. Malaysia takes on the economic activity and the operational cost, in exchange for a low-risk "audition" for future soft-power value of its own. F1 itself is treating <em>who pays</em> and <em>who gets the prestige</em> as two separate, tradeable things — which is precisely why this framework refuses to collapse them into one number for Melbourne.</p>
+    </div>
+
+    <div class="callout teal" style="margin-top:28px;">
+      <h4>The real picture</h4>
+      <p>The index scores well on global broadcast reach and on Formula 1's own revealed preference — a 15-year contract is a strong signal from the promoter's side. It scores modestly on genuine international-guest diversity: roughly 98% of attendees are Australian, and most of the "visitor economy" is interstate, not international. The soft-power case for Melbourne is real but narrower than the "F1 as global nation-branding" framing used for Gulf-state hosts — and, as the Malaysia case above shows, that framing is itself something governments openly trade on, contest, and sometimes rent out to someone else entirely.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== GAMEPLAN ===================== -->
+<div class="page" id="page-gameplan">
+<div class="flag-strip"></div>
+<section id="gameplan">
+  <div class="wrap">
+    <div class="eyebrow">05 — The Gameplan</div>
+    <div class="section-head">
+      <h1>Making It Worth It</h1>
+      <p>Almost every public conversation about the Grand Prix asks a yes/no question: is it worth it? That debate has run, unresolved, for nineteen years — see the governance gap above. This page asks the question almost nobody asks instead. Victoria has already committed to hosting Formula 1 through 2037. Given that, what would it actually take to make that commitment pay off — for local businesses, for government, for the corporation that runs it, and for the public who ultimately carries the cost?</p>
+    </div>
+
+    <div class="plain-box">
+      <h4>"Impact" and "leverage" are not the same thing — and the difference is the whole point of this page</h4>
+      <p>Sport-management researcher Laurence Chalip drew a distinction that most public debate about events collapses: an event's <strong>impact</strong> is what happens whether or not anyone plans for it — visitors turn up, they spend money, some of that ripples outward. Its <strong>leverage</strong> is the separate, deliberate set of strategies a host uses to capture more value from an event that is happening anyway. Think of hosting a big dinner party: the food, the noise, and the cleanup happen regardless. Whether your guests leave with a neighbour's business card, buy something from the stall next door, or you use the goodwill to ask a favour later — that's a choice, not a byproduct.</p>
+      <p style="margin-bottom:0;">Every other page on this site measures <em>impact</em> — what the Grand Prix generates or costs, whether planned for or not. This page is different on purpose: it does not re-argue whether Victoria should keep hosting Formula 1 — that decision is already locked in by contract to 2037. It asks what genuine, research-backed leverage would look like if applied to an event Victoria is hosting regardless, and how far that is from what's currently documented.</p>
+    </div>
+
+    <table class="data">
+      <tr><th>What genuine event leverage requires</th><th>Documented precedent elsewhere</th><th>Documented at the Australian Grand Prix, 2026</th></tr>
+      <tr>
+        <td>A formal small-business/SME program running before the event, not just during it</td>
+        <td>Gold Coast 2018: over 55,000 local small businesses targeted through "Be Games Ready," "Trade 2018," and matched grants programs, launched a full year out</td>
+        <td>Not identified in AGPC's published annual report or public disclosures</td>
+      </tr>
+      <tr>
+        <td>Minimum local-content requirements on major event-linked contracts</td>
+        <td>Victoria's own Local Jobs First Policy already sets local-content minimums on state-significant projects ($50M+) and local-jobs commitments from $1M (regional) / $3M (metropolitan)</td>
+        <td>No public evidence AGPC applies Local Jobs First–style thresholds to its own supplier or construction contracts</td>
+      </tr>
+      <tr>
+        <td>Published local-leverage reporting — SME participation, local spend, apprenticeships — alongside financial results</td>
+        <td>Academic case-study literature on Gold Coast 2018 documents this kind of reporting as part of what separated "legacy rhetoric" from measured business benefit</td>
+        <td>AGPC's annual report publishes attendance and visitor-spend data but no local-supplier or SME-participation metrics</td>
+      </tr>
+      <tr>
+        <td>A transparent mechanism recycling event-linked benefit into local community programs</td>
+        <td>Proposed, not universal — existing Australian commentary has argued the Grand Prix's net cost could instead double funding for community sport</td>
+        <td>No reinvestment mechanism identified; existing critique argues for spending the money elsewhere entirely, rather than redirecting Grand Prix–generated benefit itself</td>
+      </tr>
+    </table>
+
+    <div class="callout" style="margin-top:24px;">
+      <h4>A gap, not a verdict</h4>
+      <p style="margin-bottom:0;">An absence of public documentation is not proof that nothing happens — AGPC may run supplier or community programs that simply aren't reported the way Gold Coast 2018's were. The point of this page isn't to accuse; it's to propose closing that same transparency gap this site documents everywhere else, regardless of which way any future independent cost-benefit review eventually lands.</p>
+    </div>
+
+    <div class="section-head" style="margin-top:36px;">
+      <h1 style="font-size:26px;">A Plan for Four Stakeholders</h1>
+      <p>Concrete, cited steps — grouped by who they're for, not by what sounds good in a press release.</p>
+    </div>
+
+    <div class="framework-grid">
+      <div class="fw-card c1">
+        <div class="fw-num">1</div>
+        <span class="tag">Local Businesses &amp; SMEs</span>
+        <h3>Leverage, Not Luck</h3>
+        <ol class="steps">
+          <li><strong>A formal SME leverage program, launched a year out</strong> — pre-event training, matchmaking with AGPC and F1-linked suppliers, and digital-readiness grants, modelled directly on Gold Coast 2018's "Be Games Ready" and "Trade 2018" programs.</li>
+          <li><strong>A published, timed tender pipeline</strong> for event-linked contracts, so smaller local suppliers can plan and bid early — rather than the pipeline being visible only to the national contractors already in the room.</li>
+          <li><strong>Deliberately extend the spending window outward</strong> — active promotion directing race-weekend visitors toward neighbouring precincts (South Melbourne, St Kilda Road, the Albert Park village strip), not just concessions inside the circuit fence, which is exactly the kind of "business leveraging" the sport-event literature distinguishes from passive impact.</li>
+        </ol>
+      </div>
+      <div class="fw-card c2">
+        <div class="fw-num">2</div>
+        <span class="tag">Government &amp; AGPC</span>
+        <h3>Make the Ledger Public</h3>
+        <ol class="steps">
+          <li><strong>Apply Local Jobs First–style local-content minimums</strong> to AGPC's own event contracts, the same standard Victoria already sets for other government-funded major projects.</li>
+          <li><strong>Publish an annual local-leverage report</strong> alongside the existing financial one — SME participation rate, local subcontractor spend, and local apprenticeships, in the same table format Gold Coast 2018's case study literature used to show real business benefit rather than "legacy rhetoric."</li>
+          <li><strong>Adopt event leverage as formal policy, not just an event-week talking point</strong> — commission the independent cost-benefit review this site already recommends, and separately, regardless of that review's verdict, formalise a leverage strategy so future hosting years capture more local benefit even if the topline cost-benefit balance never turns positive.</li>
+        </ol>
+      </div>
+      <div class="fw-card c3">
+        <div class="fw-num">3</div>
+        <span class="tag">The Public</span>
+        <h3>Where the Benefit Lands</h3>
+        <ol class="steps">
+          <li><strong>A public scorecard that names where money actually goes</strong> — not a single headline "$300M" claim, but a line-by-line account of which programs, precincts, or funds any confirmed net benefit is directed to.</li>
+          <li><strong>A defined share of any confirmed net benefit directed to community programs</strong> — directly answering existing, cited criticism that the Grand Prix's net cost could instead double funding for community sport, by making reinvestment a real mechanism rather than a rhetorical trade-off.</li>
+          <li><strong>Independent, standing oversight</strong> tied to the same Auditor-General-scoped review recommended elsewhere on this site, so "benefit" claims are checked to the same standard the cost side already is.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="case-study" style="margin-top:32px;">
+      <span class="cs-tag">Precedent · 2017–2018</span>
+      <h3>The Playbook Already Exists — Just Not Here</h3>
+      <div class="cs-meta">Gold Coast 2018 Commonwealth Games, Queensland</div>
+      <div class="cs-grid">
+        <div>
+          <p>Before a single Commonwealth Games event was run, the Queensland Government had already launched a dedicated small-business leverage push: "Be Games Ready," "Be My Guest," "Mentoring for Growth," and a "Trade 2018" export-readiness stream, backed by dedicated small-business grant programs. The government's own framing was explicit about the difference between hosting and leveraging: the Games would be "a game changer for Queensland business, with legacy outcomes set to flow on long after the Games" — not just four days of visitor spend at the venue gates.</p>
+          <p>Independent academic research published after the fact backs the substance of that claim rather than just the press release: a peer-reviewed case study in the journal <em>Event Management</em> found measurable business benefits flowing from the leverage programs specifically, distinct from the passive economic impact of the Games themselves — precisely the impact/leverage distinction this page is built on.</p>
+        </div>
+        <div>
+          <div class="cs-stat"><div class="n">55,000+</div><div class="l">Gold Coast small businesses the program was designed to reach</div></div>
+          <div class="cs-stat"><div class="n">12+ months</div><div class="l">Lead time before the Games — not a race-week initiative</div></div>
+          <div class="cs-stat"><div class="n">5 named programs</div><div class="l">Distinct, budgeted small-business initiatives, not one blended fund</div></div>
+        </div>
+      </div>
+      <p style="margin-top:14px; margin-bottom:0;">No comparably documented program has been identified for the Australian Grand Prix in Melbourne. That is the gap this page argues should close — not because the Gold Coast model would transfer perfectly, but because it proves a genuine SME-leverage program for a major event is a solved problem elsewhere in Australia, not a hypothetical one.</p>
+    </div>
+
+    <div class="section-head" style="margin-top:36px;">
+      <h1 style="font-size:26px;">What's In It for Everyone</h1>
+      <p>The common version of this debate treats "worth it" as a single number. This is what it looks like broken out by who actually benefits, if the steps above were adopted.</p>
+    </div>
+
+    <div class="stake-grid">
+      <div class="stake-card"><div class="who">Local businesses &amp; SMEs</div><p>Earlier visibility into event-linked contracts, real support to bid for them, and a deliberate push to route race-weekend spending into surrounding precincts instead of just the circuit gate.</p></div>
+      <div class="stake-card"><div class="who">Government &amp; Treasury</div><p>A defensible, published leverage record turns "we host Formula 1" from a recurring budget-estimates liability into a program with visible, checkable local return — independent of how the cost-benefit number itself lands.</p></div>
+      <div class="stake-card"><div class="who">AGPC, the corporation</div><p>A documented local-leverage program is a genuine, citable answer the next time its economic claims are challenged — replacing a disputed headline number with a checkable local-benefit record.</p></div>
+      <div class="stake-card"><div class="who">The general public</div><p>Visibility into where any confirmed benefit actually lands, and a real mechanism — not just a rhetorical trade-off — for redirecting some of it toward the community programs the event's cost is currently weighed against.</p></div>
+    </div>
+
+    <div class="callout teal" style="margin-top:28px;">
+      <h4>What this page is, and isn't</h4>
+      <p style="margin-bottom:0;">This is an original proposal, built by combining a peer-reviewed academic model of event leverage with a real, documented precedent from another Australian major event and Victoria's own existing procurement policy. It has not been announced, endorsed, or committed to by the Victorian Government, AGPC, or Formula 1 — and it isn't a substitute for the independent cost-benefit review recommended elsewhere on this site. It's this framework's answer to the more useful question the "is it worth it" debate usually skips: worth it <em>for whom</em>, and what would it actually take to make it so.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== EXEC SUMMARY ===================== -->
+<div class="page" id="page-exec">
+<div class="flag-strip"></div>
+<section id="exec">
+  <div class="wrap">
+    <div class="eyebrow no-print">06 — The One-Pager</div>
+    <div class="section-head no-print">
+      <h1>The One-Page Version</h1>
+    </div>
+
+    <div class="exec-sheet" id="exec-sheet">
+      <div class="exec-top">
+        <div>
+          <div class="t1">Executive Summary</div>
+          <h2 style="margin-top:6px;font-size:22px;">The Australian Grand Prix: Closing a 19-Year Independent Review Gap</h2>
+        </div>
+        <div class="exec-audience">Prepared by: Ari · August 2026</div>
+      </div>
+
+      <h3>The Issue</h3>
+      <p>Victoria has committed to hosting the Formula 1 Australian Grand Prix through 2037, at a most-recently-audited net cost of $102.3M in a single year (FY2024-25), on top of a co-hosted MotoGP loss of $26.6M. Cumulative losses already exceed $1 billion and are projected to reach roughly $3 billion by contract end. No independent economic review has tested the benefit side of this commitment since a 2006 Auditor-General-commissioned study found a net social <em>loss</em>.</p>
+
+      <h3>What This Framework Adds</h3>
+      <p>A three-part measurement standard — direct activity, an honest multiplier range, and a separately reported soft-power index — applied transparently to the 2026 event using only publicly available, cited data. It does not take a side in the "keep it or cut it" debate; it makes the next debate possible to have with real numbers.</p>
+
+      <div class="exec-grid">
+        <div class="exec-stat"><div class="n" style="color:var(--red)">~$324M</div><div class="l">Government/industry claim, scaled to 2026 attendance</div></div>
+        <div class="exec-stat"><div class="n" style="color:var(--blue)">~$107M</div><div class="l">Framework's bottom-up direct visitor spend estimate</div></div>
+        <div class="exec-stat"><div class="n" style="color:var(--amber)">−$102.3M</div><div class="l">Audited net cash cost, FY2024-25 (undisputed)</div></div>
+      </div>
+
+      <h3>Why the Gap Exists</h3>
+      <p>Claimed figures use gross-spending/GSP models with a multiplier the ABS discontinued as unsuitable in 2001–02; independent reviews use welfare economics and have twice found net losses (2006, 2013). Neither side currently publishes a methodology the other accepts.</p>
+
+      <h3>Recommendation</h3>
+      <p>Commission an independent, Auditor-General-scoped cost-benefit review before the next Victorian Budget cycle — the same model used in 2006 — and publish the AGPC's visitor-mix microdata alongside the annual report so third parties can replicate, not just cite, the headline number.</p>
+
+      <h3>Confidence &amp; Caveats</h3>
+      <p>Direct-spend and net-cost figures are drawn from AGPC's own audited annual report and Victorian Parliament Hansard. The 2026-specific direct-spend estimate is a bottom-up calculation built from 2023/24 visitor-mix ratios (transparently stated) applied to 2026 attendance, not an independently audited number — that is precisely the gap this paper argues should be closed.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== SOURCES ===================== -->
+<div class="page" id="page-sources">
+<div class="flag-strip"></div>
+<section id="sources">
+  <div class="wrap">
+    <div class="eyebrow">07 — Sources</div>
+    <div class="section-head">
+      <h1>Show Your Work</h1>
+      <p><span class="src-flag primary">Primary</span> = an audited report or official document. <span class="src-flag gov">Official</span> = a direct government or organizer statement. <span class="src-flag secondary">Secondary</span> = journalism or commentary — solid reporting, worth reading with a healthy "trust, then verify."</p>
+    </div>
+
+    <div class="biblio">
+      <ol>
+        <li id="src-1">Logan, Joan. "F1 Grand Prix: Extracting Private Profit from a Public Park in Melbourne." <em>The Point</em>, March 6, 2026. <a href="https://thepoint.com.au/opinions/260304-f1-grand-prix-extracting-private-profit-from-a-public-park-in-melbourne" target="_blank">thepoint.com.au</a>.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-2">"Victoria Government Unfussed by Grand Prix Debt." <em>Pearls and Irritations</em>, December 2025. <a href="https://johnmenadue.com/post/2025/12/victoria-government-unfussed-by-gp-debt/" target="_blank">johnmenadue.com</a>, citing figures from the Australian Grand Prix Corporation's tabled annual report.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-3">Applied Economics. <em>Formula One Australian Grand Prix: An Economic Cost-Benefit Analysis of the 2005 Event.</em> Report prepared for the Victorian Auditor-General's Office. Sydney: Applied Economics, September 2006. <a href="https://appliedeconomics.com.au/wp-content/uploads/2021/10/2006-cost-benefit-analysis-of-formula-one-grand-prix-victoria.pdf" target="_blank">appliedeconomics.com.au</a>; see also Victorian Auditor-General's Office, <em>State Investment in Major Events</em> (Melbourne: Victorian Government Printer, May 23, 2007), <a href="https://www.audit.vic.gov.au/report/state-investment-major-events" target="_blank">audit.vic.gov.au</a>.<br><span class="src-flag primary">Primary</span></li>
+        <li id="src-4">Premier of Victoria. "Melbourne in the Formula 1 Driver's Seat Until 2037." Media release, December 15, 2022. <a href="https://www.premier.vic.gov.au/melbourne-formula-1-drivers-seat-until-2037" target="_blank">premier.vic.gov.au</a>.<br><span class="src-flag gov">Official</span></li>
+        <li id="src-5">Quiggin, John. "What Is the Actual Economic Benefit of the Grand Prix?" <em>Crikey</em>, November 30, 2023, <a href="https://www.crikey.com.au/2023/11/30/grand-prix-2023-victorian-economic-benefit-ernst-young/" target="_blank">crikey.com.au</a>; republished John Quiggin, "What Is the Actual Economic Benefit of the Grand Prix?" <em>John Quiggin</em> (Substack), accessed August 18, 2026, <a href="https://johnquigginblog.substack.com/p/what-is-the-actual-economic-benefit" target="_blank">johnquigginblog.substack.com</a>.<br><span class="src-flag secondary">Secondary (named economist)</span></li>
+        <li id="src-6">Campbell, Roderick. <em>Blowout: A Cost-Benefit Analysis of the Australian Grand Prix.</em> Melbourne: Economists at Large, 2013. <a href="https://www.ecolarge.com/wp-content/uploads/2013/03/Blowout-A-cost-benefit-analysis-of-the-Australian-Grand-Prix-Ecolarge-Final.pdf" target="_blank">ecolarge.com</a>. Commissioned by Save Albert Park; methodology and welfare-economics critique treated as independent of AGPC/EY, note funding source.<br><span class="src-flag secondary">Secondary (advocacy-commissioned, named economist)</span></li>
+        <li id="src-7">Australia Institute. "The $100m Lost by the Grand Prix Could Double Funding for Community Sport and Pay the Airfares of All International and Interstate Visitors." Canberra: Australia Institute, 2024. <a href="https://australiainstitute.org.au/post/the-100m-lost-by-the-grand-prix-could-double-funding-for-community-sport-and-pay-the-airfares-of-all-international-and-interstate-visitors/" target="_blank">australiainstitute.org.au</a>.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-8">Parliament of Victoria. "Australian Grands Prix Amendment Bill 2025 — Second Reading." Hansard, Legislative Assembly, August 28, 2025. <a href="https://www.parliament.vic.gov.au/parliamentary-activity/hansard/hansard-details/HANSARD-2145855009-32197" target="_blank">parliament.vic.gov.au</a>.<br><span class="src-flag primary">Primary (figures as cited by individual MPs, not independently audited)</span></li>
+        <li id="src-9">Australian Grand Prix Corporation. <em>2024 Annual Report.</em> Melbourne: Australian Grand Prix Corporation, tabled October 18, 2024. <a href="https://www.grandprix.com.au/uploads/images/AGPC_Corporate_010_2024_Annual_Report_Final_For_Tabling.pdf" target="_blank">grandprix.com.au</a>.<br><span class="src-flag primary">Primary</span></li>
+        <li id="src-10">"'Very Thin': Inside the Figures Propping Up Grand Prix." <em>Canberra Times</em>, March 6, 2026 (Australian Community Media syndication). <a href="https://www.canberratimes.com.au/story/9192407/very-thin-inside-the-figures-propping-up-grand-prix/" target="_blank">canberratimes.com.au</a>.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-11">Menadue, John, ed. "Melbourne's F1 Grand Prix a Financial Car Crash for Victoria." <em>Pearls and Irritations</em>, March 2024. <a href="https://johnmenadue.com/post/2024/03/melbournes-f1-grand-prix-a-financial-car-crash-for-victoria/" target="_blank">johnmenadue.com</a>.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-13">Formula 1. "Formula 1 to Race in Melbourne Until 2035 in New Agreement." Formula1.com, June 15, 2022. <a href="https://www.formula1.com/en/latest/article/formula-1-to-race-in-melbourne-until-2035-in-new-agreement.7EeElN0gG4wOKY1OJwHV94" target="_blank">formula1.com</a>; EY 2022 assessment figures ($92M direct / $171M GSP) as reported in PaddockIntel, "Australian Grand Prix 2026: Tickets, Costs &amp; Economic Impact," paddockintel.com, 2026, <a href="https://paddockintel.com/melbourne-2026-australian-grand-prix-cost-economic-impact/" target="_blank">paddockintel.com</a>.<br><span class="src-flag secondary">Mixed: official (contract) + secondary aggregator (EY figures, unverified against EY's original report)</span></li>
+        <li id="src-14">Speedcafe. "F1 News: 2026 Australian Grand Prix Record Attendance Figures." Speedcafe.com, March 8, 2026, citing Australian Grand Prix Corporation attendance data. <a href="https://speedcafe.com/f1-news-2026-australian-grand-prix-record-attendance-figures-albert-park/" target="_blank">speedcafe.com</a>.<br><span class="src-flag secondary">Secondary, citing primary AGPC figures</span></li>
+        <li id="src-15">Ministry of Sport. "Record-Breaking Sell-Out Cements Formula 1 as Australia's Premier Sporting Event." Ministryofsport.com, March 6, 2026. <a href="https://ministryofsport.com/record-breaking-sell-out-cements-formula-1-as-australias-premier-sporting-event/" target="_blank">ministryofsport.com</a>.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-16">Saha, Shreya. "Melbourne Gears Up for the 2026 Australian Grand Prix." <em>Travel and Tour World</em>, March 2, 2026. <a href="https://www.travelandtourworld.com/news/article/melbourne-gears-up-for-the-2026-australian-grand-prix-record-crowds-and-huge-economic-impact-set-to-boost-tourism-and-global-recognition/" target="_blank">travelandtourworld.com</a>. Cited as an example of unattributed "billions of dollars" pre-event framing, not as a data source.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-16-academic">Grix, Jonathan, and Donna Lee. "Soft Power, Sports Mega-Events and Emerging States: The Lure of the Politics of Attraction." <em>Global Society</em> 27, no. 4 (2013): 521–36. <a href="https://doi.org/10.1080/13600826.2013.827632" target="_blank">doi.org/10.1080/13600826.2013.827632</a>.<br><span class="src-flag primary">Primary (peer-reviewed)</span></li>
+        <li id="src-17">El-Dabt, Latifa, Fatima AlReshaid, Kyungyeol (Anthony) Park, Nayef AlBuloushi, and Ahmad Al-Enzi. "Sustainable Strategic Nation Branding through Sports: Leveraging Soft Power via Mega-Event Hosting." <em>Frontiers in Sociology</em> 10 (2025): 1521396. <a href="https://doi.org/10.3389/fsoc.2025.1521396" target="_blank">doi.org/10.3389/fsoc.2025.1521396</a>.<br><span class="src-flag primary">Primary (peer-reviewed)</span></li>
+        <li id="src-18">"A Fatal Formula? Formula One, Sportswashing and the Staging of Events in the Middle East." Cited as representative of the academic "sportswashing" critique applied to motorsport hosting decisions generally. <a href="https://www.researchgate.net/publication/404097839_A_Fatal_Formula_Formula_One_Sportswashing_and_the_Staging_of_Events_in_the_Middle_East" target="_blank">researchgate.net</a>.<br><span class="src-flag secondary">Secondary (peer-reviewed, preprint listing)</span></li>
+        <li id="src-19">Amra and Elma. "Top 20 Formula 1 Marketing Statistics 2025." Amraandelma.com, September 22, 2025. <a href="https://www.amraandelma.com/formula-1-marketing-statistics/" target="_blank">amraandelma.com</a>. Industry marketing-statistics aggregator; broadcast/social figures not independently verified against Nielsen or Liberty Media investor filings.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-20">Wikipedia contributors. "2026 Australian Grand Prix." <em>Wikipedia, The Free Encyclopedia</em>. Accessed August 18, 2026. <a href="https://en.wikipedia.org/wiki/2026_Australian_Grand_Prix" target="_blank">en.wikipedia.org</a>. Used only for the confirmed race date (8 March 2026).<br><span class="src-flag secondary">Secondary (tertiary reference)</span></li>
+        <li id="src-21">Formula 1. "Formula 1 and FIA Confirm That Malaysia Will Join the 2026 Calendar as Host Venue for the Bahrain Grand Prix." Formula1.com. Accessed August 2026. <a href="https://corp.formula1.com/formula-1-and-fia-confirm-that-malaysia-will-join-the-2026-calendar-as-host-venue-for-the-bahrain-grand-prix/" target="_blank">corp.formula1.com</a>.<br><span class="src-flag gov">Official</span></li>
+        <li id="src-22">"Formula 1 Is Officially Back in Malaysia, But Here's the Real Deal." <em>Malay Mail</em>, July 29, 2026. <a href="https://www.malaymail.com/news/sports/2026/07/29/formula-1-is-officially-back-in-malaysia-but-heres-the-real-deal/229357" target="_blank">malaymail.com</a>.<br><span class="src-flag secondary">Secondary</span></li>
+        <li id="src-23">Chalip, Laurence. "Beyond Impact: A General Model for Sport Event Leverage." In <em>Sport Tourism: Interrelationships, Impacts and Issues</em>, edited by Brent W. Ritchie and Daryl Adair, 226–252. Clevedon, UK: Channel View Publications, 2004.<br><span class="src-flag primary">Primary (peer-reviewed academic model)</span></li>
+        <li id="src-24">Carlini, Joan, Alexandra Coghlan, Alana Thomson, and Andrew O'Neil. "From Legacy Rhetoric to Business Benefits: A Case Study of the Gold Coast 2018 Commonwealth Games." <em>Event Management</em> 24, no. 1 (2020). <a href="https://doi.org/10.3727/152599519X15506259856057" target="_blank">doi.org/10.3727/152599519X15506259856057</a>.<br><span class="src-flag primary">Primary (peer-reviewed)</span></li>
+        <li id="src-25">Queensland Government. "Games Help Advance Small Businesses on Gold Coast." Ministerial Media Statement, August 2, 2017. <a href="https://statements.qld.gov.au/statements/82155" target="_blank">statements.qld.gov.au</a>.<br><span class="src-flag gov">Official</span></li>
+        <li id="src-26">Victorian Government. <em>Local Jobs First Policy.</em> Melbourne: Victorian Government, July 2026. <a href="https://localjobsfirst.vic.gov.au/__data/assets/pdf_file/0026/226727/Local-Jobs-First-Policy-July-2026.pdf" target="_blank">localjobsfirst.vic.gov.au</a>.<br><span class="src-flag gov">Official</span></li>
+        <li id="src-27">Industry Capability Network Victoria. "Local Jobs First." Accessed September 2026. <a href="https://icn.org.au/icn_vic/local-jobs-first/" target="_blank">icn.org.au</a>. Cited for local-content dollar thresholds ($1M regional / $3M metropolitan; $50M+ minimum local-content projects).<br><span class="src-flag secondary">Secondary</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div class="page" id="page-about">
+<div class="flag-strip"></div>
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">00 — About This Project</div>
+    <div class="about-hero">
+      <h1>Why This Project Matters.</h1>
+      <p class="lede">Victoria's Formula 1 contract runs to 2037 and will shape how the state talks about major-event value for over a decade — but the numbers behind it are written by whoever commissions them, and rarely checked by anyone else. This is a small, serious attempt to make that system more navigable for the people it actually affects.</p>
+    </div>
+
+    <div class="about-block">
+      <h4>For the Public &amp; Stakeholders</h4>
+      <p>For Victorian taxpayers, a single trustworthy number beats four contradictory ones — it's the difference between an informed opinion and an assumption made on your behalf. For government and the Australian Grand Prix Corporation, a framework that survives scrutiny is what protects a $3 billion, fifteen-year public commitment from becoming a political liability at the next budget estimates hearing. For investors and the wider major-events industry, credible, repeatable measurement is what rebuilds confidence in economic-impact claims generally, after years of multiplier disputes eroding trust in the number itself. And for journalists, policy staff, and anyone deciding whether to believe the next $300 million headline, this is a way to check it — instead of just picking a side based on who said it.</p>
+    </div>
+
+    <div class="about-block">
+      <h4>Why This Matters to Me</h4>
+      <p>This project sits at the intersection of motorsport, public policy and economics. It started with a documented, verifiable gap in how the Grand Prix's value gets measured, and grew into an attempt to close it — reading the primary sources directly, working through how direct spending, multiplier modelling and soft power actually relate to one another, and building something that reflects that reading rather than a general impression of it. It is a genuinely self-directed piece of work. If it helps one person ask a sharper question the next time a headline number gets quoted, it has done what it set out to do.</p>
+    </div>
+
+    <div class="fine-print">
+      Built with cited public sources. Not affiliated with the Australian Grand Prix Corporation, Formula 1, the Victorian Government, or Save Albert Park. Independent analysis only — not financial, investment, or legal advice.
+    </div>
+  </div>
+</section>
+</div>
+</main>
+
+<footer class="no-print">
+  <div class="wrap">
+    <div>© 2026 · AGP Independent Economic &amp; Soft-Power Impact Framework · v1.1 · Prepared by Ari</div>
+    <div>Not affiliated with the Australian Grand Prix Corporation, Formula 1, or Save Albert Park.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---------- router ----------
+  var routes = ['home','problem','framework','worked-example','soft-power','gameplan','exec','sources','about'];
+  function showRoute(r){
+    if(routes.indexOf(r) === -1) r = 'home';
+    var pages = document.querySelectorAll('.page');
+    for(var i=0;i<pages.length;i++) pages[i].classList.remove('active');
+    var el = document.getElementById('page-'+r);
+    if(el) el.classList.add('active');
+    var links = document.querySelectorAll('nav.links a');
+    for(var j=0;j<links.length;j++){
+      var href = links[j].getAttribute('href').replace('#','');
+      links[j].classList.toggle('active', href === r);
+    }
+    try{ window.scrollTo(0,0); }catch(e){ try{ document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }catch(e2){} }
+  }
+  window.addEventListener('hashchange', function(){ showRoute(location.hash.replace('#','') || 'home'); });
+  // Click handler for in-page route links: hash links don't reliably fire hashchange in the sandboxed frame.
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(!a || a.hasAttribute('data-pf')) return;
+    var r = (a.getAttribute('href')||'').slice(1);
+    if(routes.indexOf(r) === -1) return;
+    e.preventDefault();
+    showRoute(r);
+    try{ history.replaceState(null,'','#'+r); }catch(err){}
+  });
+  // Always open on the homepage (after the intro), whatever hash the link carried.
+  try{ if(location.hash) history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  showRoute('home');
+
+  // ---------- parallax background ----------
+  var svg = document.getElementById('trackSvg');
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      window.requestAnimationFrame(function(){
+        var y = window.scrollY || 0;
+        svg.style.transform = 'translateX(-50%) translateY(' + (y * -0.07) + 'px)';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // ---------- intro: lights out + curtain ----------
+  var lights = document.querySelectorAll('#lightsRig .light');
+  var caption = document.getElementById('introCaption');
+  var flash = document.getElementById('introFlash');
+  var done = false;
+
+  function litSequence(fast){
+    var step = fast ? 90 : 430;
+    lights.forEach(function(l, i){
+      setTimeout(function(){ l.classList.add('on'); }, i*step);
+    });
+    var goDelay = lights.length*step + (fast?150:600);
+    setTimeout(function(){
+      lights.forEach(function(l){ l.classList.remove('on'); });
+      caption.textContent = 'Lights out.';
+      flash.classList.add('go');
+      setTimeout(openCurtain, 180);
+    }, goDelay);
+  }
+
+  function openCurtain(){
+    if(done) return;
+    done = true;
+    document.body.classList.add('intro-opening');
+    setTimeout(function(){
+      document.body.classList.remove('intro-active');
+      document.body.classList.add('intro-done');
+    }, 1050);
+  }
+
+  document.getElementById('skipIntro').addEventListener('click', function(){
+    if(done) return;
+    done = true;
+    document.body.classList.add('intro-opening');
+    setTimeout(function(){
+      document.body.classList.remove('intro-active');
+      document.body.classList.add('intro-done');
+    }, 700);
+  });
+
+  litSequence(false);
+})();
+</script>
+<script>window.PF_CONFIG={self:"BGEnBUZp3m2SVE8jz3kyCH",nav:"nav.links",rename:"About=>About the project"};</script>
+<script>
+/* Ari · portfolio About & contact + case-studies menu (shared across case studies) */
+(function(){
+  if (window.__pfLoaded) return; window.__pfLoaded = true;
+  var cur = document.currentScript;
+  var CFG = window.PF_CONFIG || {};
+  if (cur) { CFG.self = CFG.self || cur.getAttribute('data-self'); CFG.nav = CFG.nav || cur.getAttribute('data-nav'); CFG.rename = CFG.rename || cur.getAttribute('data-rename'); }
+  var st = document.createElement('style'); st.textContent = '\n.pf-dlg{--pf-bg:#FBFCFD;--pf-ink:#14202E;--pf-ink2:#44546A;--pf-line:#D5DDE5;--pf-acc:#1B6F78;--pf-scrim:rgba(10,18,28,.55);position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:var(--pf-scrim);font-family:Georgia,"Times New Roman",serif}\n@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}}\n:root[data-theme="dark"] .pf-dlg{--pf-bg:#16212D;--pf-ink:#E6EDF4;--pf-ink2:#B4C2D0;--pf-line:#2E3F50;--pf-acc:#6CC3CB;--pf-scrim:rgba(0,0,0,.65)}\n.pf-dlg[hidden],.pf-body[hidden]{display:none!important}\n.pf-card{background:var(--pf-bg);color:var(--pf-ink);width:min(560px,100%);max-height:100%;overflow:auto;border-radius:10px;border:1px solid var(--pf-line);box-shadow:0 20px 60px rgba(0,0,0,.3);display:grid}\n.pf-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--pf-line)}\n.pf-tabs{display:flex;gap:4px;flex-wrap:wrap}\n.pf-tabs button,.pf-x{appearance:none;border:1px solid transparent;background:none;color:var(--pf-ink2);font:600 15px/1.2 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.02em;padding:7px 12px;border-radius:999px;cursor:pointer}\n.pf-tabs button[aria-selected="true"]{background:var(--pf-ink);color:var(--pf-bg)}\n.pf-x{border-color:var(--pf-line);border-radius:6px;font-size:14px}\n.pf-tabs button:focus-visible,.pf-x:focus-visible,.pf-body a:focus-visible,.pf-copy:focus-visible{outline:2px solid var(--pf-acc);outline-offset:2px}\n.pf-body{padding:18px;display:grid;gap:14px;font-size:16px;line-height:1.6}\n.pf-body h2{margin:0;font:700 26px/1.1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;color:var(--pf-ink)}\n.pf-body p{margin:0;color:var(--pf-ink2)}\n.pf-label{font:600 12px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ink2)}\n.pf-li{display:inline-flex;align-items:center;gap:10px;justify-self:start;background:#0A66C2;color:#fff;text-decoration:none;font:600 16px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.03em;padding:11px 16px;border-radius:6px}\n.pf-li svg{width:18px;height:18px;fill:currentColor}\n.pf-url{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 13px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--pf-ink2);word-break:break-all}\n.pf-copy{appearance:none;border:1px solid var(--pf-line);background:none;color:var(--pf-ink);font:600 13px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;padding:6px 10px;border-radius:5px;cursor:pointer}\n.pf-body p a{color:var(--pf-acc);text-underline-offset:3px}.pf-list{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--pf-line)}\n.pf-list li{border-bottom:1px solid var(--pf-line)}\n.pf-list a{display:grid;gap:2px;padding:11px 4px;text-decoration:none;color:var(--pf-ink)}\n.pf-list a b{font:600 17px/1.25 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif}\n.pf-list a span{font-size:14px;color:var(--pf-ink2)}\n.pf-list a[aria-current] b::after{content:"  · you are here";font:italic 400 13px Georgia,serif;color:var(--pf-acc)}\nbody.pf-open{overflow:hidden}\n\n.pf-bar{font:600 13px/1 "Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.04em;background:#14202E;color:#E6EDF4;padding:9px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;position:relative;z-index:40}\n.pf-bar b{letter-spacing:.12em}\n.pf-bar nav{display:flex;gap:16px}\n.pf-bar a{color:#E6EDF4;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}\n.pf-bar a:hover{border-bottom-color:#6CC3CB}\n.pf-bar a:focus-visible{outline:2px solid #6CC3CB;outline-offset:3px}\n'; document.head.appendChild(st);
+  var wrap = document.createElement('div'); wrap.innerHTML = '<div class="pf-dlg" id="pfDlg" role="dialog" aria-modal="true" aria-label="Portfolio" hidden>\n  <div class="pf-card">\n    <div class="pf-head">\n      <div class="pf-tabs" role="tablist">\n        <button type="button" role="tab" data-pfv="about" aria-selected="true">About &amp; contact</button>\n        <button type="button" role="tab" data-pfv="work" aria-selected="false">Case studies</button>\n      </div>\n      <button type="button" class="pf-x" id="pfClose" aria-label="Close">Close ✕</button>\n    </div>\n    <div class="pf-body" data-pfp="about">\n      <div class="pf-label">About</div>\n      <h2>Arpitha (Ari) Ummanath</h2>\n      <p>Policy researcher and writer based in Australia, working on international security, defence and strategic policy. My portfolio is a set of independent, source-linked case studies that turn public evidence into analysis and practical recommendations.</p>\n      <p>Published work includes a solo piece in ASPI\'s <a href="https://www.aspi.org.au/strategist-posts/women-are-integral-to-closing-australias-defence-workforce-gap/" target="_blank" rel="noopener"><i>The Strategist</i></a> and a co-authored paper on Australia\'s fuel security (<a href="https://static1.squarespace.com/static/649417f4c2f2ae170d6fff9c/t/69dd727c449d6a56e2e7e9c7/1776120444468/Voices+of+the+Future+Vol2.pdf" target="_blank" rel="noopener"><i>Voices of the Future</i></a> – Girls Run The World).</p>\n      <div class="pf-label" style="margin-top:6px">Contact</div>\n      <p>The best way to reach me is on LinkedIn.</p>\n      <a class="pf-li" href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect on LinkedIn</a>\n      <div class="pf-url"><span id="pfUrl">linkedin.com/in/arpitha-u-62549a2ba</span><button type="button" class="pf-copy" id="pfCopy">Copy link</button></div>\n    </div>\n    <div class="pf-body" data-pfp="work" hidden>\n      <div class="pf-label">Portfolio</div>\n      <h2>Case studies</h2>\n      <ul class="pf-list">\n        <li><a href="../assurance-gap/" target="_blank" rel="noopener"><b>The Assurance Gap</b><span>Defence autonomy · assurance &amp; test and evaluation</span></a></li>\n        <li><a href="../tail-number/" target="_blank" rel="noopener"><b>Tail Number Exposed</b><span>Business-jet flight-data privacy · aviation security</span></a></li>\n        <li><a href="../aukus/" target="_blank" rel="noopener"><b>The AUKUS Export-Control Navigator</b><span>Defence industry · export controls</span></a></li>\n        <li><a href="../saf/" target="_blank" rel="noopener"><b>The SAF Mandate Gap</b><span>Aviation · sustainable fuel policy</span></a></li>\n        <li><a href="../grand-prix/" target="_blank" rel="noopener"><b>Is the Grand Prix Worth It?</b><span>Economic &amp; soft-power impact</span></a></li>\n        <li><a href="../real-selectors/" target="_blank" rel="noopener"><b>The Real Selectors</b><span>Cricket governance · two live case studies</span></a></li>\n        <li><a href="../ranking/" target="_blank" rel="noopener"><b>Does the Ranking Hold?</b><span>Rail procurement security scorecard</span></a></li>\n        <li><a href="../companion-briefs/" target="_blank" rel="noopener"><b>Companion Briefs</b><span>Geopolitical risk · Indo-Pacific &amp; passive-index protocol</span></a></li>\n      </ul>\n    </div>\n  </div>\n</div>'; document.body.appendChild(wrap.firstElementChild);
+  function mkLinks(container, cls, before){
+    [['work','Case studies'],['about','About &amp; contact']].forEach(function(p){
+      var a=document.createElement('a'); a.href='#'; a.setAttribute('role','button'); a.setAttribute('data-pf',p[0]); a.innerHTML=p[1];
+      if(cls) a.className=cls;
+      container.appendChild(a);
+    });
+  }
+  var nav = CFG.nav ? document.querySelector(CFG.nav) : null;
+  if (nav) {
+    var sample = nav.querySelector('a:not(.active):not(.current)') || nav.querySelector('a');
+    var cls = sample ? sample.className.replace(/\b(active|current)\b/g,'').trim() : '';
+    if (CFG.rename) { var parts = CFG.rename.split('=>'); nav.querySelectorAll('a').forEach(function(a){ if(a.textContent.trim()===parts[0]) a.textContent=parts[1]; }); }
+    mkLinks(nav, cls);
+  } else {
+    var bar=document.createElement('div'); bar.className='pf-bar';
+    bar.innerHTML='<b>ARI · PORTFOLIO</b><nav aria-label="Portfolio"></nav>';
+    mkLinks(bar.querySelector('nav'), '');
+    var host = CFG.barHost ? document.querySelector(CFG.barHost) : null;
+    if (host) host.insertBefore(bar, host.firstChild); else document.body.insertBefore(bar, document.body.firstChild);
+  }
+  var SELF = CFG.self || '';
+
+  const dlg=document.getElementById('pfDlg'); if(!dlg) return;
+  dlg.querySelectorAll('.pf-list a').forEach(a=>{ if(SELF && a.href.indexOf(SELF)>-1) a.setAttribute('aria-current','page'); });
+  let last=null;
+  function view(v){dlg.querySelectorAll('[data-pfv]').forEach(b=>b.setAttribute('aria-selected',b.dataset.pfv===v));dlg.querySelectorAll('[data-pfp]').forEach(p=>p.hidden=p.dataset.pfp!==v);}
+  function open(v){last=document.activeElement;view(v||'about');dlg.hidden=false;document.body.classList.add('pf-open');dlg.querySelector('[aria-selected="true"]').focus();}
+  function close(){dlg.hidden=true;document.body.classList.remove('pf-open');if(last&&last.focus)last.focus();}
+  document.addEventListener('click',e=>{const t=e.target.closest('[data-pf]');if(t){e.preventDefault();e.stopImmediatePropagation();open(t.dataset.pf);}},true);
+  dlg.addEventListener('click',e=>{if(e.target===dlg)close();const b=e.target.closest('[data-pfv]');if(b)view(b.dataset.pfv);});
+  document.getElementById('pfClose').addEventListener('click',close);
+  dlg.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  document.getElementById('pfCopy').addEventListener('click',()=>{const u='https://www.linkedin.com/in/arpitha-u-62549a2ba/';const btn=document.getElementById('pfCopy');
+    try{navigator.clipboard.writeText(u).then(()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy link',1500);},sel);}catch(e){sel();}
+    function sel(){const r=document.createRange();r.selectNodeContents(document.getElementById('pfUrl'));const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected, press Ctrl/Cmd+C';}});
+
+})();
+</script>
+</body>
+</html>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

@@ -1,0 +1,419 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>The Index Lag Protocol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,600;1,9..144,420&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#edece6;
+    --surface:#ffffff;
+    --surface-2:#e1ded3;
+    --ink:#1d1a15;
+    --ink-dim:#6b6656;
+    --line:rgba(29,26,21,0.14);
+    --line-strong:rgba(29,26,21,0.28);
+    --ledger:#1c3d33;
+    --ledger-ink:#ffffff;
+    --amber:#a85a26;
+    --amber-ink:#ffffff;
+    --slate:#3f5b74;
+    --slate-ink:#ffffff;
+    --ok:#3c7757;
+    --ok-ink:#ffffff;
+    --no:#a6383d;
+    --no-ink:#ffffff;
+    --shadow: 0 1px 2px rgba(29,26,21,0.06), 0 6px 20px -8px rgba(29,26,21,0.18);
+    --focus:#a85a26;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#14120d;
+      --surface:#1c1912;
+      --surface-2:#242018;
+      --ink:#eeece4;
+      --ink-dim:#a89f8c;
+      --line:rgba(238,236,228,0.14);
+      --line-strong:rgba(238,236,228,0.26);
+      --ledger:#4f9c82;
+      --ledger-ink:#06140f;
+      --amber:#e08a4f;
+      --amber-ink:#2a1000;
+      --slate:#7fa0bd;
+      --slate-ink:#08151f;
+      --ok:#69b98f;
+      --ok-ink:#04190f;
+      --no:#e26b6f;
+      --no-ink:#2a0708;
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 30px -10px rgba(0,0,0,0.6);
+      --focus:#e08a4f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14120d;
+    --surface:#1c1912;
+    --surface-2:#242018;
+    --ink:#eeece4;
+    --ink-dim:#a89f8c;
+    --line:rgba(238,236,228,0.14);
+    --line-strong:rgba(238,236,228,0.26);
+    --ledger:#4f9c82;
+    --ledger-ink:#06140f;
+    --amber:#e08a4f;
+    --amber-ink:#2a1000;
+    --slate:#7fa0bd;
+    --slate-ink:#08151f;
+    --ok:#69b98f;
+    --ok-ink:#04190f;
+    --no:#e26b6f;
+    --no-ink:#2a0708;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 30px -10px rgba(0,0,0,0.6);
+    --focus:#e08a4f;
+  }
+
+  *{ box-sizing:border-box; }
+  body{ background:var(--paper); color:var(--ink); margin:0; }
+  .page{ max-width:960px; margin:0 auto; padding:40px 24px 80px; font-family:'IBM Plex Sans', system-ui, sans-serif; font-size:15px; line-height:1.55; }
+  ::selection{ background:var(--amber); color:var(--amber-ink); }
+  a{ color:var(--amber); }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  .tabular{ font-variant-numeric:tabular-nums; }
+
+  .masthead{ display:flex; justify-content:space-between; align-items:flex-end; gap:20px; padding-bottom:20px; margin-bottom:28px; border-bottom:2px solid var(--ledger); flex-wrap:wrap; }
+  .masthead .kicker{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); font-weight:600; margin:0 0 10px; }
+  .masthead h1{ font-size:clamp(26px,4.2vw,36px); font-weight:600; color:var(--ink); letter-spacing:-0.01em; }
+  .masthead .sub{ font-family:'Fraunces', serif; font-style:italic; font-weight:420; color:var(--ink-dim); font-size:15.5px; margin-top:6px; max-width:46ch; }
+  .masthead .meta{ text-align:right; font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-dim); line-height:1.7; white-space:nowrap; }
+  .masthead .meta .live{ display:inline-flex; align-items:center; gap:6px; color:var(--amber); font-weight:600; }
+  .masthead .meta .live::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--amber); }
+
+  .intro{ background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:3px; padding:16px 20px; margin-bottom:32px; box-shadow:var(--shadow); }
+  .intro .label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--amber); font-weight:600; display:block; margin-bottom:8px; }
+  .intro p{ margin:0; font-size:14.5px; }
+  .intro p + p{ margin-top:10px; }
+
+  section{ margin-bottom:46px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin:0 0 14px; flex-wrap:wrap; }
+  .section-head h2{ font-size:19px; font-weight:600; color:var(--ledger); }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .section-head h2{ color:var(--ink); } }
+  :root[data-theme="dark"] .section-head h2{ color:var(--ink); }
+  .section-head .hint{ font-size:12.5px; color:var(--ink-dim); font-family:'IBM Plex Mono',monospace; }
+  .section-num{ font-family:'IBM Plex Mono',monospace; color:var(--amber); font-weight:600; margin-right:8px; }
+
+  /* ---------- Timeline ---------- */
+  .timeline-wrap{ background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:20px 20px 6px; box-shadow:var(--shadow); }
+  svg.timeline{ width:100%; height:auto; display:block; }
+  .band-gap{ fill:var(--amber); opacity:.14; }
+  .band-tail{ fill:var(--slate); opacity:.12; }
+  .band-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase; fill:var(--ink-dim); }
+  .tl-line{ stroke:var(--line-strong); stroke-width:1.5; }
+  .tl-stem{ stroke:var(--line-strong); stroke-width:1; }
+  .tl-dot{ stroke:var(--surface); stroke-width:2.5; cursor:pointer; transition:r .15s; }
+  .tl-dot:hover{ stroke:var(--ink); }
+  .tl-dot.active{ stroke:var(--ink); }
+  .tl-date{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; fill:var(--ink); pointer-events:none; }
+  .tl-label{ font-family:'IBM Plex Sans',sans-serif; font-size:10.5px; fill:var(--ink-dim); pointer-events:none; }
+  .day-badge{ font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; fill:var(--amber); }
+
+  .detail-panel{ margin-top:12px; padding:16px 20px; background:var(--surface-2); border-radius:3px; border-left:3px solid var(--amber); }
+  .detail-panel .dp-date{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--amber); font-weight:600; text-transform:uppercase; letter-spacing:.06em; }
+  .detail-panel h3{ font-size:16px; font-weight:600; margin:4px 0 8px; color:var(--ink); }
+  .detail-panel p{ margin:0; font-size:13.8px; color:var(--ink); }
+
+  /* ---------- Timeline data table ---------- */
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:3px; box-shadow:var(--shadow); margin-top:14px; }
+  table{ width:100%; border-collapse:collapse; min-width:600px; background:var(--surface); }
+  thead th{ background:var(--ledger); color:var(--ledger-ink); text-align:left; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.05em; text-transform:uppercase; padding:11px 14px; font-weight:600; }
+  tbody td{ padding:11px 14px; border-top:1px solid var(--line); font-size:13.5px; vertical-align:top; }
+  tbody tr:hover td{ background:var(--surface-2); }
+  tbody td.date{ font-family:'IBM Plex Mono',monospace; white-space:nowrap; font-weight:600; }
+
+  /* ---------- Region tabs (indicator framework) ---------- */
+  .tabs{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+  .tab{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:500; padding:8px 14px; border-radius:20px; border:1px solid var(--line-strong); background:transparent; color:var(--ink-dim); cursor:pointer; transition:all .15s; }
+  .tab:hover{ border-color:var(--amber); color:var(--ink); }
+  .tab.active{ background:var(--ledger); border-color:var(--ledger); color:var(--ledger-ink); }
+  .indicator-panel{ background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:20px 22px; box-shadow:var(--shadow); }
+  .indicator-panel h3{ font-size:15px; font-weight:600; margin-bottom:12px; color:var(--ink); }
+  .indicator-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .indicator-grid .k{ font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--amber); font-weight:600; display:block; margin-bottom:6px; }
+  .indicator-grid p{ margin:0; font-size:13.8px; }
+  @media (max-width:640px){ .indicator-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- Decision tree ---------- */
+  .tree{ position:relative; padding-left:44px; }
+  .tree::before{ content:""; position:absolute; left:17px; top:8px; bottom:8px; width:2px; background:var(--line-strong); }
+  .tree-step{ position:relative; margin-bottom:14px; background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:14px 18px; box-shadow:var(--shadow); }
+  .tree-step .step-num{
+    position:absolute; left:-44px; top:14px; width:30px; height:30px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px;
+    background:var(--ok); color:var(--ok-ink);
+  }
+  .tree-step.no .step-num{ background:var(--no); color:var(--no-ink); }
+  .tree-step.no{ border-style:dashed; opacity:.88; }
+  .step-title{ font-weight:600; font-size:14.5px; margin-bottom:4px; }
+  .step-tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:20px; background:var(--ok); color:var(--ok-ink); margin-bottom:8px; }
+  .tree-step.no .step-tag{ background:var(--no); color:var(--no-ink); }
+  .step-body{ display:grid; grid-template-columns:1fr 1fr; gap:14px; font-size:13.3px; }
+  .step-body .k{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-dim); display:block; margin-bottom:3px; }
+  @media (max-width:640px){ .step-body{ grid-template-columns:1fr; } }
+
+  /* ---------- Escalation cards ---------- */
+  .escalation-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .esc-card{ background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:18px 20px; box-shadow:var(--shadow); }
+  .esc-card .esc-num{ font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; color:var(--amber); display:block; margin-bottom:6px; }
+  .esc-card h3{ font-size:14.5px; font-weight:600; margin-bottom:6px; }
+  .esc-card p{ margin:0; font-size:13.3px; color:var(--ink); }
+  @media (max-width:640px){ .escalation-grid{ grid-template-columns:1fr; } }
+
+  .positioning{ font-size:14.5px; max-width:74ch; }
+
+  .sources{ margin-top:44px; padding-top:18px; border-top:1px solid var(--line); }
+  .sources h2{ font-size:13px; color:var(--ink-dim); font-weight:600; font-family:'IBM Plex Sans',sans-serif; text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
+  .sources ol{ margin:0; padding-left:18px; font-size:11.5px; color:var(--ink-dim); line-height:1.7; }
+  .disclaimer{ margin-top:18px; font-size:11px; color:var(--ink-dim); line-height:1.6; max-width:74ch; }
+  .byline{ margin-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-dim); }
+
+  @media (max-width:640px){ .masthead{ flex-direction:column; align-items:flex-start; } .masthead .meta{ text-align:left; } }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div>
+      <p class="kicker">Independent Product-Risk Research &nbsp;·&nbsp; Working Paper for Institutional Review</p>
+      <h1>The Index Lag Protocol</h1>
+      <p class="sub">Closing the structural lag between a geopolitical shock and a passive fund's ability to respond</p>
+    </div>
+    <div class="meta">
+      <div class="live">CASE STUDY &mdash; RUSSIA, FEB&ndash;MAR 2022</div>
+      <div>Prepared by Ari, ANU</div>
+      <div>Updated 7 SEP 2026</div>
+    </div>
+  </header>
+
+  <div class="intro">
+    <span class="label">The problem, precisely stated</span>
+    <p>When Russia invaded Ukraine on 24 February 2022, BlackRock's funds carried roughly $17bn of Russia exposure that lost value as sanctions and trading restrictions made those securities effectively unsellable &mdash; and BlackRock, Vanguard, and every other passive manager tracking MSCI or FTSE Russell emerging-market benchmarks were structurally bound to keep holding those securities until the index providers themselves acted.<sup>1</sup></p>
+    <p>That gap &mdash; between a shock the world can see and an index reconstitution a passive mandate requires before a manager can act &mdash; is not a Russia-specific problem. It is a standing feature of index-tracking mandates, and it will recur the next time a G7-sanctioned economy sits inside a major benchmark. This protocol proposes what a passive manager can pre-agree today, before the next event, rather than improvise during it.</p>
+  </div>
+
+  <section id="timelineSection">
+    <div class="section-head">
+      <h2><span class="section-num">01</span>The 2022 timeline, as it actually unfolded</h2>
+      <span class="hint">click a marker &rarr; detail below</span>
+    </div>
+    <div class="timeline-wrap">
+      <svg class="timeline" viewBox="0 0 900 260" id="timelineSvg" role="img" aria-label="Timeline of the 2022 Russia index-removal sequence"></svg>
+    </div>
+    <div class="detail-panel" id="detailPanel"></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Event</th><th>Constraint on passive managers</th></tr></thead>
+        <tbody>
+          <tr><td class="date">24 Feb 2022</td><td>Russia invades Ukraine</td><td>Funds still fully invested per mandate; no index action yet</td></tr>
+          <tr><td class="date">2 Mar 2022</td><td>MSCI and FTSE Russell both announce intent to remove Russian securities</td><td>Announcement only &mdash; indices not yet reconstituted; funds still tracking old weights</td></tr>
+          <tr><td class="date">4 Mar 2022</td><td>FTSE Russell announces removal of Russian government &amp; hard-currency bonds</td><td>Fixed-income sleeve still pending; MOEX largely frozen to foreign sellers by this point</td></tr>
+          <tr><td class="date">7 Mar 2022</td><td>FTSE Russell equities removal effective; Moscow Exchange &amp; GDR-listed names deleted at zero value</td><td>First hard reconstitution point for FTSE-tracking funds &mdash; 11 days after invasion</td></tr>
+          <tr><td class="date">9 Mar 2022</td><td>MSCI reclassification effective; Russia priced at zero across MSCI EM indices in one step</td><td>First hard reconstitution point for MSCI-tracking funds &mdash; 13 days after invasion</td></tr>
+          <tr><td class="date">15 &amp; 30 Mar 2022</td><td>S&amp;P DJI publishes results of its market-accessibility investor consultation</td><td>A third major provider still consulting three&ndash;five weeks after invasion</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px; font-size:14px;">The takeaway is not that index providers were slow by some absolute standard &mdash; MSCI and FTSE Russell both moved inside two weeks, which is fast by index-governance norms. It is that a passive mandate has no lawful mechanism to front-run that window, however obvious the shock. This protocol is built to manage that exact-sized gap &mdash; not by front-running the index, but by using every degree of freedom a fund actually retains during it.</p>
+  </section>
+
+  <section id="indicatorSection">
+    <div class="section-head">
+      <h2><span class="section-num">02</span>Early-warning indicator framework, by region</h2>
+      <span class="hint">select a region</span>
+    </div>
+    <div class="tabs" id="regionTabs"></div>
+    <div class="indicator-panel" id="indicatorPanel"></div>
+  </section>
+
+  <section id="treeSection">
+    <div class="section-head">
+      <h2><span class="section-num">03</span>Decision tree &mdash; what a manager can do before the index moves</h2>
+    </div>
+    <div class="tree" id="treeList"></div>
+  </section>
+
+  <section id="escalationSection">
+    <div class="section-head">
+      <h2><span class="section-num">04</span>Proposed faster escalation channel</h2>
+    </div>
+    <div class="escalation-grid" id="escalationGrid"></div>
+  </section>
+
+  <section id="positioningSection">
+    <div class="section-head"><h2>Positioning</h2></div>
+    <p class="positioning">Nothing above asks an index provider to move faster than its own governance allows, and nothing asks a passive manager to stop being passive. It pre-agrees, in writing and in advance, the parts of the response that are already legal and already available &mdash; so that the next Russia-scale event costs a fund the eleven-to-thirteen days index providers actually need, not the additional weeks lost to first figuring out who to call.</p>
+  </section>
+
+  <footer class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>Citywire, &ldquo;BlackRock funds suffer $17bn losses on Russia exposure,&rdquo; 11 Mar 2022; The National, &ldquo;BlackRock suffers $17bn in losses due to Russia-Ukraine war,&rdquo; 11 Mar 2022.</li>
+      <li>MSCI, &ldquo;MSCI to Reclassify the MSCI Russia Indexes from Emerging Markets to Standalone Markets Status,&rdquo; press release, 2 &amp; 9 Mar 2022; MSCI Q&amp;A: Reclassification of MSCI Russia Indexes to Standalone.</li>
+      <li>FTSE Russell, &ldquo;FAQ: Russia Treatment in FTSE Russell Indices,&rdquo; Mar 2022 (LSEG policy documents).</li>
+      <li>S&amp;P Dow Jones Indices, &ldquo;Consultation on Sanctions and Russia Market Accessibility: Results,&rdquo; 15 &amp; 30 Mar 2022.</li>
+      <li>Bloomberg, &ldquo;MSCI Pulls Russian Equities Out of Its Key Emerging Market Index,&rdquo; 2 Mar 2022; South China Morning Post, &ldquo;Russia shunned as FTSE Russell, MSCI remove stocks, bonds from indices after market becomes &lsquo;uninvestable&rsquo;,&rdquo; 2022.</li>
+    </ol>
+    <p class="disclaimer">This page is an independent research sample prepared by the author and is not published by, affiliated with, or endorsed by BlackRock, Vanguard, MSCI, FTSE Russell, S&amp;P Dow Jones Indices, or any entity named herein. It is circulated solely to illustrate an analytical approach and is not investment research, a solicitation, or a recommendation. All figures are drawn from the cited public sources as of the date above and have not been independently verified against primary institutional data; readers should confirm current figures before relying on them.</p>
+    <p class="byline">Prepared by Ari &middot; Australian National University &middot; International Security Studies &amp; Criminology</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var ns = "http://www.w3.org/2000/svg";
+  function el(tag, attrs){ var e = document.createElementNS(ns, tag); for(var k in attrs){ e.setAttribute(k, attrs[k]); } return e; }
+
+  // ---------- Timeline ----------
+  var EVENTS = [
+    { day:0,  date:"24 Feb", full:"24 February 2022", label:"Invasion", title:"Russia invades Ukraine",
+      body:"Funds still fully invested per mandate — no index action yet. The clock on the structural lag starts here." , side:"up"},
+    { day:6,  date:"2–4 Mar", full:"2–4 March 2022", label:"Announce", title:"MSCI &amp; FTSE Russell announce removal",
+      body:"2 Mar: both providers announce intent to remove Russian securities. 4 Mar: FTSE Russell separately announces removal of Russian government and hard-currency bonds. Announcement only — indices not yet reconstituted, so funds are still tracking the old weights.", side:"down"},
+    { day:11, date:"7 Mar", full:"7 March 2022", label:"FTSE effective", title:"FTSE Russell equities removal effective",
+      body:"Moscow Exchange and GDR-listed names deleted at zero value. First hard reconstitution point for FTSE-tracking funds — 11 days after invasion.", side:"up"},
+    { day:13, date:"9 Mar", full:"9 March 2022", label:"MSCI effective", title:"MSCI reclassification effective",
+      body:"Russia priced at zero across MSCI EM indices in one step. First hard reconstitution point for MSCI-tracking funds — 13 days after invasion. This is the headline gap this protocol is sized against.", side:"down"},
+    { day:19, date:"15 Mar", label:"S&P DJI interim", title:"S&amp;P DJI interim consultation results",
+      body:"A third major index provider is still consulting three weeks after the invasion — evidence that ad hoc consultation, without a pre-agreed trigger, runs on the provider's clock, not the fund's.", side:"up"},
+    { day:34, date:"30 Mar", label:"S&P DJI final", title:"S&amp;P DJI final consultation results",
+      body:"Market-accessibility consultation concludes five weeks after invasion — the slowest resolution of the three major providers, and the outer bound this protocol aims to compress.", side:"down"}
+  ];
+
+  var svg = document.getElementById("timelineSvg");
+  var X0 = 60, X1 = 840, Y = 150;
+  function xOf(day){ return X0 + day/34*(X1-X0); }
+
+  // bands
+  svg.appendChild(el("rect", {x:xOf(0), y:70, width:xOf(13)-xOf(0), height:160, class:"band-gap"}));
+  svg.appendChild(el("rect", {x:xOf(13), y:70, width:xOf(34)-xOf(13), height:160, class:"band-tail"}));
+  var bandLabel1 = el("text", {x:(xOf(0)+xOf(13))/2, y:225, class:"band-label", "text-anchor":"middle"});
+  bandLabel1.textContent = "13-DAY STRUCTURAL LAG";
+  svg.appendChild(bandLabel1);
+  var bandLabel2 = el("text", {x:(xOf(13)+xOf(34))/2, y:225, class:"band-label", "text-anchor":"middle"});
+  bandLabel2.textContent = "S&P DJI STILL CONSULTING";
+  svg.appendChild(bandLabel2);
+
+  var dayBadge = el("text", {x:X0, y:55, class:"day-badge"});
+  dayBadge.textContent = "Day 0 → Day 34";
+  svg.appendChild(dayBadge);
+  var dayBadgeSub = el("text", {x:X0, y:20, class:"band-label"});
+  dayBadgeSub.textContent = "INVASION TO FINAL INDEX-PROVIDER RESOLUTION";
+  svg.insertBefore(dayBadgeSub, svg.firstChild);
+
+  svg.appendChild(el("line", {x1:X0, x2:X1, y1:Y, y2:Y, class:"tl-line"}));
+
+  EVENTS.forEach(function(e, i){
+    var x = xOf(e.day);
+    var g = el("g", {"data-idx":i, tabindex:"0", style:"cursor:pointer"});
+    var labelY = e.side === "up" ? Y - 46 : Y + 62;
+    var stemY2 = e.side === "up" ? Y - 12 : Y + 12;
+    g.appendChild(el("line", {x1:x, x2:x, y1:Y, y2:stemY2, class:"tl-stem"}));
+    var dot = el("circle", {cx:x, cy:Y, r:9, class:"tl-dot" + (i===3 ? " active" : ""), fill: i<=3 ? "var(--amber)" : "var(--slate)"});
+    g.appendChild(dot);
+    var dateT = el("text", {x:x, y: e.side==="up" ? labelY : labelY - 16, class:"tl-date", "text-anchor":"middle"});
+    dateT.textContent = e.date;
+    g.appendChild(dateT);
+    var lblT = el("text", {x:x, y: e.side==="up" ? labelY + 13 : labelY - 2, class:"tl-label", "text-anchor":"middle"});
+    lblT.textContent = e.label;
+    g.appendChild(lblT);
+    g.addEventListener("click", function(){ selectEvent(i); });
+    g.addEventListener("keydown", function(ev){ if(ev.key==="Enter") selectEvent(i); });
+    svg.appendChild(g);
+  });
+
+  var panel = document.getElementById("detailPanel");
+  function selectEvent(i){
+    var e = EVENTS[i];
+    svg.querySelectorAll(".tl-dot").forEach(function(d,idx){ d.classList.toggle("active", idx===i); });
+    panel.innerHTML = '<div class="dp-date">' + (e.full || e.date + " 2022") + '</div><h3>' + e.title + '</h3><p>' + e.body + '</p>';
+  }
+  selectEvent(3);
+
+  // ---------- Indicator framework ----------
+  var REGIONS = [
+    { key:"russia", tab:"Russia-adjacent / E. Europe", benchmark:"MSCI EM, FTSE EM",
+      indicators:"Troop mobilisation &amp; satellite-confirmed staging; G7 coordinated-statement language shift from &ldquo;concern&rdquo; to &ldquo;consequences&rdquo;; SWIFT-exclusion rhetoric; CDS spread widening &gt;2 standard deviations",
+      trigger:"MSCI/FTSE Russell &ldquo;market accessibility&rdquo; or &ldquo;investability&rdquo; review notices; OFAC SDN sovereign-level listing" },
+    { key:"indopacific", tab:"Indo-Pacific / Taiwan", benchmark:"MSCI Taiwan, MSCI AC Asia",
+      indicators:"PLA exercise scope/duration beyond precedent; ADR trading-halt requests; TSMC/supply-chain contingency disclosures; insurer war-risk premium spikes on Taiwan Strait transits",
+      trigger:"MSCI Taiwan standalone-reclassification review; exchange-level trading suspension on TWSE" },
+    { key:"mideast", tab:"Middle East / Iran-linked", benchmark:"MSCI Frontier, MSCI EM",
+      indicators:"IAEA compliance-report downgrades; Strait of Hormuz insurance-market repricing; new US Treasury sanctions designations",
+      trigger:"MSCI Frontier Markets reclassification consultations" },
+    { key:"southasia", tab:"South Asia", benchmark:"MSCI EM — India, Pakistan",
+      indicators:"Cross-border strike/skirmish escalation beyond established LAC/LoC patterns; sanctions-secondary-tariff legislation targeting energy trade",
+      trigger:"MSCI India country-weight review; FTSE Russell country-classification watch list" }
+  ];
+  var tabsEl = document.getElementById("regionTabs");
+  var indicatorPanel = document.getElementById("indicatorPanel");
+  REGIONS.forEach(function(r, i){
+    var b = document.createElement("button");
+    b.className = "tab" + (i===0 ? " active" : "");
+    b.textContent = r.tab;
+    b.addEventListener("click", function(){
+      tabsEl.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+      b.classList.add("active");
+      renderIndicator(r);
+    });
+    tabsEl.appendChild(b);
+  });
+  function renderIndicator(r){
+    indicatorPanel.innerHTML =
+      '<h3>' + r.tab + ' <span class="mono" style="font-size:11px;color:var(--ink-dim);font-weight:400;">&nbsp;·&nbsp;' + r.benchmark + '</span></h3>' +
+      '<div class="indicator-grid">' +
+        '<div><span class="k">Leading indicators</span><p>' + r.indicators + '</p></div>' +
+        '<div><span class="k">Index-provider trigger to watch</span><p>' + r.trigger + '</p></div>' +
+      '</div>';
+  }
+  renderIndicator(REGIONS[0]);
+
+  // ---------- Decision tree ----------
+  var STEPS = [
+    { n:1, tag:"Available now", title:"Fair-value price the affected securities rather than use last-traded price", basis:"Standard fund-valuation policy discretion; does not require index action", precedent:"Applied by multiple EM funds to Russian holdings as MOEX access seized up in late Feb 2022", no:false },
+    { n:2, tag:"Available now", title:"Suspend or gate creation/redemption baskets containing the affected securities", basis:"Authorized-participant agreement terms; fund-level liquidity-management policy", precedent:"De facto outcome once Russian securities became unsellable to APs", no:false },
+    { n:3, tag:"Available now", title:"Formally request an emergency/out-of-cycle consultation from the index provider", basis:"Index providers' own published consultation processes (used reactively by S&amp;P DJI, 15 &amp; 30 Mar 2022)", precedent:"Available but not pre-agreed — ran on the provider's timeline, not the fund's", no:false },
+    { n:4, tag:"Available now", title:"Escalate to custodian on settlement risk for the affected market", basis:"Standard custody-agreement risk protocols", precedent:"Triggered as Euroclear/Clearstream settlement in Russian securities froze", no:false },
+    { n:5, tag:"Available now", title:"Issue proactive client/investor disclosure on anticipated tracking error", basis:"Standard fund-disclosure obligations, exercised early rather than after the fact", precedent:"Issued by several EM fund managers in the first days of March 2022, ahead of index action", no:false },
+    { n:6, tag:"Cannot do", title:"Pre-emptively zero-weight or sell down the position ahead of index removal", basis:"Breaches passive tracking mandate by definition", precedent:"The actual constraint that produced the $17bn BlackRock write-down", no:true }
+  ];
+  var treeList = document.getElementById("treeList");
+  STEPS.forEach(function(s){
+    var d = document.createElement("div");
+    d.className = "tree-step" + (s.no ? " no" : "");
+    d.innerHTML =
+      '<span class="step-num">' + s.n + '</span>' +
+      '<span class="step-tag">' + s.tag + '</span>' +
+      '<div class="step-title">' + s.title + '</div>' +
+      '<div class="step-body">' +
+        '<div><span class="k">Legal / structural basis</span>' + s.basis + '</div>' +
+        '<div><span class="k">2022 precedent</span>' + s.precedent + '</div>' +
+      '</div>';
+    treeList.appendChild(d);
+  });
+
+  // ---------- Escalation cards ----------
+  var ESCALATION = [
+    { n:"01", title:"Pre-agreed trigger definition", body:"A joint standing protocol between passive managers and MSCI/FTSE Russell/S&amp;P DJI defining exactly which events — a coordinated G7 sanctions statement, an OFAC SDN sovereign-level designation, an exchange-level trading suspension — automatically open a consultation window, removing the need to first persuade the provider a consultation is warranted." },
+    { n:"02", title:"Committed decision window", body:"A five-business-day target for an initial market-accessibility determination once a pre-agreed trigger fires, benchmarked against the 11–13 day gap MSCI and FTSE Russell actually achieved without a pre-agreement, and the 5-week gap S&amp;P DJI's ad hoc process took." },
+    { n:"03", title:"Standing communication channel", body:"A named escalation contact at each major index provider, held by the passive manager's risk desk rather than routed through general client service, activated the moment the regional indicators above fire." },
+    { n:"04", title:"Joint post-event review", body:"A standing commitment to review and republish the protocol's trigger definitions after each live use, so the framework tightens with each event rather than being rebuilt from scratch." }
+  ];
+  var escGrid = document.getElementById("escalationGrid");
+  ESCALATION.forEach(function(c){
+    var d = document.createElement("div");
+    d.className = "esc-card";
+    d.innerHTML = '<span class="esc-num">' + c.n + '</span><h3>' + c.title + '</h3><p>' + c.body + '</p>';
+    escGrid.appendChild(d);
+  });
+})();
+</script>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>

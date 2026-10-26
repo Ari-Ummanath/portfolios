@@ -1,0 +1,202 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The National Interest Screen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: screening worksheet — deal inputs left, assessment read-out right (trigger → track → factor profile → outcome range) */
+:root{
+  --bg:#f4f4f1; --panel:#ffffff; --ink:#1b2130; --muted:#5d6475; --line:#d9dbe1;
+  --navy:#1f3a68; --gold:#a8790f; --high:#b03a2e; --mid:#c98a12; --low:#2f7d5b; --chip:#e9ecf3;
+  --display:"Source Serif 4",Georgia,serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11151d;--panel:#191f2b;--ink:#e6e9f0;--muted:#9aa2b4;--line:#2c3446;--navy:#8fb0ea;--gold:#e0b04a;--high:#ef7a6c;--mid:#e9b14a;--low:#5fc595;--chip:#232b3b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#11151d;--panel:#191f2b;--ink:#e6e9f0;--muted:#9aa2b4;--line:#2c3446;--navy:#8fb0ea;--gold:#e0b04a;--high:#ef7a6c;--mid:#e9b14a;--low:#5fc595;--chip:#232b3b;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:1120px;margin:0 auto;padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:24px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,4.6vw,44px);line-height:1.08;margin:6px 0 10px;text-wrap:balance;color:var(--navy)}
+h2{font-family:var(--display);font-size:19px;margin:0 0 12px;text-wrap:balance}
+.lede{max-width:70ch;color:var(--muted);margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.fact{background:var(--panel);border-left:3px solid var(--gold);padding:12px 14px}
+.fact b{display:block;font-family:var(--mono);font-size:21px;font-variant-numeric:tabular-nums;color:var(--navy)}
+.fact span{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:840px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px}
+.field{display:grid;gap:6px;margin-bottom:14px}
+.field>label,.legend{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+select,input[type=number]{width:100%;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);font:inherit}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.checks label:last-child{border-bottom:0}
+.checks small{display:block;color:var(--muted);font-size:13px}
+input[type=checkbox]{margin-top:4px;accent-color:var(--navy);width:16px;height:16px;flex:none}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.out{display:grid;gap:16px}
+.step{display:grid;gap:4px}
+.step .k{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.verdict{font-family:var(--display);font-size:22px;font-weight:700}
+.pill{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--chip)}
+.factors{display:grid;gap:10px;margin-top:4px}
+.f{display:grid;grid-template-columns:minmax(0,1fr) 120px 54px;gap:10px;align-items:center;font-size:14px}
+.bar{height:8px;background:var(--chip);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;transition:width .3s}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+.lvl{font-family:var(--mono);font-size:12px;text-align:right}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.outcomes div{border:1px solid var(--line);border-radius:4px;padding:8px;font-size:13px;text-align:center;opacity:.4}
+.outcomes div.on{opacity:1;border-color:var(--navy);background:var(--chip);font-weight:600}
+.reasons{margin:0;padding-left:18px;font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+button{font:inherit;font-size:13px;padding:7px 12px;border-radius:4px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+button.primary{background:var(--navy);color:var(--panel);border-color:var(--navy)}
+.note{font-size:13px;color:var(--muted);max-width:78ch}
+.note a{color:var(--navy)}
+footer{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:8px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Independent project · Arpitha Ummanath · Foreign investment &amp; economic security</div>
+    <h1>The National Interest Screen</h1>
+    <p class="lede">Australia screens foreign investment case by case against the national interest. Since the 2024 reforms, the system runs on two tracks: faster decisions for low-risk investors, and closer scrutiny where a deal touches critical minerals, critical infrastructure, critical technology, sensitive data or land near government facilities. This worksheet walks a hypothetical deal through that logic, from whether it must be notified to which national interest factors carry the weight.</p>
+  </header>
+
+  <section class="facts" aria-label="Framework at a glance">
+    <div class="fact"><b>5</b><span>National interest factors typically considered, from national security to the character of the investor</span></div>
+    <div class="fact"><b>5</b><span>Sensitive areas flagged for more intense scrutiny under the 2024 two-track reforms</span></div>
+    <div class="fact"><b>$0</b><span>Threshold for national security actions and for foreign government investors: notification regardless of value</span></div>
+    <div class="fact"><b>50%</b><span>Of proposals Treasury aims to decide within the 30-day statutory period, from 1 January 2025</span></div>
+  </section>
+
+  <div class="grid">
+    <form class="panel" id="f" aria-label="Deal inputs">
+      <h2>The deal</h2>
+      <div class="field"><label for="inv">Investor</label>
+        <select id="inv">
+          <option value="priv">Private foreign investor (non-FTA country)</option>
+          <option value="fta">Private foreign investor (FTA partner country)</option>
+          <option value="gov">Foreign government investor or state-linked fund</option>
+        </select></div>
+      <div class="field"><label for="sec">Target sector</label>
+        <select id="sec">
+          <option value="non">Non-sensitive (e.g. manufacturing, professional services)</option>
+          <option value="sens">Sensitive business (e.g. media, telecommunications, transport)</option>
+          <option value="min">Critical minerals project or processor</option>
+          <option value="inf">Critical infrastructure (e.g. energy network, port, water)</option>
+          <option value="tech">Critical technology or large sensitive data sets</option>
+          <option value="nsb">National security business (e.g. defence supplier)</option>
+        </select></div>
+      <div class="field"><label for="val">Deal value (A$ million)</label>
+        <input type="number" id="val" min="0" step="10" value="420"></div>
+      <div class="field"><label for="ctl">Influence gained</label>
+        <select id="ctl">
+          <option value="0">Passive stake, no board seat</option>
+          <option value="1">Board seat or veto rights</option>
+          <option value="2">Operational control</option>
+        </select></div>
+      <div class="legend" style="margin-top:4px">Risk flags</div>
+      <div class="checks" id="flags">
+        <label><input type="checkbox" id="near">Assets near defence or government facilities<small>Proximity is one of the five scrutiny areas</small></label>
+        <label><input type="checkbox" id="tax">Aggressive tax structuring<small>Related-party debt, pre-sale restructuring or offshoring IP</small></label>
+        <label><input type="checkbox" id="comp">Buyer already a major competitor or customer<small>Market concentration or supply-chain leverage</small></label>
+        <label><input type="checkbox" id="opaque">Unclear ownership chain<small>Complex structures slow assessment and raise character concerns</small></label>
+        <label><input type="checkbox" id="repeat">Repeat investor with clean compliance record<small>Supports the streamlined track</small></label>
+      </div>
+      <div class="btns">
+        <button type="button" class="primary" data-case="minerals">Example: critical minerals stake</button>
+        <button type="button" data-case="factory">Example: low-risk factory</button>
+      </div>
+    </form>
+
+    <aside class="out" aria-live="polite">
+      <div class="panel step">
+        <span class="k">1 · Must it be notified?</span>
+        <span class="verdict" id="trig">Yes</span>
+        <span class="note" id="trigWhy"></span>
+      </div>
+      <div class="panel step">
+        <span class="k">2 · Likely screening track</span>
+        <span><span class="pill" id="track">Intensive scrutiny</span></span>
+        <span class="note" id="trackWhy"></span>
+      </div>
+      <div class="panel step">
+        <span class="k">3 · National interest factor profile</span>
+        <div class="factors" id="factors"></div>
+      </div>
+      <div class="panel step">
+        <span class="k">4 · Plausible outcome range</span>
+        <div class="outcomes" id="outs"><div data-o="0">No objection</div><div data-o="1">Approve with conditions</div><div data-o="2">Prohibit</div></div>
+        <ul class="reasons" id="reasons"></ul>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p class="note"><b>Method.</b> The structure (notification, two tracks, five national interest factors, four possible decisions) follows Treasury's published framework. The scores, weights and outcome bands are my own illustrative model for teaching purposes. They are not Treasury or FIRB methodology, and real decisions are made case by case by the Treasurer. Dollar thresholds are indexed every 1 January; the figures used here are 2026 values as reported by a secondary summary and should be checked against Treasury's official schedule.</p>
+    <p class="note"><b>Sources.</b> <a href="https://foreigninvestment.gov.au/investing-in-australia/how-regulation-works">Treasury: How regulation works (national interest factors and decisions)</a> · <a href="https://foreigninvestment.gov.au/guidance/types-investments/national-security">Treasury: National security guidance</a> · <a href="https://foreigninvestment.gov.au/guidance/general/monetary-thresholds">Treasury: Monetary thresholds</a> · <a href="https://www.hsfkramer.com/insights/2024-05/two-track-approach-changes-to-australias-foreign-investment-framework">HSF Kramer: 2024 two-track reforms</a> · <a href="https://ausbusinessregister.com.au/firb-notification-thresholds-2026/">AusBusinessRegister: 2026 threshold summary</a></p>
+  </footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const TH={non:{priv:347,fta:1498},sens:{priv:347,fta:347}}; // A$m, 2026, secondary source
+const SECNAME={non:"non-sensitive business",sens:"sensitive business",min:"critical minerals",inf:"critical infrastructure",tech:"critical technology or sensitive data",nsb:"national security business"};
+function lvl(v){return v>=3?["High","var(--high)"]:v>=2?["Elevated","var(--mid)"]:v>=1?["Moderate","var(--gold)"]:["Low","var(--low)"]}
+function calc(){
+  const inv=$('inv').value,sec=$('sec').value,val=+$('val').value||0,ctl=+$('ctl').value;
+  const fl=id=>$(id).checked;
+  const scrutiny=["min","inf","tech","nsb"].includes(sec)||fl('near');
+  // 1. trigger
+  let trig,why;
+  if(inv==="gov"){trig=true;why="Foreign government investors face a $0 threshold, so notification is required regardless of value."}
+  else if(sec==="nsb"){trig=true;why="Acquiring a direct interest in a national security business is a notifiable national security action at $0."}
+  else{
+    const key=(sec==="non")?"non":"sens";
+    const t=TH[key][inv];
+    trig=val>t;
+    why=trig?`A$${val}m exceeds the indicative 2026 threshold of about A$${t.toLocaleString()}m for this investor and a ${key==="non"?"non-sensitive":"sensitive"} business.`
+             :`A$${val}m sits below the indicative A$${t.toLocaleString()}m threshold, so mandatory notification is unlikely${scrutiny?". The call-in power still applies on national security grounds, so voluntary notification would give certainty.":"."}`;
+  }
+  $('trig').textContent=trig?"Yes, notify Treasury":"Probably not mandatory";
+  $('trig').style.color=trig?"var(--navy)":"var(--low)";
+  $('trigWhy').textContent=why;
+  // 2. track
+  const streamlined=!scrutiny&&!fl('tax')&&!fl('opaque')&&inv!=="gov"&&(fl('repeat')||ctl===0);
+  $('track').textContent=streamlined?"Streamlined":"Intensive scrutiny";
+  $('track').style.color=streamlined?"var(--low)":"var(--high)";
+  $('trackWhy').textContent=streamlined?"Low-risk sector, simple structure and a known or passive investor fit the faster track for lower-risk proposals."
+    :`Flagged by: ${[scrutiny&&("a scrutiny area ("+(fl('near')&&!["min","inf","tech","nsb"].includes(sec)?"proximity to government facilities":SECNAME[sec])+")"),inv==="gov"&&"state links",fl('tax')&&"tax structuring",fl('opaque')&&"opaque ownership",(!fl('repeat')&&ctl>0)&&"control sought by a new investor"].filter(Boolean).join(", ")}.`;
+  // 3. factors 0-3
+  const base={min:2,inf:2,tech:2,nsb:3,sens:1,non:0}[sec];
+  const F=[
+    ["National security",Math.min(3,base+(fl('near')?1:0)+(inv==="gov"?1:0)+(ctl===2&&base>0?1:0))],
+    ["Competition",Math.min(3,(fl('comp')?2:0)+(ctl===2?1:0))],
+    ["Other government policies (incl. tax)",Math.min(3,(fl('tax')?2:0)+(sec==="min"?1:0))],
+    ["Economy and community",Math.min(3,(sec==="inf"||sec==="min"?1:0)+(ctl===2?1:0)+(val>1000?1:0))],
+    ["Character of the investor",Math.min(3,(fl('opaque')?2:0)+(inv==="gov"?1:0)-(fl('repeat')?1:0))]
+  ].map(([n,v])=>[n,Math.max(0,v)]);
+  $('factors').innerHTML=F.map(([n,v])=>{const [l,c]=lvl(v);return `<div class="f"><span>${n}</span><div class="bar"><i style="width:${(v/3)*100}%;background:${c}"></i></div><span class="lvl" style="color:${c}">${l}</span></div>`}).join("");
+  // 4. outcomes
+  const total=F.reduce((a,[,v])=>a+v,0),max=Math.max(...F.map(([,v])=>v));
+  const band=max>=3&&total>=9?[1,2]:max>=2||total>=4?[1]:[0,1];
+  if(!trig&&!scrutiny)band.splice(0,band.length,0);
+  document.querySelectorAll('#outs div').forEach(d=>d.classList.toggle('on',band.includes(+d.dataset.o)));
+  const r=[];
+  if(band.includes(1))r.push("Typical conditions: data stays onshore, board or access limits, offtake or supply commitments, and tax undertakings.");
+  if(band.includes(2))r.push("Prohibition becomes plausible where several high factors combine and conditions cannot contain the risk.");
+  if(band.length===1&&band[0]===0)r.push("Low factor scores and no mandatory trigger: the likely outcome is no objection, or no application at all.");
+  $('reasons').innerHTML=r.map(x=>`<li>${x}</li>`).join("");
+}
+const CASES={
+  minerals:{inv:"priv",sec:"min",val:420,ctl:"1",flags:["tax","opaque"]},
+  factory:{inv:"fta",sec:"non",val:600,ctl:"0",flags:["repeat"]}
+};
+document.querySelectorAll('[data-case]').forEach(b=>b.onclick=()=>{const c=CASES[b.dataset.case];$('inv').value=c.inv;$('sec').value=c.sec;$('val').value=c.val;$('ctl').value=c.ctl;document.querySelectorAll('#flags input').forEach(i=>i.checked=c.flags.includes(i.id));calc()});
+$('f').addEventListener('input',calc);$('f').addEventListener('change',calc);
+$('f').addEventListener('submit',e=>e.preventDefault());
+document.querySelector('[data-case="minerals"]').click();
+</script>
+
+<script src="../assets/portfolio.js"></script>
+</body></html>
