@@ -16,7 +16,6 @@ Live site: **https://ari-ummanath.github.io/portfolios/**
 | `companion-briefs/` | Companion Briefs |
 | `grand-prix/` | Is the Grand Prix Worth It? |
 | `real-selectors/` | The Real Selectors |
-| `cricket-canada/` | Cricket Canada |
 
 ## How to update anything (no software needed)
 
@@ -30,8 +29,9 @@ Works on a phone browser too.
 
 ### Where things live
 
-- **Your About text, LinkedIn, published work, and the Case studies list on every project:** `assets/portfolio.js`. Edit it once and every project updates. The editable parts are marked `EDIT`.
-- **The portfolio home page (cards, intro, About):** `index.html` in the top folder. Each project card is one `<a class="card">…</a>` block, and editable spots are marked `<!-- EDIT -->`.
+- **Your About text, LinkedIn, published work, and the menu on every project (the round ☰ button, top right):** `assets/portfolio.js`. Edit it once and every project updates. The editable parts are marked `EDIT`. The menu picks up each project's own tabs automatically.
+- **The portfolio home page (your name, the Policy projects circle, project cards, About):** `index.html` in the top folder. Each project is one `<li>…</li>` block; the numbers and the dots around the circle update themselves. Editable spots are marked `<!-- EDIT -->`.
+- **Adding a new project:** put its folder in the repo, add a `<li>` card in `index.html`, add a line to `PROJECTS` in `assets/portfolio.js`, and add `<script src="../assets/portfolio.js"></script>` just before `</body>` in the project page.
 - **"Last updated / Last reviewed" dates:** search the project page for `Last updated`, `Last reviewed`, `LAST REVIEWED` or `Updated`.
 - **AUKUS source checks:** `aukus/source-watch.json` holds each source's status and last-checked date.
 
