@@ -133,14 +133,14 @@ footer{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:8px}
   </div>
 
   <footer>
-    <p class="note"><b>Method.</b> The structure (notification, two tracks, five national interest factors, four possible decisions) follows Treasury's published framework. The scores, weights and outcome bands are my own illustrative model for teaching purposes. They are not Treasury or FIRB methodology, and real decisions are made case by case by the Treasurer. Dollar thresholds are indexed every 1 January; the figures used here are 2026 values as reported by a secondary summary and should be checked against Treasury's official schedule.</p>
-    <p class="note"><b>Sources.</b> <a href="https://foreigninvestment.gov.au/investing-in-australia/how-regulation-works">Treasury: How regulation works (national interest factors and decisions)</a> · <a href="https://foreigninvestment.gov.au/guidance/types-investments/national-security">Treasury: National security guidance</a> · <a href="https://foreigninvestment.gov.au/guidance/general/monetary-thresholds">Treasury: Monetary thresholds</a> · <a href="https://www.hsfkramer.com/insights/2024-05/two-track-approach-changes-to-australias-foreign-investment-framework">HSF Kramer: 2024 two-track reforms</a> · <a href="https://ausbusinessregister.com.au/firb-notification-thresholds-2026/">AusBusinessRegister: 2026 threshold summary</a></p>
+    <p class="note"><b>Method.</b> The structure (notification, two tracks, five national interest factors, four possible decisions) follows Treasury's published framework. The scores, weights and outcome bands are my own illustrative model for teaching purposes. They are not Treasury or FIRB methodology, and real decisions are made case by case by the Treasurer. Dollar thresholds are indexed every 1 January; the figures used here are 2026 values, checked against Treasury's official 2026 schedule (1 November 2026).</p>
+    <p class="note"><b>Sources.</b> <a href="https://foreigninvestment.gov.au/investing-in-australia/how-regulation-works">Treasury: How regulation works (national interest factors and decisions)</a> · <a href="https://foreigninvestment.gov.au/guidance/types-investments/national-security">Treasury: National security guidance</a> · <a href="https://foreigninvestment.gov.au/guidance/general/monetary-thresholds">Treasury: Monetary thresholds</a> · <a href="https://www.hsfkramer.com/insights/2024-05/two-track-approach-changes-to-australias-foreign-investment-framework">HSF Kramer: 2024 two-track reforms</a> · <a href="https://foreigninvestment.gov.au/sites/foreigninvestment.gov.au/files/2025-12/monetary-threshold-2026.pdf">Treasury: 2026 monetary thresholds schedule</a> · <a href="https://ausbusinessregister.com.au/firb-notification-thresholds-2026/">AusBusinessRegister: 2026 threshold summary</a></p>
   </footer>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
-const TH={non:{priv:347,fta:1498},sens:{priv:347,fta:347}}; // A$m, 2026, secondary source
+const TH={non:{priv:347,fta:1498},sens:{priv:347,fta:347}}; // A$m, 2026, Treasury official schedule
 const SECNAME={non:"non-sensitive business",sens:"sensitive business",min:"critical minerals",inf:"critical infrastructure",tech:"critical technology or sensitive data",nsb:"national security business"};
 function lvl(v){return v>=3?["High","var(--high)"]:v>=2?["Elevated","var(--mid)"]:v>=1?["Moderate","var(--gold)"]:["Low","var(--low)"]}
 function calc(){
