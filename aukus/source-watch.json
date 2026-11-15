@@ -1,5 +1,5 @@
 {
-  "last_checked": "2026-11-01T09:00:00+11:00",
+  "last_checked": "2026-11-15T09:00:00+11:00",
   "regulatory_currency": "ITAR §126.7 final rule — 30 Dec 2025",
   "method": "Content spot-check via Claude (Cowork): the six pages, plus eCFR, were re-checked by a scheduled weekly review and their key facts compared against the cited claims on this site. This cloud environment cannot make raw outbound requests for a byte-level hash; see monitor.py for a portable script that does a true SHA-256 check when run somewhere with normal internet access (e.g. your own machine).",
   "sources": [
@@ -8,16 +8,16 @@
       "label": "Excluded Technology List (22 CFR Pt 126, Supp. 2)",
       "url": "https://www.law.cornell.edu/cfr/text/22/appendix-Supplement_No_2_to_part_126",
       "status": "current",
-      "note": "Reachable; eCFR shows Supplement No. 2 last amended 20 Aug 2024 (89 FR 67291), with no 2026 changes. Exclusion categories consistent with the site's ETL patterns.",
-      "last_checked": "2026-11-01T09:00:00+11:00"
+      "note": "Reachable; Cornell still lists only 89 FR 67291 (20 Aug 2024) for Supplement No. 2. The 2026 ITAR rules touching Part 126 (FR Docs 2026-19404 and 2026-20082) amend §§ 125.4 and 126.1 only, not the ETL.",
+      "last_checked": "2026-11-15T09:00:00+11:00"
     },
     {
       "id": "fr_final",
       "label": "ITAR §126.7 final rule (90 FR 61053)",
       "url": "https://www.federalregister.gov/documents/2025/12/30/2025-23998/international-traffic-in-arms-regulations-exemption-for-defense-trade-and-cooperation-among",
       "status": "current",
-      "note": "Final rule effective on publication, 30 Dec 2025. eCFR (current to Oct 2026) shows no later amendment to §126.7, and the final rule did not change the ETL, so the earlier review flag is cleared.",
-      "last_checked": "2026-11-01T09:00:00+11:00"
+      "note": "Final rule effective on publication, 30 Dec 2025, confirmed via the govinfo PDF. No 2026 Federal Register rule found amending §126.7.",
+      "last_checked": "2026-11-15T09:00:00+11:00"
     },
     {
       "id": "fr_interim",
@@ -25,14 +25,14 @@
       "url": "https://www.federalregister.gov/documents/2024/08/20/2024-18043/international-traffic-in-arms-regulations-exemption-for-defense-trade-and-cooperation-among",
       "status": "current",
       "note": "Effective 1 Sep 2024, interim final rule status confirmed.",
-      "last_checked": "2026-11-01T09:00:00+11:00"
+      "last_checked": "2026-11-15T09:00:00+11:00"
     },
     {
       "id": "dec_lfe",
       "label": "Australia — licence-free environment (5 criteria)",
       "url": "https://www.defence.gov.au/business-industry/exporting/applications-pre-notifications/licence-free-environment",
       "status": "current",
-      "note": "Five access criteria (end-user, location, not-excluded, registration, pre-notification) confirmed unchanged.",
+      "note": "Five access criteria (end-user, location, not-excluded, registration, pre-notification) confirmed unchanged. Page could not be fetched on 15 Nov 2026, so this reflects the 1 Nov 2026 check.",
       "last_checked": "2026-11-01T09:00:00+11:00"
     },
     {
@@ -40,7 +40,7 @@
       "label": "Australia — changes to export controls",
       "url": "https://www.defence.gov.au/business-industry/exporting/export-controls-framework/changes-export-controls",
       "status": "current",
-      "note": "Commencement (1 Sep 2024) and offences ss. 10A to 10C confirmed unchanged.",
+      "note": "Commencement (1 Sep 2024) and offences ss. 10A to 10C confirmed unchanged. Page could not be fetched on 15 Nov 2026, so this reflects the 1 Nov 2026 check.",
       "last_checked": "2026-11-01T09:00:00+11:00"
     },
     {
@@ -48,8 +48,8 @@
       "label": "BIS — AUKUS export control changes",
       "url": "https://www.bis.gov/media/documents/aukus.pdf",
       "status": "review",
-      "note": "Reachable; ~80% figure unchanged. Wording check: the BIS figure covers existing commercial defence trade with both the UK and Australia, not US to Australia alone, and the PDF does not contain the ~30% ETL figure.",
-      "last_checked": "2026-11-01T09:00:00+11:00"
+      "note": "Reachable; ~80% figure unchanged. It covers existing commercial defence trade with both the UK and Australia; the site's wording on the AUKUS home page was corrected to match on 15 Nov 2026.",
+      "last_checked": "2026-11-15T09:00:00+11:00"
     }
   ],
   "changes_detected": []
