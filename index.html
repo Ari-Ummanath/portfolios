@@ -143,7 +143,17 @@ a{color:inherit}
 /* ======================================================================
    2b. Feature: How I build a case file
    ====================================================================== */
-.feature{border-top:3px double var(--ink);padding:56px 0 64px}
+.feature{padding-block:44px 80px}
+.teaser{padding-block:8px 64px}
+.m-end{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:44px;padding-top:30px;border-top:3px double var(--ink)}
+.m-end .btn{background:none;cursor:pointer;color:var(--ink)}
+.teaser-link{display:grid;justify-items:center;gap:10px;text-align:center;text-decoration:none;border-top:3px double var(--ink);border-bottom:1px solid var(--ink);padding:38px 16px 34px;transition:background .25s}
+.teaser-link:hover{background:rgba(34,29,25,.035)}
+.teaser .label{color:var(--ink-2)}
+.t-head{font:500 clamp(36px,6vw,72px)/1 var(--display);letter-spacing:-.02em;text-wrap:balance}
+.t-dek{font:italic 400 19px/1.45 var(--serif);color:var(--ink-2);max-width:48ch}
+.t-go{margin-top:6px;font:500 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:4px}
+.t-go::after{content:"  \2192"}
 .feature .kick{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--ink);padding-bottom:10px;color:var(--ink-2)}
 .feature h2{margin:26px 0 8px;text-align:center;font:500 clamp(42px,7vw,92px)/.95 var(--display);letter-spacing:-.02em;text-wrap:balance}
 .feature .by{text-align:center;font:italic 400 18px var(--serif);color:var(--ink-2);margin:0 0 34px}
@@ -222,6 +232,7 @@ body.lock{overflow:hidden}
 <header class="cover" id="home">
   <div class="corners label">
     <a href="#about">About</a>
+    <a href="#method" data-sheet="method">The method</a>
     <a href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener">Contact</a>
   </div>
 
@@ -390,8 +401,13 @@ body.lock{overflow:hidden}
   </div>
 </div>
 
-<!-- ============================ FEATURE ============================ -->
-<section class="feature wrap" aria-labelledby="howh">
+<!-- ============ PAGE 2: THE METHOD (opens on click) ============ -->
+<div class="projects" id="method" role="dialog" aria-modal="true" aria-labelledby="howh" aria-hidden="true">
+  <div class="p-head"><div class="wrap">
+    <span class="who">Arpitha Ummanath</span>
+    <button class="close" type="button" data-close>Close &nbsp;&#10005;</button>
+  </div></div>
+  <div class="feature wrap">
   <div class="kick label"><span>The method</span><span>Page 2</span></div>
   <h2 id="howh">How I build a case file</h2>
   <p class="by">By Arpitha Ummanath</p>
@@ -406,6 +422,19 @@ body.lock{overflow:hidden}
     <h3>Keep it current</h3>
     <p>Policy moves. Figures are revised, rules are finalised and cases develop. These files are checked against their sources and dated, so a reader always knows how recent the evidence is.</p>
   </div>
+    <div class="m-end"><button type="button" class="btn" data-close-go="projects">Open the projects</button><button type="button" class="btn" data-close-only>Back to the portfolio</button></div>
+</div>
+</div>
+
+
+<!-- ============ TEASER for page 2 ============ -->
+<section class="teaser wrap">
+  <a href="#method" class="teaser-link" data-sheet="method">
+    <span class="label">Continued on page 2</span>
+    <span class="t-head">How I build a case file</span>
+    <span class="t-dek">The method behind every project: a documented gap, the primary sources, and something people can use.</span>
+    <span class="t-go">Turn to page 2</span>
+  </a>
 </section>
 
 <!-- ============================ ABOUT ============================ -->
@@ -482,6 +511,22 @@ body.lock{overflow:hidden}
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&ov.classList.contains('open')) close(); });
   window.addEventListener('popstate',function(){ if(location.hash==='#projects') open(null,false); else if(ov.classList.contains('open')) close(true); });
   if(location.hash==='#projects') open(null,false);
+
+  /* page 2: the method */
+  var m=document.getElementById('method'), mLast=null;
+  function openM(from,push){ mLast=from||null; m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.classList.add('lock'); m.scrollTop=0;
+    if(push!==false && location.hash!=='#method') history.pushState(null,'','#method');
+    setTimeout(function(){ m.querySelector('[data-close]').focus({preventScroll:true}); },300); }
+  function closeM(pop){ m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.classList.remove('lock');
+    if(mLast&&mLast.focus) mLast.focus({preventScroll:true});
+    if(pop!==true && location.hash==='#method') history.back(); }
+  document.querySelectorAll('[data-sheet="method"]').forEach(function(b){ b.addEventListener('click',function(e){ e.preventDefault(); openM(b); }); });
+  m.querySelector('[data-close]').addEventListener('click',function(){ closeM(); });
+  m.querySelector('[data-close-only]').addEventListener('click',function(){ closeM(); });
+  m.querySelector('[data-close-go]').addEventListener('click',function(){ closeM(true); history.replaceState(null,'',location.pathname); open(null); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&m.classList.contains('open')) closeM(); });
+  window.addEventListener('popstate',function(){ if(location.hash==='#method') openM(null,false); else if(m.classList.contains('open')) closeM(true); });
+  if(location.hash==='#method') openM(null,false);
 
   var btns=[].slice.call(document.querySelectorAll('.filters button'));
   btns.forEach(function(b){ b.addEventListener('click',function(){ var f=b.getAttribute('data-f');
