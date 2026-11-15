@@ -223,7 +223,7 @@ body.lock{overflow:hidden}
 <!-- ============================ COVER ============================ -->
 <header class="cover" id="home">
   <div class="corners label">
-    <a href="#about">About</a>
+    <a href="#about" data-sheet="about">About</a>
     <a href="#method" data-sheet="method">The method</a>
     <a href="https://www.linkedin.com/in/arpitha-u-62549a2ba/" target="_blank" rel="noopener">Contact</a>
   </div>
@@ -296,7 +296,7 @@ body.lock{overflow:hidden}
 
   <div class="corners label">
     <span>Canberra · Australia</span>
-    <a href="#about" class="down-l">About me</a>
+    <a href="#about" class="down-l" data-sheet="about">About me</a>
     <span>MMXXVI</span>
   </div>
 </header>
@@ -422,7 +422,12 @@ body.lock{overflow:hidden}
 
 
 <!-- ============================ ABOUT ============================ -->
-<main class="about" id="about">
+<div class="projects" id="about" role="dialog" aria-modal="true" aria-label="About" aria-hidden="true">
+  <div class="p-head"><div class="wrap">
+    <span class="who">Arpitha Ummanath</span>
+    <button class="close" type="button" data-close>Close &nbsp;&#10005;</button>
+  </div></div>
+<div class="about">
   <p class="quote">&lsquo;Every claim, <em>traced to its source.</em>&rsquo;</p>
   <div class="ab">
     <div>
@@ -450,7 +455,8 @@ body.lock{overflow:hidden}
       </div>
     </div>
   </div>
-</main>
+</div>
+</div>
 
 <footer><div class="wrap">
   <span>&copy; 2026 Arpitha Ummanath · Canberra, Australia</span>
@@ -496,21 +502,30 @@ body.lock{overflow:hidden}
   window.addEventListener('popstate',function(){ if(location.hash==='#projects') open(null,false); else if(ov.classList.contains('open')) close(true); });
   if(location.hash==='#projects') open(null,false);
 
-  /* page 2: the method */
-  var m=document.getElementById('method'), mLast=null;
-  function openM(from,push){ mLast=from||null; m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.classList.add('lock'); m.scrollTop=0;
-    if(push!==false && location.hash!=='#method') history.pushState(null,'','#method');
-    setTimeout(function(){ m.querySelector('[data-close]').focus({preventScroll:true}); },300); }
-  function closeM(pop){ m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.classList.remove('lock');
-    if(mLast&&mLast.focus) mLast.focus({preventScroll:true});
-    if(pop!==true && location.hash==='#method') history.back(); }
-  document.querySelectorAll('[data-sheet="method"]').forEach(function(b){ b.addEventListener('click',function(e){ e.preventDefault(); openM(b); }); });
-  m.querySelector('[data-close]').addEventListener('click',function(){ closeM(); });
-  m.querySelector('[data-close-only]').addEventListener('click',function(){ closeM(); });
-  m.querySelector('[data-close-go]').addEventListener('click',function(){ closeM(true); history.replaceState(null,'',location.pathname); open(null); });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&m.classList.contains('open')) closeM(); });
-  window.addEventListener('popstate',function(){ if(location.hash==='#method') openM(null,false); else if(m.classList.contains('open')) closeM(true); });
-  if(location.hash==='#method') openM(null,false);
+  /* sections that open on click: page 2 (#method) and About (#about) */
+  var SHEETS=['method','about'], cur=null, sLast=null;
+  function openS(id,from,push){
+    var el=document.getElementById(id); if(!el) return;
+    if(cur&&cur!==id) closeS(cur,true);
+    sLast=from||null; cur=id; el.classList.add('open'); el.setAttribute('aria-hidden','false'); document.body.classList.add('lock'); el.scrollTop=0;
+    if(push!==false && location.hash!=='#'+id) history.pushState(null,'','#'+id);
+    setTimeout(function(){ el.querySelector('[data-close]').focus({preventScroll:true}); },300);
+  }
+  function closeS(id,pop){
+    var el=document.getElementById(id); if(!el) return;
+    el.classList.remove('open'); el.setAttribute('aria-hidden','true'); if(cur===id) cur=null;
+    if(!ov.classList.contains('open')) document.body.classList.remove('lock');
+    if(pop!==true){ if(sLast&&sLast.focus) sLast.focus({preventScroll:true}); if(location.hash==='#'+id) history.back(); }
+  }
+  SHEETS.forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    document.querySelectorAll('[data-sheet="'+id+'"]').forEach(function(b){ b.addEventListener('click',function(e){ e.preventDefault(); openS(id,b); }); });
+    el.querySelectorAll('[data-close],[data-close-only]').forEach(function(b){ b.addEventListener('click',function(){ closeS(id); }); });
+    el.querySelectorAll('[data-close-go],[data-open]').forEach(function(b){ b.addEventListener('click',function(e){ e.stopImmediatePropagation(); closeS(id,true); history.replaceState(null,'',location.pathname); open(null); },true); });
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&cur) closeS(cur); });
+  window.addEventListener('popstate',function(){ var h=location.hash.slice(1); if(SHEETS.indexOf(h)>-1) openS(h,null,false); else if(cur) closeS(cur,true); });
+  if(SHEETS.indexOf(location.hash.slice(1))>-1) openS(location.hash.slice(1),null,false);
 
   var btns=[].slice.call(document.querySelectorAll('.filters button'));
   btns.forEach(function(b){ b.addEventListener('click',function(){ var f=b.getAttribute('data-f');
