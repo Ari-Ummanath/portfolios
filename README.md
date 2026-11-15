@@ -28,9 +28,12 @@ Works on a phone browser too.
 
 ### Where things live
 
-- **Your About text, LinkedIn, published work, and the menu on every project (the round ☰ button, top right):** `assets/portfolio.js`. Edit it once and every project updates. The editable parts are marked `EDIT`. The menu picks up each project's own tabs automatically.
-- **The portfolio home page (your name, the Policy projects circle, project cards, About):** `index.html` in the top folder. Each project is one `<li>…</li>` block; the numbers and the dots around the circle update themselves. Editable spots are marked `<!-- EDIT -->`.
-- **Adding a new project:** put its folder in the repo, add a `<li>` card in `index.html`, add a line to `PROJECTS` in `assets/portfolio.js`, and add `<script src="../assets/portfolio.js"></script>` just before `</body>` in the project page.
+- **Your About text, LinkedIn, published work, and the menu on every project (the red "Index" seal, top right):** `assets/portfolio.js`. Edit it once and every project updates. The editable parts are marked `EDIT`. The menu picks up each project's own tabs automatically.
+- **The portfolio home page:** `index.html` in the top folder. Editable spots are marked `<!-- EDIT -->`.
+  - **Colours and fonts:** the `:root` block at the top of `index.html` (paper, ink, wax red, and one folder colour per theme).
+  - **Project folders:** each project is one `<li>…</li>` block in the list of case files. `data-t` picks the folder colour (`defence`, `aviation`, `economic` or `sport`). The Nº numbers and the "eleven case files" wording on the envelope update themselves.
+  - **Creative work:** the blue "Creative work · Opening soon" card under the envelope is a placeholder. When your creative pages are ready, add their folder and change that card into a link to it.
+- **Adding a new project:** put its folder in the repo, add an `<li>` folder in `index.html`, add a line to `PROJECTS` in `assets/portfolio.js`, and add `<script src="../assets/portfolio.js"></script>` just before `</body>` in the project page.
 - **"Last updated / Last reviewed" dates:** search the project page for `Last updated`, `Last reviewed`, `LAST REVIEWED` or `Updated`.
 - **AUKUS source checks:** `aukus/source-watch.json` holds each source's status and last-checked date.
 

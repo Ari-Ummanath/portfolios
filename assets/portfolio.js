@@ -88,39 +88,47 @@
 
   /* ---------- the menu ---------- */
   function build() {
+    if (!document.querySelector('link[data-pfm-fonts]')) {
+      var lf = document.createElement('link'); lf.rel = 'stylesheet'; lf.setAttribute('data-pfm-fonts', '1');
+      lf.href = 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500&display=swap';
+      document.head.appendChild(lf);
+    }
+    var PAPER = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
     var css = ''
-      + '.pfm-root{--m-bg:#ffffff;--m-ink:#14202E;--m-ink2:#4a5868;--m-line:#e2e6ea;--m-soft:#f2f4f6;--m-acc:#1B6F78;font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}'
-      + '@media (prefers-color-scheme:dark){.pfm-root{--m-bg:#16212D;--m-ink:#E6EDF4;--m-ink2:#B4C2D0;--m-line:#2E3F50;--m-soft:#1d2a38;--m-acc:#6CC3CB}}'
-      + '.pfm-btn{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:calc(env(safe-area-inset-right,0px) + 12px);z-index:9400;width:52px;height:52px;border-radius:50%;border:0;background:#14202E;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.28),0 0 0 2px rgba(255,255,255,.85);transition:transform .2s,opacity .25s}'
-      + '.pfm-btn:hover{transform:scale(1.06)}.pfm-btn:focus-visible{outline:3px solid #6CC3CB;outline-offset:3px}'
-      + '.pfm-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}'
+      + '.pfm-root{--m-paper:#F1EBE0;--m-ink:#221D19;--m-ink2:#5E5348;--m-line:rgba(34,29,25,.18);--m-red:#8C2B22;--m-serif:"EB Garamond",Garamond,Georgia,serif;--m-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;--m-sans:Jost,"Futura","Avenir Next",sans-serif;font-family:var(--m-serif)}'
+      + '.pfm-btn{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);right:calc(env(safe-area-inset-right,0px) + 14px);z-index:9400;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;color:#F3E6D8;'
+      + 'background:radial-gradient(circle at 34% 30%,#B0453A 0%,#8C2B22 46%,#5E1A14 100%);box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 -2px 4px rgba(0,0,0,.35) inset,0 6px 16px rgba(60,20,10,.35);display:grid;place-items:center;transition:transform .25s,opacity .3s}'
+      + '.pfm-btn::before{content:"";position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(243,230,216,.45)}'
+      + '.pfm-btn:hover{transform:rotate(-8deg) scale(1.05)}.pfm-btn:focus-visible{outline:2px solid #221D19;outline-offset:3px}'
+      + '.pfm-btn span{font:italic 400 13px/1 "Bodoni Moda",Didot,Georgia,serif;letter-spacing:.02em}'
       + '.pfm-btn.pfm-hide{opacity:0;pointer-events:none}'
-      + '.pfm-scrim{position:fixed;inset:0;z-index:9600;background:rgba(10,18,28,.5);opacity:0;transition:opacity .25s}'
-      + '.pfm-sheet{position:fixed;top:0;right:0;bottom:0;z-index:9700;width:min(440px,100vw);background:var(--m-bg);color:var(--m-ink);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.25);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}'
+      + '.pfm-scrim{position:fixed;inset:0;z-index:9600;background:rgba(34,29,25,.42);opacity:0;transition:opacity .3s}'
+      + '.pfm-sheet{position:fixed;top:0;right:0;bottom:0;z-index:9700;width:min(460px,100vw);background:' + PAPER + ',var(--m-paper);color:var(--m-ink);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.75,.15,1);box-shadow:-24px 0 60px rgba(34,29,25,.22);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}'
       + '.pfm-open .pfm-scrim{opacity:1}.pfm-open .pfm-sheet{transform:none}'
       + '.pfm-root[hidden]{display:none}'
-      + '.pfm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--m-line)}'
-      + '.pfm-home{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;background:#14202E;font-weight:600;font-size:15px;padding:11px 16px;border-radius:999px}'
-      + '@media (prefers-color-scheme:dark){.pfm-home{background:#E6EDF4;color:#14202E}}'
-      + '.pfm-home svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}'
-      + '.pfm-x{appearance:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--m-line);background:var(--m-bg);color:var(--m-ink);font-size:20px;line-height:1;cursor:pointer}'
-      + '.pfm-home:focus-visible,.pfm-x:focus-visible,.pfm-body a:focus-visible,.pfm-body button:focus-visible{outline:3px solid var(--m-acc);outline-offset:2px}'
-      + '.pfm-tabs{display:flex;gap:6px;padding:12px 16px 0;flex-wrap:wrap}'
-      + '.pfm-tabs button{appearance:none;border:1px solid var(--m-line);background:var(--m-bg);color:var(--m-ink2);font:600 14px/1 inherit;font-family:inherit;padding:10px 14px;border-radius:999px;cursor:pointer}'
-      + '.pfm-tabs button[aria-selected="true"]{background:var(--m-ink);color:var(--m-bg);border-color:var(--m-ink)}'
-      + '.pfm-body{flex:1;overflow:auto;padding:16px 16px 28px;-webkit-overflow-scrolling:touch}'
+      + '.pfm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 22px;border-bottom:1px solid var(--m-line)}'
+      + '.pfm-home{color:var(--m-ink);text-decoration:none;font:italic 400 19px/1.2 var(--m-serif);border-bottom:1px solid var(--m-ink);padding-bottom:2px}'
+      + '.pfm-x{appearance:none;width:44px;height:44px;border:0;background:none;color:var(--m-ink);font:400 22px/1 var(--m-serif);cursor:pointer}'
+      + '.pfm-home:focus-visible,.pfm-x:focus-visible,.pfm-body a:focus-visible,.pfm-body button:focus-visible,.pfm-tabs button:focus-visible{outline:2px solid var(--m-red);outline-offset:3px}'
+      + '.pfm-tabs{display:flex;gap:22px;padding:18px 22px 0;flex-wrap:wrap}'
+      + '.pfm-tabs button{appearance:none;border:0;border-bottom:1px solid transparent;background:none;color:var(--m-ink2);font:500 12px/1 var(--m-sans);letter-spacing:.16em;text-transform:uppercase;padding:8px 0;cursor:pointer}'
+      + '.pfm-tabs button[aria-selected="true"]{color:var(--m-ink);border-bottom-color:var(--m-ink)}'
+      + '.pfm-body{flex:1;overflow:auto;padding:22px 22px 36px;-webkit-overflow-scrolling:touch}'
       + '.pfm-panel[hidden]{display:none}'
-      + '.pfm-kicker{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--m-ink2);margin:4px 0 6px}'
-      + '.pfm-title{font:700 24px/1.2 Georgia,"Times New Roman",serif;margin:0 0 14px}'
-      + '.pfm-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}'
-      + '.pfm-list a,.pfm-list button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;appearance:none;border:1px solid var(--m-line);background:var(--m-soft);color:var(--m-ink);text-decoration:none;font:500 17px/1.3 inherit;font-family:inherit;padding:14px 16px;border-radius:12px;cursor:pointer;min-height:52px}'
-      + '.pfm-list a:hover,.pfm-list button:hover{border-color:var(--m-acc)}'
-      + '.pfm-list .on{border-color:var(--m-acc);box-shadow:inset 3px 0 0 var(--m-acc)}'
-      + '.pfm-list i{font-style:normal;color:var(--m-acc);font-size:18px}'
-      + '.pfm-proj a{display:grid;gap:3px}.pfm-proj b{font-weight:600;font-size:17px}.pfm-proj span{font-size:14px;color:var(--m-ink2)}'
-      + '.pfm-proj a[aria-current]{border-color:var(--m-acc)}.pfm-proj a[aria-current] b::after{content:" · you are here";font-weight:400;font-style:italic;font-size:13px;color:var(--m-acc)}'
-      + '.pfm-about p{font-size:16px;line-height:1.6;color:var(--m-ink2);margin:0 0 14px}.pfm-about ul{margin:0 0 16px;padding-left:18px;color:var(--m-ink2);font-size:15px;line-height:1.5}.pfm-about li{margin-bottom:8px}.pfm-about ul a{color:var(--m-acc)}'
-      + '.pfm-li{display:inline-flex;align-items:center;gap:10px;background:#0A66C2;color:#fff!important;text-decoration:none;font-weight:600;font-size:16px;padding:13px 18px;border-radius:10px}'
+      + '.pfm-kicker{font:500 11px/1.4 var(--m-sans);letter-spacing:.18em;text-transform:uppercase;color:var(--m-ink2);margin:6px 0 8px}'
+      + '.pfm-title{font:400 30px/1.12 var(--m-display);margin:0 0 22px;letter-spacing:-.01em}'
+      + '.pfm-list{list-style:none;margin:0 0 8px;padding:0;border-top:1px solid var(--m-line)}'
+      + '.pfm-list li{border-bottom:1px solid var(--m-line)}'
+      + '.pfm-list a,.pfm-list button{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;appearance:none;border:0;background:none;color:var(--m-ink);text-decoration:none;font:400 19px/1.3 var(--m-serif);padding:15px 2px;cursor:pointer;min-height:54px;transition:padding .2s}'
+      + '.pfm-list a:hover,.pfm-list button:hover{padding-left:10px}'
+      + '.pfm-list .on{font-style:italic}.pfm-list .on::before{content:"\\2014\\00a0";color:var(--m-red)}'
+      + '.pfm-list i{font-style:normal;color:var(--m-red);font-size:18px}'
+      + '.pfm-proj a{display:grid;gap:2px}.pfm-proj b{font:400 20px/1.25 var(--m-display)}.pfm-proj span{font:italic 400 16px/1.35 var(--m-serif);color:var(--m-ink2)}'
+      + '.pfm-proj a[aria-current] b::after{content:"  \\2014 you are here";font:italic 400 15px var(--m-serif);color:var(--m-red)}'
+      + '.pfm-about p{font-size:18px;line-height:1.6;color:var(--m-ink2);margin:0 0 16px}.pfm-about ul{margin:0 0 20px;padding-left:18px;color:var(--m-ink2);font-size:17px;line-height:1.5}.pfm-about li{margin-bottom:10px}.pfm-about ul a{color:var(--m-ink)}'
+      + '.pfm-li{display:inline-block;border:1px solid var(--m-ink);color:var(--m-ink)!important;text-decoration:none;font:500 12px/1 var(--m-sans);letter-spacing:.16em;text-transform:uppercase;padding:15px 20px}'
+      + '.pfm-li:hover{background:var(--m-ink);color:var(--m-paper)!important}'
+      + '@media (max-width:560px){.pfm-btn{width:48px;height:48px;top:calc(env(safe-area-inset-top,0px) + 10px);right:10px}.pfm-btn span{font-size:12px}}'
       + 'body.pfm-lock{overflow:hidden}'
       /* the older built-in buttons are replaced by this menu */
       + '[data-pf],.pf-bar,.pfs-tab{display:none!important}'
@@ -130,18 +138,18 @@
 
     var btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'pfm-btn pfm-root'; btn.setAttribute('aria-label', 'Open menu'); btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+    btn.innerHTML = '<span aria-hidden="true">Index</span>';
     document.body.appendChild(btn);
 
     var root = document.createElement('div'); root.className = 'pfm-root'; root.hidden = true;
     var pubs = ABOUT.pubs.map(function (p) { return '<li><a href="' + p[2] + '" target="_blank" rel="noopener">' + esc(p[0]) + '</a><br>' + esc(p[1]) + '</li>'; }).join('');
     root.innerHTML = '<div class="pfm-scrim" data-close></div>'
       + '<div class="pfm-sheet" role="dialog" aria-modal="true" aria-label="Menu">'
-      + '<div class="pfm-head"><a class="pfm-home" href="' + ROOT + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Portfolio home</a><button type="button" class="pfm-x" data-close aria-label="Close menu">✕</button></div>'
+      + '<div class="pfm-head"><a class="pfm-home" href="' + ROOT + '">&larr;&nbsp;Return to the portfolio</a><button type="button" class="pfm-x" data-close aria-label="Close menu">✕</button></div>'
       + '<div class="pfm-tabs" role="tablist"><button type="button" role="tab" data-v="here" aria-selected="true">This project</button><button type="button" role="tab" data-v="all" aria-selected="false">All projects</button><button type="button" role="tab" data-v="about" aria-selected="false">About</button></div>'
       + '<div class="pfm-body">'
       + '<div class="pfm-panel" data-p="here"><div class="pfm-kicker">You are viewing</div><h2 class="pfm-title">' + esc(THIS ? THIS[1] : document.title) + '</h2><div class="pfm-kicker">Sections</div><ul class="pfm-list" id="pfmSecs"></ul></div>'
-      + '<div class="pfm-panel" data-p="all" hidden><div class="pfm-kicker">Portfolio</div><h2 class="pfm-title">Projects</h2><ul class="pfm-list pfm-proj">' + projectListHTML() + '</ul></div>'
+      + '<div class="pfm-panel" data-p="all" hidden><div class="pfm-kicker">The portfolio</div><h2 class="pfm-title">Projects</h2><ul class="pfm-list pfm-proj">' + projectListHTML() + '</ul></div>'
       + '<div class="pfm-panel pfm-about" data-p="about" hidden><div class="pfm-kicker">About</div><h2 class="pfm-title">' + esc(ABOUT.name) + '</h2><p>' + esc(ABOUT.bio) + '</p><div class="pfm-kicker">Published work</div><ul>' + pubs + '</ul><div class="pfm-kicker">Contact</div><p>The best way to reach me is on LinkedIn.</p><a class="pfm-li" href="' + ABOUT.linkedin + '" target="_blank" rel="noopener">Connect on LinkedIn</a></div>'
       + '</div></div>';
     document.body.appendChild(root);
@@ -150,8 +158,8 @@
     function renderSections() {
       secs = findSections();
       var ul = root.querySelector('#pfmSecs');
-      ul.innerHTML = secs.length ? secs.map(function (s, i) { return '<li><button type="button" data-sec="' + i + '"' + (s.active ? ' class="on"' : '') + '><span>' + esc(s.label) + '</span><i aria-hidden="true">→</i></button></li>'; }).join('')
-        : '<li><button type="button" data-sec="top"><span>Back to the top of this page</span><i aria-hidden="true">↑</i></button></li>';
+      ul.innerHTML = secs.length ? secs.map(function (s, i) { return '<li><button type="button" data-sec="' + i + '"' + (s.active ? ' class="on"' : '') + '><span>' + esc(s.label) + '</span><i aria-hidden="true">&rarr;</i></button></li>'; }).join('')
+        : '<li><button type="button" data-sec="top"><span>Back to the top of this page</span><i aria-hidden="true">&uarr;</i></button></li>';
     }
     function view(v) {
       root.querySelectorAll('[data-v]').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-v') === v); });
