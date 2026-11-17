@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata · Modern era</title>
+<meta name="description" content="Water insecurity from 1960 to 2026: the Sahel drought, the Aral Sea, Australia's Millennium Drought, Syria, Cape Town's Day Zero, the Kakhovka dam and the Gulf.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap page-head">
+    <div class="eyebrow">Modern era · 1960 to 2026</div>
+    <h1>When people became the driver</h1>
+    <p class="dek">In the instrumental era we can measure drought directly, and human choices move to the centre: rivers diverted for irrigation, reservoirs managed for some users and not others, and water infrastructure destroyed in war.</p>
+    <nav class="jumps" aria-label="Cases" id="caseNav"></nav>
+  </div>
+
+  <section class="block" aria-labelledby="h-conflict" style="padding-top:32px">
+    <div class="wrap two">
+      <figure class="chart">
+        <svg id="conflictChart" viewBox="0 0 520 250" role="img" aria-labelledby="ct cd"><title id="ct">Reported water-conflict events per year</title><desc id="cd">2000: 24. 2022: about 236. 2023: about 350. 2024: 420.</desc></svg>
+        <figcaption>Violent events involving water, Pacific Institute Water Conflict Chronology. 2022 and 2023 (hatched) are derived from the stated increases of 78% and nearly 20% to 2024, so they are approximate.<sup class="fn" data-s="pirelease"></sup><sup class="fn" data-s="pifact"></sup></figcaption>
+      </figure>
+      <div class="stack measure">
+        <div class="eyebrow">The modern signal</div>
+        <h2 id="h-conflict">Violence over water is at a record</h2>
+        <p>The Pacific Institute's database tracks cases where water is a trigger, a weapon or a casualty of violence. It records 420 events in 2024, against 24 in 2000, and now holds more than 2,750 incidents.<sup class="fn" data-s="pirelease"></sup></p>
+        <p class="assess">Part of the rise may reflect better reporting, since the database is built from news and open sources. Even so, the direction matches the cases below: water is increasingly a target, not only scarce.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" id="cases"></div>
+
+  <section class="block notes" aria-labelledby="h-notes">
+    <div class="wrap"><h2 id="h-notes" style="font-size:1.5rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div>
+  </section>
+</main>
+<footer id="site-footer"></footer>
+
+<script src="data.js"></script>
+<script>
+renderHeader("modern.html"); renderFooter();
+const IDS=["sahel","aral","millennium","syria","capetown","kakhovka","gulf"];
+const AX=[1950,2030,[1960,1980,2000,2020]];
+const tiles=a=>`<div class="tiles">${a.map(([b,s,k])=>`<div><b class="num">${b}</b><span>${s}${sup(k)}</span></div>`).join("")}</div>`;
+const EXTRA={
+  sahel:{html:`
+    <p>The Sahel, the semi-arid belt along the Sahara's southern edge, dried from the late 1960s into the 1990s, with rainfall reductions of 20–50% across the region.${sup(["lu"])}</p>
+    <p>An atmospheric model forced only by observed sea-surface temperatures from 1930 to 2000 reproduced the region's rainfall variability. The drying trend was tied to warmer-than-average waters around Africa, in the Indian as well as the Atlantic Ocean.${sup(["giannini"])}</p>
+    <p>The idea of “desertification” has its origin in this drought.${sup(["pern"])}</p>`},
+  aral:{html:`
+    <p>In 1960 the Aral Sea was the world's fourth-largest lake, covering 68,000 km² and holding 1,090 km³ of water. Irrigation withdrawals from its two rivers cut the inflow.${sup(["micklin1988"])}</p>
+    ${tiles([["−12.9 m","fall in sea level, 1960 to 1987",["micklin1988"]],["−66%","volume lost by 1987; area −40%",["micklin1988"]],["10 → 27 g/L","average salinity, 1960 to 1987",["micklin1988"]],["10%","of its original size by 2007",["micklinSA"]]])}
+    <p>Since a dam was completed in 2005, the northern Small Aral has partly recovered: salinity has dropped and fishers are again catching species such as pike perch.${sup(["micklinSA"])}</p>`, debateSrc:["micklinSA"]},
+  millennium:{html:`
+    <p>The Millennium Drought (2001–2009) was the worst on record for southeast Australia. Researchers from ANU, CSIRO and the Bureau of Meteorology's research centre traced its causes and impacts through climate, water, economic and satellite data.${sup(["vandijk"])}</p>
+    <p>Rainfall reductions were amplified 1.5–1.7 times in dryland wheat yields, though rising cropping area and water-use efficiency offset the impact. River management protected some categories of water users, but only by worsening impacts on annual irrigated farming and especially on river ecosystems.${sup(["vandijk"])}</p>`},
+  syria:{html:`
+    <p>Kelley and colleagues found a human climate-change signal in the severe drought that preceded Syria's civil war, and argued it was one of many contributing factors in the unrest.${sup(["kelley"])}</p>
+    <p>Selby, Dahi, Fröhlich and Hulme re-examined the evidence in 2017 and challenged the claimed links between drought, migration and conflict.${sup(["selby"])} In the same journal, Cullen Hendrix judged that Kelley et al. made a strong case for a climate signal in the drought, but did little to substantiate the claim that the drought caused the conflict.${sup(["hendrix"])}</p>
+    <p class="assess">This is the most cited and most contested climate-conflict case of the modern era. It shows why this project separates evidence of drought from claims about what drought caused.</p>`, debateSrc:["selby","hendrix"]},
+  capetown:{html:`
+    <p>In what local researchers called the worst drought in a century, the City of Cape Town set “Day Zero” as the day dam levels would reach 13.5%. At that point taps would be cut and residents would collect 25 litres a day each from 200 collection points.${sup(["uct"])}</p>
+    <figure class="chart"><svg id="ctChart" viewBox="0 0 520 150" role="img" aria-label="Cape Town daily water use fell from 1,200 million litres in February 2015 to 511 million litres in March 2018"></svg>
+      <figcaption>City water use, million litres per day.${sup(["groundup"])}</figcaption></figure>
+    <p>By February 2018 the daily ration was 50 litres per person.${sup(["uct"])} Day Zero never came.${sup(["bruhl"])}</p>`},
+  kakhovka:{html:`
+    <p>The Kakhovka dam on the Dnipro was destroyed on 6 June 2023. A joint Government of Ukraine–UN assessment counted:${sup(["kakhovka"])}</p>
+    ${tiles([["US$14 bn","damage and loss",["kakhovka"]],["620 km²","flooded across four oblasts",["kakhovka"]],["100,000","residents directly affected",["kakhovka"]]])}
+    <p>Upstream areas lost access to water supply, and the breach disrupted drinking water, irrigation, energy and river transport across southern Ukraine.${sup(["kakhovka"])}</p>`},
+  gulf:{html:`
+    <p>Desalination supplied 60% of the Gulf Cooperation Council's water consumption in 2023, and 90–99% of drinking water in Bahrain, Kuwait and Qatar.${sup(["shehabi"])}</p>
+    <p>After war began on 28 February 2026, a desalination plant on Iran's Qeshm Island was hit on 7 March, affecting about 30 villages; Bahrain reported a strike on a plant on 8 March; and a Kuwaiti power and desalination plant was reported damaged on 30 March. Responsibility was denied in each case.${sup(["shehabi"])}</p>
+    <p>For dated, sourced updates, see the live brief <a href="${BTW_URL}">Below the Waterline</a>.</p>`}
+};
+const evs=IDS.map(id=>EVENTS.find(e=>e.id===id));
+document.getElementById("caseNav").innerHTML=evs.map(e=>`<a href="#${e.id}">${e.name}</a>`).join("");
+document.getElementById("cases").innerHTML=evs.map(e=>renderCase(e,EXTRA[e.id],AX)).join("");
+
+/* charts */
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,p,txt){ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); if(txt!=null) e.textContent=txt; p.appendChild(e); return e; }
+(function(){
+  const svg=document.getElementById("conflictChart"), x0=44, base=205, top=24, max=450, red="#a8382b";
+  const defs=el("defs",{},svg), p=el("pattern",{id:"hatch",width:6,height:6,patternUnits:"userSpaceOnUse",patternTransform:"rotate(45)"},defs);
+  el("line",{x1:0,y1:0,x2:0,y2:6,stroke:red,"stroke-width":2.5},p);
+  [0,100,200,300,400].forEach(t=>{ const y=base-(base-top)*t/max; el("line",{x1:x0,x2:510,y1:y,y2:y,stroke:"#dde3e2"},svg); el("text",{x:x0-8,y:y+4,"text-anchor":"end"},svg,t); });
+  const d=[["2000",24,0],["2022",236,1],["2023",350,1],["2024",420,0]], bw=72, gap=(466-bw*4)/4;
+  d.forEach(([yr,v,der],i)=>{ const x=x0+gap/2+i*(bw+gap), h=(base-top)*v/max;
+    el("rect",{x,y:base-h,width:bw,height:h,rx:2,fill:der?"url(#hatch)":red,stroke:red,"stroke-width":der?1:0},svg);
+    el("text",{x:x+bw/2,y:base-h-8,"text-anchor":"middle",class:"lbl"},svg,(der?"≈":"")+v);
+    el("text",{x:x+bw/2,y:base+18,"text-anchor":"middle"},svg,yr); });
+})();
+(function(){
+  const svg=document.getElementById("ctChart"); if(!svg) return;
+  const x0=120, x1=470, max=1200, green="#1f7a5a";
+  const rows=[["Feb 2015",1200,"#8a5a2b"],["Mar 2018",511,green]];
+  rows.forEach(([l,v,c],i)=>{ const y=22+i*52, w=(x1-x0)*v/max;
+    el("text",{x:0,y:y+18,class:"lbl"},svg,l); el("rect",{x:x0,y,width:w,height:28,rx:3,fill:c},svg);
+    el("text",{x:x0+w+8,y:y+19,class:"lbl"},svg,v.toLocaleString("en-AU")+" ML"); });
+})();
+paintRefs(); renderNotes("notes");
+</script>
+<script src="../../assets/portfolio.js"></script>
+</body>
+</html>

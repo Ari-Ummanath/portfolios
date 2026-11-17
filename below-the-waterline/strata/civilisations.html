@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata · Civilisations</title>
+<meta name="description" content="Six ancient societies where drought and water insecurity shaped decline, with the paleoclimate evidence behind each case.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap page-head">
+    <div class="eyebrow">Civilisations · 2100 BCE to 1430 CE</div>
+    <h1>When the rains failed</h1>
+    <p class="dek">For each case, the climate signal comes from a natural archive (ocean dust, river sediments, pollen, lake gypsum or tree rings) and the human story from archaeology and texts. Read them as evidence of pressure, not proof of a single cause.</p>
+    <nav class="jumps" aria-label="Cases" id="caseNav"></nav>
+  </div>
+
+  <section class="block" aria-labelledby="h-compare" style="padding-top:32px">
+    <div class="wrap">
+      <h2 id="h-compare" style="font-size:1.6rem;margin-bottom:1rem">At a glance</h2>
+      <div class="scroll-x"><table class="table" id="compare"><thead><tr><th scope="col">Society</th><th scope="col">When</th><th scope="col">Archive</th><th scope="col">Key signal</th><th scope="col">What happened</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <div class="wrap" id="cases"></div>
+
+  <section class="block" aria-labelledby="h-pattern">
+    <div class="wrap two">
+      <div class="stack measure">
+        <div class="eyebrow">Pattern</div>
+        <h2 id="h-pattern">What the six cases share</h2>
+        <p>Every society here had built something remarkable on reliable water: grain lands in northern Mesopotamia, flood-fed farming on the Indus, Angkor's network of canals and reservoirs. Each then met a drought lasting decades to centuries, recorded independently in natural archives.<sup class="fn" data-s="cullen"></sup><sup class="fn" data-s="giosan"></sup><sup class="fn" data-s="buckley"></sup></p>
+        <p>None of the studies claims water alone ended a civilisation. People also moved and adapted: Mesa Verde's farmers headed for places where maize could still grow, and the Indus population shifted toward wetter regions.<sup class="fn" data-s="wsu"></sup><sup class="fn" data-s="giosan"></sup></p>
+      </div>
+      <div class="assess">The same infrastructure that made these societies thrive also made them dependent on water arriving on schedule. That is the link to the present: modern cities, irrigation and AI data centres are also built on assumptions about water that a changing climate can break.</div>
+    </div>
+  </section>
+
+  <section class="block notes" aria-labelledby="h-notes">
+    <div class="wrap"><h2 id="h-notes" style="font-size:1.5rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div>
+  </section>
+</main>
+<footer id="site-footer"></footer>
+
+<script src="data.js"></script>
+<script>
+renderHeader("civilisations.html"); renderFooter();
+const IDS=["akkad","harappa","lba","maya","pueblo","angkor"];
+const AX=[-3000,1600,[-3000,-2000,-1000,0,1000,1500]];
+const EXTRA={
+  akkad:{html:`
+    <p>Core M5-422 was taken from the Gulf of Oman, directly downwind of Mesopotamia's dust sources. It shows a very abrupt increase in wind-blown dust, radiocarbon-dated to 4025 ± 125 calendar years before present, that persisted for about 300 years.${sup(["cullen"])}</p>
+    <p>Tell Leilan in northeast Syria was a provincial capital and a main source of the empire's grain. Excavations there and at nearby Abu Hgeira place a major environmental change near 4,200 years before present, linked to the collapse.${sup(["cullen"])}</p>`},
+  harappa:{html:`
+    <p>Dated river landforms show the Indus plains became remarkably stable as the region dried after about 5,000 years ago. Gentler floods probably encouraged intensive farming first, and urbanisation around 4,500 years ago.${sup(["giosan"])}</p>
+    <p>Cities flourished for roughly six centuries. From about 3,900 years ago, settled area and settlement size declined, many sites were abandoned, and population density shifted east. Further monsoon decline made both flood-fed and rain-fed farming difficult; the civilisation slowly disintegrated between 3,900 and 3,000 years ago.${sup(["giosan","whoi"])}</p>`},
+  lba:{html:`
+    <p>The study combines pollen from an ancient lake's sediments in Cyprus with a radiocarbon chronology that ties climate proxies to archaeological layers.${sup(["kaniewski"])}</p>
+    <p>Around 3,200 years ago the interlinked Aegean, Egyptian, Syro-Palestinian and Hittite worlds collapsed. Texts and reliefs describe armies clashing, famine-ravaged cities abandoned and countrysides depopulated.${sup(["kaniewski"])}</p>`},
+  maya:{html:`
+    <p>When a lake shrinks in drought, gypsum forms and locks some of the lake water inside its crystals. Measuring three oxygen and two hydrogen isotopes in that trapped water reconstructs Lake Chichancanab's hydrology between 800 and 1000 CE.${sup(["cam2018"])}</p>
+    <p>Annual rainfall fell 41–54% compared with today, with intervals of up to 70% at peak drought, and relative humidity fell 2–7%.${sup(["evans"])} In the 9th century the central Maya region saw major political collapse: its limestone cities were abandoned and dynasties ended.${sup(["cam2018"])}</p>`},
+  pueblo:{html:`
+    <p>Tree rings record both rainfall (in lower-elevation pines) and temperature (in high-elevation trees). Bocinsky and Kohler used them to rebuild 2,000 years of local climate and map the areas that met the needs of ancestral maize.${sup(["wsu","bocinsky"])}</p>
+    <p>Farmers tended to live in agricultural refugia, the areas most reliably inside the maize niche.${sup(["bocinsky"])} In the late 1200s drought hit that niche around Mesa Verde, and some 40,000 people left southwest Colorado while the Pajarito Plateau of the northern Rio Grande saw a large population spike.${sup(["wsu"])}</p>`},
+  angkor:{html:`
+    <p>The climate record comes from Fujian cypress trees growing in Vietnam's Bidoup Nui Ba National Park: a 759-year reconstruction, the longest tropical tree-ring record at the time.${sup(["phys2010","lamont"])}</p>
+    <p>Angkor was a “hydraulic city” of canals, embankments and reservoirs. A mega-drought ran from the 1330s to the 1360s, and a shorter, more severe one from the 1400s to the 1420s; the third-driest and driest years in 760 years fell back to back in 1402 and 1403.${sup(["buckley","lamont"])} Intense monsoons between the droughts may have damaged the water system.${sup(["buckley"])}</p>`}
+};
+const evs=IDS.map(id=>EVENTS.find(e=>e.id===id));
+document.getElementById("caseNav").innerHTML=evs.map(e=>`<a href="#${e.id}">${e.name}</a>`).join("");
+document.querySelector("#compare tbody").innerHTML=evs.map(e=>`<tr><th scope="row" style="text-align:left;font-weight:600"><a href="#${e.id}">${e.name}</a></th><td class="num" style="white-space:nowrap">${span(e)}</td><td>${e.evidence}</td><td><b class="num">${e.metric}</b> <span class="muted">${e.metricLabel}</span></td><td class="muted">${TYPES[e.type].label}</td></tr>`).join("");
+document.getElementById("cases").innerHTML=evs.map(e=>renderCase(e,EXTRA[e.id],AX)).join("");
+paintRefs(); renderNotes("notes");
+</script>
+<script src="../../assets/portfolio.js"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Below the Waterline · Three lenses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.mind{position:relative;border:1px solid var(--line);border-radius:18px;background:radial-gradient(600px 300px at 50% 60%,rgba(118,211,198,.08),transparent 70%),var(--deep);overflow:hidden}
+.mind svg{display:block;width:100%;height:auto}
+.mind .link{stroke:var(--line);stroke-width:1.5;stroke-dasharray:4 5}
+.mind .link.on{stroke:var(--brine);stroke-dasharray:none}
+.drop{cursor:pointer;outline:none}
+.drop path{fill:rgba(118,211,198,.08);stroke:var(--brine);stroke-width:1.6;transition:fill .4s}
+.drop:hover path,.drop:focus-visible path{fill:rgba(118,211,198,.28)}
+.drop[aria-pressed="true"] path{fill:var(--brine)}
+.drop text{fill:var(--ink);font-family:var(--body);font-size:15px;font-weight:600;text-anchor:middle;pointer-events:none}
+.drop .sub{fill:var(--muted);font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.06em}
+.drop[aria-pressed="true"] text.in{fill:var(--abyss)}
+.drop:focus-visible path{stroke-width:3}
+.core-node circle{fill:var(--abyss);stroke:var(--brine);stroke-width:1.2}
+.core-node text{fill:var(--ink);font-family:var(--display);font-size:20px;text-anchor:middle}
+.core-node .s{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+#rain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+.hint{font-family:var(--mono);font-size:.74rem;color:var(--muted);text-align:center;padding:0 0 14px}
+/* lens content (ported) */
+section.chapter{padding:clamp(48px,7vw,88px) 0 0;scroll-margin-top:64px}
+.chapter-head{display:grid;gap:.9rem;margin-bottom:2.2rem}
+.lens-label{display:inline-flex;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--abyss);background:var(--brine);padding:.25rem .6rem;border-radius:4px;width:max-content}
+.sub{margin-top:3rem}
+.sub h3{font-family:var(--display);font-size:var(--s2,1.7rem);margin-bottom:1rem}
+.chapter h3{font-family:var(--body);font-weight:600;font-size:1.25rem}
+.sub>h3,.sub>div>div>h3{font-family:var(--display);font-weight:400;font-size:1.7rem}
+.timeline{list-style:none;margin:1.2rem 0 0;padding:0;border-left:1px solid var(--line)}
+.timeline li{position:relative;padding:0 0 1.1rem 1.3rem}
+.timeline li::before{content:"";position:absolute;left:-5px;top:.55rem;width:9px;height:9px;border-radius:50%;background:var(--abyss);border:2px solid var(--alert)}
+.timeline .when{font-family:var(--mono);font-size:.75rem;color:var(--muted);display:block}
+.callout{border:1px solid var(--line);background:var(--deep);border-radius:12px;padding:1.1rem 1.2rem;font-size:.95rem}
+.callout .mono{color:var(--sediment);display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.08em;font-size:.7rem}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:2rem 0}
+.strip div{background:var(--deep);padding:1.1rem 1.15rem}
+.strip b{display:block;font-family:var(--mono);font-weight:500;font-size:1.65rem;line-height:1.15}
+.strip span{display:block;color:var(--muted);font-size:.875rem;margin-top:.35rem}
+.strip .crit b{color:var(--alert)} .strip .warn b{color:var(--sediment)}
+figure{margin:0}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:.75rem;max-width:62ch}
+.chart{background:var(--deep);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.1rem .8rem}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{fill:var(--muted);font-family:var(--mono);font-size:11px}
+.chart .lbl{fill:var(--ink);font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:.5rem}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:.35rem;vertical-align:-1px;border-radius:2px}
+.lens .wrap>.two:last-child,.lens .sub:last-child{padding-bottom:clamp(48px,7vw,88px)}
+.lens{border-top:0}
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<canvas id="rain" aria-hidden="true"></canvas>
+<main>
+  <div id="head"></div>
+  <section class="block" style="border-top:0;padding-top:16px" aria-label="Choose a lens">
+    <div class="wrap">
+      <div class="mind">
+        <svg viewBox="0 0 900 400" role="group" aria-label="Three lenses" id="mindsvg"></svg>
+        <p class="hint">Tap a drop to let it rain</p>
+      </div>
+    </div>
+  </section>
+  <div id="lenses">
+<!-- ============ LENS 1: SECURITY ============ -->
+<section class="chapter lens" hidden id="security" aria-labelledby="h-sec">
+  <div class="wrap">
+    <div class="chapter-head">
+      <span class="lens-label">Lens one</span>
+      
+      <h2 id="h-sec">Critical infrastructure, under fire and online</h2>
+      <p class="lede">Water systems are now targets in three ways: physical strikes in wartime, cyber intrusion in peacetime, and quiet competition for supply from energy and AI infrastructure.</p>
+    </div>
+
+    <div class="two">
+      <div class="stack measure">
+        <h3>The Gulf: “saltwater kingdoms” in a war zone</h3>
+        <p>Desalination met 60% of Gulf Cooperation Council water consumption in 2023 and 76% of its municipal drinking-grade supply.<sup class="fn" data-s="shehabi"></sup> AP reported that a 2010 CIA analysis warned attacks on these plants could trigger national crises in several Gulf states, and that more than 90% of the Gulf's desalinated water comes from just 56 plants.<sup class="fn" data-s="ap"></sup></p>
+        <p>Since the US–Israel war with Iran began on 28 February 2026, several desalination facilities have been reported damaged. The Arab Center Washington DC notes that damage has so far been limited, with no significant disruption to supply reported.<sup class="fn" data-s="shehabi"></sup> As of early November the war was in its ninth month, with diplomacy and strikes running in parallel.<sup class="fn" data-s="rferl"></sup></p>
+        <p>International humanitarian law, including the Geneva Conventions, prohibits attacking civilian infrastructure indispensable to the survival of the population, which includes drinking-water facilities.<sup class="fn" data-s="ap"></sup></p>
+      </div>
+      <div>
+        <ol class="timeline" aria-label="Reported incidents involving water infrastructure, 2026">
+          <li><span class="when">28 Feb 2026</span>War begins with US and Israeli strikes on Iran.<sup class="fn" data-s="rferl"></sup></li>
+          <li><span class="when">7 Mar 2026</span>Desalination plant on Qeshm Island, Iran, hit; supply to about 30 villages affected. Iran blamed the US; the US and Israel denied responsibility.<sup class="fn" data-s="shehabi"></sup></li>
+          <li><span class="when">8 Mar 2026</span>Bahrain says Iranian drones damaged a desalination plant; operations were not disrupted. Iran denied attacking water facilities in Bahrain and Kuwait.<sup class="fn" data-s="national"></sup><sup class="fn" data-s="shehabi"></sup></li>
+          <li><span class="when">30 Mar 2026</span>Report of an attack damaging a Kuwaiti power and desalination plant and killing a worker; Iran denied responsibility.<sup class="fn" data-s="shehabi"></sup></li>
+          <li><span class="when">2 Nov 2026</span>US strikes Qeshm Island again; the UAE's energy minister says the country will be better prepared for any resumption.<sup class="fn" data-s="rferl"></sup></li>
+        </ol>
+        <p class="mono muted" style="margin-top:.4rem">Source check: AP corrected its 8 March story to say the UAE's Fujairah F1 complex was not damaged. This brief follows the correction.<sup class="fn" data-s="ap"></sup></p>
+      </div>
+    </div>
+
+    <div class="sub two">
+      <div class="stack measure">
+        <h3>Cyber: the quiet front line</h3>
+        <p>In February 2024, CISA, the NSA and the FBI assessed that China-backed actors known as Volt Typhoon were pre-positioning on the networks of critical infrastructure, including water and wastewater systems, for possible disruption during a crisis or conflict.<sup class="fn" data-s="cisa"></sup> Australia's Cyber Security Centre co-sealed the advisory and assessed that Australian infrastructure could be vulnerable to similar activity.<sup class="fn" data-s="acsc"></sup></p>
+        <p>In July 2026, more than 100 internet-exposed systems in the US water sector were hit by cyberattacks, prompting CISA guidance on finding exposed industrial controllers.<sup class="fn" data-s="secaff"></sup></p>
+      </div>
+      <div class="callout">
+        <span class="mono">Criminology angle</span>
+        <p>Attacks on water systems sit across the lines between crime, terrorism and statecraft. The same exposed controller can be reached by a criminal group, a hacktivist or a state, so attribution, and with it the choice of legal response, is often the hardest part.</p>
+        <p class="assess">This is why water-sector cyber resilience belongs in both the conference's investment conversation and national security policy.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>The water–energy–AI nexus, and a measurement problem</h3>
+      <div class="two">
+        <div class="stack measure">
+          <p>UN University estimates data centres will use 945 terawatt-hours of electricity by 2030, with a water footprint equal to the basic annual domestic needs of all 1.3 billion people in Sub-Saharan Africa.<sup class="fn" data-s="unuai"></sup> Rystad Energy, counting only water consumed directly for cooling, puts 2030 at about 644 billion litres in its central case.<sup class="fn" data-s="rystad"></sup></p>
+          <p>Both can be right, because they measure different things. One counts water evaporated in the building; the other adds the water used to generate the building's power. Google's widely quoted 0.26 mL for a median Gemini text prompt counts cooling water only, not water used to generate electricity.<sup class="fn" data-s="google"></sup><sup class="fn" data-s="thread1028"></sup></p>
+          <p class="mono muted">Source check: the conference newsletter dated Google's analysis to May 2025. The paper was submitted to arXiv on 21 August 2025.<sup class="fn" data-s="google"></sup></p>
+        </div>
+        <figure class="chart" id="gapFig">
+          <svg id="gapChart" viewBox="0 0 520 210" role="img" aria-labelledby="gapTitle gapDesc"><title id="gapTitle">Data-centre water estimates for 2030</title><desc id="gapDesc">Direct cooling consumption about 644 billion litres; water footprint including electricity about 9.3 trillion litres.</desc></svg>
+          <figcaption>Projected data-centre water use in 2030, in billions of litres, under two definitions. Sources: Rystad Energy via Down To Earth; UNU-INWEH via TechWire Asia.<sup class="fn" data-s="rystad"></sup><sup class="fn" data-s="techwire"></sup></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LENS 2: CONFLICT ============ -->
+<section class="chapter lens" hidden id="conflict" aria-labelledby="h-conflict">
+  <div class="wrap">
+    <div class="chapter-head">
+      <span class="lens-label">Lens two</span>
+      
+      <h2 id="h-conflict">Trigger, weapon, casualty</h2>
+      <p class="lede">The Pacific Institute's Water Conflict Chronology, the largest open-source database of water-related violence, sorts each event by the role water plays: a trigger of violence, a weapon, or a casualty.<sup class="fn" data-s="pirelease"></sup> It now holds more than 2,750 incidents.<sup class="fn" data-s="pirelease"></sup></p>
+    </div>
+    <div class="two">
+      <figure class="chart">
+        <svg id="conflictChart" viewBox="0 0 520 260" role="img" aria-labelledby="cTitle cDesc"><title id="cTitle">Reported water-conflict events per year</title><desc id="cDesc">2000: 24. 2022: about 236. 2023: about 350. 2024: 420.</desc></svg>
+        <div class="legend"><span><i style="background:var(--alert)"></i>Reported figure</span><span><i style="background:repeating-linear-gradient(45deg,var(--alert) 0 2px,transparent 2px 5px);border:1px solid var(--alert)"></i>Derived from stated % change</span></div>
+        <figcaption>Events reported per year. 2022 and 2023 are derived from the stated increases of 78% and nearly 20% to 2024, so they are approximate. The Institute's 2024 release gave 22 events for 2000; its 2025 release gives 24, because the database is revised as events are found.<sup class="fn" data-s="pirelease"></sup><sup class="fn" data-s="pifact"></sup><sup class="fn" data-s="wateronline"></sup></figcaption>
+      </figure>
+      <div class="stack measure">
+        <h3>Where cooperation is missing</h3>
+        <p>Shared waters carry 60% of global freshwater flows and directly sustain more than 40% of the world's population.<sup class="fn" data-s="cpD"></sup> Only around 10 agreements govern specific transboundary aquifers worldwide.<sup class="fn" data-s="cpD"></sup></p>
+        <p>As of August 2026 the UN Water Convention had 59 parties and the UN Watercourses Convention 42; twelve countries have acceded since 2023.<sup class="fn" data-s="cpD"></sup></p>
+        <div class="callout"><span class="mono">Cooperation pays</span>
+          <p>A flood early-warning system on the Ratu River between Nepal and India reportedly saved 169 lives in Nepal during the 2017 floods.<sup class="fn" data-s="cpD"></sup></p></div>
+        <p class="assess">Rising violence and thin legal cover point the same way: the cheapest security investment on the table in Abu Dhabi may be treaty accessions and joint basin bodies, not hardware.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LENS 3: AUSTRALIA ============ -->
+<section class="chapter lens" hidden id="indo-pacific" aria-labelledby="h-aus">
+  <div class="wrap">
+    <div class="chapter-head">
+      <span class="lens-label">Lens three</span>
+      
+      <h2 id="h-aus">From Antalya to Abu Dhabi: Australia's water month</h2>
+      <p class="lede">Australia arrives in Abu Dhabi straight from COP31 in Antalya (9–20 November), where it holds the new role of President of Negotiations after a hosting compromise with Türkiye. The Pacific hosted the Pre-COP in October.<sup class="fn" data-s="dcceew"></sup><sup class="fn" data-s="gt"></sup></p>
+    </div>
+    <div class="strip">
+      <div class="crit"><b>5 m</b><span>people in the Pacific lack basic drinking water services<sup class="fn" data-s="unicefpac"></sup></span></div>
+      <div class="crit"><b>9 m</b><span>lack basic sanitation; coverage on track to reach only 33% by 2030<sup class="fn" data-s="unicefpac"></sup></span></div>
+      <div class="warn"><b>64%</b><span>basic drinking water coverage expected by 2030 at the current pace<sup class="fn" data-s="unicefpac"></sup></span></div>
+      <div class="warn"><b>25%</b><span>of Sydney's available water that data centres could use by 2035, per Sydney Water projections<sup class="fn" data-s="reuters"></sup></span></div>
+    </div>
+    <div class="two">
+      <div class="stack measure">
+        <h3>Three things for Australian readers</h3>
+        <p><b>Pacific credibility.</b> Australia's COP31 role was built on Pacific priorities.<sup class="fn" data-s="lowy"></sup> Pacific water and sanitation gaps are a direct test of that partnership. DFAT and the Australian Water Partnership, a DFAT-funded program implemented by eWater Group, have supported the Pacific Water and Wastewater Association for more than a decade.<sup class="fn" data-s="insidewater"></sup><sup class="fn" data-s="pwwa"></sup></p>
+        <p><b>The AI water question at home.</b> Data centres use under 1% of Greater Sydney's water today, about 3.5 billion litres a year.<sup class="fn" data-s="wmedia"></sup> On 23 March 2026 the federal government put sustainable water use into its data centre investment expectations for the first time.<sup class="fn" data-s="swm"></sup></p>
+        <p><b>Inclusion.</b> In 2024, Australia, Canada and New Zealand said they were disappointed the UN did not uphold best practice on civil society participation in the conference.<sup class="fn" data-s="canz"></sup></p>
+      </div>
+      <div class="callout">
+        <span class="mono">Why this lens is rare</span>
+        <p>Most Abu Dhabi coverage will come from the Gulf, Europe and New York. An Indo-Pacific reading connects three files that Canberra usually runs separately: climate diplomacy, Pacific development and critical-infrastructure security.</p>
+        <p class="assess">Watch for whether Australia carries COP31 Pacific language into Abu Dhabi, and whether it announces water commitments for the Pacific.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  </div>
+  <section class="block notes" aria-labelledby="h-notes"><div class="wrap"><h2 id="h-notes" style="font-size:1.4rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="data.js"></script>
+<script>
+renderChrome("lenses.html");
+document.getElementById("head").innerHTML=pageHead("03","Three lenses","One conference, read three ways. Each lens is a different way of asking what water means for security.","The lenses");
+drawWaves();
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent,text){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; parent.appendChild(e); return e; }
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+(function gapChart(){
+  const svg=document.getElementById("gapChart"), W=520, x0=200, x1=425, max=10000;
+  const rows=[{l:"Direct cooling",s:"Rystad Energy, central case",v:644,c:css("--sediment")},{l:"Water footprint",s:"UNU-INWEH, incl. electricity",v:9300,c:css("--brine")}];
+  [0,2500,5000,7500,10000].forEach(t=>{ const x=x0+(x1-x0)*t/max; el("line",{x1:x,x2:x,y1:20,y2:150,stroke:css("--line")},svg); el("text",{x:x,y:170,"text-anchor":"middle"},svg,t.toLocaleString("en-AU")); });
+  rows.forEach((r,i)=>{ const y=38+i*60, w=(x1-x0)*r.v/max;
+    el("text",{x:0,y:y+12,class:"lbl"},svg,r.l); el("text",{x:0,y:y+28},svg,r.s);
+    el("rect",{x:x0,y:y,width:Math.max(w,2),height:26,rx:3,fill:r.c},svg);
+    el("text",{x:x0+w+8,y:y+18,class:"lbl"},svg,r.v.toLocaleString("en-AU")+" bn L"); });
+  el("text",{x:x0,y:196},svg,"Billion litres per year, 2030 projection");
+})();
+
+(function conflictChart(){
+  const svg=document.getElementById("conflictChart"), x0=40, base=210, top=24, max=450;
+  const data=[{y:"2000",v:24,d:false},{y:"2022",v:236,d:true},{y:"2023",v:350,d:true},{y:"2024",v:420,d:false}];
+  const defs=el("defs",{},svg), p=el("pattern",{id:"hatch",width:6,height:6,patternUnits:"userSpaceOnUse",patternTransform:"rotate(45)"},defs);
+  el("rect",{width:6,height:6,fill:"transparent"},p); el("line",{x1:0,y1:0,x2:0,y2:6,stroke:css("--alert"),"stroke-width":2.5},p);
+  [0,100,200,300,400].forEach(t=>{ const y=base-(base-top)*t/max; el("line",{x1:x0,x2:510,y1:y,y2:y,stroke:css("--line")},svg); el("text",{x:x0-8,y:y+4,"text-anchor":"end"},svg,t); });
+  const bw=70, gap=(470-bw*data.length)/(data.length);
+  data.forEach((r,i)=>{ const x=x0+gap/2+i*(bw+gap), h=(base-top)*r.v/max;
+    el("rect",{x:x,y:base-h,width:bw,height:h,rx:2,fill:r.d?"url(#hatch)":css("--alert"),stroke:css("--alert"),"stroke-width":r.d?1:0},svg);
+    el("text",{x:x+bw/2,y:base-h-8,"text-anchor":"middle",class:"lbl"},svg,(r.d?"≈":"")+r.v);
+    el("text",{x:x+bw/2,y:base+18,"text-anchor":"middle"},svg,r.y); });
+})();
+
+
+/* ---------- mind map ---------- */
+const LENSES=[{id:"security",t:"Security",s:"INFRASTRUCTURE · CYBER · AI",x:170,y:160},{id:"conflict",t:"Conflict",s:"TRIGGER · WEAPON · CASUALTY",x:450,y:120},{id:"indo-pacific",t:"Australia",s:"& THE INDO-PACIFIC",x:730,y:160}];
+const svg=document.getElementById("mindsvg"), cxC=450, cyC=320;
+LENSES.forEach(l=>el("line",{x1:cxC,y1:cyC,x2:l.x,y2:l.y+78,class:"link","data-l":l.id},svg));
+const cn=el("g",{class:"core-node"},svg); el("circle",{cx:cxC,cy:cyC,r:58},cn); el("text",{x:cxC,y:cyC-2},cn,"Abu Dhabi"); el("text",{x:cxC,y:cyC+18,class:"s"},cn,"8–10 DEC 2026");
+const dropPath=(x,y)=>`M${x} ${y-62} C ${x+10} ${y-40}, ${x+52} ${y-2}, ${x+52} ${y+26} A 52 52 0 1 1 ${x-52} ${y+26} C ${x-52} ${y-2}, ${x-10} ${y-40}, ${x} ${y-62} Z`;
+LENSES.forEach(l=>{ const g=el("g",{class:"drop",tabindex:0,role:"button","aria-pressed":"false","aria-label":`Open the ${l.t} lens`,"data-l":l.id},svg);
+  el("path",{d:dropPath(l.x,l.y)},g); el("text",{x:l.x,y:l.y+28,class:"in"},g,l.t); el("text",{x:l.x,y:l.y-78,class:"sub"},g,l.s);
+  g.addEventListener("click",()=>open(l.id,true)); g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); open(l.id,true); }}); });
+
+/* ---------- rain ---------- */
+const rc=document.getElementById("rain"), rx=rc.getContext("2d");
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function rain(fromEl,done){
+  if(still){ done(); return; }
+  const d=Math.min(devicePixelRatio||1,2); rc.width=innerWidth*d; rc.height=innerHeight*d; rx.setTransform(d,0,0,d,0,0);
+  const r=fromEl.getBoundingClientRect(), x0=r.left+r.width/2, y0=r.top+r.height*.7;
+  const drops=Array.from({length:140},()=>({x:x0+(Math.random()-.5)*Math.max(r.width*2.6,200),y:y0+(Math.random()-.5)*40-Math.random()*120,v:8+Math.random()*10,l:10+Math.random()*16}));
+  const t0=performance.now(); let called=false;
+  (function f(now){ const t=now-t0; rx.clearRect(0,0,innerWidth,innerHeight);
+    rx.strokeStyle="rgba(118,211,198,.7)"; rx.lineWidth=1.3; rx.beginPath();
+    drops.forEach(p=>{ p.y+=p.v; p.x+=(p.x-x0)*.004; rx.moveTo(p.x,p.y); rx.lineTo(p.x,p.y-p.l); });
+    rx.stroke();
+    if(t>500&&!called){ called=true; done(); }
+    if(t<1300) requestAnimationFrame(f); else rx.clearRect(0,0,innerWidth,innerHeight);
+  })(t0);
+}
+let current=null;
+function open(id,animate){
+  if(id===current && animate){ document.getElementById(id).scrollIntoView({behavior:"smooth"}); return; }
+  const g=svg.querySelector(`.drop[data-l="${id}"]`);
+  svg.querySelectorAll(".drop").forEach(d=>d.setAttribute("aria-pressed",d.dataset.l===id));
+  svg.querySelectorAll(".link").forEach(d=>d.classList.toggle("on",d.dataset.l===id));
+  const show=()=>{ document.querySelectorAll("section.lens").forEach(s=>{ s.hidden=s.id!==id; if(s.id===id){ s.classList.remove("reveal"); void s.offsetWidth; s.classList.add("reveal"); } }); current=id;
+    try{ history.replaceState(null,"","#"+id); }catch(e){}
+    if(animate) setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:still?"auto":"smooth",block:"start"}),still?0:250); };
+  animate? rain(g,show) : show();
+}
+const start=["security","conflict","indo-pacific"].includes(location.hash.slice(1))? location.hash.slice(1) : "security";
+/* number notes across all three lenses in reading order */
+document.querySelectorAll("section.lens").forEach(s=>s.hidden=false);
+finishPage();
+open(start,false);
+</script>
+<script src="../assets/portfolio.js"></script>
+</body>
+</html>

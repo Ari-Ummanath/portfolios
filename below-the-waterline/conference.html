@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Below the Waterline · Conference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.days{grid-template-columns:1fr}}
+.day{border:1px solid var(--line);border-radius:14px;padding:1rem;background:var(--deep)}
+.day .date{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.08em}
+.day .theme{font-family:var(--display);font-size:1.25rem;margin:.3rem 0 .8rem}
+.dlg{display:flex;gap:.7rem;align-items:center;width:100%;text-align:left;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.75rem .85rem;margin-top:.5rem;font:inherit;font-size:.95rem;cursor:pointer;transition:border-color .2s,background .2s}
+.dlg .tag{font-family:var(--display);font-size:1.4rem;color:var(--brine);width:1.4em;text-align:center}
+.dlg:hover{border-color:var(--brine)}
+.dlg[aria-pressed="true"]{background:rgba(118,211,198,.12);border-color:var(--brine)}
+.detail{margin-top:18px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,36px);background:linear-gradient(160deg,var(--deep2),var(--deep))}
+@media (max-width:820px){.detail{grid-template-columns:1fr}}
+.detail .letter{font-family:var(--display);font-size:clamp(4rem,9vw,7rem);line-height:.85;color:var(--brine)}
+.detail h2{margin:.4rem 0 1rem}
+.sumline{display:flex;gap:.7rem;font-size:1.05rem}
+.sumline::before{content:"";flex:none;width:10px;height:10px;margin-top:.55rem;border-radius:50%;background:var(--brine)}
+.sol h3{font-family:var(--mono);font-weight:400;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sediment);margin-bottom:.8rem}
+.sol ol{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.8rem}
+.sol li{counter-increment:s;display:grid;grid-template-columns:2.2rem 1fr;gap:.6rem;padding:.8rem 0;border-top:1px solid var(--line)}
+.sol li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:.8rem;color:var(--brine);padding-top:.15rem}
+.sol b{color:var(--ink)}
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div id="head"></div>
+
+  <section class="block" style="border-top:0;padding-top:24px" aria-labelledby="h-dlg">
+    <div class="wrap">
+      <h2 id="h-dlg" style="margin-bottom:1.2rem">Six dialogues, six problems</h2>
+      <p class="muted measure" style="margin-bottom:1.2rem">Each dialogue has an official UN concept paper. Choose one to see the problem in a line and a possible solution, built from the options in the papers and the evidence elsewhere in this brief. The heading above each day is the host country's theme.<sup class="fn" data-s="thread1113"></sup></p>
+      <div class="days" id="days"></div>
+      <div id="detail" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-led">
+    <div class="wrap">
+      <div class="eyebrow">The ledger</div>
+      <h2 id="h-led" style="margin:.6rem 0 1rem;max-width:22ch">The UN's own scientists now call it “water bankruptcy”</h2>
+      <p class="lede" style="margin-bottom:1.6rem">In January 2026, UN University's water institute argued that many regions have overspent their renewable water “income” and drawn down their long-term “savings” in aquifers, glaciers and wetlands.<sup class="fn" data-s="unubank"></sup></p>
+      <div class="tiles" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">
+        <div class="crit"><b>75%</b><span>of humanity lives in countries classed as water-insecure or critically water-insecure<sup class="fn" data-s="unubank"></sup></span></div>
+        <div class="crit"><b>4 bn</b><span>people face severe water scarcity at least one month a year<sup class="fn" data-s="unubank"></sup></span></div>
+        <div class="warn"><b>70%</b><span>of major aquifers show long-term decline<sup class="fn" data-s="unubank"></sup></span></div>
+        <div class="warn"><b>8×</b><span>faster progress needed to reach universal safe drinking water by 2030; sanitation needs 6×<sup class="fn" data-s="cpA"></sup></span></div>
+        <div><b>US$6.7 tn</b><span>World Bank estimate of the water infrastructure gap by 2030<sup class="fn" data-s="cpF"></sup></span></div>
+        <div><b>−23%</b><span>fall in total official development assistance in 2025<sup class="fn" data-s="cpA"></sup></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-base">
+    <div class="wrap two">
+      <div class="stack measure">
+        <div class="eyebrow">Why the 2023 baseline matters</div>
+        <h2 id="h-base">Pledges without numbers cannot be tracked</h2>
+        <p>The 2023 conference closed with about 700 voluntary commitments.<sup class="fn" data-s="enb"></sup> Only 22% of the 719 that WRI analysed had quantitative targets.<sup class="fn" data-s="wri"></sup> The 2026 concept papers lean the other way, proposing measurable targets such as 100 parties to the UN water conventions by 2030 and one private dollar for every public dollar.<sup class="fn" data-s="cpD"></sup><sup class="fn" data-s="cpF"></sup></p>
+        <p><a class="btn ghost" href="watchlist.html">See the watchlist →</a></p>
+      </div>
+      <div class="panel"><div class="eyebrow" style="margin-bottom:.5rem">Mandate</div><p>The conference was convened by A/RES/77/334, with six interactive dialogues set by A/RES/78/327.<sup class="fn" data-s="docs"></sup><sup class="fn" data-s="res78"></sup> It meets at ADNEC, Abu Dhabi, on 8–10 December, co-hosted by the UAE and Senegal.<sup class="fn" data-s="unpage"></sup></p></div>
+    </div>
+  </section>
+
+  <section class="block notes" aria-labelledby="h-notes"><div class="wrap"><h2 id="h-notes" style="font-size:1.4rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="data.js"></script>
+<script>
+renderChrome("conference.html");
+document.getElementById("head").innerHTML=pageHead("02","Three days in Abu Dhabi","The first UN conference dedicated to accelerating SDG 6, and the first led by two countries of the Global South.<sup class=\"fn\" data-s=\"kt140\"></sup>","The conference");
+drawWaves();
+let READY=false;
+const days=document.getElementById("days");
+days.innerHTML=DAYS.map(d=>`<div class="day"><div class="date">${d.date}</div><div class="theme">${d.theme}</div>${d.items.map(k=>`<button class="dlg" type="button" data-k="${k}" aria-pressed="false" aria-controls="detail"><span class="tag">${k}</span>${DLG[k].name}</button>`).join("")}</div>`).join("");
+days.addEventListener("click",e=>{ const b=e.target.closest(".dlg"); if(b){ show(b.dataset.k); if(innerWidth<820) document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"}); }});
+function show(k){
+  document.querySelectorAll(".dlg").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===k));
+  const d=DLG[k], s=SRC[d.src];
+  document.getElementById("detail").innerHTML=`<div class="detail reveal"><div><div class="letter">${k}</div><h2>${d.name}</h2><p class="sumline"><span>${withRefs(d.summary)}</span></p><p style="margin-top:1rem" class="mono"><a href="${s.url}">Read the concept paper ↗</a></p></div>
+    <div class="sol"><h3>A possible solution</h3><ol>${d.solution.map(x=>`<li><span>${withRefs(x)}</span></li>`).join("")}</ol></div></div>`;
+  if(READY) paintRefs(document.getElementById("detail"));
+}
+show("D");
+paintRefs(); READY=true;
+Object.values(DLG).forEach(d=>[d.summary,...d.solution].forEach(x=>(x.match(/\[([A-Za-z0-9]+)\]/g)||[]).forEach(m=>{ const k=m.slice(1,-1); if(SRC[k]) refNum(k); })));
+renderNotes("notes");
+</script>
+<script src="../assets/portfolio.js"></script>
+</body>
+</html>

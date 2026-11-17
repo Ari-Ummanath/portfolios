@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata</title>
+<meta name="description" content="An evidence-based simulation of water insecurity across 5,000 years of civilisations: drag through time from 3000 BCE to 2100 on a world map.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.sim{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(300px,1fr);gap:20px;align-items:start}
+@media (max-width:980px){.sim{grid-template-columns:1fr}}
+.mapcard{background:var(--surface);border:1px solid var(--rule);border-radius:10px;overflow:hidden;position:relative}
+#map{display:block;width:100%;height:auto;background:#e4ecec}
+#map .sphere{fill:#e4ecec}
+#map .grat{fill:none;stroke:#d3dddd;stroke-width:.5}
+#map .land{fill:var(--land);stroke:#f7f9f9;stroke-width:.5;transition:fill .5s}
+#map .land.stressed{fill:var(--stress)}
+#map .ring{fill:none;stroke-width:1.5;transform-box:fill-box;transform-origin:center}
+#map .ev.active .ring{animation:ripple 2.2s ease-out infinite}
+#map .ev{cursor:pointer;transition:opacity .4s}
+#map .ev.past .dot{fill:transparent!important}
+#map .ev.past{opacity:.45}
+#map .ev.hidden{opacity:0;pointer-events:none}
+#map .ev.sel .dot{stroke:var(--ink);stroke-width:2}
+#map .small{fill:var(--stress);stroke:#8f7a52;stroke-width:1;transition:opacity .5s}
+@keyframes ripple{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+.legend{display:flex;flex-wrap:wrap;gap:.6rem 1.1rem;padding:.8rem 1rem;border-top:1px solid var(--rule)}
+.legend .sw{display:inline-block;width:14px;height:10px;background:var(--stress);border:1px solid #b9a27a;margin-right:.4rem;vertical-align:-1px}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;font-size:.82rem;padding:.45rem .6rem;border-radius:5px;max-width:240px;opacity:0;transition:opacity .15s;z-index:5}
+.panel{display:grid;gap:14px}
+.yearbox{background:var(--ink);color:#fff;border-radius:10px;padding:1rem 1.2rem}
+.yearbox .y{font-family:var(--display);font-size:clamp(2.4rem,5vw,3.4rem);line-height:1;font-variant-numeric:tabular-nums}
+.yearbox .era{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#b9c6cc;margin-top:.4rem}
+.evcard{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--c);border-radius:8px;padding:.9rem 1rem;transition:box-shadow .2s}
+.evcard.sel{box-shadow:0 0 0 2px var(--c)}
+.evcard .top{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}
+.evcard h3{font-size:1.15rem}
+.evcard .when{font-family:var(--mono);font-size:.72rem;color:var(--muted);white-space:nowrap}
+.evcard .m{font-family:var(--display);font-size:1.9rem;line-height:1.1;margin-top:.4rem;color:var(--c)}
+.evcard .ml{font-size:.86rem;color:var(--muted)}
+.evcard .s{font-size:.9rem;margin-top:.5rem}
+.evcard .ev-ev{font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:.5rem}
+.evcard a.more{font-size:.85rem;display:inline-block;margin-top:.5rem}
+.signal{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:1rem}
+.signal h3{font-size:1.05rem;font-family:var(--body);font-weight:600;margin-bottom:.6rem}
+.signal dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.45rem .8rem;font-size:.88rem}
+.signal dt{font-family:var(--display);font-size:1.15rem;line-height:1.2;white-space:nowrap}
+.signal dd{margin:0;color:var(--muted)}
+.empty{font-size:.92rem;color:var(--muted);background:var(--surface);border:1px dashed var(--rule);border-radius:8px;padding:1rem}
+.empty button{margin-top:.6rem}
+
+/* the core */
+.corewrap{margin-top:18px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px 10px}
+.coretop{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;justify-content:space-between;margin-bottom:8px}
+.btn{font:inherit;font-size:.88rem;font-weight:500;border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:999px;padding:.45rem 1rem;cursor:pointer;display:inline-flex;gap:.45rem;align-items:center}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{background:var(--water);border-color:var(--water);color:#fff}
+#core{display:block;width:100%;height:auto;touch-action:none;cursor:ew-resize}
+#core:focus-visible{outline:2px solid var(--water);outline-offset:4px}
+#core text{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+#core .era-l{fill:var(--ink);font-size:10.5px}
+.jumps button{font-family:var(--mono);font-size:.74rem;border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:.3rem .65rem;border-radius:999px;cursor:pointer}
+.jumps button:hover{border-color:var(--ink)}
+.howto{font-size:.82rem;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap page-head">
+    <div class="eyebrow">Simulator · 3000 BCE to 2100</div>
+    <h1>Five thousand years of thirst, on one map.</h1>
+    <p class="dek">Each marker is a documented case where water insecurity shaped a society, from the Akkadian Empire to Cape Town's “Day Zero”, and on to published projections for 2050 and beyond.</p>
+  </div>
+
+  <section class="block" style="border-top:0;padding-top:8px;padding-bottom:40px">
+    <div class="wrap two">
+      <div class="stack measure">
+        <div class="eyebrow">How to read the map</div>
+        <h2>Markers appear when the evidence says they should</h2>
+        <p>A filled, pulsing marker is a case active in the selected year. Once a case ends it leaves a faint hollow ring, so the map accumulates history as you move forward. From 2023 onward, sand-coloured countries are the 25 that WRI's Aqueduct atlas rates as facing extremely high water stress every year.<sup class="fn" data-s="dte"></sup> Dashed markers are published projections, not forecasts made here.</p>
+        <p>Read the full cases on the <a href="civilisations.html">Civilisations</a> and <a href="modern.html">Modern era</a> pages.</p>
+      </div>
+      <div class="assess">Water insecurity rarely acts alone. In every case here, scholars debate how much drought mattered compared with politics, war, trade and inequality. The evidence shows when water failed; it rarely settles why a society broke.</div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="sim">
+      <div>
+        <div class="mapcard" id="mapcard">
+          <svg id="map" viewBox="0 0 960 490" role="img" aria-label="World map of documented water-insecurity cases at the selected year"></svg>
+          <div class="tip" id="tip" role="status"></div>
+          <div class="legend" id="legend"></div>
+        </div>
+
+        <div class="corewrap">
+          <div class="coretop">
+            <div class="jumps" id="jumps" aria-label="Jump to a moment"></div>
+          </div>
+          <svg id="core" viewBox="0 0 1000 116" role="slider" tabindex="0" aria-label="Year" aria-valuemin="-3000" aria-valuemax="2100" aria-valuenow="2026" aria-valuetext="2026 CE"></svg>
+          <p class="howto">Drag, click or use the arrow keys (Shift for bigger steps).</p>
+        </div>
+      </div>
+
+      <aside class="panel" aria-live="polite">
+        <div class="yearbox"><div class="y num" id="yearOut">2026 CE</div><div class="era" id="eraOut"></div></div>
+        <div id="active"></div>
+        <div class="signal" id="signal"></div>
+      </aside>
+    </div>
+  </div>
+
+  <section class="block notes" aria-labelledby="h-notes">
+    <div class="wrap">
+      <h2 id="h-notes" style="font-size:1.5rem;margin-bottom:1rem">Notes</h2>
+      <p class="muted" style="font-size:.9rem;margin-bottom:.8rem">Full bibliography on <a href="methods.html">Method &amp; sources</a>.</p>
+      <ol id="notes"></ol>
+    </div>
+  </section>
+</main>
+<footer id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="world.js"></script>
+<script src="data.js"></script>
+<script>
+renderHeader("index.html"); renderFooter();
+
+/* ---------- time scale: piecewise, like a compacted core ---------- */
+const SEG=[[-3000,0,0,.34],[0,1900,.34,.64],[1900,2100,.64,1]];
+function y2t(y){ for(const [a,b,ta,tb] of SEG){ if(y<=b) return ta+(tb-ta)*(Math.max(y,a)-a)/(b-a);} return 1; }
+function t2y(t){ for(const [a,b,ta,tb] of SEG){ if(t<=tb) return a+(b-a)*(Math.max(t,ta)-ta)/(tb-ta);} return 2100; }
+const ERAS=[[-3000,-1200,"Bronze Age"],[-1200,500,"Iron Age & classical"],[500,1500,"Medieval"],[1500,1900,"Early modern"],[1900,2027,"Modern"],[2027,2101,"Projections"]];
+function eraOf(y){ const e=ERAS.find(([a,b])=>y>=a&&y<b)||ERAS[ERAS.length-1]; return e[2]; }
+
+let YEAR=2026, selected=null;
+
+/* ---------- map ---------- */
+const svg=d3.select("#map"), W=960, H=490;
+const proj=d3.geoNaturalEarth1().fitExtent([[8,8],[W-8,H-8]],{type:"Sphere"});
+const path=d3.geoPath(proj);
+svg.append("path").attr("class","sphere").attr("d",path({type:"Sphere"}));
+svg.append("path").attr("class","grat").attr("d",path(d3.geoGraticule10()));
+const countries=topojson.feature(WORLD,WORLD.objects.countries).features;
+const landSel=svg.append("g").selectAll("path").data(countries).join("path").attr("class","land").attr("d",path);
+const smallSel=svg.append("g").selectAll("circle").data(Object.entries(SMALL_STATES)).join("circle").attr("class","small").attr("r",3.2)
+  .attr("cx",d=>proj(d[1])[0]).attr("cy",d=>proj(d[1])[1]);
+const evG=svg.append("g");
+const evData=[]; EVENTS.forEach(e=>e.pts.forEach((p,i)=>evData.push({e,p,i})));
+const evSel=evG.selectAll("g").data(evData).join("g").attr("class","ev hidden")
+  .attr("transform",d=>`translate(${proj(d.p)})`).attr("tabindex",-1);
+evSel.append("circle").attr("class","ring").attr("r",7).attr("stroke",d=>TYPES[d.e.type].color).attr("stroke-dasharray",d=>d.e.type==="proj"?"3 2":null);
+evSel.append("circle").attr("class","dot").attr("r",6).attr("fill",d=>TYPES[d.e.type].color).attr("stroke",d=>TYPES[d.e.type].color).attr("stroke-width",1.5).attr("stroke-dasharray",d=>d.e.type==="proj"?"3 2":null);
+
+const tip=document.getElementById("tip"), mapcard=document.getElementById("mapcard");
+evSel.on("mouseenter",(ev,d)=>{ const r=mapcard.getBoundingClientRect(); tip.innerHTML=`<b>${d.e.name}</b><br>${span(d.e)} · ${TYPES[d.e.type].label}`; tip.style.left=(ev.clientX-r.left+12)+"px"; tip.style.top=(ev.clientY-r.top+12)+"px"; tip.style.opacity=1; })
+  .on("mouseleave",()=>tip.style.opacity=0)
+  .on("click",(ev,d)=>{ if(YEAR<d.e.start||YEAR>d.e.end){ setYear(Math.round((d.e.start+d.e.end)/2)); } select(d.e.id); });
+
+document.getElementById("legend").innerHTML = Object.entries(TYPES).map(([k,t])=>`<span class="chip${k==="proj"?" dashed":""}" style="color:${t.color}"><i style="background:${t.color}"></i><span style="color:var(--ink)">${t.label}</span></span>`).join("")
+  + `<span class="chip"><span class="sw" aria-hidden="true"></span>Extremely high water stress, 2023 baseline (from 2023)</span>`;
+
+/* ---------- the core (slider) ---------- */
+const core=d3.select("#core"), CX0=20, CX1=980, CW=CX1-CX0;
+const tx=t=>CX0+t*CW, yx=y=>tx(y2t(y)), xy=x=>t2y(Math.min(1,Math.max(0,(x-CX0)/CW)));
+const g=core.append("g");
+const bandTop=22, bandH=46;
+// base sediment band with gentle layering
+const layers=[["#d9cfba",0],["#cdbf9f",.12],["#ddd3bd",.2],["#c8b892",.31],["#d7ccb4",.4],["#cbbd9a",.52],["#dbd1bb",.6],["#c4b48e",.7],["#d5c9ae",.82],["#c9ba96",.9]];
+layers.forEach(([c,t],i)=>{ const t2=(layers[i+1]||[0,1])[1]; g.append("rect").attr("x",tx(t)).attr("y",bandTop).attr("width",tx(t2)-tx(t)).attr("height",bandH).attr("fill",c); });
+// projection zone
+g.append("rect").attr("x",yx(2026)).attr("y",bandTop).attr("width",yx(2100)-yx(2026)).attr("height",bandH).attr("fill","url(#projhatch)");
+const defs=core.append("defs"); const ph=defs.append("pattern").attr("id","projhatch").attr("width",6).attr("height",6).attr("patternUnits","userSpaceOnUse").attr("patternTransform","rotate(45)");
+ph.append("rect").attr("width",6).attr("height",6).attr("fill","#dfe8ec"); ph.append("line").attr("x1",0).attr("y1",0).attr("x2",0).attr("y2",6).attr("stroke","#9db9c7").attr("stroke-width",2);
+// event strata
+EVENTS.forEach((e,i)=>{ const lane=i%3; g.append("rect").attr("x",yx(e.start)).attr("y",bandTop+6+lane*12).attr("width",Math.max(3,yx(e.end)-yx(e.start))).attr("height",9).attr("rx",2).attr("fill",TYPES[e.type].color).attr("opacity",.9)
+  .append("title").text(`${e.name}, ${span(e)}`); });
+g.append("rect").attr("x",CX0).attr("y",bandTop).attr("width",CW).attr("height",bandH).attr("fill","none").attr("stroke","#9f927a");
+// era labels
+ERAS.forEach(([a,b,l])=>{ const x=(yx(a)+yx(b))/2; g.append("text").attr("class","era-l").attr("x",x).attr("y",14).attr("text-anchor","middle").text(l); g.append("line").attr("x1",yx(a)).attr("x2",yx(a)).attr("y1",4).attr("y2",bandTop).attr("stroke","#c3cbca"); });
+// ticks
+[-3000,-2000,-1000,0,500,1000,1500,1900,1950,2000,2050,2100].forEach(y=>{ const x=yx(y); g.append("line").attr("x1",x).attr("x2",x).attr("y1",bandTop+bandH).attr("y2",bandTop+bandH+6).attr("stroke","#8b958f"); g.append("text").attr("x",x).attr("y",bandTop+bandH+18).attr("text-anchor",y===-3000?"start":y===2100?"end":"middle").text(y<0?`${-y} BCE`:y===0?"1 CE":y); });
+// handle
+const handle=core.append("g").attr("pointer-events","none");
+handle.append("rect").attr("x",-1.5).attr("y",bandTop-6).attr("width",3).attr("height",bandH+12).attr("fill","#16202a");
+handle.append("circle").attr("cy",bandTop+bandH+30).attr("r",0);
+handle.append("path").attr("d",`M-7,${bandTop-14} L7,${bandTop-14} L0,${bandTop-5} Z`).attr("fill","#16202a");
+
+function pointerYear(ev){ const pt=core.node().createSVGPoint(); pt.x=ev.clientX; pt.y=ev.clientY; const p=pt.matrixTransform(core.node().getScreenCTM().inverse()); return xy(p.x); }
+let dragging=false;
+core.on("pointerdown",ev=>{ dragging=true; core.node().setPointerCapture(ev.pointerId); stop(); setYear(pointerYear(ev)); })
+    .on("pointermove",ev=>{ if(dragging) setYear(pointerYear(ev)); })
+    .on("pointerup pointercancel",()=>{ dragging=false; });
+core.on("keydown",ev=>{
+  const big=ev.shiftKey; let step = YEAR>=1900? (big?10:1) : (big?250:25);
+  if(ev.key==="ArrowRight"||ev.key==="ArrowUp"){ setYear(YEAR+step); ev.preventDefault(); }
+  else if(ev.key==="ArrowLeft"||ev.key==="ArrowDown"){ setYear(YEAR-step); ev.preventDefault(); }
+  else if(ev.key==="Home"){ setYear(-3000); ev.preventDefault(); }
+  else if(ev.key==="End"){ setYear(2100); ev.preventDefault(); }
+});
+
+/* ---------- jumps ---------- */
+const JUMPS=[[-2075,"Akkad"],[-1900,"Indus"],[-1200,"Bronze Age"],[850,"Maya"],[1280,"Mesa Verde"],[1402,"Angkor"],[1975,"Sahel & Aral"],[2018,"Day Zero"],[2026,"Today"],[2050,"2050"]];
+document.getElementById("jumps").innerHTML=JUMPS.map(([y,l])=>`<button type="button" data-y="${y}">${l}</button>`).join("");
+document.getElementById("jumps").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b){ stop(); setYear(+b.dataset.y); }});
+
+function stop(){}
+/* ---------- render ---------- */
+function activeAt(y){ return EVENTS.filter(e=>y>=e.start&&y<=e.end); }
+function select(id){ selected=id; evSel.classed("sel",d=>d.e.id===id); document.querySelectorAll(".evcard").forEach(c=>c.classList.toggle("sel",c.dataset.id===id)); const c=document.querySelector(`.evcard[data-id="${id}"]`); if(c) c.scrollIntoView({block:"nearest",behavior:"smooth"}); }
+let lastKey="";
+function setYear(y,fromPlay){
+  YEAR=Math.round(Math.max(-3000,Math.min(2100,y)));
+  const x=yx(YEAR); handle.attr("transform",`translate(${x},0)`);
+  core.attr("aria-valuenow",YEAR).attr("aria-valuetext",fmtYear(YEAR));
+  document.getElementById("yearOut").textContent=fmtYear(YEAR);
+  document.getElementById("eraOut").textContent=eraOf(YEAR)+(YEAR>2026?" · published projections only":"");
+  evSel.attr("class",d=>{ const e=d.e; const st= YEAR<e.start? "hidden" : YEAR<=e.end? "active" : "past"; return `ev ${st}${d.e.id===selected?" sel":""}`; });
+  const stressed=YEAR>=2023; landSel.classed("stressed",d=>stressed&&STRESS25.includes(d.properties.name)); smallSel.attr("opacity",stressed?1:0);
+  const act=activeAt(YEAR), era=ERA.find(r=>YEAR>=r.from&&YEAR<=r.to);
+  const key=act.map(e=>e.id).join(",")+"|"+era.title;
+  if(key!==lastKey){ lastKey=key; renderPanel(act,era); }
+  try{ if(!fromPlay) history.replaceState(null,"",`#${YEAR<0?"ym"+(-YEAR):"y"+YEAR}`); }catch(e){}
+}
+function renderPanel(act,era){
+  const a=document.getElementById("active");
+  if(act.length){
+    a.innerHTML=`<div class="panel">${act.map(e=>{ const t=TYPES[e.type]; return `<article class="evcard${e.id===selected?" sel":""}" data-id="${e.id}" style="--c:${t.color}">
+      <div class="top"><span class="chip${e.type==="proj"?" dashed":""}" style="color:${t.color}"><i style="background:${t.color}"></i><span style="color:var(--ink)">${t.label}</span></span><span class="when">${span(e)}</span></div>
+      <h3 style="margin-top:.35rem">${e.name}</h3><div class="ev-ev" style="margin-top:0">${e.place}</div>
+      <div class="m num">${e.metric}</div><div class="ml">${e.metricLabel}${sup(e.src)}</div>
+      <p class="s">${e.summary}</p>
+      <div class="ev-ev">Evidence: ${e.evidence}</div>
+      <a class="more" href="${e.page}">Read the full case →</a></article>`; }).join("")}</div>`;
+  } else {
+    const next=EVENTS.filter(e=>e.start>YEAR).sort((p,q)=>p.start-q.start)[0];
+    a.innerHTML=`<div class="empty">No documented case in this dataset is active in ${fmtYear(YEAR)}. That reflects where research exists, not an absence of drought.${next?`<br><button class="btn ghost" type="button" id="nextBtn">Next: ${next.name}, ${fmtYear(next.start)}</button>`:""}</div>`;
+    if(next) document.getElementById("nextBtn").onclick=()=>{ stop(); setYear(next.start); select(next.id); };
+  }
+  document.getElementById("signal").innerHTML=`<h3>World signal · ${era.title}</h3><dl>${era.items.map(i=>`<dt>${i.k}</dt><dd>${i.v}${sup(i.src)}</dd>`).join("")}</dl>`;
+  paintRefs(document.querySelector(".panel"));
+}
+
+/* ---------- boot: number static refs, then all event refs, then notes ---------- */
+function bootYear(){ const m=location.hash.match(/^#y(m?)(\d+)$/); if(m) return (m[1]?-1:1)*(+m[2]); return 2026; }
+paintRefs(document.querySelector("main .block"));
+setYear(bootYear());
+paintRefs();
+EVENTS.forEach(e=>e.src.forEach(refNum)); ERA.forEach(r=>r.items.forEach(i=>i.src.forEach(refNum)));
+renderNotes("notes");
+</script>
+<script src="../../assets/portfolio.js"></script>
+</body>
+</html>

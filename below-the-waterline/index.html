@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Below the Waterline</title>
+<meta name="description" content="An independent, live research brief on the 2026 UN Water Conference (Abu Dhabi, 8–10 December 2026), read as a security story.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ---------- intro ---------- */
+#intro{position:fixed;inset:0;z-index:100;background:#030c12;display:grid;place-items:center;overflow:hidden;transition:opacity .9s ease}
+#intro.gone{opacity:0;pointer-events:none}
+#intro[hidden]{display:none!important}
+#intro canvas{position:absolute;inset:0;width:100%;height:100%}
+.in-center{position:relative;text-align:center;display:grid;gap:1.2rem;justify-items:center;padding:0 20px;z-index:2}
+.in-center h1{font-size:clamp(2.6rem,8vw,6rem);letter-spacing:-.01em}
+.in-center p{color:var(--muted);max-width:44ch}
+.hold{position:relative;width:96px;height:96px;border-radius:50%;border:1px solid var(--brine);background:rgba(118,211,198,.08);color:var(--ink);cursor:pointer;font:inherit;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;display:grid;place-items:center;touch-action:none;user-select:none;-webkit-user-select:none}
+.hold svg{position:absolute;inset:-6px;width:108px;height:108px;transform:rotate(-90deg)}
+.hold circle{fill:none;stroke:var(--brine);stroke-width:2.5;stroke-dasharray:327;stroke-dashoffset:327}
+.hold:hover{background:rgba(118,211,198,.16)}
+.skip{position:absolute;bottom:22px;right:22px;z-index:3;font:inherit;font-size:.85rem;color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:.45rem 1rem;cursor:pointer}
+.skip:hover{border-color:var(--brine)}
+.facts{position:absolute;z-index:2;pointer-events:none;left:clamp(16px,3vw,44px);top:13%;bottom:13%;display:flex;flex-direction:column;justify-content:space-between}
+.fact{position:relative;width:clamp(200px,19vw,260px);min-height:4.9rem;align-content:start;display:grid;gap:.15rem;opacity:.14;transition:opacity .5s,transform .5s;transform:translateY(8px)}
+.fact.lit{opacity:1;transform:none;text-shadow:0 1px 8px rgba(3,12,18,.8)}
+.fact b{font-family:var(--mono);font-weight:500;font-size:clamp(1.4rem,2.2vw,1.9rem);color:var(--brine);line-height:1.1}
+.fact span{color:var(--ink);font-size:.92rem;line-height:1.35}
+@media (min-width:1101px){.in-center{margin-left:clamp(240px,24vw,340px)}}
+@media (max-width:1100px){
+  .in-note{font-size:.7rem;padding:0 120px 0 16px;text-align:left}
+  .facts{left:0;right:0;top:auto;bottom:16%;height:5.5rem;display:block}
+  .fact{position:absolute;left:50%;bottom:0;width:min(88vw,420px);text-align:center;opacity:0;transform:translate(-50%,8px)}
+  .fact.lit{opacity:0}
+  .fact.lit.current{opacity:1;transform:translate(-50%,0)}
+  #intro{place-items:start center}.in-center{padding-top:14vh}
+}
+.depthread{position:absolute;left:18px;top:18px;z-index:3;font-family:var(--mono);font-size:.74rem;color:var(--muted);letter-spacing:.1em}
+.in-note{position:absolute;bottom:18px;left:0;right:0;text-align:center;z-index:3;font-size:.78rem;color:var(--muted)}
+
+/* ---------- home ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.6}
+.hero .wrap{position:relative;padding-top:clamp(56px,9vw,120px);padding-bottom:clamp(48px,7vw,88px);display:grid;gap:1.6rem}
+.hero h1{max-width:13ch}
+.hero h1 em{font-style:normal;color:var(--brine)}
+#h-title:focus{outline:none}
+.byline{color:var(--muted)} .byline strong{color:var(--ink);font-weight:600}
+.readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;max-width:940px}
+.readout{background:rgba(5,18,26,.78);padding:1rem 1.15rem}
+.readout b{display:block;font-family:var(--mono);font-weight:500;font-size:1.55rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.readout span{display:block;color:var(--muted);font-size:.82rem;margin-top:.3rem}
+.descend{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.dcard{position:relative;overflow:hidden;display:grid;gap:.5rem;align-content:start;min-height:200px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.25rem;background:var(--deep);isolation:isolate;transition:border-color .3s}
+.dcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(180deg,rgba(118,211,198,.18),rgba(118,211,198,.04));z-index:-1;transition:height .6s cubic-bezier(.2,.7,.2,1)}
+.dcard:hover::after,.dcard:focus-visible::after{height:100%}
+.dcard:hover{border-color:var(--brine)}
+.dcard .n{font-family:var(--mono);font-size:.72rem;color:var(--brine);letter-spacing:.1em}
+.dcard h3{font-size:1.6rem}
+.dcard p{color:var(--muted);font-size:.92rem}
+.dcard .stat{margin-top:auto;font-family:var(--mono);font-size:.8rem;color:var(--ink)}
+</style>
+</head>
+<body>
+
+<!-- ============ INTRO: rising waterline ============ -->
+<div id="intro" role="dialog" aria-modal="true" aria-label="Introduction" hidden>
+  <canvas id="introWater" aria-hidden="true"></canvas>
+  <div class="depthread" id="introDepth" aria-hidden="true">Surface</div>
+  <button class="skip" id="skip" type="button">Skip intro →</button>
+  <div class="facts" id="facts" aria-hidden="true"></div>
+  <div class="in-center">
+    <div class="eyebrow">2026 UN Water Conference · Abu Dhabi</div>
+    <h1>Below the Waterline</h1>
+    <p>Tap to go below the surface.</p>
+    <button class="hold" id="hold" type="button" aria-label="Descend below the waterline"><svg viewBox="0 0 108 108" aria-hidden="true"><circle cx="54" cy="54" r="52"/></svg>Dive</button>
+  </div>
+  <div class="in-note">Figures on this screen are sourced on the next page. The dive starts on its own in a few seconds.</div>
+</div>
+
+<header id="site-header"></header>
+<main>
+  <section class="hero" aria-labelledby="h-title">
+    <canvas id="sea" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="eyebrow">Live research brief · 2026 UN Water Conference · Abu Dhabi, 8–10 December</div>
+      <h1 id="h-title">Every water decision is a <em>security</em> decision.</h1>
+      <p class="lede">The world's third UN water conference in about fifty years meets in a region where desalination plants have been hit in an active war, violence over water is at a record high, and AI is competing with cities for cooling water. This brief reads the conference through three lenses: water as security, water and conflict, and Australia and the Indo-Pacific.</p>
+      <p class="byline">By <strong>Ari</strong> · International Security Studies &amp; Arts (Criminology), Australian National University · <span id="upd"></span></p>
+      <div class="readouts" role="list">
+        <div class="readout" role="listitem"><b id="cd">–</b><span>until opening day, 8 Dec (Gulf Standard Time)</span></div>
+        <div class="readout" role="listitem"><b>2.1 bn</b><span>people without safely managed drinking water, 2024<sup class="fn" data-s="jmp"></sup></span></div>
+        <div class="readout" role="listitem"><b>420</b><span>violent water-conflict events reported in 2024, a record<sup class="fn" data-s="pifact"></sup></span></div>
+        <div class="readout" role="listitem"><b>90–99%</b><span>of drinking water desalinated in Bahrain, Kuwait and Qatar<sup class="fn" data-s="shehabi"></sup></span></div>
+      </div>
+      <p class="muted" style="font-size:.82rem;max-width:72ch">Independent analysis. Not affiliated with the United Nations, the conference co-hosts (the UAE and Senegal) or any organisation named here.</p>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-desc">
+    <div class="wrap">
+      <div class="eyebrow">Descend</div>
+      <h2 id="h-desc" style="margin:.6rem 0 1.6rem">Seven levels, one story</h2>
+      <div class="descend" id="descend"></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-strata">
+    <div class="wrap two">
+      <div class="stack measure">
+        <div class="eyebrow">Companion project</div>
+        <h2 id="h-strata">Strata: 5,000 years of water insecurity</h2>
+        <p>Drag through time from the Akkadian Empire to 2100 on a world map, and see how drought has pressured societies before. Every marker comes from a peer-reviewed study or official assessment.</p>
+        <p><a class="btn" href="" id="strataBtn">Open Strata →</a></p>
+      </div>
+      <div class="assess">Abu Dhabi is not the first time water has decided the fate of a region. It may be the first time the whole world is negotiating about it at once.</div>
+    </div>
+  </section>
+
+  <section class="block notes" aria-labelledby="h-notes"><div class="wrap"><h2 id="h-notes" style="font-size:1.4rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div></section>
+</main>
+<footer id="site-footer"></footer>
+
+<script src="data.js"></script>
+<script>
+renderChrome("index.html");
+document.getElementById("upd").textContent="Updated "+fmtDate(LIVE.updated);
+document.getElementById("strataBtn").href=STRATA_URL;
+
+const CARDS={
+  "brief.html":["Five things to know before the gavel falls.","5 findings"],
+  "conference.html":["Six dialogues: what each is about, and a possible solution for each.","6 dialogues · 3 days"],
+  "lenses.html":["Tap a drop: security, conflict, or Australia and the Indo-Pacific.","3 lenses"],
+  "stakeholders.html":["Take a seat at the table and see what each party stands to gain or lose.","6 seats"],
+  "watchlist.html":["The pledges and targets that would count as success.",""],
+  "live.html":["Dated, sourced developments, refreshed every week.",""],
+  "sources.html":["Every source, in Chicago style, with links.",""]
+};
+document.getElementById("descend").innerHTML=PAGES.slice(1).map(([u,l,n])=>{ let [d,st]=CARDS[u]; if(u==="watchlist.html") st=`${LIVE.scorecard.length} items tracked`; if(u==="live.html") st=`Latest: ${fmtDate([...LIVE.feed].filter(f=>f.d<=LIVE.updated).sort((a,b)=>b.d.localeCompare(a.d))[0].d)}`; if(u==="sources.html") st=`${Object.keys(SRC).length} sources`; return `<a class="dcard" href="${u}"><span class="n">LEVEL ${n}</span><h3>${l}</h3><p>${d}</p><span class="stat">${st}</span></a>`; }).join("");
+
+/* countdown */
+(function(){ const target=Date.parse("2026-12-08T00:00:00+04:00"), out=document.getElementById("cd");
+  function tick(){ const ms=target-Date.now(); if(ms<=0){ out.textContent=Date.now()<Date.parse("2026-12-11T00:00:00+04:00")?"Under way":"Concluded"; return; } out.textContent=`${Math.floor(ms/864e5)} days ${Math.floor(ms%864e5/36e5)} h`; }
+  tick(); setInterval(tick,60000); })();
+
+/* hero contour field */
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+(function(){
+  const c=document.getElementById("sea"), x=c.getContext("2d"); let w,h;
+  function size(){ const d=Math.min(devicePixelRatio||1,2); w=c.clientWidth; h=c.clientHeight; c.width=w*d; c.height=h*d; x.setTransform(d,0,0,d,0,0); }
+  function draw(t){ x.clearRect(0,0,w,h); for(let i=0;i<26;i++){ const y0=h*.2+i*(h*.8/26), dp=i/26; x.beginPath(); for(let px=0;px<=w;px+=8){ const y=y0+Math.sin(px*.006+t*.00025+i*.55)*(6+dp*14)+Math.sin(px*.017-t*.0004+i)*(2+dp*4); px?x.lineTo(px,y):x.moveTo(px,y);} x.strokeStyle="#76d3c6"; x.globalAlpha=.05+dp*.28; x.lineWidth=i%7?0.6:1.2; x.stroke(); } x.globalAlpha=1; }
+  size(); addEventListener("resize",()=>{size(); if(still) draw(0);});
+  if(still){ draw(0); return; } let vis=true; new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(c);
+  (function loop(t){ if(vis) draw(t); requestAnimationFrame(loop); })(0);
+})();
+
+/* ============ INTRO ============ */
+const FACTS=[
+  ["2.1 bn","people without safely managed drinking water"],
+  ["75%","of humanity lives in water-insecure or critically water-insecure countries"],
+  ["420","violent water-conflict events in 2024, a record"],
+  ["90–99%","of drinking water is desalinated in Bahrain, Kuwait and Qatar"]
+];
+const intro=document.getElementById("intro");
+function seen(){
+  if(location.hash==="#home") return true;
+  try{ if(document.referrer && new URL(document.referrer).origin===location.origin) return true; }catch(e){}
+  return false;
+}
+function markSeen(){ try{ localStorage.setItem("btw-intro-v3","1"); }catch(e){} try{ sessionStorage.setItem("btw-intro-v3","1"); }catch(e){} }
+let introRunning=false;
+function startIntro(){
+  intro.hidden=false; intro.classList.remove("gone"); introRunning=true;
+  const facts=document.getElementById("facts");
+    facts.innerHTML=[...FACTS].reverse().map(([b,s])=>`<div class="fact"><b>${b}</b><span>${s}</span></div>`).join("");
+  const factEls=[...facts.querySelectorAll(".fact")].reverse();
+  const cv=document.getElementById("introWater"), cx=cv.getContext("2d"), ring=document.querySelector(".hold circle"), depthEl=document.getElementById("introDepth");
+  let W,H,level=0,holding=false,last=performance.now(),done=false,full=false,reachedAt=0;
+  function size(){ const d=Math.min(devicePixelRatio||1,2); W=cv.clientWidth; H=cv.clientHeight; cv.width=W*d; cv.height=H*d; cx.setTransform(d,0,0,d,0,0); }
+  size(); addEventListener("resize",size);
+  const hold=document.getElementById("hold");
+  const go=e=>{ if(e) e.preventDefault(); holding=true; };
+  hold.addEventListener("click",go); hold.addEventListener("pointerdown",go);
+  setTimeout(()=>{ if(!done) holding=true; },7000);
+  document.getElementById("skip").onclick=finish;
+  addEventListener("keydown",e=>{ if(e.key==="Escape"&&introRunning) finish(); });
+  hold.focus();
+  function frame(now){
+    if(done) return;
+    const dt=Math.min(.05,(now-last)/1000); last=now;
+    if(!full && holding) level += dt/3.6; level=Math.max(0,Math.min(1.02,level));
+    ring.style.strokeDashoffset=327*(1-Math.min(1,level));
+    if(!full) depthEl.textContent= level<.02? "Surface" : `Depth ${Math.round(Math.min(1,level)*100)}%`;
+    let cur=-1; const mobile=innerWidth<=1100;
+    factEls.forEach((f,i)=>{ const r=f.getBoundingClientRect(); const pos= mobile? (i+1)/5 : 1-((r.top+r.height/2)/H); const lit=full || level>=pos+.03; f.classList.toggle("lit",lit); if(lit) cur=i; });
+    factEls.forEach((f,i)=>f.classList.toggle("current", i===cur));
+    // water
+    cx.clearRect(0,0,W,H);
+    const top=H*(1-level), t=now/1000;
+    const g=cx.createLinearGradient(0,top,0,H); g.addColorStop(0,"rgba(118,211,198,.55)"); g.addColorStop(.08,"rgba(30,90,110,.55)"); g.addColorStop(1,"rgba(5,30,45,.95)");
+    cx.beginPath(); cx.moveTo(0,H);
+    for(let px=0;px<=W;px+=10){ const y=top+Math.sin(px*.012+t*2.2)*(still?0:7)+Math.sin(px*.031-t*1.4)*(still?0:3); cx.lineTo(px,y); }
+    cx.lineTo(W,H); cx.closePath(); cx.fillStyle=g; cx.fill();
+    // light rays
+    if(!still && level>.05){ cx.globalAlpha=.06; for(let i=0;i<6;i++){ const x0=(i/6)*W+Math.sin(t*.3+i)*40; cx.beginPath(); cx.moveTo(x0,top); cx.lineTo(x0+60,top); cx.lineTo(x0+140,H); cx.lineTo(x0+20,H); cx.closePath(); cx.fillStyle="#bff3ea"; cx.fill(); } cx.globalAlpha=1; }
+    // bubbles
+    if(holding && !still){ for(let i=0;i<3;i++){ cx.beginPath(); cx.arc(Math.random()*W, top+Math.random()*(H-top), Math.random()*2+1, 0, Math.PI*2); cx.fillStyle="rgba(230,240,239,.35)"; cx.fill(); } }
+    if(level>=1 && !full){ full=true; holding=false; reachedAt=now;
+      document.querySelectorAll(".fact").forEach(f=>f.classList.add("lit"));
+      hold.style.visibility="hidden"; document.querySelector(".in-center p").textContent="";
+      depthEl.textContent="Below the waterline"; }
+    if(full){ level=1.02; if(now-reachedAt>4500){ finish(); return; } }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  function finish(){ if(done) return; done=true; introRunning=false; markSeen(); intro.classList.add("gone"); setTimeout(()=>{ intro.hidden=true; document.getElementById("h-title").setAttribute("tabindex","-1"); document.getElementById("h-title").focus({preventScroll:true}); },900); }
+}
+if(location.hash==="#intro" || !seen()) startIntro();
+
+finishPage();
+</script>
+<script src="../assets/portfolio.js"></script>
+</body>
+</html>

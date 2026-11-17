@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Below the Waterline · Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.2rem}
+.filters button{font:inherit;font-family:var(--mono);font-size:.76rem;letter-spacing:.04em;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.4rem .85rem;cursor:pointer}
+.filters button:hover{color:var(--ink);border-color:var(--muted)}
+.filters button[aria-pressed="true"]{background:var(--brine);color:var(--abyss);border-color:var(--brine)}
+.feed{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.feed li{display:grid;grid-template-columns:7rem 1fr;gap:1rem;border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;background:var(--deep)}
+@media (max-width:560px){.feed li{grid-template-columns:1fr}}
+.feed .d{font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+.feed .t{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brine);display:block;margin-bottom:.25rem}
+.feed li.ahead{border-style:dashed}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--brine);margin-right:.5rem;box-shadow:0 0 0 0 rgba(118,211,198,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.bib p{padding-left:2rem;text-indent:-2rem;font-size:.93rem;color:var(--muted);margin:.6rem 0}
+.search{width:100%;max-width:420px;font:inherit;background:var(--deep);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;margin-bottom:1rem}
+.search:focus{outline:2px solid var(--brine);outline-offset:1px}
+.counts{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.counts div{border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;background:var(--deep);min-width:140px}
+.counts b{display:block;font-family:var(--display);font-size:2rem;line-height:1}
+.counts span{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div id="head"></div>
+  <section class="block" style="border-top:0;padding-top:16px" aria-label="Latest developments">
+    <div class="wrap two">
+      <div>
+        <div class="filters" id="filters" role="group" aria-label="Filter by topic"></div>
+        <ul class="feed" id="feed"></ul>
+      </div>
+      <div class="panel">
+        <h2 style="font-size:1.5rem;margin-bottom:.8rem">Update log</h2>
+        <ul class="feed" id="log" style="gap:8px"></ul>
+      </div>
+    </div>
+  </section>
+  <section class="block notes" aria-labelledby="h-notes"><div class="wrap"><h2 id="h-notes" style="font-size:1.4rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="data.js"></script>
+<script>
+renderChrome("live.html");
+document.getElementById("head").innerHTML=pageHead("06",'<span class="pulse" aria-hidden="true"></span>Latest developments',"Re-researched and republished every week, and more often around the conference. Each entry is dated and sourced.","Live");
+drawWaves();
+let READY=false, filt="All";
+const tags=["All",...new Set(LIVE.feed.map(f=>f.tag))];
+document.getElementById("filters").innerHTML=tags.map(t=>`<button type="button" data-k="${t}" aria-pressed="${t==="All"}">${t}</button>`).join("");
+document.getElementById("filters").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; filt=b.dataset.k; document.querySelectorAll("#filters button").forEach(x=>x.setAttribute("aria-pressed",x===b)); feed(); });
+function feed(){ const f=[...LIVE.feed].filter(x=>filt==="All"||x.tag===filt).sort((a,b)=>b.d.localeCompare(a.d));
+  document.getElementById("feed").innerHTML=f.map(x=>`<li class="reveal${x.d>LIVE.updated?" ahead":""}"><span class="d">${fmtDate(x.d)}</span><div><span class="t">${x.tag}</span>${x.t}${sup(x.s)}</div></li>`).join("");
+  if(READY) paintRefs(document.getElementById("feed")); }
+feed();
+document.getElementById("log").innerHTML=LIVE.log.map(x=>`<li><span class="d">${fmtDate(x.d)}</span><div>${x.t}</div></li>`).join("");
+finishPage(); READY=true;
+LIVE.feed.forEach(x=>x.s.forEach(refNum)); renderNotes("notes");
+</script>
+<script src="../assets/portfolio.js"></script>
+</body>
+</html>

@@ -21,7 +21,8 @@
     ['index-lag',                'The Index Lag Protocol',             'Passive funds · geopolitical shock response'],
     ['companion-briefs',         'Companion Briefs',                   'Geopolitical risk · Indo-Pacific & passive-index protocol'],
     ['grand-prix',               'Is the Grand Prix Worth It?',        'Economic & soft-power impact'],
-    ['real-selectors',           'The Real Selectors',                 'Cricket governance · two live case studies']
+    ['real-selectors',           'The Real Selectors',                 'Cricket governance · two live case studies'],
+    ['below-the-waterline',      'Below the Waterline',                'Water security · 2026 UN Water Conference']
   ];
 
   /* ---------- EDIT: About & contact ---------- */

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Below the Waterline · Stakeholders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.tablewrap{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.4fr);gap:clamp(20px,4vw,48px);align-items:start}
+@media (max-width:900px){.tablewrap{grid-template-columns:1fr}}
+#round{width:100%;height:auto;display:block;max-width:440px;margin:0 auto}
+.tbl{fill:rgba(118,211,198,.06);stroke:var(--line);stroke-width:1.5}
+.seat{cursor:pointer;outline:none}
+.seat circle{fill:var(--deep);stroke:var(--line);stroke-width:1.5;transition:fill .3s,stroke .3s}
+.seat:hover circle,.seat:focus-visible circle{stroke:var(--brine)}
+.seat[aria-pressed="true"] circle{fill:var(--brine);stroke:var(--brine)}
+.seat text{font-family:var(--body);font-size:12px;fill:var(--ink);text-anchor:middle;pointer-events:none}
+.seat .ic{font-size:18px;fill:var(--brine)}
+.seat[aria-pressed="true"] .ic{fill:var(--abyss)}
+.centre{font-family:var(--display);font-size:18px;fill:var(--ink);text-anchor:middle}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.cols>div{background:var(--deep);padding:1.2rem}
+.cols h3{font-family:var(--mono);font-weight:400;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brine);margin-bottom:.7rem}
+.cols ul{margin:0;padding-left:1.1rem}
+.cols li+li{margin-top:.5rem}
+.who{font-family:var(--display);font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1rem}
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div id="head"></div>
+  <section class="block" style="border-top:0;padding-top:16px" aria-label="Stakeholder views">
+    <div class="wrap tablewrap">
+      <svg id="round" viewBox="0 0 400 400" role="group" aria-label="Choose a seat at the table"></svg>
+      <div aria-live="polite"><div class="who" id="who"></div><div class="cols" id="cols"></div></div>
+    </div>
+  </section>
+  <section class="block notes" aria-labelledby="h-notes"><div class="wrap"><h2 id="h-notes" style="font-size:1.4rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="data.js"></script>
+<script>
+renderChrome("stakeholders.html");
+document.getElementById("head").innerHTML=pageHead("04","Six seats at the table","Pick a seat. Each view sets out what is at stake, what to watch in Abu Dhabi, and where the value is.","Stakeholders");
+drawWaves();
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,p,txt){ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); if(txt!=null) e.textContent=txt; p.appendChild(e); return e; }
+const svg=document.getElementById("round");
+el("circle",{cx:200,cy:200,r:96,class:"tbl"},svg);
+el("text",{x:200,y:196,class:"centre"},svg,"Abu Dhabi");
+el("text",{x:200,y:216,class:"centre",style:"font-size:12px;fill:var(--muted);font-family:var(--mono)"},svg,"SDG 6");
+STAKE.forEach((s,i)=>{ const a=-Math.PI/2+i*Math.PI*2/STAKE.length, x=200+Math.cos(a)*150, y=200+Math.sin(a)*150;
+  const g=el("g",{class:"seat",tabindex:0,role:"button","aria-pressed":"false","data-i":i,"aria-label":s.label},svg);
+  el("circle",{cx:x,cy:y,r:34},g); el("text",{x,y:y+6,class:"ic"},g,s.icon);
+  const words=s.label.split(" & "); el("text",{x,y:y+(y>200?52:-44)},g,words[0]+(words[1]?" &":"")); if(words[1]) el("text",{x,y:y+(y>200?66:-30)},g,words[1]);
+  g.addEventListener("click",()=>pick(i)); g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(i);} if(e.key==="ArrowRight"||e.key==="ArrowLeft"){ const n=(i+(e.key==="ArrowRight"?1:-1)+STAKE.length)%STAKE.length; pick(n); svg.querySelector(`.seat[data-i="${n}"]`).focus(); } }); });
+let READY=false;
+function pick(i){
+  svg.querySelectorAll(".seat").forEach(g=>g.setAttribute("aria-pressed",+g.dataset.i===i));
+  const s=STAKE[i], li=a=>a.map(x=>`<li>${withRefs(x)}</li>`).join("");
+  document.getElementById("who").textContent=s.label;
+  document.getElementById("cols").innerHTML=`<div class="reveal"><h3>What's at stake</h3><ul>${li(s.stake)}</ul></div><div class="reveal" style="animation-delay:.06s"><h3>Watch in Abu Dhabi</h3><ul>${li(s.watch)}</ul></div><div class="reveal" style="animation-delay:.12s"><h3>Where the value is</h3><ul>${li(s.value)}</ul></div>`;
+  if(READY) paintRefs(document.getElementById("cols"));
+}
+pick(0); paintRefs(); READY=true;
+STAKE.forEach(s=>[...s.stake,...s.watch,...s.value].forEach(x=>(x.match(/\[([A-Za-z0-9]+)\]/g)||[]).forEach(m=>{ const k=m.slice(1,-1); if(SRC[k]) refNum(k); })));
+renderNotes("notes");
+</script>
+<script src="../assets/portfolio.js"></script>
+</body>
+</html>

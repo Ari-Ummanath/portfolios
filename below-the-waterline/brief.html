@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Below the Waterline · Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.finds{display:grid;gap:14px}
+.find{display:grid;grid-template-columns:minmax(180px,.55fr) minmax(0,1.6fr);gap:clamp(16px,3vw,40px);align-items:start;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,30px);background:var(--deep);position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.find:hover{border-color:var(--brine);transform:translateY(-2px)}
+@media (max-width:760px){.find{grid-template-columns:1fr}}
+.find .fig{font-family:var(--display);font-size:clamp(2.6rem,5.5vw,4.4rem);line-height:.95;color:var(--brine);font-variant-numeric:tabular-nums}
+.find .figl{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:.6rem;letter-spacing:.05em}
+.find .k{position:absolute;top:14px;right:18px;font-family:var(--mono);font-size:.72rem;color:var(--line)}
+.find h2{font-size:clamp(1.4rem,2.4vw,1.9rem);margin-bottom:.6rem}
+.find details{margin-top:.9rem}
+.find summary{cursor:pointer;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sediment);list-style:none}
+.find summary::-webkit-details-marker{display:none}
+.find summary::before{content:"+ ";}
+.find details[open] summary::before{content:"− ";}
+.find details p{margin-top:.6rem;color:var(--muted);font-size:.95rem}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:.9rem}
+.bar i{display:block;height:100%;background:var(--brine)}
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div id="head"></div>
+  <section class="block" style="border-top:0;padding-top:24px" aria-label="Five findings">
+    <div class="wrap finds">
+      <article class="find reveal"><span class="k">01</span>
+        <div><div class="fig">90–99%</div><div class="figl">of drinking water desalinated in Bahrain, Kuwait and Qatar</div></div>
+        <div><h2>The host region is the case study</h2>
+          <p>Desalination supplies 42% of the UAE's drinking water and 90–99% in Bahrain, Kuwait and Qatar. In 2026, plants in Bahrain, Kuwait and on Iran's Qeshm Island were reported hit during the US–Israel war with Iran, with responsibility disputed.<sup class="fn" data-s="shehabi"></sup></p>
+          <details><summary>Why it matters</summary><p>Abu Dhabi will discuss water security while living it. Expect protection of water infrastructure in conflict to surface in the Water for Cooperation dialogue, which already names water as a target and tool of coercion.<sup class="fn" data-s="cpD"></sup></p></details></div>
+      </article>
+      <article class="find reveal" style="animation-delay:.08s"><span class="k">02</span>
+        <div><div class="fig">420</div><div class="figl">violent water-conflict events, 2024</div><div class="bar" aria-hidden="true"><i style="width:100%"></i></div><div class="bar" aria-hidden="true"><i style="width:6%"></i></div><div class="figl">2024 vs 2000 (24 events)</div></div>
+        <div><h2>Violence over water is accelerating</h2>
+          <p>The Pacific Institute recorded 420 events in 2024, nearly 20% more than 2023 and 78% more than 2022, against 24 in 2000.<sup class="fn" data-s="pirelease"></sup></p></div>
+      </article>
+      <article class="find reveal" style="animation-delay:.16s"><span class="k">03</span>
+        <div><div class="fig">43 / 153</div><div class="figl">countries with arrangements covering ≥90% of their shared waters</div><div class="bar" aria-hidden="true"><i style="width:28%"></i></div></div>
+        <div><h2>Shared water is under-governed</h2>
+          <p>153 countries share 313 transboundary basins and 426 aquifer systems, yet only 43 have arrangements covering 90% or more of those waters, and at least 20 have none.<sup class="fn" data-s="cpD"></sup></p></div>
+      </article>
+      <article class="find reveal" style="animation-delay:.24s"><span class="k">04</span>
+        <div><div class="fig">14×</div><div class="figl">spread between 2030 estimates of data-centre water use</div></div>
+        <div><h2>AI's water bill depends on who counts</h2>
+          <p>2030 estimates for data centres run from 644 billion litres (direct cooling) to 9.3 trillion litres (the water footprint of their electricity), a spread driven by definitions.<sup class="fn" data-s="rystad"></sup><sup class="fn" data-s="unuai"></sup></p>
+          <details><summary>Why it matters</summary><p>Without a common metric, governments cannot price or regulate data-centre water use. A disclosure standard is a concrete, low-cost outcome the conference could back.</p></details></div>
+      </article>
+      <article class="find reveal" style="animation-delay:.32s"><span class="k">05</span>
+        <div><div class="fig">&gt;US$1 tn</div><div class="figl">needed every year to meet SDG 6</div></div>
+        <div><h2>The money is the bottleneck</h2>
+          <p>Meeting SDG 6 needs more than US$1 trillion a year. Over 90% of water finance comes from public budgets, and private capital is under 2% of water investment in low- and middle-income countries.<sup class="fn" data-s="cpF"></sup></p></div>
+      </article>
+    </div>
+  </section>
+  <section class="block notes" aria-labelledby="h-notes"><div class="wrap"><h2 id="h-notes" style="font-size:1.4rem;margin-bottom:1rem">Notes</h2><ol id="notes"></ol></div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="data.js"></script>
+<script>
+renderChrome("brief.html");
+document.getElementById("head").innerHTML=pageHead("01","Five things to know","The whole brief in five findings. Open “Why it matters” for the analysis behind each.","The brief");
+drawWaves(); finishPage();
+</script>
+<script src="../assets/portfolio.js"></script>
+</body>
+</html>
