@@ -166,7 +166,9 @@ const FACTS=[
 const intro=document.getElementById("intro");
 function seen(){
   if(location.hash==="#home") return true;
-  try{ if(document.referrer && new URL(document.referrer).origin===location.origin) return true; }catch(e){}
+  try{ const nav=performance.getEntriesByType("navigation")[0]; if(nav && nav.type==="back_forward") return true; }catch(e){}
+  /* skip only when arriving from another page of this site (not from the portfolio home or elsewhere) */
+  try{ if(document.referrer){ const r=new URL(document.referrer), dir=location.pathname.replace(/[^/]*$/,""); if(r.origin===location.origin && r.pathname.startsWith(dir) && r.pathname!==location.pathname) return true; } }catch(e){}
   return false;
 }
 function markSeen(){ try{ localStorage.setItem("btw-intro-v3","1"); }catch(e){} try{ sessionStorage.setItem("btw-intro-v3","1"); }catch(e){} }
