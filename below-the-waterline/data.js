@@ -264,6 +264,64 @@ const STAKE = [
     value:[`Safe water at home frees time for school and work.[cpA]`,`Transparent tracking lets the public hold pledges to account.`]}
 ];
 
+SRC.cisc = {url:"https://www.cisc.gov.au/information-for-your-industry/water-and-sewerage/legislation-regulation-and-compliance/soci-act-2018",
+  note:`Cyber and Infrastructure Security Centre, “SOCI Act 2018 for Water and Sewerage,” Australian Government, Department of Home Affairs, accessed November 17, 2026,`,
+  bib:`Cyber and Infrastructure Security Centre. “SOCI Act 2018 for Water and Sewerage.” Australian Government, Department of Home Affairs. Accessed November 17, 2026.`};
+
+/* ============ SOLUTIONS: recommendations by lens ============ */
+const SOL_WHEN = {now:"Before 8 Dec", year:"Within 12 months", y2030:"By 2030"};
+const SOL_LENS = {security:"Water as security", conflict:"Water and conflict", aus:"Australia & Indo-Pacific"};
+const SOL = [
+  {id:"s1", lens:"security", when:"now", who:["Gulf states","UN & multilateral"],
+    title:"Treat desalination as a civilian lifeline",
+    act:"Use the Abu Dhabi outcome to reaffirm that drinking-water infrastructure is protected under international humanitarian law, and pair it with practical resilience: back-up storage, interconnected supply and rapid repair plans for the plants cities depend on.",
+    why:"Desalination supplies 90–99% of drinking water in Bahrain, Kuwait and Qatar, and plants were reported hit in 2026.[shehabi] AP reported that more than 90% of the Gulf's desalinated water comes from just 56 plants, and that the Geneva Conventions prohibit attacking such infrastructure.[ap]"},
+  {id:"s2", lens:"security", when:"now", who:["Utilities & operators","Governments"],
+    title:"Close the exposed-controller gap",
+    act:"Every water utility checks its own internet-facing control systems and takes them offline or behind secure access, with funded help for small utilities that lack cyber staff.",
+    why:"More than 100 internet-exposed systems in the US water sector were hit in July 2026, and CISA has published guidance on finding them.[secaff] Allied agencies assess state actors have pre-positioned in water networks.[cisa]"},
+  {id:"s3", lens:"security", when:"year", who:["Australia"],
+    title:"Hold Australia's water utilities to the cyber standard of the threat",
+    act:"Use the Security of Critical Infrastructure Act's existing water and sewerage coverage to apply enhanced cyber obligations to the systems of highest national significance, and mirror allied water-sector advisories in Australian guidance.",
+    why:"The Act already covers critical water assets, and systems of national significance can face enhanced cyber security obligations.[cisc] Australia's Cyber Security Centre assessed that Australian infrastructure could be vulnerable to the activity CISA described.[acsc]"},
+  {id:"s4", lens:"security", when:"year", who:["Governments","Utilities & operators"],
+    title:"Measure AI's water in one agreed unit",
+    act:"Agree a disclosure standard that reports both the water a data centre consumes on site and the water footprint of the electricity it uses, metered and published annually.",
+    why:"2030 estimates range from 644 billion to 9.3 trillion litres depending on what is counted.[rystad][unuai] The Prosperity concept paper calls for mandatory monitoring of data-centre water.[cpB]"},
+  {id:"c1", lens:"conflict", when:"y2030", who:["UN & multilateral","Governments"],
+    title:"Treat treaty accession as conflict prevention",
+    act:"Back the “100 Parties” push for the UN water conventions with funded legal and technical help for each acceding country, prioritising basins where violence over water is rising.",
+    why:"Only 43 of 153 countries sharing waters have arrangements covering 90% or more of them; the conventions have 59 and 42 parties.[cpD]"},
+  {id:"c2", lens:"conflict", when:"year", who:["Governments"],
+    title:"Start with shared early warning",
+    act:"Neighbouring states that cannot yet agree on allocation agree first on sharing flood and drought data. It is cheap, apolitical and builds the trust later deals need.",
+    why:"A flood early-warning system on the Ratu River between Nepal and India reportedly saved 169 lives in 2017.[cpD]"},
+  {id:"c3", lens:"conflict", when:"year", who:["UN & multilateral","Researchers"],
+    title:"Create a neutral register of attacks on water",
+    act:"Build a UN-endorsed incident register on top of open data such as the Pacific Institute's chronology, with verification standards that let disputed claims be logged as disputed.",
+    why:"Violence over water reached a record 420 reported events in 2024.[pirelease] Responsibility for the 2026 Gulf desalination strikes is still contested.[shehabi]"},
+  {id:"c4", lens:"conflict", when:"y2030", who:["Governments","UN & multilateral"],
+    title:"Govern the aquifers before they run dry",
+    act:"Start joint mapping and monitoring of shared aquifers, the step that comes before any agreement on use.",
+    why:"Only about 10 agreements cover specific transboundary aquifers worldwide.[cpD]"},
+  {id:"a1", lens:"aus", when:"now", who:["Australia"],
+    title:"Carry the Pacific from Antalya to Abu Dhabi",
+    act:"As COP31's President of Negotiations, Australia brings the Pacific's climate priorities into the water conference, framing Pacific water security as climate adaptation rather than aid.",
+    why:"Australia holds the President of Negotiations role for COP31.[dcceew] Five million people in the Pacific lack basic drinking water.[unicefpac]"},
+  {id:"a2", lens:"aus", when:"y2030", who:["Australia","Pacific partners"],
+    title:"Make a Pacific water commitment with numbers",
+    act:"Announce a measurable Pacific water and sanitation commitment, delivered through existing partners such as the Australian Water Partnership and the Pacific Water and Wastewater Association, with a public annual scorecard.",
+    why:"At current pace basic drinking-water coverage reaches only 64% by 2030 and basic sanitation 33%.[unicefpac] The Australian Water Partnership is DFAT-funded and already works with the Pacific's peak water body.[insidewater][pwwa]"},
+  {id:"a3", lens:"aus", when:"year", who:["Australia","Utilities & operators"],
+    title:"Plan data centres around water, not after it",
+    act:"Require metered water reporting and non-drinking-water cooling for new data centres, and price their water to reflect the peak demand they create.",
+    why:"Sydney Water projects data centres could take up to a quarter of the city's available water by 2035.[reuters] NSW's pricing regulator is examining how data centres should pay for peak demand.[wmedia] Federal expectations now include sustainable water use.[swm]"},
+  {id:"a4", lens:"aus", when:"now", who:["Australia","UN & multilateral"],
+    title:"Keep civil society in the room",
+    act:"Press for funded, structured stakeholder participation in the conference's follow-up, consistent with Australia's earlier position.",
+    why:"Australia, Canada and New Zealand said in 2024 that the UN had not upheld best practice on civil society participation.[canz] The Multilateral Processes paper proposes funding stakeholders from developing countries.[cpE]"}
+];
+
 /* ============ SITE HELPERS ============ */
 const PAGES = [
   ["index.html","Home","Surface"],
@@ -272,8 +330,9 @@ const PAGES = [
   ["lenses.html","Three lenses","03"],
   ["stakeholders.html","Stakeholders","04"],
   ["watchlist.html","Watchlist","05"],
-  ["live.html","Live","06"],
-  ["sources.html","Sources","07"]
+  ["solutions.html","Solutions","06"],
+  ["live.html","Live","07"],
+  ["sources.html","Sources","08"]
 ];
 const REF_ORDER=[];
 function refNum(k){ let i=REF_ORDER.indexOf(k); if(i<0){REF_ORDER.push(k); i=REF_ORDER.length-1;} return i+1; }
@@ -294,7 +353,7 @@ function fmtDate(iso){ if(iso.length===7){ const [y,m]=iso.split("-"); return ne
 function renderChrome(active){
   const h=document.getElementById("site-header");
   if(h) h.innerHTML=`<div class="wrap bar-inner"><a class="brandmark" href="index.html#home"><span class="wl" aria-hidden="true"></span>Below the Waterline</a>
-    <nav aria-label="Pages">${PAGES.slice(1).map(([u,l,n])=>`<a href="${u}"${u===active?' aria-current="page"':""}><span class="pn">${n}</span>${l}</a>`).join("")}<a class="ext" href="${STRATA_URL}"><span class="pn">08</span>Strata</a></nav></div>`;
+    <nav aria-label="Pages">${PAGES.slice(1).map(([u,l,n])=>`<a href="${u}"${u===active?' aria-current="page"':""}><span class="pn">${n}</span>${l}</a>`).join("")}<a class="ext" href="${STRATA_URL}"><span class="pn">09</span>Strata</a></nav></div>`;
   const i=PAGES.findIndex(p=>p[0]===active), prev=PAGES[i-1], next=PAGES[i+1];
   const f=document.getElementById("site-footer");
   if(f) f.innerHTML=`<div class="wrap pager">${prev?`<a class="pg prev" href="${prev[0]==="index.html"?"index.html#home":prev[0]}"><span>← Previous</span>${prev[1]}</a>`:"<span></span>"}${next?`<a class="pg next" href="${next[0]}"><span>Next →</span>${next[1]}</a>`:"<span></span>"}</div>
