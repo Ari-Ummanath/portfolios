@@ -15,6 +15,7 @@ Live site: **https://ari-ummanath.github.io/portfolios/**
 | `companion-briefs/` | Companion Briefs |
 | `grand-prix/` | Is the Grand Prix Worth It? |
 | `real-selectors/` | The Real Selectors |
+| `below-the-waterline/` | Below the Waterline (with the Strata simulator in `strata/`) |
 
 ## How to update anything (no software needed)
 

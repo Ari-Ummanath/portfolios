@@ -1,0 +1,122 @@
+/* Strata — layout idea: an atlas built like a sediment core. Cool mineral paper, ink type,
+   and one signature element: the time slider drawn as a core you can drag through. */
+:root{
+  --paper:#eef1f0;
+  --surface:#fbfcfc;
+  --ink:#16202a;
+  --muted:#5b6670;
+  --rule:#cfd6d5;
+  --water:#1d5d78;
+  --stress:#e6cfa5;
+  --land:#dde3e1;
+  --display:"Spectral", "Iowan Old Style", Georgia, serif;
+  --body:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--water);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--ink)}
+:focus-visible{outline:2px solid var(--water);outline-offset:3px;border-radius:2px}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,5.2vw,4rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,3.2vw,2.5rem)}
+h3{font-size:1.35rem}
+p{margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(16px,3.5vw,40px)}
+.measure{max-width:66ch}
+.stack>*+*{margin-top:1rem}
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.03em}
+.muted{color:var(--muted)}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--water)}
+.num{font-variant-numeric:tabular-nums}
+
+/* header */
+#site-header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:56px}
+.mark{display:flex;align-items:center;gap:.55rem;font-family:var(--display);font-size:1.35rem;color:var(--ink);text-decoration:none;white-space:nowrap}
+.mark-glyph{width:16px;height:22px;border-radius:3px;background:linear-gradient(var(--stress) 0 22%,var(--ink) 22% 30%,#c9b27f 30% 52%,var(--water) 52% 64%,#b98a52 64% 82%,var(--ink) 82% 100%)}
+#site-header nav{display:flex;gap:1.1rem;overflow-x:auto;scrollbar-width:none}
+#site-header nav::-webkit-scrollbar{display:none}
+#site-header nav a{white-space:nowrap;color:var(--muted);text-decoration:none;font-size:.9rem;padding:.4rem 0;border-bottom:2px solid transparent}
+#site-header nav a:hover{color:var(--ink)}
+#site-header nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--ink)}
+#site-header nav a.ext{color:var(--water)}
+
+/* page head */
+.page-head{padding-top:clamp(32px,5vw,64px);padding-bottom:clamp(20px,3vw,32px);display:grid;gap:1rem}
+.dek{font-size:1.2rem;max-width:62ch;line-height:1.5}
+
+/* sections */
+section.block{padding:clamp(40px,6vw,80px) 0;border-top:1px solid var(--rule);scroll-margin-top:64px}
+.two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+
+/* footnotes */
+sup.fn{font-family:var(--mono);font-size:.66em;line-height:0;margin-left:1px}
+sup.fn a{text-decoration:none;padding:0 1px}
+.notes ol{margin:0;padding-left:2.2rem}
+.notes li{font-size:.9rem;color:var(--muted);padding:.3rem 0;scroll-margin-top:72px}
+.notes li:target{background:color-mix(in srgb,var(--water) 10%,transparent);color:var(--ink)}
+.notes a,.bib a{word-break:break-all}
+.bib p{padding-left:2rem;text-indent:-2rem;font-size:.92rem;margin:.6rem 0;color:var(--muted)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+.chip i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.chip.dashed i{background:transparent!important;border:2px dashed currentColor}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.tiles>div{background:var(--surface);padding:1.1rem 1.15rem}
+.tiles b{display:block;font-family:var(--display);font-weight:500;font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.tiles span{display:block;color:var(--muted);font-size:.88rem;margin-top:.35rem}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:1.1rem 1.2rem}
+.card h3{margin-bottom:.2rem}
+.debate{margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--rule);font-size:.92rem;color:var(--muted)}
+.debate::before{content:"The debate · ";font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.assess{font-size:.92rem;color:var(--muted);border-left:3px solid var(--stress);padding-left:.8rem}
+.assess::before{content:"Analysis · ";font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+
+/* case study (shared by civilisations and modern) */
+.case{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:clamp(24px,4vw,56px);padding:clamp(40px,6vw,72px) 0;border-top:1px solid var(--rule);scroll-margin-top:64px}
+@media (max-width:900px){.case{grid-template-columns:1fr}}
+.case-side{display:grid;gap:1rem;align-content:start;position:sticky;top:76px}
+@media (max-width:900px){.case-side{position:static}}
+.case-when{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.big{font-family:var(--display);font-size:clamp(2.6rem,6vw,4.2rem);line-height:1;font-variant-numeric:tabular-nums}
+.big-label{color:var(--muted);font-size:.95rem;max-width:34ch}
+.evidence{display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:start;font-size:.92rem}
+.evidence .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--ink);border-radius:3px;padding:.1rem .4rem;white-space:nowrap}
+.miniline{width:100%;height:auto;display:block}
+.miniline text{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+
+/* jump list */
+.jumps{display:flex;flex-wrap:wrap;gap:.5rem}
+.jumps a{font-family:var(--mono);font-size:.76rem;text-decoration:none;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:.35rem .7rem;border-radius:999px}
+.jumps a:hover{border-color:var(--ink)}
+
+/* table */
+.table{width:100%;border-collapse:collapse;font-size:.93rem}
+.table th{font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1px solid var(--ink);padding:.5rem .6rem}
+.table td{border-bottom:1px solid var(--rule);padding:.7rem .6rem;vertical-align:top}
+.scroll-x{overflow-x:auto}
+
+/* charts */
+.chart{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:1rem}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.chart .lbl{fill:var(--ink);font-size:12px}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:.7rem;max-width:64ch}
+
+footer#site-footer{border-top:1px solid var(--rule);padding:32px 0 56px;color:var(--muted);font-size:.86rem}
+.foot-inner{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:space-between}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* room for the portfolio menu seal */
+#site-header .wrap{padding-right:max(84px,clamp(16px,4vw,48px))}

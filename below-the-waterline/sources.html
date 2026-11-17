@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Below the Waterline · Sources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.2rem}
+.filters button{font:inherit;font-family:var(--mono);font-size:.76rem;letter-spacing:.04em;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.4rem .85rem;cursor:pointer}
+.filters button:hover{color:var(--ink);border-color:var(--muted)}
+.filters button[aria-pressed="true"]{background:var(--brine);color:var(--abyss);border-color:var(--brine)}
+.feed{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.feed li{display:grid;grid-template-columns:7rem 1fr;gap:1rem;border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;background:var(--deep)}
+@media (max-width:560px){.feed li{grid-template-columns:1fr}}
+.feed .d{font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+.feed .t{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brine);display:block;margin-bottom:.25rem}
+.feed li.ahead{border-style:dashed}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--brine);margin-right:.5rem;box-shadow:0 0 0 0 rgba(118,211,198,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.bib p{padding-left:2rem;text-indent:-2rem;font-size:.93rem;color:var(--muted);margin:.6rem 0}
+.search{width:100%;max-width:420px;font:inherit;background:var(--deep);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;margin-bottom:1rem}
+.search:focus{outline:2px solid var(--brine);outline-offset:1px}
+.counts{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.counts div{border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;background:var(--deep);min-width:140px}
+.counts b{display:block;font-family:var(--display);font-size:2rem;line-height:1}
+.counts span{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div id="head"></div>
+  <section class="block" style="border-top:0;padding-top:16px" aria-labelledby="h-method">
+    <div class="wrap two">
+      <div class="stack measure">
+        <h2 id="h-method">Method</h2>
+        <p>Primary documents come first: UN resolutions and concept papers, government advisories, and peer-reviewed or institutional reports. News reports are used for dated events and are attributed. Where sources disagree, both are shown and the difference explained.</p>
+        <p>Lines marked “Analysis” and the “possible solution” for each dialogue are the author's judgement, built from the options in the official papers and the evidence in this brief.</p>
+      </div>
+      <div class="panel stack"><div class="eyebrow">Companion</div><p>For 5,000 years of water insecurity, from the Akkadian Empire to 2100, see <a href="" id="strata">Strata</a>.</p></div>
+    </div>
+  </section>
+  <section class="block bib" aria-labelledby="h-bib">
+    <div class="wrap">
+      <h2 id="h-bib" style="margin-bottom:1rem">Bibliography</h2>
+      <label class="mono muted" for="q" style="display:block;margin-bottom:.4rem">Search sources</label>
+      <input class="search" id="q" type="search" placeholder="e.g. Pacific Institute, CISA, concept paper">
+      <p class="mono muted" id="qcount" aria-live="polite"></p>
+      <div id="bib" style="max-width:92ch"></div>
+    </div>
+  </section>
+</main>
+<footer id="site-footer"></footer>
+<script src="data.js"></script>
+<script>
+renderChrome("sources.html");
+document.getElementById("head").innerHTML=pageHead("07","Sources","Every figure in this brief links to one of these.","Notes and bibliography");
+drawWaves();
+document.getElementById("strata").href=STRATA_URL;
+const key=s=>s.bib.replace(/<[^>]+>/g,"").replace(/^[“"‘$]+/,"").toLowerCase();
+const all=Object.values(SRC).sort((a,b)=>key(a).localeCompare(key(b)));
+function draw(q){ const f=all.filter(s=>!q||key(s).includes(q.toLowerCase()));
+  document.getElementById("bib").innerHTML=f.map(s=>`<p>${s.bib}${s.url?` <a href="${s.url}">${s.url}</a>.`:""}</p>`).join("");
+  document.getElementById("qcount").textContent=`${f.length} of ${all.length} sources`; }
+draw(""); document.getElementById("q").addEventListener("input",e=>draw(e.target.value));
+</script>
+<script src="../assets/portfolio.js"></script>
+</body>
+</html>

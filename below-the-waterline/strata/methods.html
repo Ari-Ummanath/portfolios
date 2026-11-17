@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata · Method and sources</title>
+<meta name="description" content="How the Strata water-security simulation was built: evidence standards, the time scale, limitations, and the full Chicago-style bibliography.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <div class="wrap page-head">
+    <div class="eyebrow">Method &amp; sources</div>
+    <h1>How this was built, and where it stops</h1>
+    <p class="dek">This page sets out what counts as evidence here, how the timeline works, and what the project cannot tell you.</p>
+  </div>
+
+  <section class="block" aria-labelledby="h-rules" style="padding-top:32px">
+    <div class="wrap two">
+      <div class="stack measure">
+        <h2 id="h-rules">Five rules</h2>
+        <p><b>1. Peer review first.</b> Ancient cases rest on peer-reviewed paleoclimate studies. Modern cases use peer-reviewed research, UN and government assessments, and dated reporting for recent events.</p>
+        <p><b>2. No invented numbers.</b> The simulator shows only figures stated in a source. It does not interpolate between years or model new projections. Where a study gives a range, the range is shown.</p>
+        <p><b>3. Derived values are marked.</b> Two bars in the water-conflict chart are calculated from stated percentage changes; they are hatched and labelled approximate.</p>
+        <p><b>4. Causation is not assumed.</b> Each case carries a “debate” line. A drought coinciding with a collapse is evidence of pressure, not proof of cause.</p>
+        <p><b>5. Analysis is labelled.</b> Interpretive lines are marked “Analysis” so readers can separate the author's judgement from the evidence.</p>
+      </div>
+      <div class="card stack">
+        <h3>Archives used</h3>
+        <div class="scroll-x"><table class="table">
+          <thead><tr><th scope="col">Archive</th><th scope="col">What it records</th><th scope="col">Case</th></tr></thead>
+          <tbody>
+            <tr><td>Marine sediment</td><td>Wind-blown dust from dry land</td><td>Akkad</td></tr>
+            <tr><td>River landforms</td><td>Flood intensity and river behaviour</td><td>Indus</td></tr>
+            <tr><td>Lake pollen</td><td>Vegetation, and so rainfall</td><td>Late Bronze Age</td></tr>
+            <tr><td>Lake gypsum</td><td>Isotopes of ancient lake water</td><td>Maya</td></tr>
+            <tr><td>Tree rings</td><td>Year-by-year rainfall or temperature</td><td>Mesa Verde, Angkor</td></tr>
+            <tr><td>Instruments</td><td>Rainfall, river flow, lake level, use</td><td>1960 onward</td></tr>
+          </tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-scale">
+    <div class="wrap two">
+      <div class="stack measure">
+        <h2 id="h-scale">Why the timeline stretches</h2>
+        <p>The slider runs from 3000 BCE to 2100 on a piecewise scale: 3000 BCE to 1 CE fills about a third of its length, 1 CE to 1900 another third, and 1900 to 2100 the final third. On a straight scale the last two centuries would be a sliver. Real sediment cores behave similarly, because older layers are compressed by the weight above them.</p>
+        <p>Dates in ancient cases are approximate. The Akkadian aridity onset, for example, is dated to 4025 ± 125 calendar years before present, so the marker's start year is a central estimate.<sup class="fn" data-s="cullen"></sup></p>
+      </div>
+      <div class="stack measure">
+        <h2>Limitations</h2>
+        <p>The cases are a curated set of well-studied examples, not a census of every drought. Regions with less research, including much of Africa and Australia before colonisation, are under-represented; an empty map means missing research, not missing drought.</p>
+        <p>Proxies are local or regional; a marker is placed at the study site, not across the full area affected. The 2023 water-stress shading uses the Aqueduct baseline for every later year, because country-level projections are not shown.<sup class="fn" data-s="dte"></sup></p>
+        <p>Projection figures come from different models with different definitions (water stress, water scarcity, water footprint) and should not be compared directly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-credit">
+    <div class="wrap two">
+      <div class="stack measure">
+        <h2 id="h-credit">About</h2>
+        <p>Strata is an independent evidence project by Ari, an undergraduate in International Security Studies and Arts (Criminology) at the Australian National University. It is part of <a id="btw" href="#">Below the Waterline</a>, a live brief on the 2026 UN Water Conference in Abu Dhabi.</p>
+        <p>Every figure was checked against the source in its note. Not affiliated with the United Nations or any organisation cited.</p>
+      </div>
+      <div class="notes"><h3 style="margin-bottom:.6rem">Notes</h3><ol id="notes"></ol></div>
+    </div>
+  </section>
+
+  <section class="block bib" aria-labelledby="h-bib">
+    <div class="wrap">
+      <h2 id="h-bib" style="margin-bottom:.4rem">Bibliography</h2>
+      <div id="bib" class="measure" style="max-width:90ch"></div>
+    </div>
+  </section>
+</main>
+<footer id="site-footer"></footer>
+<script src="data.js"></script>
+<script>
+renderHeader("methods.html"); renderFooter();
+document.getElementById("btw").href=BTW_URL;
+paintRefs(); renderNotes("notes"); renderBibliography("bib");
+</script>
+<script src="../../assets/portfolio.js"></script>
+</body>
+</html>
