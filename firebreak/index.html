@@ -1,0 +1,1075 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Firebreak</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Firebreak: a sourced plan for an AI-assisted DNA screening gateway for Australia, by Arpitha Ummanath.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a single reading column (about 70ch) with full-bleed bands; data sections widen to 1120px. Hazard-signage display type over a cool lab-paper ground. */
+:root{
+  --bg:#eef2f0;          /* lab paper, faint green-grey */
+  --surface:#f8faf9;
+  --ink:#0f2629;         /* deep teal ink */
+  --muted:#4d6265;
+  --rule:#c9d4d2;
+  --signal:#b86e00;      /* biohazard amber, darkened for contrast on light */
+  --signal-soft:#f6e4c4;
+  --cool:#1d6b6f;        /* sterile teal */
+  --cool-soft:#d6e8e7;
+  --calc:#5b4ba8;        /* marks Ari's own calculations */
+  --calc-soft:#e6e2f6;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --wrap:1120px; --read:70ch;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1517;--surface:#11201f;--ink:#e2ebe9;--muted:#9db0ae;--rule:#25393a;
+  --signal:#f0ac3a;--signal-soft:#3a2a10;--cool:#6cc3c2;--cool-soft:#123234;--calc:#b3a6f2;--calc-soft:#252046;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1517;--surface:#11201f;--ink:#e2ebe9;--muted:#9db0ae;--rule:#25393a;
+  --signal:#f0ac3a;--signal-soft:#3a2a10;--cool:#6cc3c2;--cool-soft:#123234;--calc:#b3a6f2;--calc-soft:#252046;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.6;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--cool);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:2px;border-radius:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.read{max-width:var(--read)}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.05;text-wrap:balance;margin:0}
+h2{font-size:clamp(2rem,5vw,3.2rem);font-weight:850;font-stretch:72%;text-transform:uppercase;letter-spacing:.01em}
+h3{font-size:1.35rem;font-weight:750;font-stretch:90%}
+h4{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);font-weight:600}
+.lede{font-size:1.2rem;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:1rem}
+section{padding-block:clamp(56px,9vw,104px);border-top:1px solid var(--rule)}
+.sec-head{display:grid;gap:.75rem;margin-bottom:2.25rem}
+.mono{font-family:var(--f-mono);font-size:.85em}
+sup.c{font-family:var(--f-mono);font-size:.62em;font-weight:600;margin-left:1px}
+sup.c a{text-decoration:none;color:var(--cool);padding:0 2px;border-radius:3px;background:var(--cool-soft)}
+sup.c a:hover{background:var(--cool);color:var(--bg)}
+
+/* nav */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex;align-items:center;gap:1rem;padding-block:10px}
+.brand{font-family:var(--f-display);font-weight:900;font-stretch:65%;text-transform:uppercase;font-size:1.25rem;letter-spacing:.04em;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+.brand i{display:inline-block;width:14px;height:14px;border:3px solid var(--signal);border-radius:50%;position:relative}
+.brand i::after{content:"";position:absolute;inset:2px;background:var(--signal);border-radius:50%}
+.navlinks{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto;min-width:0}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:6px 9px;border-radius:4px;white-space:nowrap}
+.navlinks a:hover,.navlinks a.on{color:var(--ink);background:var(--surface)}
+.themebtn{border:1px solid var(--rule);background:var(--surface);color:var(--ink);font-family:var(--f-mono);font-size:.7rem;padding:6px 8px;border-radius:4px;cursor:pointer;flex:none}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-top:0;padding-block:clamp(56px,10vw,120px) clamp(40px,7vw,80px)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.55;pointer-events:none}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(4rem,15vw,10.5rem);font-weight:900;font-stretch:62%;text-transform:uppercase;letter-spacing:-.01em;line-height:.86}
+.hero h1 span{color:var(--signal)}
+.hero .sub{font-family:var(--f-display);font-stretch:100%;font-weight:500;font-size:clamp(1.2rem,2.6vw,1.7rem);max-width:30ch;margin-top:1.25rem;line-height:1.25}
+.hero .meta{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin-top:2rem;font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.hero .meta b{color:var(--ink);font-weight:600}
+.tape{display:inline-flex;align-items:center;gap:.5rem;background:repeating-linear-gradient(-45deg,var(--signal) 0 10px,transparent 10px 20px);padding:4px;border-radius:2px;margin-bottom:1.5rem}
+.tape span{background:var(--bg);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;font-weight:600}
+
+/* 60-second brief */
+.brief{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:0;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+.brief div{padding:1.1rem 1.1rem 1.25rem;border-right:1px solid var(--rule);min-width:0}
+.brief div:last-child{border-right:0}
+@media (max-width:700px){.brief div{border-right:0;border-bottom:1px solid var(--rule)}.brief div:last-child{border-bottom:0}}
+.brief h4{margin-bottom:.4rem;color:var(--signal)}
+.brief p{font-size:.98rem;line-height:1.5}
+
+/* stat tiles */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.stat{background:var(--bg);padding:1.4rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;min-width:0}
+.stat .n{font-family:var(--f-display);font-weight:850;font-stretch:65%;font-size:clamp(2.6rem,6vw,3.6rem);line-height:.95;font-variant-numeric:tabular-nums}
+.stat .n small{font-size:.45em;font-stretch:90%;font-weight:600;color:var(--muted);margin-left:.2em}
+.stat p{font-size:.95rem;line-height:1.45}
+.stat .vs{display:flex;gap:1rem;align-items:flex-end}
+.bar{height:8px;background:var(--rule);border-radius:2px;overflow:hidden;margin-top:.25rem}
+.bar i{display:block;height:100%;background:var(--signal)}
+.bar.h i{background:var(--muted)}
+
+/* evidence cards */
+.evidence{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1rem}
+.ev{border-top:3px solid var(--ink);padding-top:1rem;display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.ev .date{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+.ev p{font-size:1rem;line-height:1.55}
+.ev .so{font-size:.9rem;color:var(--muted);border-left:2px solid var(--signal);padding-left:.75rem}
+
+/* problems */
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.ptabs button{font-family:var(--f-display);font-stretch:80%;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:.03em;border:1.5px solid var(--rule);background:var(--surface);color:var(--muted);padding:.55rem .9rem;border-radius:4px;cursor:pointer;display:flex;gap:.5rem;align-items:baseline}
+.ptabs button b{font-family:var(--f-mono);font-size:.7rem;color:var(--signal)}
+.ptabs button[aria-selected="true"]{border-color:var(--ink);color:var(--ink);background:var(--bg);box-shadow:inset 0 -3px 0 var(--signal)}
+.panel{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:2rem 3rem}
+@media (max-width:860px){.panel{grid-template-columns:1fr}}
+.panel h3{font-size:clamp(1.6rem,3.5vw,2.2rem);font-stretch:75%;font-weight:850;text-transform:uppercase;margin-bottom:.75rem}
+.block{display:flex;flex-direction:column;gap:.6rem}
+.block+.block{margin-top:1.5rem}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;counter-reset:s}
+.steps li{display:grid;grid-template-columns:2rem 1fr;gap:.6rem;font-size:1rem;line-height:1.5}
+.steps li::before{counter-increment:s;content:counter(s);font-family:var(--f-mono);font-weight:600;font-size:.8rem;width:1.7rem;height:1.7rem;border-radius:50%;border:1.5px solid var(--cool);color:var(--cool);display:grid;place-items:center}
+.bul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.45rem;font-size:1rem;line-height:1.5}
+.price{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:1.1rem;display:flex;flex-direction:column;gap:.9rem}
+.pt{display:grid;grid-template-columns:1fr auto;gap:.15rem 1rem;padding-bottom:.85rem;border-bottom:1px dashed var(--rule)}
+.pt:last-child{border-bottom:0;padding-bottom:0}
+.pt .amt{font-family:var(--f-display);font-weight:800;font-stretch:70%;font-size:1.6rem;line-height:1;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pt .lbl{font-size:.95rem;line-height:1.4}
+.pt .kind{grid-column:1/-1;display:flex;gap:.5rem;align-items:center;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;font-weight:600}
+.chip.src{background:var(--cool-soft);color:var(--cool)}
+.chip.calc{background:var(--calc-soft);color:var(--calc)}
+.chip.prop{background:var(--signal-soft);color:var(--signal)}
+.fund{display:flex;flex-wrap:wrap;gap:6px}
+.fund span{font-size:.85rem;border:1px solid var(--rule);padding:3px 9px;border-radius:4px;background:var(--bg)}
+.status{font-size:.95rem;border-left:3px solid var(--cool);padding-left:.85rem}
+
+/* price table */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:.92rem}
+th,td{text-align:left;padding:.7rem .85rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg);position:sticky;top:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+tr:last-child td{border-bottom:0}
+.legend{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;margin-top:1rem;font-size:.9rem;color:var(--muted);align-items:center}
+
+/* timeline */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
+.filters button{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);background:var(--surface);color:var(--muted);padding:6px 11px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--rule)}
+.tl li{position:relative;padding-left:2rem;padding-bottom:1.6rem;display:grid;gap:.3rem}
+.tl li::before{content:"";position:absolute;left:0;top:.4rem;width:16px;height:16px;border-radius:50%;background:var(--bg);border:3px solid var(--cool)}
+.tl li.policy::before{border-color:var(--signal)}
+.tl li.treaty::before{border-color:var(--ink)}
+.tl li.future::before{border-style:dashed;border-color:var(--signal)}
+.tl .when{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.tl .t{font-family:var(--f-display);font-weight:700;font-stretch:90%;font-size:1.1rem;line-height:1.25}
+.tl p{font-size:.97rem;line-height:1.5}
+.live-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:2.5rem}
+@media (max-width:860px){.live-grid{grid-template-columns:1fr}}
+.auto{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:1.1rem;display:flex;flex-direction:column;gap:.9rem;align-self:start}
+.auto ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.85rem}
+.auto li{font-size:.95rem;line-height:1.4;display:grid;gap:.15rem}
+.auto li small{font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--signal);margin-right:6px;animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+/* careers */
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1.5rem 2rem}
+.paths div{display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.paths h3{font-size:1.15rem}
+.paths p{font-size:.97rem;line-height:1.5}
+.fellows{columns:2 280px;column-gap:2rem;margin:0;padding:0;list-style:none}
+.fellows li{break-inside:avoid;padding:.55rem 0;border-bottom:1px solid var(--rule);font-size:.97rem}
+.orgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.orgs a{background:var(--bg);padding:1rem;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.orgs a:hover{background:var(--surface)}
+.orgs b{font-family:var(--f-display);font-stretch:90%;font-size:1.02rem}
+.orgs span{font-size:.88rem;color:var(--muted);line-height:1.4}
+
+/* sources */
+.bib{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.15rem;counter-reset:b}
+.bib li{display:grid;grid-template-columns:2.6rem 1fr;gap:.5rem;padding:.7rem .5rem;border-radius:4px;font-size:.95rem;line-height:1.5;padding-left:3.1rem;text-indent:-2.6rem}
+.bib li > *{text-indent:0}
+.bib li{display:block}
+.bib li .no{display:inline-block;width:2.6rem;font-family:var(--f-mono);font-size:.75rem;color:var(--cool);font-weight:600}
+.bib li:target{background:var(--signal-soft)}
+.bib a{word-break:break-word}
+.note{font-size:.95rem;color:var(--muted);border:1px solid var(--rule);border-radius:6px;padding:1rem 1.1rem;background:var(--surface)}
+
+/* ledger */
+.ledger{display:flex;flex-direction:column;gap:1.6rem}
+.lrow{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr) 5.5rem;gap:.5rem 1.25rem;align-items:center}
+@media (max-width:760px){.lrow{grid-template-columns:1fr auto}.lrow .lbars{grid-column:1/-1;grid-row:2}}
+.lrow h3{font-size:1.02rem;font-stretch:90%;line-height:1.25}
+.lrow h3 small{display:block;font-family:var(--f-body);font-weight:400;font-size:.85rem;color:var(--muted);margin-top:.2rem}
+.lbars{display:flex;flex-direction:column;gap:5px;position:relative;min-width:0}
+.lb{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.lb i{display:block;height:14px;border-radius:0 4px 4px 0;background:var(--muted);flex:none;cursor:default;min-width:3px}
+.lb.big i{background:var(--signal)}
+.lb span{font-family:var(--f-mono);font-size:.74rem;color:var(--ink);order:-1}
+.ratio{font-family:var(--f-display);font-weight:850;font-stretch:65%;font-size:2rem;text-align:right;color:var(--signal);font-variant-numeric:tabular-nums;line-height:1}
+.ratio small{display:block;font-family:var(--f-mono);font-size:.62rem;font-weight:400;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.axis{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr) 5.5rem;gap:1.25rem;font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
+.axis div{position:relative;height:1.2rem;border-top:1px solid var(--rule)}
+.axis div span{position:absolute;top:4px;transform:translateX(-50%)}
+@media (max-width:760px){.axis{display:none}}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--bg);font-family:var(--f-mono);font-size:.75rem;padding:6px 9px;border-radius:4px;max-width:260px;line-height:1.35}
+
+/* defence builder */
+.dd{display:grid;grid-template-columns:minmax(0,1fr);gap:1.5rem}
+.dgrid{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+.dgrid table{min-width:680px}
+.dgrid th:first-child{width:36%}
+.dgrid td.cell{text-align:center}
+.dot{display:inline-block;width:22px;height:22px;border-radius:4px;border:1.5px dashed var(--rule)}
+.dot.on{background:var(--cool);border:0}
+.dot.off{border-color:var(--signal)}
+.lay{display:flex;gap:.65rem;align-items:flex-start}
+.lay button{flex:none;width:44px;height:24px;border-radius:999px;border:1.5px solid var(--rule);background:var(--bg);position:relative;cursor:pointer;margin-top:2px}
+.lay button::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:left .15s}
+.lay button[aria-pressed="true"]{background:var(--cool);border-color:var(--cool)}
+.lay button[aria-pressed="true"]::after{left:22px;background:var(--bg)}
+.lay b{font-family:var(--f-display);font-stretch:90%;font-size:1rem;display:block}
+.lay small{font-size:.85rem;color:var(--muted);line-height:1.35;display:block}
+tr.sum td{background:var(--bg);font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;text-align:center}
+tr.sum td:first-child{text-align:left}
+.gap{color:var(--signal);font-weight:700}
+.ok{color:var(--cool);font-weight:600}
+.ddout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem}
+.ddout div{border-left:3px solid var(--signal);padding-left:.85rem;font-size:.95rem;line-height:1.45}
+.ddout div.allgood{border-color:var(--cool)}
+.presets{display:flex;flex-wrap:wrap;gap:6px}
+.presets button{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:6px 11px;border-radius:4px;cursor:pointer}
+
+/* lens */
+.lensbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:1rem}
+.lensbar span{font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-right:.25rem}
+.lensbar button{font-family:var(--f-body);font-size:.92rem;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:5px 11px;border-radius:999px;cursor:pointer}
+.lensbar button[aria-pressed="true"]{background:var(--signal);color:var(--bg);border-color:var(--signal)}
+.lensbox{background:var(--signal-soft);border-radius:6px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.4rem}
+.lensbox h4{color:var(--signal)}
+.lensbox p{font-size:1rem;line-height:1.5}
+.plain{font-size:1.08rem;line-height:1.5;margin-bottom:1rem}
+.plain b{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cool);display:block;margin-bottom:.15rem}
+
+/* countdown */
+.cd{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));margin-bottom:2.5rem;padding:1px 0 0 1px}
+.cd div{background:var(--bg);border:1px solid var(--rule);margin:-1px 0 0 -1px;padding:1.1rem;display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.cd .days{font-family:var(--f-display);font-weight:900;font-stretch:62%;font-size:3.2rem;line-height:.9;font-variant-numeric:tabular-nums;color:var(--signal)}
+.cd .days small{font-size:.35em;font-stretch:100%;font-weight:600;color:var(--muted);margin-left:.3em}
+.cd .what{font-family:var(--f-display);font-weight:700;font-stretch:90%;font-size:1rem;line-height:1.25}
+.cd .on{font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.prog{height:4px;background:var(--rule);border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--signal)}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1.25rem 2rem;margin:0}
+.gloss div{min-width:0}
+.gloss dt{font-family:var(--f-display);font-weight:750;font-stretch:90%;font-size:1.05rem}
+.gloss dd{margin:.2rem 0 0;font-size:.95rem;line-height:1.5;color:var(--muted)}
+
+.au-band{background:var(--surface)}
+.au-sub{margin-top:3rem;display:flex;flex-direction:column;gap:1.25rem}
+.au-sub:first-of-type{margin-top:0}
+.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.25rem}
+.fcard{background:var(--bg);border:1px solid var(--rule);border-radius:6px;padding:1.2rem;display:flex;flex-direction:column;gap:.7rem;min-width:0}
+.fcard .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fcard h3{font-size:1.25rem}
+.fcard ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.4rem;font-size:.97rem;line-height:1.5}
+.big{font-family:var(--f-display);font-weight:900;font-stretch:62%;font-size:3rem;line-height:.9;color:var(--signal)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.facts div{background:var(--surface);padding:1rem;display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.facts b{font-family:var(--f-display);font-stretch:85%;font-size:1.05rem}
+.facts p{font-size:.93rem;line-height:1.45}
+.facts .st{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase}
+.st.good{color:var(--cool)} .st.gapc{color:var(--signal)}
+.prop{border:1.5px solid var(--signal);border-radius:6px;padding:1.2rem;display:flex;flex-direction:column;gap:.75rem;background:var(--bg);min-width:0}
+.prop .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
+.should{border-top:1px dashed var(--rule);padding-top:.8rem;display:flex;flex-direction:column;gap:.6rem}
+.should h4{color:var(--cool)}
+.bens{border-top:1px dashed var(--rule);padding-top:.8rem}
+.bens dl{margin:.5rem 0 0;display:grid;gap:.25rem}
+.bens dt{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--signal);margin-top:.4rem}
+.bens dd{margin:0;font-size:.93rem;line-height:1.45}
+.pending{font-size:.95rem;color:var(--muted);border:1px dashed var(--rule);border-radius:6px;padding:1rem}
+footer{padding-block:3rem;border-top:1px solid var(--rule);font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between}
+</style>
+
+<style>
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:0;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--surface)}
+.flow li{padding:1rem;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:.35rem;position:relative;min-width:0}
+.flow li:last-child{border-right:0}
+@media (max-width:760px){.flow li{border-right:0;border-bottom:1px solid var(--rule)}.flow li:last-child{border-bottom:0}}
+.flow .n{font-family:var(--f-mono);font-size:.7rem;color:var(--signal);font-weight:600;letter-spacing:.08em}
+.flow b{font-family:var(--f-display);font-stretch:85%;font-size:1.05rem;line-height:1.2}
+.flow span.r{font-size:.85rem;color:var(--muted);line-height:1.35}
+.flow .ai{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;background:var(--calc-soft);color:var(--calc);padding:2px 6px;border-radius:999px;align-self:flex-start}
+.how{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+.how article{display:grid;grid-template-columns:4rem minmax(0,1fr) minmax(0,1fr);gap:1rem 2rem;padding:1.6rem 0;border-bottom:1px solid var(--rule)}
+@media (max-width:860px){.how article{grid-template-columns:3rem minmax(0,1fr)}.how article .side{grid-column:2}}
+.how .num{font-family:var(--f-display);font-weight:900;font-stretch:62%;font-size:3rem;line-height:.85;color:var(--signal)}
+.how h3{font-size:1.3rem;margin-bottom:.4rem}
+.how p{font-size:1rem;line-height:1.55}
+.side{display:flex;flex-direction:column;gap:.6rem}
+.kv{display:grid;grid-template-columns:7.5rem 1fr;gap:.25rem .75rem;font-size:.93rem;line-height:1.45}
+.kv dt{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:.15rem}
+.kv dd{margin:0}
+.aibox{background:var(--calc-soft);border-radius:6px;padding:.8rem .95rem;font-size:.95rem;line-height:1.45}
+.aibox b{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--calc);display:block;margin-bottom:.2rem}
+.chal{display:flex;flex-direction:column;gap:1rem}
+.chal article{display:grid;grid-template-columns:minmax(0,1fr) 2.5rem minmax(0,1fr);gap:1rem;align-items:stretch}
+@media (max-width:760px){.chal article{grid-template-columns:1fr}.chal .arrow{transform:rotate(90deg);justify-self:start}}
+.chal .c1,.chal .c2{border-radius:6px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.chal .c1{background:var(--signal-soft)}
+.chal .c2{background:var(--cool-soft)}
+.chal h4{font-size:.7rem}
+.chal .c1 h4{color:var(--signal)} .chal .c2 h4{color:var(--cool)}
+.chal b{font-family:var(--f-display);font-stretch:88%;font-size:1.08rem;line-height:1.25}
+.chal p{font-size:.95rem;line-height:1.5}
+.arrow{display:grid;place-items:center;font-family:var(--f-display);font-size:1.6rem;color:var(--muted)}
+.showcase{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1.25rem}
+.showcase article{border-top:3px solid var(--calc);padding-top:1rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.showcase .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--calc)}
+.showcase p{font-size:.98rem;line-height:1.5}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1rem}
+.phases article{border:1px solid var(--rule);border-radius:6px;padding:1.1rem;background:var(--surface);display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.phases .when{font-family:var(--f-mono);font-size:.72rem;color:var(--signal);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.phases ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.35rem;font-size:.95rem;line-height:1.45}
+.callout{border-left:4px solid var(--signal);padding:.4rem 0 .4rem 1rem;font-size:1.15rem;line-height:1.5;max-width:62ch}
+.lensout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1rem}
+.lensout div{background:var(--signal-soft);border-radius:6px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.4rem}
+.lensout h4{color:var(--signal)}
+.lensout p{font-size:.98rem;line-height:1.5}
+</style>
+
+<style>
+/* page mode: one section visible at a time */
+section{border-top:0}
+main{min-height:72vh}
+section[data-page]:not(.hero){padding-block:clamp(40px,7vw,80px) 1rem}
+h2{text-transform:none;font-stretch:80%;font-weight:800;letter-spacing:-.01em;font-size:clamp(2rem,4.6vw,3rem);line-height:1.05}
+h4{text-transform:none;letter-spacing:0;font-size:.95rem;font-weight:700;color:var(--ink)}
+.part{font-family:var(--f-display);font-weight:600;font-size:.95rem;color:var(--signal);margin:0}
+.small{font-size:.92rem;color:var(--muted);line-height:1.5}
+/* calmer labels: sentence case, no tracking */
+.ev .date,.flow .ai,.showcase .tag,.phases .when,.kv dt,.aibox b,.filters button,.lensbar span,.tl .when,.cd .on,.chal h4{font-family:var(--f-display);text-transform:none;letter-spacing:0;font-size:.85rem}
+.flow .n{font-family:var(--f-display);font-weight:900;font-stretch:62%;font-size:2rem;line-height:1;letter-spacing:0;color:var(--signal)}
+.flow .ai{font-size:.75rem}
+/* topbar */
+.where{font-family:var(--f-display);font-size:.9rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
+.menubtn{margin-left:auto;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font-family:var(--f-display);font-weight:600;font-size:.85rem;padding:6px 12px;border-radius:4px;cursor:pointer;flex:none}
+.menu{border-top:1px solid var(--rule);background:var(--bg);max-height:calc(100dvh - 60px);overflow:auto}
+.menu .wrap{padding-block:1.25rem 1.75rem}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:1.25rem 2rem}
+.toc h3{font-size:.95rem;font-weight:700;color:var(--signal);margin-bottom:.4rem;font-stretch:100%}
+.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.15rem}
+.toc a{color:var(--ink);text-decoration:none;font-size:1rem;display:block;padding:3px 0;border-bottom:1px solid transparent}
+.toc a:hover{color:var(--cool)}
+.toc a[aria-current="page"]{color:var(--cool);font-weight:600}
+/* intro */
+.hero .kicker{font-family:var(--f-display);font-weight:600;font-size:.95rem;color:var(--cool);margin:0 0 1rem}
+.hero .sub{max-width:44ch;font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.4}
+.hero .sub2{font-size:1.08rem;color:var(--muted);max-width:60ch;margin-top:1rem;line-height:1.55}
+.introfacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;margin-top:2.25rem}
+.introfacts div{background:var(--surface);border-top:3px solid var(--signal);padding:.9rem 1rem;display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.introfacts b{font-family:var(--f-display);font-weight:900;font-stretch:65%;font-size:2.3rem;line-height:1}
+.introfacts span{font-size:.9rem;line-height:1.45;color:var(--muted)}
+.cta{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.5rem;margin-top:2rem}
+.go{background:var(--signal);color:#fff;text-decoration:none;font-family:var(--f-display);font-weight:700;padding:.7rem 1.2rem;border-radius:4px}
+:root[data-theme="dark"] .go{color:#1a1205}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .go{color:#1a1205}}
+.cta .meta{font-family:var(--f-display);font-size:.9rem;color:var(--muted);margin:0}
+.cta .meta b{color:var(--ink)}
+.introtoc{margin-top:3.5rem;border-top:1px solid var(--rule);padding-top:1.5rem;background:color-mix(in srgb,var(--bg) 85%,transparent)}
+.tochead{font-size:1.3rem;margin-bottom:1rem}
+/* scope */
+.bounds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1.25rem}
+.bounds>div{border-radius:6px;padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.bin{background:var(--cool-soft)} .bout{background:var(--surface);border:1px solid var(--rule)}
+.bounds h3{font-size:1.2rem}
+.bounds ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.6rem;font-size:.98rem;line-height:1.5}
+/* glossary links */
+a.term{color:inherit;text-decoration:underline dotted var(--cool);text-decoration-thickness:2px;text-underline-offset:4px;background:color-mix(in srgb,var(--cool-soft) 55%,transparent);border-radius:2px;padding:0 1px}
+a.term:hover{background:var(--cool-soft);color:var(--cool)}
+.gloss>div{scroll-margin-top:90px;border-radius:6px;padding:.5rem .6rem;margin:-.5rem -.6rem;transition:background .6s}
+.gloss>div.hit{background:var(--signal-soft)}
+.bib li{scroll-margin-top:90px;transition:background .6s;border-radius:4px}
+.bib li.hit{background:var(--signal-soft)}
+/* pager */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding-block:2.5rem 3.5rem}
+.pager a{border:1px solid var(--rule);border-radius:6px;padding:.9rem 1.1rem;text-decoration:none;color:var(--ink);background:var(--surface);display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.pager a:hover{border-color:var(--cool)}
+.pager small{font-family:var(--f-display);font-size:.8rem;color:var(--muted)}
+.pager b{font-family:var(--f-display);font-size:1.05rem;font-stretch:90%}
+.pager .next{text-align:right;grid-column:2}
+.pager[hidden]{display:none}
+/* top navigation: sections, then the pages inside the current section */
+.tb1{flex-wrap:wrap;row-gap:4px}
+.topnav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto;min-width:0}
+.topnav::-webkit-scrollbar,.subnav::-webkit-scrollbar{display:none}
+.topnav a{font-family:var(--f-display);font-weight:600;font-size:.92rem;color:var(--muted);text-decoration:none;padding:7px 11px;border-radius:4px;white-space:nowrap}
+.topnav a:hover{color:var(--ink);background:var(--surface)}
+.topnav a.on{color:var(--bg);background:var(--ink)}
+.subnavbar{border-top:1px solid var(--rule);background:color-mix(in srgb,var(--surface) 70%,transparent)}
+.subnav{display:flex;gap:1.4rem;overflow-x:auto;scrollbar-width:none}
+.subnav a{font-family:var(--f-display);font-size:.9rem;color:var(--muted);text-decoration:none;padding:10px 0 8px;border-bottom:2px solid transparent;white-space:nowrap}
+.subnav a:hover{color:var(--ink)}
+.subnav a.on{color:var(--ink);font-weight:600;border-bottom-color:var(--signal)}
+@media (max-width:760px){.topnav{order:3;flex-basis:100%;margin-left:0}.themebtn{margin-left:auto}}
+/* interactive pieces */
+.act{appearance:none;border:0;background:var(--ink);color:var(--bg);font:600 .95rem/1 var(--f-display);padding:11px 16px;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block}
+.act:hover{background:var(--cool)}
+.act.ghost{background:transparent;color:var(--ink);border:1px solid var(--rule)}
+.flowctl{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;margin-bottom:1rem}
+.flow li{cursor:pointer;transition:background .3s,transform .3s}
+.flow li:hover{background:var(--bg)}
+.flow li.lit{background:var(--signal-soft);transform:translateY(-3px);box-shadow:inset 0 -3px 0 var(--signal)}
+.flow li.past{opacity:.65}
+.quiz{margin-top:2.5rem;border:1px solid var(--rule);border-radius:8px;padding:1.25rem 1.3rem;background:var(--surface);display:flex;flex-direction:column;gap:1rem;max-width:760px}
+.quiz h3{font-size:1.3rem}
+.qq{display:flex;flex-direction:column;gap:.5rem;border-top:1px solid var(--rule);padding-top:.9rem}
+.qt{font-weight:600}
+.qo{display:flex;flex-wrap:wrap;gap:8px}
+.qo button,.choice{appearance:none;border:1.5px solid var(--rule);background:var(--bg);color:var(--ink);font:600 .95rem/1 var(--f-display);padding:10px 14px;border-radius:999px;cursor:pointer;transition:border-color .2s,background .2s}
+.qo button:hover:not(:disabled),.choice:hover:not(:disabled){border-color:var(--cool)}
+.qo button:disabled,.choice:disabled{cursor:default;opacity:.6}
+.qo button.right,.choice.right{border-color:var(--cool);background:var(--cool-soft);opacity:1}
+.qo button.wrong,.choice.wrong{border-color:var(--signal);background:var(--signal-soft);opacity:1}
+.qw,.qs{font-size:.98rem;line-height:1.5}
+.qs{font-family:var(--f-display);font-weight:700;font-size:1.1rem}
+.game{max-width:760px}
+.gcard{border:1px solid var(--rule);border-radius:8px;background:var(--surface);padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:.9rem;animation:rise .35s ease}
+.gcard.end{border-color:var(--cool)}
+.gtop{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.gk{font-family:var(--f-display);font-weight:600;font-size:.9rem;color:var(--signal)}
+.gdots{display:flex;gap:6px}.gdots i{width:10px;height:10px;border-radius:50%;background:var(--rule)}.gdots i.d{background:var(--cool)}.gdots i.c{background:var(--signal)}
+.gcard h3{font-size:1.45rem}
+.gcard ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.35rem}
+.gbtns{display:flex;flex-wrap:wrap;gap:8px}
+.gres{border-top:1px solid var(--rule);padding-top:.9rem;display:flex;flex-direction:column;gap:.8rem;align-items:flex-start;animation:rise .3s ease}
+.replay{appearance:none;background:none;border:1px solid var(--rule);color:var(--muted);font:500 .85rem/1 var(--f-display);padding:7px 11px;border-radius:4px;cursor:pointer}
+.replay:hover{color:var(--ink);border-color:var(--ink)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+section[data-page]:not([hidden]) .wrap{animation:rise .45s ease}
+.ev,.showcase article,.phases article,.chal article,.how article{transition:transform .2s}
+.ev:hover,.showcase article:hover,.phases article:hover{transform:translateY(-3px)}
+@media (prefers-reduced-motion:reduce){section[data-page]:not([hidden]) .wrap,.gcard,.gres{animation:none}.flow li,.flow li.lit{transition:none;transform:none}}
+
+/* opening intro: a fire spreading through DNA letters, stopped by a cleared strip */
+#fb-intro{position:fixed;inset:0;z-index:8000;background:#0a1213;color:#e2ebe9;font-family:var(--f-display);display:grid;grid-template-rows:auto 1fr auto;padding:calc(env(safe-area-inset-top,0px) + 16px) max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(20px,env(safe-area-inset-left,0px));overflow:hidden;transition:opacity .6s ease}
+#fb-intro.out{opacity:0;pointer-events:none}
+#fiCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.fi-top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:800;font-stretch:70%;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;color:#9db0ae;pointer-events:none}
+.fi-skip{pointer-events:auto;appearance:none;background:rgba(10,18,19,.7);border:1px solid #2c4446;color:#e2ebe9;font:600 .85rem/1 var(--f-display);text-transform:none;letter-spacing:0;padding:9px 14px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.fi-skip:hover{border-color:#f0ac3a}
+.fi-hint{position:relative;align-self:end;justify-self:center;font-size:.85rem;color:#7f9694;background:rgba(10,18,19,.75);padding:5px 10px;border-radius:99px;margin:0 0 1rem;opacity:0;transition:opacity .5s;pointer-events:none}
+#fb-intro.done .fi-hint{opacity:1}
+.fi-copy{position:relative;display:grid;gap:14px;max-width:780px;margin:0 auto;width:100%;padding:1.25rem 1.4rem;border-radius:10px;background:rgba(10,18,19,.82);backdrop-filter:blur(3px);opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
+#fb-intro.done .fi-copy{opacity:1;transform:none}
+.fi-k{font-weight:600;font-size:.9rem;color:#6cc3c2;margin:0}
+.fi-copy h2{font-size:clamp(1.5rem,3.8vw,2.6rem);line-height:1.1;color:#e2ebe9;margin:0}
+.fi-copy h2 span{color:#f0ac3a}
+.fi-copy p{font-family:var(--f-body);font-size:clamp(.98rem,1.7vw,1.08rem);line-height:1.55;color:#9db0ae;margin:0}
+.fi-copy .fi-k{font-family:var(--f-display)}
+.fi-go{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.fi-enter{appearance:none;border:0;background:#f0ac3a;color:#1a1205;font:700 1rem/1 var(--f-display);padding:13px 20px;border-radius:6px;cursor:pointer}
+.fi-enter:hover{background:#ffbf55}
+.fi-fine{font-size:.8rem;color:#647a78}
+.fi-skip:focus-visible,.fi-enter:focus-visible{outline:2px solid #6cc3c2;outline-offset:3px}
+body.fi-open{overflow:hidden}
+@media (prefers-reduced-motion:reduce){#fb-intro,.fi-copy,.fi-hint{transition:none}}
+.cta .meta{display:block}
+.themebtn{font-size:1rem;line-height:1;padding:6px 9px}
+footer{font-family:var(--f-display);font-size:.85rem}
+/* leave room for the portfolio's Index seal (top right) when hosted in the portfolio */
+body:has(.pfm-btn) .tb1{padding-right:84px}
+@media (max-width:560px){body:has(.pfm-btn) .tb1{padding-right:64px}}
+@media (max-width:560px){.where{display:none}}
+</style>
+
+<div id="fb-intro" role="dialog" aria-modal="true" aria-label="Firebreak introduction" hidden>
+  <canvas id="fiCanvas" aria-hidden="true"></canvas>
+  <div class="fi-top"><span>Firebreak</span><button class="fi-skip" id="fiSkip" type="button">Skip to home</button></div>
+  <p class="fi-hint" id="fiHint" aria-hidden="true">Tap anywhere to start another spark</p>
+  <div class="fi-copy">
+    <p class="fi-k">How a firebreak works</p>
+    <h2>A firebreak stops a fire by clearing the ground it needs to spread. <span>Checking DNA orders can do the same for a biological threat.</span></h2>
+    <p>AI is making dangerous orders harder to spot, and Australia doesn't yet require suppliers to check them. Firebreak proposes an AI-assisted screening gateway that Australia can switch on with laws it already has.</p>
+    <div class="fi-go"><button class="fi-enter" id="fiEnter" type="button">Enter Firebreak →</button><span class="fi-fine">A policy proposal by Arpitha Ummanath</span></div>
+  </div>
+</div>
+<header class="topbar">
+  <div class="wrap tb1">
+    <a class="brand" href="#top"><i aria-hidden="true"></i>Firebreak</a>
+    <nav class="topnav" id="topnav" aria-label="Sections"></nav>
+    <button class="themebtn" id="themebtn" type="button" aria-label="Toggle colour theme">◐</button>
+  </div>
+  <div class="subnavbar"><nav class="wrap subnav" id="subnav" aria-label="Pages in this section"></nav></div>
+</header>
+
+<main id="main">
+<section class="hero" id="top" data-page data-title="Introduction" data-group="Overview" aria-labelledby="h1">
+  <canvas id="seq" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="kicker">Independent project · Arpitha Ummanath · Biosecurity and AI policy</p>
+    <h1 id="h1">Fire<span>break</span></h1>
+    <p class="sub">Scientists order custom DNA much like a print job: they send a sequence and a supplier makes it. Suppliers check those orders so nobody can buy the building blocks of a biological weapon. AI is making those checks easier to fool,<sup class="c" data-s="wittmann"></sup> and Australia does not require them at all.<sup class="c" data-s="goodanc"></sup></p>
+    <p class="sub2">This project sets out one fix: an AI-assisted screening gateway that Australia can switch on with laws it already has.<sup class="c" data-s="aifais"></sup> It shows AI working on both sides, as the threat and as the defence, and costs the plan using the best published benchmark.</p>
+    <div class="introfacts">
+      <div><b>43.8%</b><span>OpenAI's o3 on a hard virology troubleshooting test. Expert virologists averaged 22.1%.<sup class="c" data-s="vct"></sup></span></div>
+      <div><b>No rule</b><span>Australian import permits do not require suppliers to screen DNA orders.<sup class="c" data-s="goodanc"></sup></span></div>
+      <div><b>50</b><span>Nucleotides: the order size above which US-certified suppliers must screen, from November 2026.<sup class="c" data-s="nstm6"></sup></span></div>
+      <div><b>£3.50</b><span>Returned for every £1 spent, in the UK's cost-benefit study of DNA screening.<sup class="c" data-s="cltr"></sup></span></div>
+    </div>
+    <div class="cta"><a class="go" href="#brief">Start reading</a><span class="meta">Sources <b id="srcCount">0</b> · peer-reviewed <b id="prCount">0</b> · last reviewed <b>19 November 2026</b></span></div>
+  </div>
+</section>
+
+<section id="brief" data-page data-title="The short version" data-group="Overview">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">Overview</p><h2>The short version</h2></div>
+    <div class="brief">
+      <div><h4>The issue</h4><p>Companies print DNA to order. Checking those orders is a key barrier to building a biological weapon.<sup class="c" data-s="kubota"></sup></p></div>
+      <div><h4>What AI changed</h4><p>AI design tools can reword dangerous sequences so that many might slip past today's checks.<sup class="c" data-s="wittmann"></sup></p></div>
+      <div><h4>Australia's gap</h4><p>Australian import permits do not require DNA suppliers to screen orders.<sup class="c" data-s="goodanc"></sup></p></div>
+      <div><h4>The fix</h4><p>An AI-assisted screening gateway, switched on through existing import law and kept current by AI red-teaming.</p></div>
+      <div><h4>The price</h4><p>The UK's equivalent costs about £18M in its first year and returns £3.50 for every £1.<sup class="c" data-s="cltr"></sup></p></div>
+    </div>
+    <div class="quiz" id="quiz"><h3>Quick check</h3><p class="small">Three questions. Tap an answer to see if you're right.</p></div>
+  </div>
+</section>
+
+<section id="issue" data-page data-title="The issue" data-group="The problem">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">The problem</p>
+      <h2>DNA orders are a chokepoint, and AI is loosening it</h2>
+      <p class="lede">Researchers order synthetic DNA from commercial suppliers, and those suppliers screen orders to stop dangerous material being made.<sup class="c" data-s="kubota"></sup> That makes the order a natural checkpoint. Four facts explain why it matters now.</p>
+    </div>
+    <div class="evidence">
+      <article class="ev"><span class="date">October 2025, Science</span><h3>AI can disguise dangerous orders</h3><p>A Microsoft-led study found AI protein-design tools could redesign known toxins so that many versions might evade the screening DNA companies use.<sup class="c" data-s="wittmann"></sup><sup class="c" data-s="kubota"></sup></p><p class="so">The good news: the same team built a fix with industry and shared it with DNA synthesis companies worldwide.<sup class="c" data-s="kubota"></sup></p></article>
+      <article class="ev"><span class="date">April 2025, benchmark study</span><h3>AI knows the lab work</h3><p>OpenAI's o3 scored 43.8% on a hard virology troubleshooting test. Expert virologists averaged 22.1%.<sup class="c" data-s="vct"></sup></p><p class="so">As know-how gets easier to find, the physical materials become a more important barrier.</p></article>
+      <article class="ev"><span class="date">May 2026, Australia</span><h3>Australia has no screening rule</h3><p>Australian import permits do not require suppliers to screen DNA orders or check customers. Most countries lack explicit screening rules.<sup class="c" data-s="goodanc"></sup><sup class="c" data-s="berman"></sup></p><p class="so">148 experts and 12 organisations asked the Agriculture Minister to close the gap.<sup class="c" data-s="aifais"></sup></p></article>
+      <article class="ev"><span class="date">November 2026, United States</span><h3>Allies are moving</h3><p>The US now requires federally funded labs to buy DNA only from certified suppliers that screen orders of 50 or more nucleotides.<sup class="c" data-s="nstm6"></sup> A UK study recommends legislation by late 2026.<sup class="c" data-s="cltr"></sup></p><p class="so">Orders could shift to countries with weaker rules.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="scope" data-page data-title="What “DNA to order” means" data-group="The problem">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">The problem</p>
+      <h2>What “DNA to order” means</h2>
+      <p class="lede">Here, “DNA to order” means genetic material built by a machine to a sequence the customer chooses, rather than taken from a living thing. A researcher sends the sequence, and a supplier or a desktop machine in their lab makes it.<sup class="c" data-s="berman"></sup></p>
+      <p class="small">“DNA” is used for short. The US policy and the UK study use the wider term “synthetic nucleic acids,” which also covers RNA, and this proposal follows them.<sup class="c" data-s="nstm6"></sup><sup class="c" data-s="cltr"></sup></p>
+    </div>
+    <div class="bounds">
+      <div class="bin">
+        <h3>Inside the boundary</h3>
+        <ul>
+          <li><b>Orders of 50 nucleotides or more.</b> This is the threshold the US policy uses and the UK study recommends.<sup class="c" data-s="nstm6"></sup><sup class="c" data-s="cltr"></sup></li>
+          <li><b>Orders from overseas suppliers</b> shipped into Australia, which already pass through the import permit system.<sup class="c" data-s="goodanc"></sup></li>
+          <li><b>Orders from suppliers based in Australia.</b></li>
+          <li><b>Desktop machines</b> that let a lab print DNA itself, brought in during Phase 3, following the US approach of authorising each print.<sup class="c" data-s="nstm6"></sup></li>
+        </ul>
+      </div>
+      <div class="bout">
+        <h3>Outside the boundary</h3>
+        <p class="small">These are this proposal's choices, to keep the gateway focused.</p>
+        <ul>
+          <li><b>Orders under 50 nucleotides.</b></li>
+          <li><b>Living organisms, natural samples and cell lines.</b> They are not made to order, so they are not part of this gateway.</li>
+          <li><b>The AI design tools themselves.</b> The gateway checks what gets made, not the software that designed it.</li>
+          <li><b>Approving the research.</b> The gateway checks the order and the customer. It does not decide which experiments go ahead.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solution" data-page data-title="The idea" data-group="The proposal">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">The proposal</p>
+      <h2>An AI-assisted screening gateway for Australia</h2>
+      <p class="lede">Every synthetic DNA order entering or made in Australia passes one gateway: screened, checked against the customer, reviewed by a person if flagged, and kept current by AI that tests the system before attackers do.</p>
+      <p class="callout">What makes it different: Australia can switch this on <b>without new legislation</b>, using import-permit powers it already has,<sup class="c" data-s="aifais"></sup> and use AI on both sides, as the threat and as the defence.</p>
+    </div>
+  </div>
+</section>
+
+<section id="order" data-page data-title="The life of one order" data-group="The proposal">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">The proposal</p><h2>The life of one order</h2><p class="lede">Six stops between a lab placing an order and the DNA arriving.</p></div>
+    <div class="flowctl"><button type="button" class="act" id="flowplay">▶ Follow an order through</button><span class="small" id="flowmsg">Or tap any stop.</span></div>
+    <ol class="flow" id="flow" aria-label="Order flow">
+      <li><span class="n">1</span><b>Order placed</b><span class="r">A lab or company orders DNA from a supplier in Australia or overseas.</span></li>
+      <li><span class="n">2</span><b>Sequence screened</b><span class="r">The supplier runs the order through an approved, up-to-date screening tool.</span><span class="ai">AI-hardened</span></li>
+      <li><span class="n">3</span><b>Customer checked</b><span class="r">The supplier confirms who the buyer is and whether the use is legitimate.</span><span class="ai">AI triage</span></li>
+      <li><span class="n">4</span><b>Human review</b><span class="r">Any flagged order goes to a trained person, not an algorithm alone.</span></li>
+      <li><span class="n">5</span><b>Border check</b><span class="r">The import permit confirms the supplier screens. Non-screening suppliers cannot ship in.</span></li>
+      <li><span class="n">6</span><b>Report and learn</b><span class="r">Suspicious orders are reported; AI red-teams find new gaps and tools get patched.</span><span class="ai">AI red-team</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="screener" data-page data-title="Try being the screener" data-group="The proposal">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">The proposal</p><h2>Try being the screener</h2><p class="lede">Four fictional orders reach the gateway. For each one, decide what should happen, then see what the proposed rules would do.</p></div>
+    <div class="game" id="game" aria-live="polite"></div>
+    <p class="small" style="margin-top:1rem">Cases are invented for illustration and describe only who is ordering and what the checks found. Real decisions follow the supplier's screening protocol and Australian law.</p>
+  </div>
+</section>
+
+<section id="steps" data-page data-title="Step by step" data-group="The proposal">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">The proposal</p><h2>How it happens, step by step</h2><p class="lede">Seven steps, each with who leads it, when, and what AI does.</p></div>
+    <div class="how" id="how"></div>
+  </div>
+</section>
+
+<section id="ai" data-page data-title="AI as the defence" data-group="The proposal">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">The proposal</p>
+      <h2>How AI defends the gateway</h2>
+      <p class="lede">The same technology that creates the problem is the fastest way to keep the defence current.</p>
+    </div>
+    <div class="showcase">
+      <article><span class="tag">Red-teaming</span><h3>Attack your own system first</h3><p>Red-teaming means attacking your own system on purpose, with permission, to find weak spots before a real attacker does. Defenders use AI design tools to probe screening this way. It is how the 2025 Science study found the gap, and it led to a fix shared with industry.<sup class="c" data-s="wittmann"></sup><sup class="c" data-s="kubota"></sup></p></article>
+      <article><span class="tag">Smarter screening</span><h3>Keep tools up to date</h3><p>The US policy calls for a "tech-enabled screening layer that keeps pace with evolving risks," with screening tools verified by NIST.<sup class="c" data-s="nstm6"></sup> Free tools such as IBBIS's Common Mechanism and SecureDNA are updated centrally.<sup class="c" data-s="ibbis"></sup><sup class="c" data-s="securedna"></sup></p></article>
+      <article><span class="tag">Triage</span><h3>Focus people on the risky few</h3><p>The US policy describes risk-based screening powered by advanced AI.<sup class="c" data-s="nstm6"></sup> AI sorts routine orders from unusual ones, so human reviewers spend their time where it matters.</p></article>
+      <article><span class="tag">Evaluation</span><h3>Test new AI tools as they launch</h3><p>Australia's new AI Safety Institute<sup class="c" data-s="atse"></sup> can test new biological AI tools against the gateway, as the UK is doing with its £100M AI Biosecurity Lab and support from AI companies.<sup class="c" data-s="aibl"></sup></p></article>
+    </div>
+  </div>
+</section>
+
+<section id="challenges" data-page data-title="Where AI makes it harder" data-group="The proposal">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">The proposal</p><h2>Where AI makes this harder, and what to do about it</h2></div>
+    <div class="chal" id="chal"></div>
+  </div>
+</section>
+
+<section id="defence" data-page data-title="Where the gateway fits" data-group="The proposal">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">The proposal</p>
+      <h2>Switch off a layer, see the gap</h2>
+      <p class="lede">The gateway is one layer in a wider defence. Turn layers off to see which stages of a biological threat are left open. DNA screening guards the "Materials" stage.</p>
+      <p class="small">A teaching model built from the cited sources, following Moulange's "defence in depth" framing.<sup class="c" data-s="moulange"></sup> It shows coverage, not probabilities.</p>
+    </div>
+    <div class="dd">
+      <div class="presets" id="presets"></div>
+      <div class="dgrid"><table id="ddtable"></table></div>
+      <div class="ddout" id="ddout" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="cost" data-page data-title="What it costs" data-group="Making it happen">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">Making it happen</p>
+      <h2>What it costs</h2>
+      <p class="lede">No Australian cost study exists yet. The closest benchmark is the UK's 2025 cost-benefit analysis, the first of its kind. Its figures are shown exactly as published, in 2025 pounds.</p>
+      <div class="legend"><span class="chip src">Sourced</span> figure from a cited source <span class="chip calc">Calculation</span> arithmetic on sourced figures, shown in full</div>
+    </div>
+    <div class="tablewrap"><table id="costTable"><thead><tr><th>Item (UK benchmark)</th><th>Amount</th><th>Period</th><th>Type</th><th>Source</th></tr></thead><tbody></tbody></table></div>
+    <p class="small" style="margin-top:.75rem">The report's 2027 total of £18M includes cost categories beyond the three listed. Figures are means of modelled ranges.<sup class="c" data-s="cltr"></sup></p>
+  </div>
+</section>
+
+<section id="funding" data-page data-title="Who pays in Australia" data-group="Making it happen">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">Making it happen</p><h2>Who pays in Australia</h2></div>
+    <div class="block">
+      <div class="fund"><span>Department of Agriculture (permit conditions, enforcement)</span><span>Home Affairs (security reporting)</span><span>DNA suppliers (screening; free tools available)</span><span>Research buyers (small price pass-through)</span><span>AI Safety Institute (testing)</span></div>
+      <p style="font-size:.98rem;max-width:65ch">Supporters of the Australian proposal describe it as "low cost," without a figure.<sup class="c" data-s="aifais"></sup> Free screening tools reduce the cost to suppliers.<sup class="c" data-s="ibbis"></sup><sup class="c" data-s="securedna"></sup> The first step of the roadmap is to commission an Australian estimate.</p>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" data-page data-title="Roadmap" data-group="Making it happen">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">Making it happen</p>
+      <h2>From proposal to working gateway</h2>
+      <p class="lede">A proposed plan in four phases. Phases are sequenced by dependency; months are indicative targets, not official dates.</p>
+    </div>
+    <div class="phases" id="phases"></div>
+  </div>
+</section>
+
+<section id="benefits" data-page data-title="Who benefits" data-group="Making it happen">
+  <div class="wrap">
+    <div class="sec-head read">
+      <p class="part">Making it happen</p>
+      <h2>What each group gains</h2>
+      <p class="lede">The same gateway, seen from each seat at the table.</p>
+    </div>
+    <div class="lensbar" id="lensbar" role="group" aria-label="Choose a group"></div>
+    <div class="lensout" id="lensout" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="deadlines" data-page data-title="Deadlines" data-group="Tracking">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">Tracking</p><h2>Deadlines to watch</h2></div>
+    <div class="cd" id="countdown"></div>
+  </div>
+</section>
+
+<section id="timeline" data-page data-title="Timeline" data-group="Tracking">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">Tracking</p><h2>Timeline of key events</h2></div>
+    <div class="read">
+      <div class="filters" id="filters" role="group" aria-label="Filter timeline"></div>
+      <ol class="tl" id="tl"></ol>
+    </div>
+  </div>
+</section>
+
+<section id="glossary" data-page data-title="Glossary" data-group="Reference">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">Reference</p><h2>Plain-English glossary</h2></div>
+    <dl class="gloss" id="gloss"></dl>
+  </div>
+</section>
+
+<section id="method" data-page data-title="How this was built" data-group="Reference">
+  <div class="wrap read stack">
+    <p class="part">Reference</p>
+    <h2>How this was built</h2>
+    <ul class="bul">
+      <li><b>Sources first.</b> Every factual sentence carries a numbered citation.</li>
+      <li><b>Transparent maths.</b> Calculations are labelled and shown in full. Figures are never added across currencies or years.</li>
+      <li><b>Defence-level only.</b> No technical detail on sequences, organisms or how screening works internally. The project covers policy, governance and defence.</li>
+      <li><b>Kept current.</b> Deadlines count down from fixed, sourced dates, and the timeline is reviewed by hand.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="sources" data-page data-title="Sources" data-group="Reference">
+  <div class="wrap">
+    <div class="sec-head read"><p class="part">Reference</p><h2>Sources</h2></div>
+    <ol class="bib" id="bib"></ol>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap"><span>Firebreak, an independent policy proposal by Arpitha Ummanath</span><button type="button" class="replay" id="replay">Replay intro</button></div></footer>
+
+<script>
+const SOURCES = [
+ {id:"wittmann", pr:true, html:'Wittmann, Bruce J., Tessa Alexanian, Craig Bartling, Jacob Beal, Adam Clore, James Diggans, Kevin Flyangolts, et al. “Strengthening Nucleic Acid Biosecurity Screening against Generative Protein Design Tools.” <i>Science</i> 390, no. 6768 (2025): 82–87.', url:"https://doi.org/10.1126/science.adu8578"},
+ {id:"kubota", pr:false, html:'Kubota, Samantha. “Researchers Find—and Help Fix—a Hidden Biosecurity Threat.” <i>Microsoft Signal Blog</i>, October 2, 2025.', url:"https://news.microsoft.com/signal/articles/researchers-find-and-help-fix-a-hidden-biosecurity-threat"},
+ {id:"berman", pr:true, html:'Berman, Ayelet. “Biosecurity in the Age of Synthetic Nucleic Acids: Modernizing the Law to Manage Emerging Threats.” <i>Journal of Law and the Biosciences</i> 13, no. 1 (2026): lsag005.', url:"https://doi.org/10.1093/jlb/lsag005"},
+ {id:"cltr", pr:false, html:'Fady, Paul-Enguerrand, Isaac Heron, Richard Bruns, and Cassidy Nelson. <i>Cost-Benefit Analysis of Synthetic Nucleic Acid Screening for the UK</i>. London: Centre for Long-Term Resilience, December 2025.', url:"https://doi.org/10.71172/kyey-h0ya"},
+ {id:"nstm6", pr:false, html:'Rubio, Marco, and Michael J. Kratsios. “National Policy for Nucleic Acid Synthesis Screening.” National Science and Technology Memorandum NSTM-6. Washington, DC: The White House, November 5, 2026.', url:"https://www.whitehouse.gov/wp-content/uploads/2026/11/NSTM-6-NASS-Policy.pdf"},
+ {id:"eo14292", pr:false, html:'Trump, Donald J. “Executive Order 14292—Improving the Safety and Security of Biological Research.” <i>Daily Compilation of Presidential Documents</i>, DCPD-202500561, May 5, 2025.', url:"https://www.govinfo.gov/content/pkg/DCPD-202500561/html/DCPD-202500561.htm"},
+ {id:"goodanc", pr:false, html:'Good Ancestors. “Experts Call on Agriculture Minister to Close AI-Enabled Biosecurity Gap.” Media release, May 4, 2026.', url:"https://www.goodancestors.org.au/our-work/ai-safety/ai-bio-gene-synth-screening-press-release"},
+ {id:"aifais", pr:false, html:'Australians for AI Safety. “Activate Existing Biosecurity Powers to Address AI-Enabled Risks.” Open letter to the Minister for Agriculture, Fisheries and Forestry, May 4, 2026.', url:"https://www.australiansforaisafety.com.au/letters/ai-bio-gene-synth-screening"},
+ {id:"ibbis", pr:false, html:'International Biosecurity and Biosafety Initiative for Science (IBBIS). “IBBIS – Safeguarding Modern Bioscience and Biotechnology.” Accessed November 19, 2026.', url:"https://ibbis.bio/"},
+ {id:"securedna", pr:false, html:'SecureDNA Foundation. “Safeguarding DNA Synthesis.” Accessed November 19, 2026.', url:"https://securedna.org/"},
+ {id:"vct", pr:false, html:'Götting, Jasper, Pedro Medeiros, Jon G. Sanders, Nathaniel Li, Long Phan, Karam Elabd, Lennart Justen, Dan Hendrycks, and Seth Donoughe. “Virology Capabilities Test (VCT): A Multimodal Virology Q&amp;A Benchmark.” Preprint, arXiv, April 2025. arXiv:2504.16137.', url:"https://arxiv.org/abs/2504.16137"},
+ {id:"moulange", pr:false, html:'Moulange, Richard. “#241 – AI Designs Genomes from Scratch &amp; Outperforms Virologists at Lab Work. Dr Richard Moulange Asks: What Could Go Wrong?” Interview by Robert Wiblin. <i>The 80,000 Hours Podcast</i>, March 31, 2026. Podcast, transcript.', url:"https://80000hours.org/podcast/episodes/richard-moulange-ai-bioweapons-biorisk/"},
+ {id:"profile", pr:false, html:'Gertler, Aaron, and the 80,000 Hours team. “Preventing Catastrophic Pandemics.” 80,000 Hours. First published April 2020; last updated May 2026.', url:"https://80000hours.org/problem-profiles/preventing-catastrophic-pandemics/"},
+ {id:"aibl", pr:false, html:'Cabinet Office. “Introducing the AI Biosecurity Lab.” GOV.UK, October 24, 2026.', url:"https://www.gov.uk/government/news/introducing-the-ai-biosecurity-lab"},
+ {id:"atse", pr:false, html:'Australian Academy of Technological Sciences and Engineering. “AI Safety Institute a Welcome First Step towards Seizing Our AI Opportunity.” November 25, 2025.', url:"https://atse.org.au/news/ai-safety-institute/"},
+ {id:"agwong", pr:false, html:'Wong, Penny. “40th Anniversary of the Australia Group.” Media release, Minister for Foreign Affairs, July 21, 2025.', url:"https://www.foreignminister.gov.au/minister/penny-wong/media-release/40th-anniversary-australia-group"},
+ {id:"ag2026", pr:false, html:'Australia Group. “Statement by the Chair of the 2026 Australia Group Plenary.” Australia Group Secretariat, June 12, 2026.', url:"https://www.dfat.gov.au/publications/minisite/theaustraliagroupnet/site/en/2026-ag-plenary-statement.html"},
+ {id:"ssba", pr:false, html:'Australian Centre for Disease Control. “Security Sensitive Biological Agents (SSBA) Regulatory Scheme.” Accessed November 19, 2026.', url:"https://www.cdc.gov.au/topics/communicable-diseases-prevention-and-control/security-sensitive-biological-agents-ssba-regulatory-scheme"},
+ {id:"acdc", pr:false, html:'Australian Government Department of Health. “It’s Official – Australia’s New Centre for Disease Control Becomes Law.” Accessed November 19, 2026.', url:"https://www.health.gov.au/news/australias-new-cdc-becomes-law"},
+ {id:"casey", pr:false, html:'Casey, Susanne. “To Prepare for Future Threats, Treat Health Security as National Security.” <i>The Strategist</i>, Australian Strategic Policy Institute, April 23, 2025.', url:"https://www.aspistrategist.org.au/to-prepare-for-future-threats-treat-health-security-as-national-security/"},
+ {id:"asl3", pr:false, html:'Anthropic. “Activating AI Safety Level 3 Protections.” May 22, 2025.', url:"https://www.anthropic.com/news/activating-asl3-protections"},
+ {id:"iasr", pr:false, html:'Bengio, Yoshua, Stephen Clare, Carina Prunkl, Maksym Andriushchenko, Ben Bucknall, Philip Fox, Nestor Maslej, et al. “International AI Safety Report 2025: Second Key Update: Technical Safeguards and Risk Management.” Preprint, arXiv, November 25, 2025. arXiv:2511.19863.', url:"https://arxiv.org/abs/2511.19863"},
+ {id:"glennerster", pr:true, html:'Glennerster, Rachel, Christopher M. Snyder, and Brandon Joel Tan. “Calculating the Costs and Benefits of Advance Preparations for Future Pandemics.” <i>IMF Economic Review</i> 71 (2023): 611–48.', url:"https://doi.org/10.1057/s41308-023-00212-z"},
+ {id:"cutler", pr:true, html:'Cutler, David M., and Lawrence H. Summers. “The COVID-19 Pandemic and the $16 Trillion Virus.” <i>JAMA</i> 324, no. 15 (2020): 1495–96.', url:"https://doi.org/10.1001/jama.2020.19759"},
+ {id:"nti", pr:false, html:'Nuclear Threat Initiative. “The Next 50 Years: Strengthening the Biological Weapons Convention – Explained.” <i>Risky Business</i> (blog). Accessed November 19, 2026.', url:"https://www.nti.org/risky-business/the-next-50-years-strengthening-the-biological-weapons-convention-explained/"},
+ {id:"career", pr:false, html:'Gertler, Aaron, and Gregory Lewis. “Pandemic Prevention and Biosecurity.” Career review. 80,000 Hours. First published October 2021; last updated May 2026.', url:"https://80000hours.org/career-reviews/pandemic-prevention-biosecurity/"},
+ {id:"phage", pr:false, html:'McCarty, Niko. “AI-Designed Phages.” <i>Asimov Press</i>, September 17, 2025.', url:"https://press.asimov.com/articles/ai-phages"}
+];
+
+const HOW = [
+ {t:"Switch it on with existing law", p:'The Director of Biosecurity can already set conditions on import permits under the Biosecurity Act 2015, through the BICON permit system. Adding one condition, "supplier must screen orders and check customers," brings every imported order into the gateway without new legislation.<sup class="c" data-s="aifais"></sup><sup class="c" data-s="goodanc"></sup>',
+  who:"Department of Agriculture", when:"Phase 1", ai:"None needed yet. This is the legal switch that lets everything else work."},
+ {t:"Set one clear standard", p:'Screen every order of 50 or more nucleotides, matching the threshold in the US policy and the UK recommendation, so suppliers serving several countries run one process.<sup class="c" data-s="nstm6"></sup><sup class="c" data-s="cltr"></sup>',
+  who:"Agriculture, with industry", when:"Phase 1", ai:"Alignment means AI-hardened tools built for the US market work here too."},
+ {t:"Use approved, AI-hardened screening tools", p:'Suppliers use screening tools that are independently verified and updated as AI design improves. The US has NIST verify screening tools.<sup class="c" data-s="nstm6"></sup> Free options include IBBIS\'s open-source Common Mechanism and SecureDNA, which keeps customer orders private.<sup class="c" data-s="ibbis"></sup><sup class="c" data-s="securedna"></sup>',
+  who:"DNA suppliers", when:"Phase 2", ai:"Tools are patched after AI red-teaming finds gaps, as happened after the 2025 study.<sup class=\"c\" data-s=\"kubota\"></sup>"},
+ {t:"Check the customer, triage with AI", p:'Suppliers verify who the buyer is. The US policy requires customer checks and describes risk-based screening powered by advanced AI.<sup class="c" data-s="nstm6"></sup> Australia already has a fit and proper person test under the Biosecurity Act that can prioritise higher-risk applicants.<sup class="c" data-s="aifais"></sup>',
+  who:"Suppliers, Agriculture", when:"Phase 2", ai:"AI sorts routine orders from unusual ones, so scarce human reviewers focus on the few that matter."},
+ {t:"Keep a person in the loop and report", p:'Flagged orders go to trained human reviewers. Under the US policy, suppliers report flagged orders to federal authorities and keep records for at least 8 years.<sup class="c" data-s="nstm6"></sup> In Australia, reporting would link to Home Affairs, which co-chairs the SYNAPSE group with Agriculture.<sup class="c" data-s="goodanc"></sup>',
+  who:"Suppliers, Home Affairs", when:"Phase 2", ai:"AI explains why an order was flagged; a person makes the call."},
+ {t:"Red-team continuously with AI", p:'Australia\'s AI Safety Institute<sup class="c" data-s="atse"></sup> tests new biological AI tools against the gateway, shares findings privately with tool makers, and pushes fixes, following the find-and-patch model of the 2025 study.<sup class="c" data-s="kubota"></sup> IBBIS runs a vulnerability disclosure programme for exactly this.<sup class="c" data-s="ibbis"></sup>',
+  who:"AI Safety Institute, suppliers", when:"Phase 3", ai:"Defenders use generative AI to attack their own system first."},
+ {t:"Take it global through the Australia Group", p:'Australia is the permanent chair of the Australia Group, 42 countries plus the EU that set export controls for chemical and biological weapons.<sup class="c" data-s="agwong"></sup> Members discussed AI at the June 2026 plenary.<sup class="c" data-s="ag2026"></sup> Australia can table the gateway model for the 2027 plenary. The UK study estimates international uptake raises its annual net benefit from £150M to £970M.<sup class="c" data-s="cltr"></sup>',
+  who:"DFAT", when:"Phase 4", ai:"Shared AI red-team findings protect every member at once."}
+];
+
+const CHAL = [
+ {c:"AI can disguise dangerous orders", cp:'AI design tools can reword sequences so many might pass list-based checks.<sup class="c" data-s="wittmann"></sup>', s:"Find-and-patch cycles", sp:'Defenders red-team with the same AI tools and update screening, as the 2025 study did with industry.<sup class="c" data-s="kubota"></sup>'},
+ {c:"AI design tools are spreading fast", cp:'Australian experts cite a survey that found only 3% of 375 biological AI tools had safeguards.<sup class="c" data-s="goodanc"></sup>', s:"Guard the physical chokepoint", sp:'Whatever tool designed a sequence, it still has to be printed. The gateway checks the order, not the AI.'},
+ {c:"Desktop DNA printers skip suppliers", cp:'Benchtop synthesizers let labs print DNA in-house, outside a supplier\'s checks.<sup class="c" data-s="nstm6"></sup>', s:"Authorise each print", sp:'The US policy requires benchtop machines to start synthesis only with valid authorisation from a verified screener.<sup class="c" data-s="nstm6"></sup>'},
+ {c:"Orders can move offshore", cp:'Most countries have no explicit screening rule, so risky orders can go where rules are weakest.<sup class="c" data-s="berman"></sup>', s:"Check at the border, then go global", sp:'Import permits cover overseas suppliers.<sup class="c" data-s="aifais"></sup> The Australia Group can spread the model.<sup class="c" data-s="agwong"></sup>'},
+ {c:"Customers worry about privacy", cp:'Screening means sharing order details, which customers may treat as confidential research.', s:"Privacy-preserving screening", sp:'SecureDNA offers free screening that is cryptographically secure, so orders stay private.<sup class="c" data-s="securedna"></sup>'},
+ {c:"Small suppliers face costs", cp:'In the UK model, providers bear the largest share of costs: about £5.8M in 2027.<sup class="c" data-s="cltr"></sup>', s:"Free, open tools", sp:'IBBIS\'s Common Mechanism is free and open source; SecureDNA is free.<sup class="c" data-s="ibbis"></sup><sup class="c" data-s="securedna"></sup>'},
+ {c:"AI can be wrong or opaque", cp:'Automated flags can be false alarms, and blocking legitimate research has a cost.', s:"A person makes the final call", sp:'Every flagged order gets human review, with records kept so decisions can be audited.<sup class="c" data-s="nstm6"></sup>'}
+];
+
+const COSTS = [
+ {i:"Benefit for every £1 spent", a:"£3.50", per:"Ratio", k:"src"},
+ {i:"Total cost to the UK, first full year", a:"£18M", per:"2027", k:"src"},
+ {i:"Cost to DNA providers", a:"£5.8M", per:"2027", k:"src"},
+ {i:"Cost to customers", a:"£3.7M", per:"2027", k:"src"},
+ {i:"Cost to government", a:"£1.2M", per:"2027", k:"src"},
+ {i:"Direct benefit to the UK", a:"£64M", per:"2027", k:"src"},
+ {i:"Average total cost over 20 years", a:"£60M", per:"Per year", k:"src"},
+ {i:"Average net benefit over 20 years", a:"£150M", per:"Per year", k:"src"},
+ {i:"Net benefit with international uptake", a:"£970M", per:"Per year", k:"src"},
+ {i:"Government's share of first-year cost (£1.2M ÷ £18M)", a:"6.7%", per:"2027", k:"calc"}
+];
+
+const PHASES = [
+ {w:"Phase 1 · months 0–3", t:"Switch on", pts:["Add a screening condition to BICON import permits for synthetic DNA.","Adopt the 50-nucleotide standard.","Commission an Australian cost-benefit study."]},
+ {w:"Phase 2 · months 3–12", t:"Build the gateway", pts:["Suppliers adopt verified, AI-hardened screening tools.","Customer checks and AI triage go live.","Human review and reporting routes agreed with Home Affairs."]},
+ {w:"Phase 3 · months 12–24", t:"Keep it current", pts:["AI Safety Institute runs ongoing red-teaming.","Findings shared privately; tools patched.","Review covers benchtop DNA printers."]},
+ {w:"Phase 4 · 2027 onward", t:"Take it global", pts:["Table the model at the 2027 Australia Group plenary in Paris.","Offer help to Indo-Pacific partners.","Align with US and UK rules."]}
+];
+
+const LENSES = {country:"The country & economy", people:"The public", politics:"Politicians & parties", policy:"Policymakers", ai:"AI companies", pharma:"Pharma & manufacturers", health:"Health system"};
+const LENS = {
+ country:[["Why it pays","The UK benchmark returns £3.50 for every £1.<sup class=\"c\" data-s=\"cltr\"></sup> A single pandemic can cost trillions: COVID-19 cost the US alone an estimated $16 trillion.<sup class=\"c\" data-s=\"cutler\"></sup>"],["Trade","Aligning with US and UK rules keeps Australian biotech exporters and buyers compatible with their biggest partners.<sup class=\"c\" data-s=\"nstm6\"></sup>"]],
+ people:[["What changes for you","Nothing you will notice. It quietly closes one route to a man-made outbreak."],["Trust","Human review and audit trails mean decisions can be checked."]],
+ politics:[["A fast, low-cost win","Experts say it can start under existing law, without a new bill.<sup class=\"c\" data-s=\"aifais\"></sup>"],["Cross-party ground","Australia has chaired the Australia Group for 40 years under governments of both major parties, starting with the Hawke Government.<sup class=\"c\" data-s=\"agwong\"></sup>"]],
+ policy:[["Your move","Add the BICON condition, set the 50-nucleotide standard, and fund an Australian cost study.<sup class=\"c\" data-s=\"aifais\"></sup>"],["Gap to fix","Pandemic preparedness was absent from the 2024 National Defence Strategy.<sup class=\"c\" data-s=\"casey\"></sup>"]],
+ ai:[["Your move","Share red-team results with screening providers before releasing a biological design tool, following the 2025 find-and-patch model.<sup class=\"c\" data-s=\"kubota\"></sup>"],["Precedent","AI companies already back defensive work: OpenAI and Anthropic have committed up to £200M to the UK AI Biosecurity Lab.<sup class=\"c\" data-s=\"aibl\"></sup>"]],
+ pharma:[["Your move","Buy only from screening suppliers. Major providers already screen voluntarily.<sup class=\"c\" data-s=\"goodanc\"></sup>"],["Cost","Customers bear about £3.7M in the UK's first year, spread across the whole market.<sup class=\"c\" data-s=\"cltr\"></sup>"]],
+ health:[["Why it matters","Every engineered outbreak stopped at the order is one that never reaches a hospital."],["Link-up","Reports from the gateway can feed the Australian CDC, an independent agency since 1 January 2026.<sup class=\"c\" data-s=\"acdc\"></sup>"]]
+};
+let lens="country";
+
+const STAGES = ["Know-how","Materials","Intent","Spread","Harm"];
+const LAYERS = [
+ {k:"ai", n:"AI model safeguards", d:"Testing and refusals for weapons help", st:[0], off:'Expert-level lab help becomes easier to get.<sup class="c" data-s="vct"></sup>'},
+ {k:"screen", n:"DNA screening gateway", d:"This proposal", st:[1], off:'AI-redesigned sequences could be ordered without anyone noticing.<sup class="c" data-s="wittmann"></sup>'},
+ {k:"lab", n:"Agent & lab controls", d:"SSBA scheme, research oversight", st:[1], off:'Fewer checks on who holds dangerous agents.<sup class="c" data-s="ssba"></sup>'},
+ {k:"treaty", n:"Treaty & attribution", d:"The BWC plus the ability to tell who did it", st:[2], off:'With no verification, there is little to deter a state or group.<sup class="c" data-s="nti"></sup>'},
+ {k:"detect", n:"Early detection", d:"Pathogen-agnostic surveillance", st:[3], off:'A stealthy pathogen could spread before anyone notices.<sup class="c" data-s="moulange"></sup>'},
+ {k:"ppe", n:"Protective equipment & clean air", d:"Respirators, stockpiles, far-UVC", st:[3,4], off:'Frontline staff are exposed and spread in buildings goes unchecked.<sup class="c" data-s="career"></sup>'},
+ {k:"mcm", n:"Rapid vaccines & treatments", d:"Reserved manufacturing", st:[4], off:'Every week without a vaccine adds deaths and losses.<sup class="c" data-s="glennerster"></sup>'}
+];
+const ddOn = Object.fromEntries(LAYERS.map(l=>[l.k,true]));
+
+const TIMELINE = [
+ {d:"2027-07-01", approx:"Mid-2027", cat:"treaty", t:"Australia Group plenary, Paris", p:"Next chance to table the gateway model internationally.", s:"ag2026"},
+ {d:"2027-10-11", cat:"policy", t:"US screening day 340: benchtop printers", p:"US federally funded customers must buy benchtop DNA synthesis equipment only from approved suppliers.", s:"nstm6"},
+ {d:"2027-07-13", cat:"policy", t:"US screening day 250: approved suppliers only", p:"US federally funded customers must buy synthetic DNA only from approved, screening suppliers.", s:"nstm6"},
+ {d:"2027-04-14", cat:"policy", t:"US screening day 160: first approved-supplier list", p:"HHS publishes its initial list of adherent suppliers.", s:"nstm6"},
+ {d:"2027-02-13", cat:"policy", t:"US screening day 100: screener verification begins", p:"NIST starts verifying screening tools.", s:"nstm6"},
+ {d:"2027-02-03", cat:"policy", t:"US screening day 90: NIST standards due", p:"NIST issues screening standards and test protocols.", s:"nstm6"},
+ {d:"2026-11-05", cat:"policy", t:"US national DNA screening policy (NSTM-6)", p:"Certified, screening suppliers only for federally funded labs. Replaces the 2024 framework.", s:"nstm6"},
+ {d:"2026-10-24", cat:"ai", t:"UK launches the AI Biosecurity Lab", p:"£100M of government funding and up to £200M from OpenAI and Anthropic.", s:"aibl"},
+ {d:"2026-06-12", cat:"treaty", t:"Australia Group discusses AI", p:"42 countries and the EU discuss AI and chemical-biological convergence.", s:"ag2026"},
+ {d:"2026-05-04", cat:"policy", t:"Australian experts call for screening", p:"Open letter asks the Agriculture Minister to use existing powers.", s:"aifais"},
+ {d:"2025-12-16", cat:"policy", t:"UK cost-benefit analysis of screening", p:"£3.50 back per £1; recommends legislation by Q4 2026.", s:"cltr"},
+ {d:"2025-11-25", cat:"ai", t:"Australia announces an AI Safety Institute", p:"A national body to test AI risks.", s:"atse"},
+ {d:"2025-10-02", cat:"science", t:"AI-redesigned toxins vs screening, in Science", p:"Gap found, and a patch shared with DNA synthesis companies worldwide.", s:"wittmann"},
+ {d:"2025-05-22", cat:"ai", t:"Anthropic activates ASL-3 protections", p:"Targeted safeguards against weapons misuse ship with Claude Opus 4.", s:"asl3"},
+ {d:"2025-05-05", cat:"policy", t:"US Executive Order 14292", p:"Orders a revised DNA screening policy and new oversight of risky research.", s:"eo14292"}
+];
+
+const GLOSS = [
+ ["dna-to-order","DNA to order","Genetic material built by a machine to a sequence the customer chooses, by a supplier or a desktop machine in a lab. In this proposal it covers orders of 50 nucleotides or more. See the scope page for the full boundary."],
+ ["synthetic-dna","Synthetic DNA","DNA made by a machine rather than taken from a living thing. It is used widely in research and medicine."],
+ ["screening","DNA synthesis screening","Checking an order against lists of dangerous sequences, and checking the customer, before the DNA is made."],
+ ["gateway","Gateway","This proposal's name for one consistent screening process that every order passes through."],
+ ["benchtop","Benchtop synthesizer","A desktop machine that lets a lab print DNA itself, instead of ordering it from a supplier."],
+ ["nucleotide","Nucleotide","One building block, or “letter,” of DNA or RNA. The size of an order is counted in nucleotides."],
+ ["red-teaming","Red-teaming","Attacking your own system on purpose, with permission, to find its weak spots before a real attacker does. Here it means testing whether AI tools can get a dangerous order past screening, then fixing the gaps they find."],
+ ["triage","Triage","Sorting cases by urgency so people focus on the riskiest first."],
+ ["bicon","BICON","Australia's Biosecurity Import Conditions system, which sets the rules for import permits."],
+ ["australia-group","Australia Group","42 countries and the EU that coordinate export controls against chemical and biological weapons. Australia is its permanent chair."],
+ ["nist","NIST","The US National Institute of Standards and Technology, which verifies screening tools under the US policy."],
+ ["aisi","AI Safety Institute","A government body that tests advanced AI systems for risks. Australia's was announced in November 2025.<sup class=\"c\" data-s=\"atse\"></sup>"],
+ ["peer-review","Peer review","Independent expert checking before a journal publishes a study. A preprint has not been through this yet."]
+];
+
+/* ===== render ===== */
+const $ = s => document.querySelector(s);
+const idx = {}; SOURCES.forEach((s,i)=>idx[s.id]=i+1);
+const esc = t => String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cite = s => `<sup class="c" data-s="${s}"></sup>`;
+function wireCites(root=document){root.querySelectorAll('sup.c[data-s]').forEach(el=>{const n=idx[el.dataset.s]; if(!n){console.warn('missing source',el.dataset.s);el.remove();return;} el.innerHTML=`<a href="#src-${n}" aria-label="Source ${n}">${n}</a>`;});}
+function fmt(d){return new Date(d+"T12:00:00Z").toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});}
+
+$('#how').innerHTML = HOW.map((h,i)=>`<article><span class="num">${i+1}</span><div><h3>${h.t}</h3><p>${h.p}</p></div><div class="side"><dl class="kv"><dt>Who</dt><dd>${h.who}</dd><dt>When</dt><dd>${h.when}</dd></dl><div class="aibox"><b>AI's role</b>${h.ai}</div></div></article>`).join('');
+$('#chal').innerHTML = CHAL.map((c,i)=>`<article><div class="c1"><h4>The challenge</h4><b>${c.c}</b><p>${c.cp}</p></div><div class="arrow" aria-hidden="true">→</div><div class="c2"><h4>The fix</h4><b>${c.s}</b><p>${c.sp}</p></div></article>`).join('');
+$('#costTable tbody').innerHTML = COSTS.map(c=>`<tr><td>${c.i}</td><td class="num">${c.a}</td><td>${c.per}</td><td><span class="chip ${c.k}">${c.k==='src'?'Sourced':'Calculation'}</span></td><td>${cite('cltr')}</td></tr>`).join('');
+$('#phases').innerHTML = PHASES.map(p=>`<article><span class="when">${p.w}</span><h3>${p.t}</h3><ul>${p.pts.map(x=>`<li>${x}</li>`).join('')}</ul></article>`).join('');
+$('#gloss').innerHTML = [...GLOSS].sort((a,b)=>a[1].localeCompare(b[1])).map(([id,t,d])=>`<div id="g-${id}"><dt>${t}</dt><dd>${d}</dd></div>`).join('');
+
+function renderLens(){ $('#lensout').innerHTML = LENS[lens].map(([h,p])=>`<div><h4>${h}</h4><p>${p}</p></div>`).join(''); wireCites($('#lensout')); if(typeof linkTerms==='function')linkTerms($('#lensout')); }
+$('#lensbar').innerHTML='<span>Choose a group</span>'+Object.entries(LENSES).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="${k===lens}">${v}</button>`).join('');
+$('#lensbar').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;lens=b.dataset.k;document.querySelectorAll('#lensbar button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderLens();});
+
+function renderDD(){
+  const head=`<thead><tr><th>Layer</th>${STAGES.map(s=>`<th style="text-align:center">${s}</th>`).join('')}</tr></thead>`;
+  const rows=LAYERS.map(l=>`<tr${l.k==='screen'?' style="background:var(--signal-soft)"':''}><td><div class="lay"><button type="button" aria-pressed="${ddOn[l.k]}" data-k="${l.k}" aria-label="${l.n}"></button><div><b>${l.n}</b><small>${l.d}</small></div></div></td>${STAGES.map((s,i)=>`<td class="cell">${l.st.includes(i)?`<span class="dot ${ddOn[l.k]?'on':'off'}"></span>`:''}</td>`).join('')}</tr>`).join('');
+  const cov=STAGES.map((s,i)=>LAYERS.filter(l=>ddOn[l.k]&&l.st.includes(i)).length);
+  const sum=`<tr class="sum"><td>Stage status</td>${cov.map(c=>`<td>${c?`<span class="ok">${c} layer${c>1?'s':''}</span>`:'<span class="gap">Open gap</span>'}</td>`).join('')}</tr>`;
+  $('#ddtable').innerHTML=head+'<tbody>'+rows+sum+'</tbody>';
+  const offs=LAYERS.filter(l=>!ddOn[l.k]); const gaps=STAGES.filter((s,i)=>!cov[i]);
+  $('#ddout').innerHTML = offs.length? offs.map(l=>`<div><b>${l.n} off.</b> ${l.off}</div>`).join('')+(gaps.length?`<div><b>Open stages: ${gaps.join(', ')}.</b> Nothing on the list stops a threat there.</div>`:'')
+    : '<div class="allgood"><b>All seven layers on.</b> Every stage has at least one guard. Each layer still has holes, which is why they are stacked.</div>';
+  wireCites($('#ddout'));
+}
+const presets={"All on":()=>LAYERS.forEach(l=>ddOn[l.k]=true),"Without the gateway":()=>LAYERS.forEach(l=>ddOn[l.k]=l.k!=='screen'),"Gateway and agent controls off":()=>LAYERS.forEach(l=>ddOn[l.k]=!['screen','lab'].includes(l.k)),"All off":()=>LAYERS.forEach(l=>ddOn[l.k]=false)};
+$('#presets').innerHTML=Object.keys(presets).map(n=>`<button type="button">${n}</button>`).join('');
+$('#presets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;presets[b.textContent]();renderDD();});
+$('#ddtable').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(!b)return;ddOn[b.dataset.k]=!ddOn[b.dataset.k];renderDD();});
+
+const CATS={all:"All",policy:"Policy",ai:"AI",science:"Science",treaty:"International"}; let filt="all";
+function renderTimeline(){const today=new Date();today.setUTCHours(0,0,0,0);
+  $('#tl').innerHTML=TIMELINE.filter(e=>filt==='all'||e.cat===filt).sort((a,b)=>b.d.localeCompare(a.d)).map(e=>{const days=Math.round((new Date(e.d+"T00:00:00Z")-today)/864e5);const fut=days>0;
+    return `<li class="${e.cat}${fut?' future':''}"><span class="when">${e.approx||fmt(e.d)} · ${CATS[e.cat]} ${fut?`<span class="chip prop">${e.approx?'Upcoming':'In '+days+' days'}</span>`:''}</span><span class="t">${e.t}${cite(e.s)}</span><p>${e.p}</p></li>`;}).join('');
+  wireCites($('#tl'));}
+$('#filters').innerHTML=Object.entries(CATS).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="${k===filt}">${v}</button>`).join('');
+$('#filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filt=b.dataset.k;document.querySelectorAll('#filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderTimeline();});
+function renderCountdown(){const today=new Date();today.setUTCHours(0,0,0,0);
+  const up=TIMELINE.filter(e=>new Date(e.d+"T00:00:00Z")>today).sort((a,b)=>a.d.localeCompare(b.d));
+  $('#countdown').innerHTML=up.map(e=>{if(e.approx)return `<div><span class="days" style="font-size:2.2rem">${e.approx}</span><span class="what">${e.t}${cite(e.s)}</span><span class="on">Exact date not yet published</span></div>`;
+    const end=new Date(e.d+"T00:00:00Z"),start=new Date("2026-11-05T00:00:00Z");const days=Math.round((end-today)/864e5);const pct=Math.max(0,Math.min(100,(today-start)/(end-start)*100));
+    return `<div><span class="days">${days}<small>days</small></span><span class="what">${e.t}${cite(e.s)}</span><span class="on">Due ${fmt(e.d)}</span><div class="prog"><i style="width:${pct}%"></i></div></div>`;}).join('');
+  wireCites($('#countdown'));}
+
+(function(){const root=document.documentElement;let saved=null;try{saved=localStorage.getItem('fb-theme')}catch(e){}if(saved)root.dataset.theme=saved;
+  $('#themebtn').addEventListener('click',()=>{const cur=root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');const next=cur==='dark'?'light':'dark';root.dataset.theme=next;try{localStorage.setItem('fb-theme',next)}catch(e){}});})();
+(function(){const c=$('#seq');const ctx=c.getContext('2d');const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let W,H,cols=[],t=0;const L='ACGT';
+  function size(){const r=c.getBoundingClientRect();W=c.width=r.width*devicePixelRatio;H=c.height=r.height*devicePixelRatio;const step=22*devicePixelRatio;cols=[];for(let x=0;x<W;x+=step){cols.push({x,off:Math.random()*H,sp:.2+Math.random()*.6,chars:Array.from({length:Math.ceil(H/step)+2},()=>L[Math.random()*4|0])});}}
+  function draw(){const cs=getComputedStyle(document.documentElement);const ink=cs.getPropertyValue('--muted').trim();const sig=cs.getPropertyValue('--signal').trim();ctx.clearRect(0,0,W,H);const step=22*devicePixelRatio;ctx.font=`${11*devicePixelRatio}px JetBrains Mono, monospace`;const gapC=W*0.62,gapW=W*0.09;
+    cols.forEach(col=>{const d=Math.abs(col.x-gapC);if(d<gapW)return;const fade=Math.min(1,(d-gapW)/(W*0.12));col.chars.forEach((ch,i)=>{const y=((i*step+col.off+t*col.sp*devicePixelRatio)%(H+step))-step;ctx.globalAlpha=fade*(.18+.25*Math.sin((i+col.x)*.37)**2);ctx.fillStyle=(i*7+col.x)%23<1?sig:ink;ctx.fillText(ch,col.x,y);});});ctx.globalAlpha=1;}
+  function loop(){t+=1;draw();if(!reduce)requestAnimationFrame(loop);}size();addEventListener('resize',()=>{size();draw();});loop();})();
+
+/* bibliography: only sources actually cited on the page */
+const used=new Set([...document.querySelectorAll('sup.c[data-s]')].map(e=>e.dataset.s));
+[HOW,CHAL,TIMELINE,LAYERS].forEach(arr=>JSON.stringify(arr).replace(/data-s=\\?"([\w-]+)\\?"|"s":"([\w-]+)"/g,(m,a,b)=>used.add(a||b)));
+Object.values(LENS).flat(2).join(' ').replace(/data-s="([\w-]+)"/g,(m,a)=>used.add(a)); used.add('cltr');
+const LIST=SOURCES.filter(s=>used.has(s.id)); LIST.forEach((s,i)=>idx[s.id]=i+1); Object.keys(idx).forEach(k=>{if(!used.has(k))delete idx[k];});
+$('#bib').innerHTML=LIST.map((s,i)=>`<li id="src-${i+1}"><span class="no">[${i+1}]</span>${s.html} <a href="${s.url}" target="_blank" rel="noopener">${esc(s.url)}</a>.${s.pr?' <span class="chip src">Peer-reviewed</span>':''}</li>`).join('');
+$('#srcCount').textContent=LIST.length; $('#prCount').textContent=LIST.filter(s=>s.pr).length;
+/* ===== glossary links: first mention of each term on a page links to its glossary entry ===== */
+const TERMS=[["dna-to-order",/DNA to order/i],["synthetic-dna",/synthetic DNA/i],["red-teaming",/red-team(?:ing|s|ed)?/i],["nucleotide",/nucleotides?/i],["benchtop",/benchtop (?:synthesi[sz]ers?|DNA printers|machines)|desktop (?:DNA printers|machines?)/i],["triage",/\btriage\b/i],["bicon",/\bBICON\b/],["australia-group",/Australia Group/],["nist",/\bNIST\b/],["aisi",/AI Safety Institute/],["screening",/DNA synthesis screening/i],["gateway",/\bgateway\b/i],["peer-review",/peer[- ]review(?:ed)?/i]];
+function linkTerms(root){const used=new Set();const skip='a,sup,h1,h2,h3,h4,button,.chip,.tag,.part,.kicker,th,.n,.days,.date,.when,.ai,dt,.tochead,.chal b';
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest(skip)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+  nodes.forEach(node=>{let n=node;for(const [id,re] of TERMS){if(used.has(id)||!n)continue;const m=n.nodeValue.match(re);if(!m)continue;used.add(id);
+    const after=n.splitText(m.index);const rest=after.splitText(m[0].length);const a=document.createElement('a');a.className='term';a.href='#g-'+id;a.title='See the glossary';a.textContent=after.nodeValue;after.replaceWith(a);n=rest;}});}
+
+/* ===== pages ===== */
+const PAGES=[...document.querySelectorAll('main > section[data-page]')];
+const ORDER=PAGES.map(p=>p.id);
+const GROUPS={};PAGES.forEach(p=>{(GROUPS[p.dataset.group]??=[]).push(p)});
+function route(){let h=decodeURIComponent(location.hash.slice(1))||'top';let focus=null;
+  if(/^src-\d+$/.test(h)){focus=h;h='sources';}else if(h.startsWith('g-')){focus=h;h='glossary';}
+  if(!ORDER.includes(h))h='top';
+  PAGES.forEach(p=>p.hidden=p.id!==h);
+  const cur=PAGES[ORDER.indexOf(h)],g=cur.dataset.group;
+  $('#topnav').innerHTML=Object.entries(GROUPS).map(([n,ps])=>`<a href="#${ps[0].id}"${n===g?' class="on" aria-current="true"':''}>${n}</a>`).join('');
+  $('#subnav').innerHTML=GROUPS[g].map(p=>`<a href="#${p.id}"${p===cur?' class="on" aria-current="page"':''}>${p.dataset.title}</a>`).join('');
+  [$('#topnav a.on'),$('#subnav a.on')].forEach(a=>{if(a){const n=a.parentElement;n.scrollLeft=Math.max(0,a.offsetLeft-n.offsetLeft-16);}});
+  if(focus){const el=document.getElementById(focus);if(el){requestAnimationFrame(()=>{el.scrollIntoView({block:'center'});el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),2200);});}}
+  else scrollTo(0,0);
+  if(h==='top'){dispatchEvent(new Event('resize'));dispatchEvent(new Event('fb-home'));}}
+addEventListener('hashchange',route);
+
+renderLens(); renderDD(); renderTimeline(); renderCountdown(); wireCites();
+PAGES.filter(p=>!['glossary','sources','top'].includes(p.id)).forEach(linkTerms);
+/* ===== quick check quiz ===== */
+const QUIZ=[
+ {q:"Do Australian rules require DNA suppliers to screen orders?",o:["Yes","No"],a:1,why:'No. Australian import permits do not require suppliers to screen orders or check customers.'+cite('goodanc')},
+ {q:"Would Australia need a new law to switch the gateway on?",o:["Yes, a new Act","No, existing permit powers"],a:1,why:'No. The Director of Biosecurity can add conditions to import permits under the Biosecurity Act 2015.'+cite('aifais')},
+ {q:"In the UK study, roughly what does every £1 spent on screening return?",o:["50p","£3.50","£35"],a:1,why:'About £3.50 for every £1 spent.'+cite('cltr')}
+];
+let qScore=0,qDone=0;
+$('#quiz').insertAdjacentHTML('beforeend',QUIZ.map((x,i)=>`<div class="qq" data-i="${i}"><p class="qt">${i+1}. ${x.q}</p><div class="qo">${x.o.map((o,j)=>`<button type="button" data-j="${j}">${o}</button>`).join('')}</div><p class="qw" hidden></p></div>`).join('')+'<p class="qs" id="qscore" hidden></p>');
+$('#quiz').addEventListener('click',e=>{const b=e.target.closest('.qo button');if(!b)return;const box=b.closest('.qq');if(box.dataset.done)return;box.dataset.done=1;
+  const x=QUIZ[+box.dataset.i],ok=+b.dataset.j===x.a;box.querySelectorAll('button').forEach(btn=>{btn.disabled=true;if(+btn.dataset.j===x.a)btn.classList.add('right');});if(!ok)b.classList.add('wrong');
+  const w=box.querySelector('.qw');w.innerHTML=(ok?'<b>Correct.</b> ':'<b>Not quite.</b> ')+x.why;w.hidden=false;wireCites(w);qDone++;if(ok)qScore++;
+  if(qDone===QUIZ.length){const s=$('#qscore');s.innerHTML=`You got ${qScore} of ${QUIZ.length}. <a href="#issue">See the evidence →</a>`;s.hidden=false;}});
+
+/* ===== follow an order ===== */
+(function(){const items=[...document.querySelectorAll('#flow li')],msg=$('#flowmsg');let timer=null;
+  const light=i=>{items.forEach((li,k)=>{li.classList.toggle('lit',k===i);li.classList.toggle('past',k<i);});msg.textContent=i>=0?`Stop ${i+1} of ${items.length}: ${items[i].querySelector('b').textContent}`:'Or tap any stop.';};
+  items.forEach((li,i)=>{li.tabIndex=0;li.addEventListener('click',()=>{clearInterval(timer);light(i);});li.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();clearInterval(timer);light(i);}});});
+  $('#flowplay').addEventListener('click',()=>{clearInterval(timer);let i=0;light(0);timer=setInterval(()=>{i++;if(i>=items.length){clearInterval(timer);msg.textContent='Delivered. Every stop is a chance to catch a problem.';items.forEach(li=>li.classList.remove('lit'));return;}light(i);},1300);});})();
+
+/* ===== be the screener ===== */
+const CASES=[
+ {who:"University research lab",facts:["Institution verified, account open for five years","Order fits the lab's published research area","Screening tool: no match to anything of concern"],a:0,why:'Every check is clean, so the order goes through. Most orders look like this, which is why AI triage helps: it clears routine orders quickly so people can focus on the few that need a closer look.'+cite('nstm6')},
+ {who:"Established biotech company",facts:["Customer verified","Screening tool: the order resembles a controlled item","The company says it holds a permit for this work"],a:1,why:'A flagged order goes to a trained person even when there is a good explanation. AI can explain why it flagged the order; a person checks the permit and makes the call.'+cite('nstm6')},
+ {who:"New online account",facts:["No institution listed","Shipping to a home address","Screening tool: no match"],a:1,why:'The order itself looks harmless, but the buyer can\'t be verified. The gateway checks who is ordering as well as what, so it is held until a person confirms the customer.'+cite('nstm6')},
+ {who:"Overseas supplier shipping to an Australian lab",facts:["The supplier does not screen orders","Import permit required to enter Australia"],a:2,why:'Under the proposed permit condition, suppliers that do not screen orders cannot ship DNA into Australia. That is the border check.'+cite('aifais')}
+];
+const ACTS=["Let it through","Send to a person","Block it"];
+let gi=0,gScore=0;
+function renderGame(){const g=$('#game');
+  if(gi>=CASES.length){g.innerHTML=`<div class="gcard end"><p class="gk">Result</p><h3>You matched the gateway on ${gScore} of ${CASES.length} orders.</h3><p>Notice the pattern: AI clears the routine orders, people handle anything unusual, and the import permit stops suppliers that don't screen.</p><div class="gbtns"><button type="button" class="act" id="again">Play again</button><a class="act ghost" href="#steps">See how it's built →</a></div></div>`;
+    $('#again').onclick=()=>{gi=0;gScore=0;renderGame();};return;}
+  const c=CASES[gi];
+  g.innerHTML=`<div class="gcard"><div class="gtop"><p class="gk">Order ${gi+1} of ${CASES.length}</p><div class="gdots">${CASES.map((_,k)=>`<i class="${k<gi?'d':k===gi?'c':''}"></i>`).join('')}</div></div><h3>${c.who}</h3><ul>${c.facts.map(f=>`<li>${f}</li>`).join('')}</ul><div class="gbtns" id="gchoices">${ACTS.map((a,j)=>`<button type="button" class="choice" data-j="${j}">${a}</button>`).join('')}</div><div class="gres" id="gres" hidden></div></div>`;
+  $('#gchoices').onclick=e=>{const b=e.target.closest('button');if(!b||$('#gchoices').dataset.done)return;$('#gchoices').dataset.done=1;const ok=+b.dataset.j===c.a;if(ok)gScore++;
+    [...$('#gchoices').children].forEach(x=>{x.disabled=true;if(+x.dataset.j===c.a)x.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const r=$('#gres');r.innerHTML=`<p><b>${ok?'Same call as the gateway.':'The gateway would '+ACTS[c.a].toLowerCase()+'.'}</b> ${c.why}</p><button type="button" class="act" id="gnext">${gi+1<CASES.length?'Next order →':'See your result'}</button>`;r.hidden=false;wireCites(r);
+    $('#gnext').onclick=()=>{gi++;renderGame();$('#game').scrollIntoView({block:'nearest'});};$('#gnext').focus({preventScroll:true});};}
+renderGame();
+
+/* ===== count up the intro figures ===== */
+(function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.querySelectorAll('.introfacts b').forEach(el=>{const m=el.textContent.match(/^([^\d]*)([\d.]+)(.*)$/);if(!m)return;const [_,pre,num,post]=m,dec=(num.split('.')[1]||'').length,end=+num;let t0=null;
+    const step=t=>{if(!t0)t0=t;const p=Math.min(1,(t-t0)/1400),v=end*(1-Math.pow(1-p,3));el.textContent=pre+v.toFixed(dec)+post;if(p<1)requestAnimationFrame(step);};
+    window.addEventListener('fb-home',()=>{t0=null;requestAnimationFrame(step);});});})();
+
+route();
+/* ===== opening intro: fire spreads through a field of DNA letters and stops at a cleared strip (the screening gateway) ===== */
+(function(){const el=$('#fb-intro'),cv=$('#fiCanvas'),ctx=cv.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,L='ACGT';
+  let W,H,dpr,cs,cols,rows,grid,letters,bx0,bx1,timer=null,raf=null,hits=0,flashT=0,timers=[],running=false;
+  function size(){dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    cs=W<560?16:20;cols=Math.ceil(W/cs);rows=Math.ceil(H/cs);const mid=Math.round(cols*.6),bw=Math.max(2,Math.round(cols*.035));bx0=mid;bx1=mid+bw;
+    grid=new Uint8Array(cols*rows);letters=Array.from({length:cols*rows},()=>L[Math.random()*4|0]);}
+  /* 0 calm, 1..6 burning (counts down), 7 burnt */
+  const isBreak=c=>c>=bx0&&c<bx1;
+  function spark(c,r){if(c<0||r<0||c>=cols||r>=rows||isBreak(c))return;const i=r*cols+c;if(grid[i]===0)grid[i]=6;}
+  function step(){let any=false;const next=grid.slice();
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const i=r*cols+c,v=grid[i];if(v>=1&&v<=6){any=true;
+      [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dc,dr])=>{const nc=c+dc,nr=r+dr;if(nc<0||nr<0||nc>=cols||nr>=rows)return;
+        if(isBreak(nc)){if(Math.random()<.5){hits++;flashT=performance.now();}return;}
+        const j=nr*cols+nc;if(grid[j]===0&&next[j]===0&&Math.random()<(dc===1?.62:.45))next[j]=6;});
+      next[i]=v===1?7:v-1;}}
+    grid=next;return any;}
+  function draw(){ctx.clearRect(0,0,W,H);ctx.font=`600 ${cs*.55}px "JetBrains Mono",monospace`;ctx.textAlign='center';ctx.textBaseline='middle';
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){if(isBreak(c))continue;const v=grid[r*cols+c],x=c*cs+cs/2,y=r*cs+cs/2;
+      if(v===0){ctx.fillStyle='rgba(108,195,194,.22)';}
+      else if(v===7){ctx.fillStyle='rgba(150,80,45,.5)';}
+      else{const k=v/6;ctx.fillStyle=`rgba(${240},${Math.round(90+82*k)},${Math.round(30+28*k)},${.45+.55*k})`;ctx.shadowColor='rgba(240,140,40,.8)';ctx.shadowBlur=8*k;}
+      ctx.fillText(letters[r*cols+c],x,y);ctx.shadowBlur=0;}
+    /* the cleared strip */
+    const glow=Math.max(0,1-(performance.now()-flashT)/900),x0=bx0*cs,x1=bx1*cs;
+    const g=ctx.createLinearGradient(x0,0,x1,0);g.addColorStop(0,`rgba(108,195,194,${.10+.35*glow})`);g.addColorStop(.5,`rgba(108,195,194,${.04+.15*glow})`);g.addColorStop(1,`rgba(108,195,194,${.10+.35*glow})`);
+    ctx.fillStyle=g;ctx.fillRect(x0,0,x1-x0,H);ctx.fillStyle=`rgba(108,195,194,${.5+.5*glow})`;ctx.fillRect(x0,0,1.5,H);ctx.fillRect(x1-1.5,0,1.5,H);
+    ctx.save();ctx.translate((x0+x1)/2,H*.2);ctx.rotate(-Math.PI/2);ctx.font=`700 ${Math.max(11,cs*.62)}px "Archivo",sans-serif`;ctx.fillStyle=`rgba(226,235,233,${.6+.4*glow})`;ctx.fillText('SCREENING GATEWAY',0,0);ctx.restore();}
+  function loop(){draw();if(running)raf=requestAnimationFrame(loop);}
+  function run(){clearInterval(timer);timer=setInterval(()=>{if(!step()){clearInterval(timer);timer=null;}},70);}
+  function finalFrame(){for(let r=0;r<rows;r++)for(let c=0;c<bx0;c++)grid[r*cols+c]=Math.random()<.9?7:0;for(let r=0;r<rows;r++)for(let c=Math.max(0,bx0-2);c<bx0;c++)grid[r*cols+c]=3;draw();}
+  function close(){timers.forEach(clearTimeout);clearInterval(timer);running=false;cancelAnimationFrame(raf);el.classList.add('out');document.body.classList.remove('fi-open');
+    if(!location.hash||location.hash==='#top')dispatchEvent(new Event('fb-home'));setTimeout(()=>{el.hidden=true;},reduce?0:600);}
+  function open(){timers.forEach(clearTimeout);timers=[];clearInterval(timer);el.hidden=false;el.classList.remove('out','done');document.body.classList.add('fi-open');size();
+    if(reduce){finalFrame();el.classList.add('done');$('#fiEnter').focus({preventScroll:true});return;}
+    running=true;cancelAnimationFrame(raf);loop();
+    const r0=Math.floor(rows*.45);spark(1,r0);spark(1,r0+1);spark(0,Math.floor(rows*.2));spark(0,Math.floor(rows*.75));run();
+    timers.push(setTimeout(()=>{el.classList.add('done');$('#fiEnter').focus({preventScroll:true});},3600));$('#fiSkip').focus({preventScroll:true});}
+  cv.addEventListener('pointerdown',e=>{const r=cv.getBoundingClientRect();const c=Math.floor((e.clientX-r.left)/cs),rr=Math.floor((e.clientY-r.top)/cs);
+    for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const i=(rr+dr)*cols+(c+dc);if(i>=0&&i<grid.length&&grid[i]===7)grid[i]=0;}spark(c,rr);if(!timer)run();if(reduce){draw();}});
+  addEventListener('resize',()=>{if(!el.hidden){size();if(reduce)finalFrame();}});
+  open();$('#replay').addEventListener('click',open);
+  $('#fiSkip').addEventListener('click',close);$('#fiEnter').addEventListener('click',close);
+  el.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(e.key==='Tab'){e.preventDefault();const a=$('#fiSkip'),b=$('#fiEnter');(document.activeElement===a?b:a).focus();}});})();
+</script>
+<script src="../assets/portfolio.js"></script>
+</body></html>
