@@ -16,6 +16,7 @@ Live site: **https://ari-ummanath.github.io/portfolios/**
 | `grand-prix/` | Is the Grand Prix Worth It? |
 | `real-selectors/` | The Real Selectors |
 | `below-the-waterline/` | Below the Waterline (with the Strata simulator in `strata/`) |
+| `firebreak/` | Firebreak: an AI-assisted DNA screening gateway for Australia |
 
 ## How to update anything (no software needed)
 
